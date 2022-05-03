@@ -17,7 +17,7 @@ class Project extends Model
 
     public function boards()
     {
-        return $this->hasMany(Board::class);
+        return $this->hasMany(Board::class)->orderBy('sort_order');
     }
 
     public function items()

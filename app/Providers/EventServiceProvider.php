@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Project;
 use App\Models\Vote;
+use App\Observers\ProjectObserver;
 use App\Observers\VoteObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -23,6 +25,7 @@ class EventServiceProvider extends ServiceProvider
 
     protected $observers = [
         Vote::class => [VoteObserver::class],
+        Project::class => [ProjectObserver::class],
     ];
 
     /**

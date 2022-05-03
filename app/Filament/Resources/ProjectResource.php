@@ -4,12 +4,14 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Filament\Resources\ProjectResource\RelationManagers;
+use App\Models\Board;
 use App\Models\Project;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Ramsey\Uuid\Uuid;
 
 class ProjectResource extends Resource
 {
@@ -21,6 +23,15 @@ class ProjectResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $data = [];
+
+        $uuid = Uuid::uuid4()->toString();
+
+        $data[$uuid] = [
+            'title' => 'Test 1234',
+            'description' => null,
+        ];
+
         return $form
             ->schema([
                 Forms\Components\Card::make([
@@ -34,7 +45,15 @@ class ProjectResource extends Resource
                     Forms\Components\MarkdownEditor::make('description')
                         ->columnSpan(2)
                         ->maxLength(65535),
-                ])->columns(2)
+                    Forms\Components\HasManyRepeater::make('boards')
+                        ->relationship('boards')
+                        ->orderable('sort_order')
+                        ->columnSpan(2)
+                        ->schema([
+                            Forms\Components\TextInput::make('title'),
+                            Forms\Components\Textarea::make('description'),
+                        ]),
+                ])->columns()
             ]);
     }
 

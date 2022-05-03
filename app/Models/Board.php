@@ -11,7 +11,8 @@ class Board extends Model
 
     public $fillable = [
         'title',
-        'description'
+        'description',
+        'sort_order',
     ];
 
     public function project()

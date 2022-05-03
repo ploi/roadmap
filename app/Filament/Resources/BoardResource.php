@@ -19,6 +19,8 @@ class BoardResource extends Resource
 
     protected static ?string $navigationGroup = 'Manage';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function form(Form $form): Form
     {
         return $form

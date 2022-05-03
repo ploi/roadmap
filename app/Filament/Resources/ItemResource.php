@@ -51,6 +51,7 @@ class ItemResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\TextColumn::make('board.project.title'),
                 Tables\Columns\TextColumn::make('board.title'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
