@@ -2,11 +2,13 @@
 
 namespace App\Http\Livewire\Item;
 
+use App\Models\Item;
 use Livewire\Component;
 
 class VoteButton extends Component
 {
-    public $item;
+    public Item $item;
+    public bool $hasVoted = false;
 
     public function toggleUpvote()
     {
@@ -16,6 +18,8 @@ class VoteButton extends Component
 
     public function render()
     {
+        $this->hasVoted = $this->item->hasVoted();
+
         return view('livewire.item.vote-button');
     }
 }

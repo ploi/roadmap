@@ -47,13 +47,20 @@ class Item extends Model
         return $this->hasMany(Vote::class);
     }
 
+    public function hasVoted(User $user = null): bool
+    {
+        $user = $user ?? auth()->user();
+
+        return (bool)$this->votes()->where('user_id', $user->id)->exists();
+    }
+
     public function toggleUpvote(User $user = null): bool|Vote
     {
         $user = $user ?? auth()->user();
 
         $vote = $this->votes()->where('user_id', $user->id)->first();
 
-        if (filled($vote)) {
+        if ($vote) {
             $vote->delete();
 
             return true;
