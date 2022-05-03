@@ -14,10 +14,6 @@
                                 </button>
 
                                 <span class="">{{ $item->votes }}</span>
-
-                                <button>
-                                    <x-heroicon-o-chevron-down class="w-5 h-5" />
-                                </button>
                             </div>
 
                             <a href="{{ route('projects.items.show', [$project->id, $item->id]) }}" class="flex-1">
