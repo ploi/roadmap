@@ -47,9 +47,14 @@
             <nav class="my-2 space-y-2">
                 <ul class="px-2 space-y-1">
                     <li>
-                        <a class="flex items-center h-10 px-2 space-x-2 transition rounded-lg hover:bg-gray-500/5 focus:bg-blue-500/10 focus:text-blue-600 focus:outline-none"
+                        <a
+                            @class([
+                                    'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
+                                    'text-white bg-blue-600' => request()->is('/'),
+                                    'hover:bg-gray-500/5 focus:bg-blue-500/10 focus:text-blue-600 focus:outline-none' => !request()->is('/')
+                                ])
                            href="{{ route('home') }}">
-                            <svg class="text-blue-500 w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            <svg @class(['w-7 h-7', 'text-blue-500' => !request()->is('/')]) xmlns="http://www.w3.org/2000/svg" fill="none"
                                  viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                       stroke-width="1.5"
