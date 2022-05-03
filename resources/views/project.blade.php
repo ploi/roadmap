@@ -6,10 +6,11 @@
             @forelse($boards as $board)
                 <section class="h-full">
                     <div class="bg-gray-100 rounded-xl min-w-[18rem] lg:min-w-[24rem] flex flex-col max-h-full">
-                        <p
+                        <a
+                            href="{{ route('projects.boards.show', [$project->id, $board->id]) }}"
                             class="p-2 font-semibold tracking-tight text-center text-gray-500 border-b bg-gray-100/80 rounded-t-xl backdrop-blur-xl backdrop-saturate-150">
                             {{ $board->title }}
-                        </p>
+                        </a>
 
                         <ul class="p-2 space-y-2 overflow-y-scroll flex-1">
                             @foreach($board->items as $item)

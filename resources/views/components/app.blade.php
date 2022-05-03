@@ -17,6 +17,8 @@
 
     <link rel="stylesheet"
           href="{{ mix('css/app.css') }}">
+
+    @livewireStyles
 </head>
 <body class="antialiased">
 <div class="flex h-[720px] bg-gray-100"
@@ -110,13 +112,13 @@
                         <li>
                             <a @class([
                                     'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                                    'text-white bg-blue-600' => (int)request()->route('project') === $project->id,
-                                    'hover:bg-gray-500/5 focus:bg-blue-500/10 focus:text-blue-600 focus:outline-none' => (int)request()->route('project') !== $project->id
+                                    'text-white bg-blue-600' => (int)request()->route('projects') === $project->id,
+                                    'hover:bg-gray-500/5 focus:bg-blue-500/10 focus:text-blue-600 focus:outline-none' => (int)request()->route('projects') !== $project->id
                                 ])
 
                                href="{{ route('projects.show', $project->id) }}">
                                 <svg
-                                    @class(['w-7 h-7', 'text-blue-500' => (int)request()->route('project') !== $project->id])
+                                    @class(['w-7 h-7', 'text-blue-500' => (int)request()->route('projects') !== $project->id])
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                           stroke-width="1.5" d="M10.25 4.75L7.75 19.25"/>
@@ -217,6 +219,7 @@
         </div>
     </div>
 </div>
+@livewireScripts
 <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>
