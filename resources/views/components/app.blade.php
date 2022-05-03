@@ -55,9 +55,11 @@
                                     'text-white bg-blue-600' => request()->is('/'),
                                     'hover:bg-gray-500/5 focus:bg-blue-500/10 focus:text-blue-600 focus:outline-none' => !request()->is('/')
                                 ])
-                           href="{{ route('home') }}">
-                            <svg @class(['w-7 h-7', 'text-blue-500' => !request()->is('/')]) xmlns="http://www.w3.org/2000/svg" fill="none"
-                                 viewBox="0 0 24 24">
+                            href="{{ route('home') }}">
+                            <svg
+                                @class(['w-7 h-7', 'text-blue-500' => !request()->is('/')]) xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                       stroke-width="1.5"
                                       d="M6.75024 19.2502H17.2502C18.3548 19.2502 19.2502 18.3548 19.2502 17.2502V9.75025L12.0002 4.75024L4.75024 9.75025V17.2502C4.75024 18.3548 5.64568 19.2502 6.75024 19.2502Z"/>
@@ -70,10 +72,17 @@
                     </li>
 
                     <li>
-                        <a class="flex items-center h-10 px-2 space-x-2 transition rounded-lg hover:bg-gray-500/5 focus:bg-blue-500/10 focus:text-blue-600 focus:outline-none"
-                           href="#">
-                            <svg class="text-blue-500 w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                 viewBox="0 0 24 24">
+                        <a
+                            @class([
+        'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
+        'text-white bg-blue-600' => request()->is('my'),
+        'hover:bg-gray-500/5 focus:bg-blue-500/10 focus:text-blue-600 focus:outline-none' => !request()->is('my')
+    ])
+                            href="{{ route('my') }}">
+                            <svg
+                                @class(['w-7 h-7', 'text-blue-500' => !request()->is('my')]) xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                       stroke-width="1.5"
                                       d="M5.75 19.2502H18.25C18.8023 19.2502 19.25 18.8025 19.25 18.2502V5.75C19.25 5.19772 18.8023 4.75 18.25 4.75H5.75C5.19772 4.75 4.75 5.19772 4.75 5.75V18.2502C4.75 18.8025 5.19772 19.2502 5.75 19.2502Z"/>
@@ -180,7 +189,7 @@
                 </aside>
 
 
-                <ul class="flex items-center space-x-1">
+                <ul class="flex items-center space-x-2">
                     <li>
                         <a class="flex items-center justify-center w-10 h-10 text-blue-500 transition rounded-full hover:bg-gray-500/5 focus:bg-blue-500/10 focus:outline-none"
                            href="#">
@@ -194,7 +203,7 @@
 
                     @guest
                         <li>
-                            <a class="flex items-center justify-center w-10 h-10 text-blue-500 hover:text-blue-600 focus:outline-none"
+                            <a class="flex items-center justify-center text-blue-500 hover:text-blue-600 focus:outline-none"
                                href="{{ route('login') }}">
                                 Login
                             </a>
@@ -202,13 +211,27 @@
                     @endguest
 
                     @auth
-                        <div class="relative w-10 h-10 rounded-full">
-                            <div class="absolute inset-0 bg-gray-200 rounded-full animate-pulse"></div>
+                        @if(auth()->user()->admin)
+                            <li>
+                                <a class="flex items-center justify-center w-10 h-10 text-red-500 transition rounded-full hover:bg-gray-500/5 focus:bg-blue-500/10 focus:outline-none"
+                                   href="{{ route('filament.pages.dashboard') }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none"
+                                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/>
+                                    </svg>
+                                </a>
+                            </li>
+                        @endif
+                        <li>
+                            <div class="relative w-7 h-7 rounded-full">
+                                <div class="absolute inset-0 bg-gray-200 rounded-full animate-pulse"></div>
 
-                            <img class="absolute inset-0 object-cover rounded-full"
-                                 src="{{ auth()->user()->getGravatar() }}"
-                                 alt="">
-                        </div>
+                                <img class="absolute inset-0 object-cover rounded-full"
+                                     src="{{ auth()->user()->getGravatar() }}"
+                                     alt="">
+                            </div>
+                        </li>
                     @endauth
                 </ul>
             </header>

@@ -3,3 +3,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.alert-success {
+    @apply bg-success-100 border-l-4 border-success-500 text-success-700 p-4;
+}
+
+.alert-info {
+    @apply bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 dark:bg-blue-900 dark:text-blue-300 dark:border-blue-400;
+}
+
+.alert-danger {
+    @apply bg-danger-100 border-l-4 border-danger-500 text-danger-700 p-4;
+}
+
+.alert-warning {
+    @apply bg-warning-100 border-l-4 border-warning-500 text-warning-700 p-4;
+}

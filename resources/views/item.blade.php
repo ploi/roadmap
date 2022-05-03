@@ -4,6 +4,11 @@
     ['title' => $item->title, 'url' => route('projects.items.show', [$project->id, $item->id])]
 ]">
     <main class="p-4 overflow-y-scroll flex justify-center">
+        <form method="post" action="{{ route('item.vote', [$project->id, $item->id]) }}">
+            @csrf
+            <button>Vote</button>
+        </form>
+
         <div class="block p-2 space-y-2 bg-white shadow rounded-xl lg:min-w-[60rem]">
             <header class="flex items-center px-4 py-2 space-x-4">
                 <div class="flex items-center flex-1 space-x-3 overflow-hidden">

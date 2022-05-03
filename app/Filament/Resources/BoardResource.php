@@ -15,7 +15,9 @@ class BoardResource extends Resource
 {
     protected static ?string $model = Board::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-view-boards';
+
+    protected static ?string $navigationGroup = 'Manage';
 
     public static function form(Form $form): Form
     {
