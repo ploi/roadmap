@@ -50,7 +50,8 @@ class ItemResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\TextColumn::make('title')->searchable(),
+                Tables\Columns\TextColumn::make('total_votes')->label('Votes')->sortable(),
                 Tables\Columns\TextColumn::make('board.project.title'),
                 Tables\Columns\TextColumn::make('board.title'),
                 Tables\Columns\TextColumn::make('created_at')
