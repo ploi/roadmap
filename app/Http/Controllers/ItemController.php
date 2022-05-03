@@ -15,6 +15,7 @@ class ItemController extends Controller
 
         return view('item', [
             'project' => $project,
+            'board' => $item->board,
             'item' => $item
         ]);
     }
