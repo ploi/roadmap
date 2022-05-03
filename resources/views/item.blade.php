@@ -1,16 +1,9 @@
 <x-app :breadcrumbs="[
     ['title' => $project->title, 'url' => route('projects.show', $project->id)],
-    ['title' => $board->title, 'url' => ''],
+    ['title' => $board->title, 'url' => route('projects.boards.show', [$project->id, $board->id])],
     ['title' => $item->title, 'url' => route('projects.items.show', [$project->id, $item->id])]
 ]">
     <main class="p-4 overflow-y-scroll">
-        {{--        <form method="post" action="{{ route('projects.items.vote', [$project->id, $item->id]) }}">--}}
-        {{--            @csrf--}}
-        {{--            <button>Vote</button>--}}
-        {{--        </form>--}}
-
-        {{--        <livewire:item.vote-button :item="$item" />--}}
-
         <div class="grid grid-cols-3 gap-4">
             <x-card class="col-span-2">
                 <header class="flex items-center px-4 py-2 space-x-4">
