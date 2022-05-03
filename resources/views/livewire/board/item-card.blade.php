@@ -5,12 +5,12 @@
                 <x-heroicon-o-chevron-up class="w-5 h-5" />
             </button>
 
-            <span class="">{{ $item->total_votes }}</span>
+            <span class="">{{ $projectItem->total_votes }}</span>
         </div>
 
-        <a href="{{ route('projects.items.show', [$project->id, $item->id]) }}" class="flex-1">
-            <p class="font-bold text-lg">{{ $item->title }}</p>
-            <p>{{ $item->excerpt }}</p>
+        <a href="{{ route('projects.items.show', [$project->id, $projectItem->id]) }}" class="flex-1">
+            <p class="font-bold text-lg">{{ $projectItem->title }}</p>
+            <p>{{ $projectItem->excerpt }}</p>
         </a>
 
         <div>

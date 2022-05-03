@@ -13,7 +13,7 @@ class CreateItemCard extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    public $board;
+    public $project;
 
     public function mount()
     {
@@ -35,11 +35,15 @@ class CreateItemCard extends Component implements HasForms
         $formState = $this->form->getState();
 
         $item = Item::create([
-            'user_id' => auth()->user()->id,
-            ...$formState
+            ...$formState,
         ]);
 
-        $this->form->fill([]);
+        $item->user()->associate($this->project->boards()->first())->save();
+        $item->board()->associate(auth()->user())->save();
+
+        $item->toggleUpvote();
+
+        return redirect()->route('projects.boards.show', [$this->project->id, $this->project->boards()->first()]);
     }
 
     public function render()
