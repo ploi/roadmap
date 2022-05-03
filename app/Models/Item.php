@@ -40,13 +40,6 @@ class Item extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function excerpt(): Attribute
-    {
-        return Attribute::make(
-            get: fn() => Str::substr($this->content, 0, 100) . '...',
-        );
-    }
-
     public function votes()
     {
         return $this->hasMany(Vote::class);
