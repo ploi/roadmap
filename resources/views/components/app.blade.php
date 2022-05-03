@@ -151,7 +151,7 @@
                     </button>
                 </aside>
 
-                <ul class="flex items-center -mr-2 space-x-1">
+                <ul class="flex items-center space-x-1">
                     <li>
                         <a class="flex items-center justify-center w-10 h-10 text-blue-500 transition rounded-full hover:bg-gray-500/5 focus:bg-blue-500/10 focus:outline-none"
                            href="#">
@@ -163,17 +163,14 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a class="flex items-center justify-center w-10 h-10 text-blue-500 transition rounded-full hover:bg-gray-500/5 focus:bg-blue-500/10 focus:outline-none"
-                           href="#">
-                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="1.5" d="M12 5.75V18.25"/>
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="1.5" d="M18.25 12L5.75 12"/>
-                            </svg>
-                        </a>
-                    </li>
+                    @guest
+                        <li>
+                            <a class="flex items-center justify-center w-10 h-10 text-blue-500 hover:text-blue-600 focus:outline-none"
+                               href="{{ route('login') }}">
+                                Login
+                            </a>
+                        </li>
+                    @endguest
                 </ul>
             </header>
 
