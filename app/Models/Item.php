@@ -21,6 +21,15 @@ class Item extends Model
         'content'
     ];
 
+    protected function excerpt(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                return Str::limit(strip_tags(str($this->attributes['content'])->markdown()), 150);
+            },
+        );
+    }
+
     public function board()
     {
         return $this->belongsTo(Board::class);
