@@ -152,43 +152,23 @@
 
                     <ul class="flex items-center -space-x-1 text-sm font-medium text-gray-600">
                         @foreach($breadcrumbs as $breadcrumb)
-                        <li>
-                            <a class="transition hover:underline focus:outline-none focus:text-gray-800 focus:underline"
-                               href="#">
-                                Teams
-                            </a>
-                        </li>
+                            @if(!$loop->first)
+                                <li>
+                                    <svg class="text-gray-400 w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                         viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                              stroke-width="1.5" d="M10.75 8.75L14.25 12L10.75 15.25"/>
+                                    </svg>
+                                </li>
+                            @endif
+
+                            <li>
+                                <a class="transition hover:underline focus:outline-none focus:text-gray-800 focus:underline"
+                                   href="{{ $breadcrumb['url'] }}">
+                                    {{ $breadcrumb['title'] }}
+                                </a>
+                            </li>
                         @endforeach
-
-                        <li>
-                            <svg class="text-gray-400 w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                 viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="1.5" d="M10.75 8.75L14.25 12L10.75 15.25"/>
-                            </svg>
-                        </li>
-
-                        <li>
-                            <a class="transition hover:underline focus:outline-none focus:text-gray-800 focus:underline"
-                               href="#">
-                                Razor UI
-                            </a>
-                        </li>
-
-                        <li>
-                            <svg class="text-gray-400 w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                 viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="1.5" d="M10.75 8.75L14.25 12L10.75 15.25"/>
-                            </svg>
-                        </li>
-
-                        <li>
-                            <a class="text-gray-800 transition hover:underline focus:outline-none focus:underline"
-                               href="#">
-                                Members
-                            </a>
-                        </li>
                     </ul>
                 </aside>
 

@@ -1,4 +1,6 @@
-<x-app>
+<x-app :breadcrumbs="[
+    ['title' => $project->title, 'url' => route('project.show', $project->id)]
+]">
     <main class="p-4 overflow-x-auto">
         <div class="inline-flex h-full min-w-full gap-4 flex-nowrap justify-center">
             @forelse($boards as $board)
