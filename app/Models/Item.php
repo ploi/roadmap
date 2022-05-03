@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Item extends Model
 {
@@ -18,6 +20,15 @@ class Item extends Model
         'title',
         'content'
     ];
+
+    protected function excerpt(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                return Str::limit(strip_tags(str($this->attributes['content'])->markdown()), 150);
+            },
+        );
+    }
 
     public function board()
     {
