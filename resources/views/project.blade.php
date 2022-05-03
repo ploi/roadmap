@@ -25,36 +25,8 @@
                                                         {{ $item->created_at->format('d F') }}
                                                     </span>
 
-                                            <div class="flex items-center -space-x-4">
-                                                <div class="relative w-8 h-8 rounded-full ring-2 ring-white">
-                                                    <div
-                                                        class="absolute inset-0 bg-gray-200 rounded-full animate-pulse">
-                                                    </div>
-
-                                                    <img class="absolute inset-0 object-cover rounded-full"
-                                                         src="https://thispersondoesnotexist.com/image"
-                                                         alt="">
-                                                </div>
-
-                                                <div class="relative w-8 h-8 rounded-full ring-2 ring-white">
-                                                    <div
-                                                        class="absolute inset-0 bg-gray-200 rounded-full animate-pulse">
-                                                    </div>
-
-                                                    <img class="absolute inset-0 object-cover rounded-full"
-                                                         src="https://thispersondoesnotexist.com/image"
-                                                         alt="">
-                                                </div>
-
-                                                <div class="relative w-8 h-8 rounded-full ring-2 ring-white">
-                                                    <div
-                                                        class="absolute inset-0 bg-gray-200 rounded-full animate-pulse">
-                                                    </div>
-
-                                                    <img class="absolute inset-0 object-cover rounded-full"
-                                                         src="https://thispersondoesnotexist.com/image"
-                                                         alt="">
-                                                </div>
+                                            <div>
+                                                {{ $item->votes_count }} {{ trans_choice('messages.votes', $item->votes_count) }}
                                             </div>
                                         </footer>
                                     </a>
