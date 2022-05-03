@@ -1,7 +1,7 @@
 <x-app :breadcrumbs="[
-    ['title' => $project->title, 'url' => route('project.show', $project->id)],
+    ['title' => $project->title, 'url' => route('projects.show', $project->id)],
     ['title' => $board->title, 'url' => ''],
-    ['title' => $item->title, 'url' => route('item.show', [$project->id, $item->id])]
+    ['title' => $item->title, 'url' => route('projects.items.show', [$project->id, $item->id])]
 ]">
     <main class="p-4 overflow-y-scroll flex justify-center">
         <div class="block p-2 space-y-2 bg-white shadow rounded-xl lg:min-w-[60rem]">

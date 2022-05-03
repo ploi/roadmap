@@ -114,7 +114,7 @@
                                     'hover:bg-gray-500/5 focus:bg-blue-500/10 focus:text-blue-600 focus:outline-none' => (int)request()->route('project') !== $project->id
                                 ])
 
-                               href="{{ route('project.show', $project->id) }}">
+                               href="{{ route('projects.show', $project->id) }}">
                                 <svg
                                     @class(['w-7 h-7', 'text-blue-500' => (int)request()->route('project') !== $project->id])
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

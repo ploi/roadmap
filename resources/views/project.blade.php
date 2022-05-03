@@ -1,5 +1,5 @@
 <x-app :breadcrumbs="[
-    ['title' => $project->title, 'url' => route('project.show', $project->id)]
+    ['title' => $project->title, 'url' => route('projects.show', $project->id)]
 ]">
     <main class="p-4 overflow-x-auto h-full">
         <div class="inline-flex h-full min-w-full gap-4 flex-nowrap justify-center overflow-hidden">
@@ -14,7 +14,7 @@
                         <ul class="p-2 space-y-2 overflow-y-scroll flex-1">
                             @foreach($board->items as $item)
                                 <li>
-                                    <a href="{{ route('item.show', [$project->id, $item->id]) }}" class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50">
+                                    <a href="{{ route('projects.items.show', [$project->id, $item->id]) }}" class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50">
                                         <p>
                                             {{ $item->title }}
                                         </p>
