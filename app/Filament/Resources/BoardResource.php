@@ -25,7 +25,7 @@ class BoardResource extends Resource
                     Forms\Components\TextInput::make('title')
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\BelongsToSelect::make('project_id')->relationship('project', 'title'),
+                    Forms\Components\BelongsToSelect::make('project_id')->relationship('project', 'title')->required(),
                     Forms\Components\Textarea::make('description')
                         ->columnSpan(2)
                         ->maxLength(65535),

@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->unsignedInteger('votes')->nullable()->default(0);
 
             $table->foreignId('board_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
 
             $table->timestamps();
         });

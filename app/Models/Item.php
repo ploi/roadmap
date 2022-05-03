@@ -9,6 +9,11 @@ class Item extends Model
 {
     use HasFactory;
 
+    const STATUS_OPEN = 'open';
+    const STATUS_REVIEW = 'under-review';
+    const STATUS_PLANNED = 'planned';
+    const STATUS_LIVE = 'live';
+
     public $fillable = [
         'title',
         'content'
@@ -17,5 +22,10 @@ class Item extends Model
     public function board()
     {
         return $this->belongsTo(Board::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

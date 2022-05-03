@@ -18,4 +18,9 @@ class Board extends Model
     {
         return $this->belongsTo(Project::class);
     }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
 }

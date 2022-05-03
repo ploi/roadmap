@@ -25,7 +25,8 @@ class ItemResource extends Resource
                     Forms\Components\TextInput::make('title')
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\BelongsToSelect::make('board_id')->relationship('board', 'title'),
+                    Forms\Components\BelongsToSelect::make('board_id')->relationship('board', 'title')->required(),
+                    Forms\Components\BelongsToSelect::make('user_id')->relationship('user', 'name')->required()->searchable(),
                     Forms\Components\MarkdownEditor::make('content')
                         ->columnSpan(2)
                         ->required()
