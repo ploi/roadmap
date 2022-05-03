@@ -2824,6 +2824,9 @@ select{
 .mb-4{
   margin-bottom: 1rem;
 }
+.mr-1\.5{
+  margin-right: 0.375rem;
+}
 .block{
   display: block;
 }
@@ -3968,6 +3971,10 @@ select{
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
+.text-red-500{
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
 .antialiased{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -4540,6 +4547,10 @@ select{
   opacity: 0.7;
 }
 .group:focus-within .group-focus-within\:text-primary-500{
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity));
+}
+.group:focus-within .group-focus-within\:text-blue-500{
   --tw-text-opacity: 1;
   color: rgb(59 130 246 / var(--tw-text-opacity));
 }

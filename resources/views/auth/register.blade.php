@@ -1,77 +1,91 @@
-@extends('layouts.app')
+<x-app>
+    <div class=" relative overflow-hidden flex justify-center">
+        <div class="z-10 flex-1 w-full max-w-lg py-8 md:py-16">
+            <div class="w-full max-w-md px-4 mx-auto sm:px-6 md:px-8">
+                <h1 class="text-xl font-semibold tracking-tight md:text-2xl">
+                    Sign in
+                </h1>
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <p class="mt-1 text-base font-medium text-gray-500">
+                    Not new here?
+                    <a class="text-blue-600 transition hover:text-blue-500 focus:outline-none focus:underline"
+                       href="{{ route('login') }}">Log In</a>.
+                </p>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+                @if ($errors->any())
+                    <div class="alert-danger mt-8">
+                        @foreach ($errors->all() as $error)
+                            <div>{{ ucfirst($error) }}</div>
+                        @endforeach
+                    </div>
+                @endif
 
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                <form class="mt-8 space-y-6 md:mt-12"
+                      method="post"
+                      action="{{ route('register') }}">
+                    @csrf
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                    <div class="space-y-2">
+                        <label class="inline-block text-sm font-medium text-gray-700"
+                               for="name">Name</label>
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                        <input
+                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600"
+                            id="name"
+                            name="name"
+                            value="{{ old('name') }}"
+                            type="text">
+                    </div>
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                    <div class="space-y-2">
+                        <label class="inline-block text-sm font-medium text-gray-700"
+                               for="email">Email address</label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                        <input
+                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-blue-600 focus:border-blue-600"
+                            id="email"
+                            placeholder="name@yourcompany.com"
+                            name="email"
+                            value="{{ old('email') }}"
+                            type="email">
+                    </div>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                    <div class="space-y-2">
+                        <label class="inline-block text-sm font-medium text-gray-700"
+                               for="password">Password</label>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                        <input
+                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-blue-600 focus:border-blue-600"
+                            id="password"
+                            name="password"
+                            type="password">
+                    </div>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                    <div class="space-y-2">
+                        <label class="inline-block text-sm font-medium text-gray-700"
+                               for="password_confirmation">Confirm password</label>
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                        <input
+                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-blue-600 focus:border-blue-600"
+                            id="password_confirmation"
+                            name="password_confirmation"
+                            type="password">
+                    </div>
 
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                    <button
+                        class="flex items-center justify-center w-full h-8 px-3 text-sm font-semibold tracking-tight text-white transition bg-blue-600 rounded-lg shadow hover:bg-blue-500 focus:bg-blue-700 focus:outline-none focus:ring-offset-2 focus:ring-offset-blue-700 focus:ring-2 focus:ring-white focus:ring-inset"
+                        type="submit">Get started
+                    </button>
+                </form>
 
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                <div class="w-4 mx-auto mt-4 border-t border-gray-300"></div>
+
+                <p class="mt-3 text-sm font-medium text-center">
+                    <a class="text-blue-600 transition hover:text-blue-500 focus:outline-none focus:underline"
+                       href="#">Forgot password?</a>
+                </p>
             </div>
         </div>
     </div>
-</div>
-@endsection
+</x-app>
