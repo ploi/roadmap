@@ -151,12 +151,14 @@
                     </button>
 
                     <ul class="flex items-center -space-x-1 text-sm font-medium text-gray-600">
+                        @foreach($breadcrumbs as $breadcrumb)
                         <li>
                             <a class="transition hover:underline focus:outline-none focus:text-gray-800 focus:underline"
                                href="#">
                                 Teams
                             </a>
                         </li>
+                        @endforeach
 
                         <li>
                             <svg class="text-gray-400 w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none"

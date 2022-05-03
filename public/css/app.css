@@ -1385,6 +1385,12 @@ select {
 .min-w-\[2rem\] {
   min-width: 2rem;
 }
+.min-w-\[60rem\] {
+  min-width: 60rem;
+}
+.min-w-\[10rem\] {
+  min-width: 10rem;
+}
 .max-w-2xl {
   max-width: 42rem;
 }
@@ -1718,6 +1724,9 @@ select {
 }
 .overflow-hidden {
   overflow: hidden;
+}
+.overflow-scroll {
+  overflow: scroll;
 }
 .overflow-x-auto {
   overflow-x: auto;
@@ -3821,6 +3830,10 @@ select {
 
   .lg\:min-w-\[24rem\] {
     min-width: 24rem;
+  }
+
+  .lg\:min-w-\[60rem\] {
+    min-width: 60rem;
   }
 
   .lg\:max-w-\[20em\] {

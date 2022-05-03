@@ -10,7 +10,7 @@ class App extends Component
 {
     public Collection $projects;
 
-    public function __construct()
+    public function __construct(public array $breadcrumbs = [])
     {
         $this->projects = Project::get();
     }

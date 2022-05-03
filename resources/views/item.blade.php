@@ -1,6 +1,6 @@
 <x-app>
-    <main class="p-4 overflow-x-auto flex justify-center">
-        <div class="block p-2 space-y-2 overflow-hidden bg-white shadow rounded-xl max-w-2xl">
+    <main class="p-4 overflow-y-scroll flex justify-center">
+        <div class="block p-2 space-y-2 bg-white shadow rounded-xl lg:min-w-[60rem]">
             <header class="flex items-center px-4 py-2 space-x-4">
                 <div class="flex items-center flex-1 space-x-3 overflow-hidden">
                     <div class="relative flex-shrink-0 w-10 h-10 rounded-full">
@@ -29,21 +29,9 @@
             <div class="border-t"></div>
 
             <div class="p-4 prose">
-                <h2>Hey Lisa,</h2>
+                <h2>{{ $item->title }}</h2>
 
-                <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempora repudiandae in excepturi
-                    veniam
-                    enim iure possimus.
-                </p>
-
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste rem cumque ab, saepe velit
-                    quam atque
-                    libero. Quidem voluptatem incidunt in corrupti expedita earum aliquam ex fugiat
-                    perspiciatis, eos
-                    mollitia?
-                </p>
+                {!! str($item->content)->markdown() !!}
             </div>
         </div>
 
