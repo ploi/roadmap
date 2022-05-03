@@ -26,14 +26,7 @@ class ItemController extends Controller
 
         $item = $project->items()->findOrfail($itemId);
 
-        $check = $item->votes()->where('user_id', $request->user()->id)->exists();
-
-        if ($check) {
-            return redirect()->back();
-        }
-
-        $vote = $item->votes()->create();
-        $vote->user()->associate($request->user())->save();
+        $item->toggleUpvote();
 
         return redirect()->back();
     }

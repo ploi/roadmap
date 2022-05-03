@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Item extends Model
@@ -30,18 +32,36 @@ class Item extends Model
         );
     }
 
-    public function board()
+    public function board(): BelongsTo
     {
         return $this->belongsTo(Board::class);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function votes()
+    public function votes(): HasMany
     {
         return $this->hasMany(Vote::class);
+    }
+
+    public function toggleUpvote(User $user = null): bool|Vote
+    {
+        $user = $user ?? auth()->user();
+
+        $vote = $this->votes()->where('user_id', $user->id)->first();
+
+        if (filled($vote)) {
+            $vote->delete();
+
+            return true;
+        }
+
+        $vote = $this->votes()->create();
+        $vote->user()->associate($user)->save();
+
+        return $vote;
     }
 }
