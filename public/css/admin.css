@@ -2892,11 +2892,23 @@ select{
 .h-\[4rem\]{
   height: 4rem;
 }
+.h-\[400px\]{
+  height: 400px;
+}
 .max-h-60{
   max-height: 15rem;
 }
 .max-h-96{
   max-height: 24rem;
+}
+.max-h-\[full\]{
+  max-height: full;
+}
+.max-h-\[100\%\]{
+  max-height: 100%;
+}
+.max-h-full{
+  max-height: 100%;
 }
 .min-h-\[720px\]{
   min-height: 720px;
