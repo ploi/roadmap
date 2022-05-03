@@ -38,6 +38,8 @@ class CreateItemCard extends Component implements HasForms
             'user_id' => auth()->user()->id,
             ...$formState
         ]);
+
+        $this->form->fill([]);
     }
 
     public function render()

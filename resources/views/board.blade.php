@@ -7,20 +7,24 @@
             <ul class="w-full divide-y">
                 @foreach($board->items as $item)
                     <li class="pb-5 pt-5 first:pt-0">
-                        <a href="{{ route('projects.items.show', [$project->id, $item->id]) }}" class="inline-block flex space-x-3">
-                            <div>
-                                <span class="">5</span>
+                        <div class="inline-block flex space-x-3">
+                            <div class="flex flex-col text-center -space-y-1">
+                                <button>
+                                    <x-heroicon-o-chevron-up class="w-5 h-5" />
+                                </button>
+
+                                <span class="">{{ $item->votes }}</span>
                             </div>
 
-                            <div class="flex-1">
+                            <a href="{{ route('projects.items.show', [$project->id, $item->id]) }}" class="flex-1">
                                 <p class="font-bold text-lg">{{ $item->title }}</p>
                                 <p>{{ $item->excerpt }}</p>
-                            </div>
+                            </a>
 
                             <div>
                                 ... comments
                             </div>
-                        </a>
+                        </div>
                     </li>
                 @endforeach
             </ul>
