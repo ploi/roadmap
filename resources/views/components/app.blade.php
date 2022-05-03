@@ -189,7 +189,7 @@
                 </aside>
 
 
-                <ul class="flex items-center space-x-2">
+                <ul class="flex items-center space-x-4">
                     <li>
                         <a class="flex items-center justify-center w-10 h-10 text-blue-500 transition rounded-full hover:bg-gray-500/5 focus:bg-blue-500/10 focus:outline-none"
                            href="#">
@@ -206,6 +206,12 @@
                             <a class="flex items-center justify-center text-blue-500 hover:text-blue-600 focus:outline-none"
                                href="{{ route('login') }}">
                                 Login
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center justify-center text-blue-500 hover:text-blue-600 focus:outline-none"
+                               href="{{ route('register') }}">
+                                Register
                             </a>
                         </li>
                     @endguest
