@@ -45,11 +45,7 @@
 
                 <div class="border-t"></div>
 
-                <div class="flex items-center space-x-4">
-                    <livewire:item.vote-button :item="$item"/>
-
-                    <span>{{ $item->total_votes }} total {{ trans_choice('messages.votes', $item->total_votes) }}</span>
-                </div>
+                <livewire:item.vote-button :item="$item"/>
             </x-card>
         </div>
     </main>

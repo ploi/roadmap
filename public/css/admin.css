@@ -3452,6 +3452,12 @@ select{
 .border-l{
   border-left-width: 1px;
 }
+.border-dashed{
+  border-style: dashed;
+}
+.border-dotted{
+  border-style: dotted;
+}
 .border-gray-300{
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
@@ -3482,6 +3488,10 @@ select{
 .border-danger-300{
   --tw-border-opacity: 1;
   border-color: rgb(253 164 175 / var(--tw-border-opacity));
+}
+.border-black{
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 .bg-white{
   --tw-bg-opacity: 1;
@@ -4023,6 +4033,15 @@ select{
 }
 .opacity-25{
   opacity: 0.25;
+}
+.opacity-30{
+  opacity: 0.3;
+}
+.opacity-40{
+  opacity: 0.4;
+}
+.opacity-60{
+  opacity: 0.6;
 }
 .shadow{
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
