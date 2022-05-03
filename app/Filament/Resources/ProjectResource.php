@@ -25,10 +25,16 @@ class ProjectResource extends Resource
     {
         $data = [];
 
-        $uuid = Uuid::uuid4()->toString();
+        $uuid1 = Uuid::uuid4()->toString();
+        $uuid2 = Uuid::uuid4()->toString();
 
-        $data[$uuid] = [
+        $data[$uuid1] = [
             'title' => 'Test 1234',
+            'description' => null,
+        ];
+
+        $data[$uuid2] = [
+            'title' => 'Test jklajsdlasd',
             'description' => null,
         ];
 
@@ -49,8 +55,12 @@ class ProjectResource extends Resource
                         ->relationship('boards')
                         ->orderable('sort_order')
                         ->columnSpan(2)
+                        ->afterStateHydrated(function ($component) use ($data) {
+                            $component->state($data);
+                        })
                         ->schema([
-                            Forms\Components\TextInput::make('title'),
+                            Forms\Components\TextInput::make('title')
+                                ->default(''),
                             Forms\Components\Textarea::make('description'),
                         ]),
                 ])->columns()

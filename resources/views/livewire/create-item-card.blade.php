@@ -4,7 +4,7 @@
     <form wire:submit.prevent="submit" class="space-y-5">
         {{ $this->form }}
 
-        <x-filament::button>
+        <x-filament::button wire:click="submit">
             Create
         </x-filament::button>
     </form>
