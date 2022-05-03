@@ -9,7 +9,7 @@
 
         <section class="w-96 sticky top-0">
             <div class="bg-white rounded-lg shadow p-5">
-                <livewire:create-item-card :project="$project" />
+                <livewire:create-item-card :project="$project" :board="$board" />
             </div>
         </section>
     </main>

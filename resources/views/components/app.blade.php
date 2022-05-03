@@ -239,8 +239,11 @@
             <div class="bg-gray-50 h-full overflow-y-scroll">
                 {{ $slot }}
             </div>
+
         </div>
     </div>
+
+    <x-filament::notification-manager/>
 </div>
 @livewireScripts
 <script src="{{ mix('js/app.js') }}"></script>
