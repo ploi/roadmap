@@ -19,4 +19,9 @@ class Project extends Model
     {
         return $this->hasMany(Board::class);
     }
+
+    public function items()
+    {
+        return $this->hasManyThrough(Item::class, Board::class);
+    }
 }

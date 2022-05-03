@@ -111,8 +111,8 @@
 
                                href="{{ route('project.show', $project->id) }}">
                                 <svg
-                                     @class(['w-7 h-7', 'text-blue-500' => (int)request()->route('project') !== $project->id])
-                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    @class(['w-7 h-7', 'text-blue-500' => (int)request()->route('project') !== $project->id])
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                           stroke-width="1.5" d="M10.25 4.75L7.75 19.25"/>
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -149,7 +149,47 @@
                                   stroke-width="1.5" d="M4.75 12H19.25"/>
                         </svg>
                     </button>
+
+                    <ul class="flex items-center -space-x-1 text-sm font-medium text-gray-600">
+                        <li>
+                            <a class="transition hover:underline focus:outline-none focus:text-gray-800 focus:underline"
+                               href="#">
+                                Teams
+                            </a>
+                        </li>
+
+                        <li>
+                            <svg class="text-gray-400 w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                 viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="1.5" d="M10.75 8.75L14.25 12L10.75 15.25"/>
+                            </svg>
+                        </li>
+
+                        <li>
+                            <a class="transition hover:underline focus:outline-none focus:text-gray-800 focus:underline"
+                               href="#">
+                                Razor UI
+                            </a>
+                        </li>
+
+                        <li>
+                            <svg class="text-gray-400 w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                 viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="1.5" d="M10.75 8.75L14.25 12L10.75 15.25"/>
+                            </svg>
+                        </li>
+
+                        <li>
+                            <a class="text-gray-800 transition hover:underline focus:outline-none focus:underline"
+                               href="#">
+                                Members
+                            </a>
+                        </li>
+                    </ul>
                 </aside>
+
 
                 <ul class="flex items-center space-x-1">
                     <li>
@@ -171,10 +211,22 @@
                             </a>
                         </li>
                     @endguest
+
+                    @auth
+                        <div class="relative w-10 h-10 rounded-full">
+                            <div class="absolute inset-0 bg-gray-200 rounded-full animate-pulse"></div>
+
+                            <img class="absolute inset-0 object-cover rounded-full"
+                                 src="{{ auth()->user()->getGravatar() }}"
+                                 alt="">
+                        </div>
+                    @endauth
                 </ul>
             </header>
 
-            {{ $slot }}
+            <div class="bg-gray-50 h-full">
+                {{ $slot }}
+            </div>
         </div>
     </div>
 </div>

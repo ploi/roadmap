@@ -11,7 +11,7 @@
                     <ul class="p-2 space-y-2">
                         @foreach($board->items as $item)
                             <li>
-                                <a href="#" class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50">
+                                <a href="{{ route('item.show', [$project->id, $item->id]) }}" class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50">
                                     <p>
                                         {{ $item->title }}
                                     </p>
