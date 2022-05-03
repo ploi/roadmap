@@ -22,7 +22,7 @@
                         @foreach($items as $item)
                         <tr class="divide-x">
                             <td class="px-4 py-3">
-                                <a class="border-b font-semibold text-black" href="{{ route('item.show', [$item->board->project->id, $item->id]) }}">
+                                <a class="border-b font-semibold text-black" href="{{ route('projects.items.show', [$item->board->project->id, $item->id]) }}">
                                     {{ $item->title }}
                                 </a>
                             </td>
