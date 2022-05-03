@@ -9,6 +9,8 @@
             <button>Vote</button>
         </form>
 
+        <livewire:item.vote-button :item="$item" />
+
         <div class="block p-2 space-y-2 bg-white shadow rounded-xl lg:min-w-[60rem]">
             <header class="flex items-center px-4 py-2 space-x-4">
                 <div class="flex items-center flex-1 space-x-3 overflow-hidden">
@@ -43,6 +45,5 @@
                 {!! str($item->content)->markdown() !!}
             </div>
         </div>
-
     </main>
 </x-app>
