@@ -226,7 +226,7 @@
                 </ul>
             </header>
 
-            <div class="bg-gray-50 h-full">
+            <div class="bg-gray-50 h-full overflow-y-scroll">
                 {{ $slot }}
             </div>
         </div>

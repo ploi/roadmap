@@ -1385,15 +1385,6 @@ select {
 .min-w-\[2rem\] {
   min-width: 2rem;
 }
-.min-w-\[60rem\] {
-  min-width: 60rem;
-}
-.min-w-\[10rem\] {
-  min-width: 10rem;
-}
-.max-w-2xl {
-  max-width: 42rem;
-}
 .max-w-lg {
   max-width: 32rem;
 }
@@ -1408,6 +1399,9 @@ select {
 }
 .max-w-xl {
   max-width: 36rem;
+}
+.max-w-2xl {
+  max-width: 42rem;
 }
 .max-w-3xl {
   max-width: 48rem;
@@ -1725,9 +1719,6 @@ select {
 .overflow-hidden {
   overflow: hidden;
 }
-.overflow-scroll {
-  overflow: scroll;
-}
 .overflow-x-auto {
   overflow-x: auto;
 }
@@ -1883,6 +1874,10 @@ select {
 .bg-black\/50 {
   background-color: rgb(0 0 0 / 0.5);
 }
+.bg-gray-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
 .bg-primary-500\/10 {
   background-color: rgb(59 130 246 / 0.1);
 }
@@ -1917,10 +1912,6 @@ select {
 }
 .bg-white\/50 {
   background-color: rgb(255 255 255 / 0.5);
-}
-.bg-gray-50 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 .bg-transparent {
   background-color: transparent;
@@ -3828,12 +3819,12 @@ select {
     display: none;
   }
 
-  .lg\:min-w-\[24rem\] {
-    min-width: 24rem;
-  }
-
   .lg\:min-w-\[60rem\] {
     min-width: 60rem;
+  }
+
+  .lg\:min-w-\[24rem\] {
+    min-width: 24rem;
   }
 
   .lg\:max-w-\[20em\] {
