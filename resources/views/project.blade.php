@@ -2,7 +2,12 @@
     ['title' => $project->title, 'url' => route('projects.show', $project->id)]
 ]">
     <main class="p-4 overflow-x-auto h-full">
-        <div class="inline-flex h-full min-w-full gap-4 flex-nowrap justify-center overflow-hidden">
+        <div
+            @class([
+            'inline-flex h-full min-w-full gap-4 flex-nowrap overflow-hidden',
+            'justify-center' => app(\App\Settings\GeneralSettings::class)->board_centered
+            ])
+        >
             @forelse($boards as $board)
                 <section class="h-full">
                     <div class="bg-gray-100 rounded-xl min-w-[18rem] lg:min-w-[24rem] flex flex-col max-h-full">
@@ -15,7 +20,8 @@
                         <ul class="p-2 space-y-2 overflow-y-scroll flex-1">
                             @foreach($board->items as $item)
                                 <li>
-                                    <a href="{{ route('projects.items.show', [$project->id, $item->id]) }}" class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50">
+                                    <a href="{{ route('projects.items.show', [$project->id, $item->id]) }}"
+                                       class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50">
                                         <p>
                                             {{ $item->title }}
                                         </p>
@@ -51,7 +57,8 @@
                         <h2 class="text-xl font-semibold tracking-tight">You're all caught up</h2>
 
                         <p class="font-medium text-gray-500">
-                            There are no boards in this project. If you're an administrator, you can add new boards via the administration area.
+                            There are no boards in this project. If you're an administrator, you can add new boards via
+                            the administration area.
                         </p>
                     </header>
                 </div>
