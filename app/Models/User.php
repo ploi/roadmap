@@ -32,4 +32,9 @@ class User extends Authenticatable
     {
         return 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(Arr::get($this->attributes, 'email')))) . '?s=' . (int)$size;
     }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
 }
