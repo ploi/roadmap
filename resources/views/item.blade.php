@@ -4,7 +4,7 @@
     ['title' => $item->title, 'url' => route('projects.items.show', [$project->id, $item->id])]
 ]">
     <main class="p-4 overflow-y-scroll flex justify-center">
-        <form method="post" action="{{ route('item.vote', [$project->id, $item->id]) }}">
+        <form method="post" action="{{ route('projects.items.vote', [$project->id, $item->id]) }}">
             @csrf
             <button>Vote</button>
         </form>
