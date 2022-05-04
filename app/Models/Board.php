@@ -13,6 +13,7 @@ class Board extends Model
         'title',
         'description',
         'sort_order',
+        'can_users_create',
     ];
 
     public function project()
@@ -23,5 +24,10 @@ class Board extends Model
     public function items()
     {
         return $this->hasMany(Item::class);
+    }
+
+    public function canUsersCreateItem()
+    {
+        return $this->can_users_create;
     }
 }
