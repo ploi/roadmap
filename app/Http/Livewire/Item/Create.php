@@ -19,8 +19,8 @@ class Create extends Component implements HasForms
 {
     use InteractsWithForms, CanNotify;
 
-    public Project $project;
-    public Board $board;
+    public Project|null $project = null;
+    public Board|null $board = null;
 
     public function mount()
     {
@@ -53,6 +53,10 @@ class Create extends Component implements HasForms
         $item->toggleUpvote();
 
         $this->notify('success', 'Item has been created!');
+
+        if(!$this->project){
+            return redirect()->route('home');
+        }
 
         return redirect()->route('projects.boards.show', [$this->project->id, $this->board->id]);
     }

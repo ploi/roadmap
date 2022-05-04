@@ -2,6 +2,6 @@
     ['title' => 'Dashboard', 'url' => route('home')]
 ]">
     <main class="p-4 overflow-x-auto">
-       Home
+       <livewire:item.create />
     </main>
 </x-app>
