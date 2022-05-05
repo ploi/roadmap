@@ -1,7 +1,7 @@
-<div class="flex items-center space-x-4">
-    <x-filament::button :color="$hasVoted ? 'secondary' : 'primary'" wire:click="toggleUpvote">
+<div class="flex items-center space-x-4 p-1">
+    <x-filament::button :color="$hasVoted ? 'primary' : 'secondary'" wire:click="toggleUpvote">
         @if($hasVoted)
-            <x-heroicon-o-thumb-down class="w-5 h-5"/>
+            <x-heroicon-o-thumb-up class="w-5 h-5"/>
         @else
             <x-heroicon-o-thumb-up class="w-5 h-5"/>
         @endif
