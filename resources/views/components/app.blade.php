@@ -39,7 +39,7 @@
 
     <!-- Show and hide sidebar on mobile by switching classes: open ? 'translate-x-0' : '-translate-x-full' -->
     <aside
-        class="fixed inset-y-0 left-0 z-20 flex flex-col h-screen overflow-hidden transition duration-300 bg-gray-100 lg:border-r w-72 lg:z-0 lg:translate-x-0"
+        class="fixed inset-y-0 left-0 z-20 flex flex-col h-screen overflow-hidden transition duration-300 bg-gray-50 lg:border-r w-72 lg:z-0 lg:translate-x-0"
         x-bind:class="open ? 'translate-x-0' : '-translate-x-full'">
         <header class="flex items-center flex-shrink-0 h-16 px-4 border-b">
             <p class="text-xl font-semibold tracking-tight">{{ config('app.name') }}</p>
@@ -57,7 +57,7 @@
                                 ])
                             href="{{ route('home') }}">
 
-                            <x-heroicon-o-home class="w-7 h-7 {{ !request()->is('/') ? 'text-blue-500' : ''  }}"/>
+                            <x-heroicon-o-home class="w-5 h-5 {{ !request()->is('/') ? 'text-blue-500' : ''  }}"/>
 
                             <span class="font-medium">Dashboard</span>
                         </a>
@@ -71,7 +71,7 @@
         'hover:bg-gray-500/5 focus:bg-blue-500/10 focus:text-blue-600 focus:outline-none' => !request()->is('my')
     ])
                             href="{{ route('my') }}">
-                            <x-heroicon-o-view-boards class="w-7 h-7 {{ !request()->is('my') ? 'text-blue-500' : ''  }}"/>
+                            <x-heroicon-o-view-boards class="w-5 h-5 {{ !request()->is('my') ? 'text-blue-500' : ''  }}"/>
 
                             <span class="font-medium">My items</span>
                         </a>
@@ -80,7 +80,7 @@
                     <li>
                         <a class="flex items-center h-10 px-2 space-x-2 transition rounded-lg hover:bg-gray-500/5 focus:bg-blue-500/10 focus:text-blue-600 focus:outline-none"
                            href="#">
-                            <x-heroicon-o-user class="w-7 h-7 {{ !request()->is('profile') ? 'text-blue-500' : ''  }}"/>
+                            <x-heroicon-o-user class="w-5 h-5 {{ !request()->is('profile') ? 'text-blue-500' : ''  }}"/>
 
                             <span class="font-medium">Settings</span>
                         </a>
@@ -101,7 +101,7 @@
                                 ])
 
                                href="{{ route('projects.show', $project->id) }}">
-                                <x-heroicon-o-hashtag class="w-7 h-7 {{ request()->segment(2) == $project->id ? '' : 'text-blue-500'  }}"/>
+                                <x-heroicon-o-hashtag class="w-5 h-5 {{ request()->segment(2) == $project->id ? '' : 'text-blue-500'  }}"/>
 
                                 <span class="font-medium">{{ $project->title }}</span>
                             </a>
@@ -207,7 +207,7 @@
                 </ul>
             </header>
 
-            <div class="bg-gray-50 h-full overflow-y-scroll">
+            <div class="bg-white h-full overflow-y-scroll">
                 {{ $slot }}
             </div>
 

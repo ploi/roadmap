@@ -3003,6 +3003,9 @@ select{
 .max-w-xs{
   max-width: 20rem;
 }
+.max-w-4xl{
+  max-width: 56rem;
+}
 .max-w-sm{
   max-width: 24rem;
 }
@@ -3014,9 +3017,6 @@ select{
 }
 .max-w-3xl{
   max-width: 48rem;
-}
-.max-w-4xl{
-  max-width: 56rem;
 }
 .max-w-5xl{
   max-width: 64rem;
@@ -3588,6 +3588,14 @@ select{
 .bg-white\/20{
   background-color: rgb(255 255 255 / 0.2);
 }
+.bg-primary-400{
+  --tw-bg-opacity: 1;
+  background-color: rgb(96 165 250 / var(--tw-bg-opacity));
+}
+.bg-primary-100{
+  --tw-bg-opacity: 1;
+  background-color: rgb(219 234 254 / var(--tw-bg-opacity));
+}
 .bg-cover{
   background-size: cover;
 }
@@ -3644,6 +3652,10 @@ select{
 .px-3{
   padding-left: 0.75rem;
   padding-right: 0.75rem;
+}
+.py-10{
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 .px-6{
   padding-left: 1.5rem;
