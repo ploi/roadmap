@@ -5,7 +5,7 @@
 ]">
     <main class="p-4 overflow-y-scroll">
         <div class="grid grid-cols-3 gap-4">
-            <x-card class="col-span-2">
+            <x-card class="col-span-2 bg-gray-50">
                 <header class="flex items-center px-4 py-2 space-x-4">
                     <div class="flex items-center flex-1 space-x-3 overflow-hidden">
                         <div class="relative flex-shrink-0 w-10 h-10 rounded-full">
@@ -27,19 +27,23 @@
                     {!! str($item->content)->markdown() !!}
                 </div>
             </x-card>
-            <x-card class="space-y-4">
-                <header class="px-2">
-                    <h2>{{ $item->title }}</h2>
 
-                    <time class="flex-shrink-0 text-sm font-medium text-gray-500">
-                        {{ $item->created_at }}
-                    </time>
-                </header>
+            <div>
+                <x-card class="space-y-4 bg-gray-50">
+                    <header class="px-2">
+                        <h2>{{ $item->title }}</h2>
 
-                <div class="border-t"></div>
+                        <time class="flex-shrink-0 text-sm font-medium text-gray-500">
+                            {{ $item->created_at }}
+                        </time>
+                    </header>
 
-                <livewire:item.vote-button :item="$item"/>
-            </x-card>
+                    <div class="border-t"></div>
+
+                    <livewire:item.vote-button :item="$item"/>
+                </x-card>
+            </div>
+
         </div>
     </main>
 </x-app>
