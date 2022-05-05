@@ -47,6 +47,11 @@ class Item extends Model
         return $this->hasMany(Vote::class);
     }
 
+    public function scopePopular($query)
+    {
+        return $query->orderBy('total_votes');
+    }
+
     public function hasVoted(User $user = null): bool
     {
         $user = $user ?? auth()->user();
