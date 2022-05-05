@@ -31,6 +31,12 @@ class Settings extends SettingsPage
 
                 TagsInput::make('default_boards')->label('Default boards')
                     ->visible(fn ($get) => $get('create_default_boards')),
+
+                Toggle::make('show_projects_sidebar_without_boards')->label('Show projects in sidebar without boards')
+                    ->helperText('If you don\'t want to show projects without boards in the sidebar, toggle this off.')
+                    ->columnSpan(2),
+                Toggle::make('allow_general_creation_of_item')->label('Allow general creation of an item')
+                    ->helperText('This allows your users to create an item without a board.'),
             ])->columns(),
         ];
     }

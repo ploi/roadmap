@@ -11,14 +11,16 @@
             @forelse($boards as $board)
                 <section class="h-full">
                     <div class="bg-gray-100 rounded-xl min-w-[18rem] lg:min-w-[24rem] flex flex-col max-h-full">
-                        <a
-                            href="{{ route('projects.boards.show', [$project->id, $board->id]) }}"
-                            class="p-2 font-semibold text-center text-gray-800 border-b bg-gray-100/80 rounded-t-xl backdrop-blur-xl backdrop-saturate-150">
-                            {{ $board->title }}
-                        </a>
+                        <div class="p-2 font-semibold text-center text-gray-800 border-b bg-gray-100/80 rounded-t-xl backdrop-blur-xl backdrop-saturate-150">
+                            <a
+                                href="{{ route('projects.boards.show', [$project->id, $board->id]) }}" class="border-b border-dotted border-black">
+                                {{ $board->title }}
+                            </a>
+                        </div>
+
 
                         <ul class="p-2 space-y-2 overflow-y-scroll flex-1">
-                            @foreach($board->items as $item)
+                            @forelse($board->items as $item)
                                 <li>
                                     <a href="{{ route('projects.items.show', [$project->id, $item->id]) }}"
                                        class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50">
@@ -38,7 +40,14 @@
                                         </footer>
                                     </a>
                                 </li>
-                            @endforeach
+                            @empty
+                                <li>
+                                    <div
+                                        class="p-3 font-medium text-center text-gray-500 border border-gray-300 border-dashed rounded-xl opacity-70">
+                                        <p>There are no items here.</p>
+                                    </div>
+                                </li>
+                            @endforelse
                         </ul>
                     </div>
                 </section>
@@ -46,7 +55,8 @@
                 <div class="w-full">
                     <div
                         class="flex flex-col items-center justify-center max-w-md p-6 mx-auto space-y-6 text-center border rounded-2xl">
-                        <div class="flex items-center justify-center w-16 h-16 text-blue-500 bg-white rounded-full shadow">
+                        <div
+                            class="flex items-center justify-center w-16 h-16 text-blue-500 bg-white rounded-full shadow">
                             <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                       stroke-width="1.5"
@@ -58,7 +68,8 @@
                             <h2 class="text-xl font-semibold tracking-tight">You're all caught up</h2>
 
                             <p class="font-medium text-gray-500">
-                                There are no boards in this project. If you're an administrator, you can add new boards via
+                                There are no boards in this project. If you're an administrator, you can add new boards
+                                via
                                 the administration area.
                             </p>
                         </header>

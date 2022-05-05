@@ -51,12 +51,20 @@ class Item extends Model
     {
         $user = $user ?? auth()->user();
 
+        if (!$user) {
+            return false;
+        }
+
         return (bool)$this->votes()->where('user_id', $user->id)->exists();
     }
 
-    public function toggleUpvote(User $user = null): bool|Vote
+    public function toggleUpvote(User $user = null): bool|Vote|\Livewire\Redirector
     {
         $user = $user ?? auth()->user();
+
+        if(!$user){
+            return redirect()->route('login');
+        }
 
         $vote = $this->votes()->where('user_id', $user->id)->first();
 

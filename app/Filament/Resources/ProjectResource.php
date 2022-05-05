@@ -72,9 +72,8 @@ class ProjectResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\TextColumn::make('url'),
-                Tables\Columns\TextColumn::make('boards_count')->counts('boards'),
+                Tables\Columns\TextColumn::make('title')->searchable(),
+                Tables\Columns\TextColumn::make('boards_count')->sortable()->counts('boards'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

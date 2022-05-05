@@ -2,13 +2,16 @@
 
 namespace App\Http\Livewire\Project;
 
+use App\Models\Board;
+use App\Models\Project;
 use Livewire\Component;
 
 class Items extends Component
 {
-    public $project;
+    public Project $project;
+    public Board $board;
 
-    public $projectItems = [];
+    public $items = [];
 
     protected $listeners = [
         'item-created' => '$refresh',
@@ -16,7 +19,7 @@ class Items extends Component
 
     public function render()
     {
-        $this->projectItems = $this->project->items()->orderBy('created_at', 'desc')->get();
+        $this->items = $this->board->items()->latest()->get();
 
         return view('livewire.board.items');
     }
