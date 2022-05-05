@@ -49,7 +49,7 @@ class Item extends Model
 
     public function scopePopular($query)
     {
-        return $query->orderBy('total_votes');
+        return $query->orderBy('total_votes', 'desc');
     }
 
     public function hasVoted(User $user = null): bool
