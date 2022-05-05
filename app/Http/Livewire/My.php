@@ -21,8 +21,9 @@ class My extends Component implements HasTable
     protected function getTableColumns(): array
     {
         return [
-            Tables\Columns\TextColumn::make('title'),
+            Tables\Columns\TextColumn::make('title')->searchable(),
             Tables\Columns\TextColumn::make('total_votes')->label('Votes')->sortable(),
+            Tables\Columns\TextColumn::make('board.title'),
             Tables\Columns\TextColumn::make('created_at')->sortable()->label('Date')->dateTime(),
         ];
     }
