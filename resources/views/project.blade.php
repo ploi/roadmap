@@ -20,7 +20,7 @@
 
 
                         <ul class="p-2 space-y-2 overflow-y-scroll flex-1">
-                            @forelse($board->items as $item)
+                            @forelse($board->items()->popular()->get() as $item)
                                 <li>
                                     <a href="{{ route('projects.items.show', [$project->id, $item->id]) }}"
                                        class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50">
@@ -35,7 +35,7 @@
                                                     </span>
 
                                             <div>
-                                                {{ $item->votes_count }} {{ trans_choice('messages.votes', $item->votes_count) }}
+                                                {{ $item->total_votes }} {{ trans_choice('messages.votes', $item->total_votes) }}
                                             </div>
                                         </footer>
                                     </a>
