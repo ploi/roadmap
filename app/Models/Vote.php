@@ -9,6 +9,10 @@ class Vote extends Model
 {
     use HasFactory;
 
+    public $fillable = [
+        'subscribed'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -49,14 +49,14 @@ class Item extends Model
         return $this->hasMany(Vote::class);
     }
 
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function scopePopular($query)
     {
         return $query->orderBy('total_votes', 'desc');
-    }
-
-    public function scopeInbox($query)
-    {
-        return $query->whereDoesntHave('board');
     }
 
     public function scopeHasNoProjectAndBoard($query)
@@ -73,6 +73,17 @@ class Item extends Model
         }
 
         return (bool)$this->votes()->where('user_id', $user->id)->exists();
+    }
+
+    public function getUserVote(User $user = null): Vote|null
+    {
+        $user = $user ?? auth()->user();
+
+        if (!$user) {
+            return null;
+        }
+
+        return $this->votes()->where('user_id', $user->id)->first();
     }
 
     public function toggleUpvote(User $user = null): bool|Vote|\Livewire\Redirector

@@ -3485,6 +3485,10 @@ select{
   --tw-border-opacity: 1;
   border-color: rgb(253 164 175 / var(--tw-border-opacity));
 }
+.border-gray-500{
+  --tw-border-opacity: 1;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity));
+}
 .bg-white{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -3598,6 +3602,9 @@ select{
 }
 .bg-white\/20{
   background-color: rgb(255 255 255 / 0.2);
+}
+.bg-blue-500\/10{
+  background-color: rgb(59 130 246 / 0.1);
 }
 .bg-cover{
   background-size: cover;
@@ -3988,6 +3995,10 @@ select{
 .text-warning-400{
   --tw-text-opacity: 1;
   color: rgb(250 204 21 / var(--tw-text-opacity));
+}
+.text-blue-700{
+  --tw-text-opacity: 1;
+  color: rgb(29 78 216 / var(--tw-text-opacity));
 }
 .antialiased{
   -webkit-font-smoothing: antialiased;
