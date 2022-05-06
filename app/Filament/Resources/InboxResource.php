@@ -26,6 +26,11 @@ class InboxResource extends Resource
 
     protected static ?string $slug = 'inbox';
 
+    protected static function getNavigationBadge(): ?string
+    {
+        return Item::query()->hasNoProjectAndBoard()->count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -68,14 +73,14 @@ class InboxResource extends Resource
                 //
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
