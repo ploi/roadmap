@@ -70,6 +70,17 @@ class Item extends Model
         return (bool)$this->votes()->where('user_id', $user->id)->exists();
     }
 
+    public function getUserVote(User $user = null): Vote|null
+    {
+        $user = $user ?? auth()->user();
+
+        if (!$user) {
+            return null;
+        }
+
+        return $this->votes()->where('user_id', $user->id)->first();
+    }
+
     public function toggleUpvote(User $user = null): bool|Vote|\Livewire\Redirector
     {
         $user = $user ?? auth()->user();
