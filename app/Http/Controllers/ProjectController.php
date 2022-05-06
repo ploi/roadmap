@@ -13,7 +13,7 @@ class ProjectController extends Controller
 
         return view('project', [
             'project' => $project,
-            'boards' => $project->boards()->with(['items' => function($query){
+            'boards' => $project->boards()->visible()->with(['items' => function($query){
                 return $query->popular()->withCount('votes');
             }])->get()
         ]);

@@ -11,9 +11,14 @@ class Board extends Model
 
     public $fillable = [
         'title',
+        'visible',
         'description',
         'sort_order',
         'can_users_create',
+    ];
+
+    public $casts = [
+        'visible' => 'boolean'
     ];
 
     public function project()
@@ -24,6 +29,11 @@ class Board extends Model
     public function items()
     {
         return $this->hasMany(Item::class);
+    }
+
+    public function scopeVisible($query)
+    {
+        return $query->where('visible', true);
     }
 
     public function canUsersCreateItem()

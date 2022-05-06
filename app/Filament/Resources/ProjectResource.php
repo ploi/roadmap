@@ -55,12 +55,12 @@ class ProjectResource extends Resource
                         ->relationship('boards')
                         ->orderable('sort_order')
                         ->columnSpan(2)
-                        ->afterStateHydrated(function ($component) use ($data) {
-                            $component->state($data);
-                        })
+//                        ->afterStateHydrated(function ($component) use ($data) {
+////                            $component->state($data);
+//                        })
                         ->schema([
-                            Forms\Components\TextInput::make('title')
-                                ->default(''),
+                            Forms\Components\Toggle::make('visible'),
+                            Forms\Components\TextInput::make('title'),
                             Forms\Components\Textarea::make('description'),
                         ]),
                 ])->columns()
