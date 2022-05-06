@@ -17,7 +17,8 @@ class ItemController extends Controller
             'project' => $project,
             'board' => $item->board,
             'item' => $item,
-            'user' => $item->user
+            'user' => $item->user,
+            'comments' => $item->comments()->with('user:id,name,email')->oldest()->get()
         ]);
     }
 

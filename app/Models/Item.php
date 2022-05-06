@@ -49,6 +49,11 @@ class Item extends Model
         return $this->hasMany(Vote::class);
     }
 
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function scopePopular($query)
     {
         return $query->orderBy('total_votes', 'desc');
