@@ -156,6 +156,12 @@
 
                 <ul class="flex items-center space-x-4">
                     <li>
+                        <x-filament::button onclick="Livewire.emit('openModal', 'create-item-modal')" icon="heroicon-o-plus-circle">
+                            Create item
+                        </x-filament::button>
+                    </li>
+
+                    <li>
                         <a class="flex items-center justify-center w-10 h-10 text-blue-500 transition rounded-full hover:bg-gray-500/5 focus:bg-blue-500/10 focus:outline-none"
                            href="#">
                             <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -216,6 +222,7 @@
 
     <x-filament::notification-manager/>
 </div>
+@livewire('livewire-ui-modal')
 @livewireScripts
 <script src="{{ mix('js/app.js') }}"></script>
 </body>

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Item;
+use Closure;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,7 +16,7 @@ class My extends Component implements HasTable
 
     protected function getTableQuery(): Builder
     {
-        return Item::query()->where('user_id', auth()->id());
+        return Item::query()->where('user_id', auth()->id())->orderBy('created_at', 'desc');
     }
 
     protected function getTableColumns(): array
@@ -26,6 +27,11 @@ class My extends Component implements HasTable
             Tables\Columns\TextColumn::make('board.title'),
             Tables\Columns\TextColumn::make('created_at')->sortable()->label('Date')->dateTime(),
         ];
+    }
+
+    protected function getTableRecordUrlUsing(): ?Closure
+    {
+        return fn ($record) => /*route('projects.items.show', $record)*/ null;
     }
 
     public function render()
