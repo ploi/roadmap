@@ -91,6 +91,7 @@
             <nav class="my-4 space-y-2">
                 <p class="px-4 text-lg font-semibold">Projects</p>
 
+                @if($projects->count() > 0)
                 <ul class="px-2 space-y-1">
                     @foreach($projects as $project)
                         <li>
@@ -108,6 +109,11 @@
                         </li>
                     @endforeach
                 </ul>
+                @else
+                <div class="px-4">
+                    <span class="text-sm text-gray-500">There are no projects yet.</span>
+                </div>
+                @endif
             </nav>
         </div>
     </aside>
