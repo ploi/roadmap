@@ -14,9 +14,15 @@ class My extends Component implements HasTable
 {
     use InteractsWithTable;
 
+    public $type = 'default';
+
     protected function getTableQuery(): Builder
     {
-        return Item::query()->where('user_id', auth()->id())->orderBy('created_at', 'desc');
+        if($this->type == 'default'){
+            return auth()->user()->items()->with('board.project')->latest()->getQuery();
+        }
+
+        return auth()->user()->votedItems()->with('board.project')->latest('votes.created_at')->getQuery();
     }
 
     protected function getTableColumns(): array

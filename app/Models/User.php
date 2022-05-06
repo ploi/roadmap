@@ -42,4 +42,14 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(Item::class);
     }
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
+
+    public function votedItems()
+    {
+        return $this->hasManyThrough(Item::class, Vote::class, 'user_id', 'id', 'id', 'item_id');
+    }
 }

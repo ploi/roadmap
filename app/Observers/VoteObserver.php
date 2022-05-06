@@ -8,11 +8,17 @@ class VoteObserver
 {
     public function created(Vote $vote)
     {
-        $vote->item->increment('total_votes');
+        $this->updateTotalVotes($vote);
     }
 
     public function deleted(Vote $vote)
     {
-        $vote->item->decrement('total_votes');
+        $this->updateTotalVotes($vote);
+    }
+
+    protected function updateTotalVotes(Vote $vote)
+    {
+        $vote->item->total_votes = $vote->item->votes()->count();
+        $vote->item->save();
     }
 }
