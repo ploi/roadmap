@@ -59,6 +59,11 @@ class Item extends Model
         return $query->whereDoesntHave('board');
     }
 
+    public function scopeHasNoProjectAndBoard($query)
+    {
+        return $query->whereNull('project_id')->whereNull('board_id');
+    }
+
     public function hasVoted(User $user = null): bool
     {
         $user = $user ?? auth()->user();
