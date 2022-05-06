@@ -42,10 +42,10 @@
     </nav>
 
     <nav class="my-4 space-y-2">
-        <p class="px-4 text-lg font-semibold">Projects</p>
+        <p class="px-2 text-lg font-semibold">Projects</p>
 
         @if($projects->count() > 0)
-            <ul class="px-2 space-y-1">
+            <ul class="space-y-1">
                 @foreach($projects as $project)
                     <li>
                         <a @class([
