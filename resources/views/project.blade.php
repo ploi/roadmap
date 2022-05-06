@@ -1,10 +1,9 @@
 <x-app :breadcrumbs="[
     ['title' => $project->title, 'url' => route('projects.show', $project->id)]
 ]">
-    <main class="p-4 overflow-x-auto h-full">
-        <div
+    <div
             @class([
-            'inline-flex h-full min-w-full gap-4 flex-nowrap overflow-hidden',
+            'inline-flex h-full w-full min-w-full gap-4 flex-nowrap overflow-scroll',
             'justify-center' => app(\App\Settings\GeneralSettings::class)->board_centered
             ])
         >
@@ -76,5 +75,4 @@
                 </div>
             @endforelse
         </div>
-    </main>
 </x-app>

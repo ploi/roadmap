@@ -6,10 +6,9 @@
 ['title' => 'Dashboard', 'url' => route('home')],
 ['title' => $item->title, 'url' => route('items.show', $item->id)],
 ]">
-    <main class="p-4 overflow-y-scroll">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div class="lg:col-span-2 space-y-4">
-                <x-card class="bg-gray-50">
+                <x-card>
                     <header class="flex items-center px-4 py-2 space-x-4">
                         <div class="flex items-center flex-1 space-x-3 overflow-hidden">
                             <div class="relative flex-shrink-0 w-10 h-10 rounded-full">
@@ -36,7 +35,7 @@
             </div>
 
             <div class="lg:col-span-1">
-                <x-card class="space-y-4 bg-gray-50">
+                <x-card class="space-y-4">
                     <header class="px-2">
                         <h2>{{ $item->title }}</h2>
 
@@ -52,5 +51,4 @@
             </div>
 
         </div>
-    </main>
 </x-app>

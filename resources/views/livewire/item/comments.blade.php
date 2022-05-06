@@ -33,7 +33,7 @@
         </div>
     @endforeach
 
-    <form wire:submit.prevent="submit" class="space-y-4 p-5">
+    <form wire:submit.prevent="submit" class="space-y-4">
         {{ $this->form }}
 
         <x-filament::button wire:click="submit">
