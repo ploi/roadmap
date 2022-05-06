@@ -2,12 +2,12 @@
 
 namespace App\Filament\Widgets;
 
-use App\Filament\Resources\ItemResource;
-use App\Models\Item;
 use Closure;
+use App\Models\Item;
 use Filament\Tables;
-use Filament\Widgets\TableWidget as BaseWidget;
+use App\Filament\Resources\ItemResource;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Widgets\TableWidget as BaseWidget;
 
 class PopularItems extends BaseWidget
 {

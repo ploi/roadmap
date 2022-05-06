@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\ProjectResource\Pages;
 
-use App\Filament\Resources\ProjectResource;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\ProjectResource;
 
 class EditProject extends EditRecord
 {

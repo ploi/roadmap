@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\InboxResource\Pages;
 
-use App\Filament\Resources\InboxResource;
 use App\Models\Item;
+use App\Filament\Resources\InboxResource;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 

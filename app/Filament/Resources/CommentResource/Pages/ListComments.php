@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\CommentResource\Pages;
 
-use App\Filament\Resources\CommentResource;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\CommentResource;
 
 class ListComments extends ListRecords
 {

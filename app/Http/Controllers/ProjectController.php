@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
-use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -13,7 +12,7 @@ class ProjectController extends Controller
 
         return view('project', [
             'project' => $project,
-            'boards' => $project->boards()->visible()->with(['items' => function($query){
+            'boards' => $project->boards()->visible()->with(['items' => function ($query) {
                 return $query->popular()->withCount('votes');
             }])->get()
         ]);

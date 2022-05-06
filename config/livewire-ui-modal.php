@@ -34,7 +34,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Configure the default properties for a modal component.
-    | 
+    |
     | Supported modal_max_width
     | 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl', '7xl'
     */

@@ -2,16 +2,14 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\InboxResource\Pages;
-use App\Filament\Resources\InboxResource\RelationManagers;
-use App\Models\Inbox;
-use App\Models\Item;
-use App\Models\Project;
 use Filament\Forms;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use App\Models\Item;
 use Filament\Tables;
+use App\Models\Project;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
+use App\Filament\Resources\InboxResource\Pages;
 
 class InboxResource extends Resource
 {

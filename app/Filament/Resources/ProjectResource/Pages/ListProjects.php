@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\ProjectResource\Pages;
 
-use App\Filament\Resources\ProjectResource;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\ProjectResource;
 
 class ListProjects extends ListRecords
 {

@@ -2,18 +2,18 @@
 
 namespace App\Http\Livewire\Item;
 
-use App\Models\Board;
-use App\Models\Item;
-use App\Models\Project;
-use Filament\Forms\Components\MarkdownEditor;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Http\Livewire\Concerns\CanNotify;
-use Livewire\Component;
 use function auth;
-use function redirect;
 use function view;
+use App\Models\Item;
+use App\Models\Board;
+use function redirect;
+use App\Models\Project;
+use Livewire\Component;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Http\Livewire\Concerns\CanNotify;
+use Filament\Forms\Concerns\InteractsWithForms;
 
 class Create extends Component implements HasForms
 {
@@ -54,7 +54,7 @@ class Create extends Component implements HasForms
 
         $this->notify('success', 'Item has been created!');
 
-        if(!$this->project){
+        if (!$this->project) {
             return redirect()->route('home');
         }
 

@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\BoardResource\Pages;
 
-use App\Filament\Resources\BoardResource;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\BoardResource;
 
 class EditBoard extends EditRecord
 {

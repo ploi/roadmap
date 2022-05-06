@@ -2,14 +2,11 @@
 
 namespace App\Filament\Pages;
 
+use Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
 use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\TagsInput;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Pages\SettingsPage;
+use Filament\Forms\Components\TagsInput;
 
 class Settings extends SettingsPage
 {

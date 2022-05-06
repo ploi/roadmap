@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\InboxResource\Pages;
 
-use App\Filament\Resources\InboxResource;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\InboxResource;
 
 class EditInbox extends EditRecord
 {
