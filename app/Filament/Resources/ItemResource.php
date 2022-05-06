@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ItemResource\Pages;
 use App\Filament\Resources\ItemResource\RelationManagers;
 use App\Models\Item;
+use App\Models\Project;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -26,11 +27,8 @@ class ItemResource extends Resource
                 Forms\Components\Card::make([
                     Forms\Components\TextInput::make('title')
                         ->required()
-                        ->maxLength(255),
-                    Forms\Components\BelongsToSelect::make('board_id')
-                        ->relationship('board', 'title')
-                        ->preload()
-                        ->required(),
+                        ->maxLength(255)
+                        ->columnSpan(2),
                     Forms\Components\BelongsToSelect::make('user_id')
                         ->relationship('user', 'name')
                         ->default(auth()->user()->id)
@@ -41,8 +39,27 @@ class ItemResource extends Resource
                         ->columnSpan(2)
                         ->required()
                         ->maxLength(65535),
-                ])->columns(2)
-            ]);
+                ])->columns()->columnSpan(3),
+
+                Forms\Components\Card::make([
+                    Forms\Components\Select::make('project_id')
+                        ->label('Project')
+                        ->options(Project::query()->pluck('title', 'id'))
+                        ->reactive()
+                        ->required(),
+                    Forms\Components\Select::make('board_id')
+                        ->label('Board')
+                        ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? [])
+                        ->required(),
+                    Forms\Components\Placeholder::make('created_at')
+                        ->label('Created at')
+                        ->content(fn ($record) => $record->created_at->format('d-m-Y H:i:s')),
+                    Forms\Components\Placeholder::make('updated_at')
+                        ->label('Updated at')
+                        ->content(fn ($record) => $record->updated_at->format('d-m-Y H:i:s')),
+                ])->columnSpan(1),
+            ])
+            ->columns(4);
     }
 
     public static function table(Table $table): Table

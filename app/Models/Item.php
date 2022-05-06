@@ -20,7 +20,9 @@ class Item extends Model
 
     public $fillable = [
         'title',
-        'content'
+        'content',
+        'project_id',
+        'board_id',
     ];
 
     protected function excerpt(): Attribute
