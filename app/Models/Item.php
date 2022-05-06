@@ -52,6 +52,11 @@ class Item extends Model
         return $query->orderBy('total_votes', 'desc');
     }
 
+    public function scopeInbox($query)
+    {
+        return $query->whereDoesntHave('board');
+    }
+
     public function hasVoted(User $user = null): bool
     {
         $user = $user ?? auth()->user();
