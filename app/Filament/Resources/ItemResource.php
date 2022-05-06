@@ -53,9 +53,11 @@ class ItemResource extends Resource
                         ->required(),
                     Forms\Components\Placeholder::make('created_at')
                         ->label('Created at')
+                        ->visible(fn ($record) => filled($record))
                         ->content(fn ($record) => $record->created_at->format('d-m-Y H:i:s')),
                     Forms\Components\Placeholder::make('updated_at')
                         ->label('Updated at')
+                        ->visible(fn ($record) => filled($record))
                         ->content(fn ($record) => $record->updated_at->format('d-m-Y H:i:s')),
                 ])->columnSpan(1),
             ])

@@ -6,6 +6,7 @@ use App\Filament\Resources\InboxResource\Pages;
 use App\Filament\Resources\InboxResource\RelationManagers;
 use App\Models\Inbox;
 use App\Models\Item;
+use App\Models\Project;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -34,10 +35,6 @@ class InboxResource extends Resource
                     Forms\Components\TextInput::make('title')
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\BelongsToSelect::make('board_id')
-                        ->relationship('board', 'title')
-                        ->preload()
-                        ->required(),
                     Forms\Components\BelongsToSelect::make('user_id')
                         ->relationship('user', 'name')
                         ->default(auth()->user()->id)
@@ -49,8 +46,27 @@ class InboxResource extends Resource
                         ->columnSpan(2)
                         ->required()
                         ->maxLength(65535),
-                ])->columns(2)
-            ]);
+                ])->columns()->columnSpan(3),
+
+                Forms\Components\Card::make([
+                    Forms\Components\Select::make('project_id')
+                        ->label('Project')
+                        ->options(Project::query()->pluck('title', 'id'))
+                        ->reactive(),
+                    Forms\Components\Select::make('board_id')
+                        ->label('Board')
+                        ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
+                    Forms\Components\Placeholder::make('created_at')
+                        ->label('Created at')
+                        ->visible(fn ($record) => filled($record))
+                        ->content(fn ($record) => $record->created_at->format('d-m-Y H:i:s')),
+                    Forms\Components\Placeholder::make('updated_at')
+                        ->label('Updated at')
+                        ->visible(fn ($record) => filled($record))
+                        ->content(fn ($record) => $record->updated_at->format('d-m-Y H:i:s')),
+                ])->columnSpan(1),
+            ])
+            ->columns(4);
     }
 
     public static function table(Table $table): Table
