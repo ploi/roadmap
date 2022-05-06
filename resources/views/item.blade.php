@@ -1,7 +1,10 @@
-<x-app :breadcrumbs="[
+<x-app :breadcrumbs="$project ? [
     ['title' => $project->title, 'url' => route('projects.show', $project->id)],
     ['title' => $board->title, 'url' => route('projects.boards.show', [$project->id, $board->id])],
     ['title' => $item->title, 'url' => route('projects.items.show', [$project->id, $item->id])]
+]: [
+['title' => 'Dashboard', 'url' => route('home')],
+['title' => $item->title, 'url' => route('items.show', $item->id)],
 ]">
     <main class="p-4 overflow-y-scroll">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">

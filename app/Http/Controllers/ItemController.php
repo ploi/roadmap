@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
-    public function show($projectId, $itemId)
+    public function show($projectId, $itemId = null)
     {
-        $project = Project::findOrFail($projectId);
+        $project = null;
 
-        $item = $project->items()->findOrfail($itemId);
+        if (!$itemId) {
+            $item = Item::query()->findOrFail($projectId);
+        } else {
+            $project = Project::query()->findOrFail($projectId);
+
+            $item = $project->items()->findOrfail($itemId);
+        }
 
         return view('item', [
             'project' => $project,

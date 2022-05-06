@@ -18,7 +18,7 @@ class My extends Component implements HasTable
 
     protected function getTableQuery(): Builder
     {
-        if($this->type == 'default'){
+        if ($this->type == 'default') {
             return auth()->user()->items()->with('board.project')->latest()->getQuery();
         }
 
@@ -30,6 +30,7 @@ class My extends Component implements HasTable
         return [
             Tables\Columns\TextColumn::make('title')->searchable(),
             Tables\Columns\TextColumn::make('total_votes')->label('Votes')->sortable(),
+            Tables\Columns\TextColumn::make('board.project.title')->label('Project'),
             Tables\Columns\TextColumn::make('board.title'),
             Tables\Columns\TextColumn::make('created_at')->sortable()->label('Date')->dateTime(),
         ];
@@ -37,7 +38,13 @@ class My extends Component implements HasTable
 
     protected function getTableRecordUrlUsing(): ?Closure
     {
-        return fn ($record) => /*route('projects.items.show', $record)*/ null;
+        return function ($record) {
+            if (!$record->board) {
+                return route('items.show', $record->id);
+            }
+
+            return route('projects.items.show', [$record->project->id, $record->id]);
+        };
     }
 
     public function render()
