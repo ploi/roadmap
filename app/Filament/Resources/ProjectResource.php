@@ -57,7 +57,7 @@ class ProjectResource extends Resource
 ////                            $component->state($data);
 //                        })
                         ->schema([
-                            Forms\Components\Toggle::make('visible'),
+                            Forms\Components\Toggle::make('visible')->helperText('Hides the board from the public view, but will still be accessible if you use the direct URL.'),
                             Forms\Components\TextInput::make('title'),
                             Forms\Components\Textarea::make('description'),
                         ]),
