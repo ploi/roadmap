@@ -13,6 +13,6 @@ class ListInboxes extends ListRecords
 
     protected function getTableQuery(): Builder
     {
-        return Item::query()->inbox();
+        return Item::query()->hasNoProjectAndBoard();
     }
 }

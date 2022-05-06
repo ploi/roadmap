@@ -54,11 +54,6 @@ class Item extends Model
         return $query->orderBy('total_votes', 'desc');
     }
 
-    public function scopeInbox($query)
-    {
-        return $query->whereDoesntHave('board');
-    }
-
     public function scopeHasNoProjectAndBoard($query)
     {
         return $query->whereNull('project_id')->whereNull('board_id');
