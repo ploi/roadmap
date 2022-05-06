@@ -19,3 +19,7 @@
 .alert-warning {
     @apply bg-warning-100 border-l-4 border-warning-500 text-warning-700 p-4;
 }
+
+[x-cloak] {
+    display: none;
+}
