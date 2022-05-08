@@ -23,3 +23,7 @@
 [x-cloak] {
     display: none;
 }
+
+.bg-primary-600 {
+    @apply bg-blue-600;
+}
