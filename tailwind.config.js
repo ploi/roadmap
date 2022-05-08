@@ -22,7 +22,7 @@ module.exports = {
         extend: {
             colors: {
                 danger: colors.rose,
-                primary: colors.blue,
+                primary: 'var(--color-primary)',
                 success: colors.green,
                 warning: colors.yellow,
             },

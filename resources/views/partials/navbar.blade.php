@@ -5,12 +5,12 @@
                 <a
                     @class([
                             'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                            'text-white bg-primary-500' => request()->is('/'),
-                            'hover:bg-gray-500/5 focus:bg-primary-500/10 focus:text-primary-600 focus:outline-none' => !request()->is('/')
+                            'text-white bg-primary' => request()->is('/'),
+                            'hover:bg-gray-500/5 focus:bg-primary/10 focus:text-primary-600 focus:outline-none' => !request()->is('/')
                         ])
                     href="{{ route('home') }}">
 
-                    <x-heroicon-o-home class="w-5 h-5 {{ !request()->is('/') ? 'text-primary-500' : ''  }}"/>
+                    <x-heroicon-o-home class="w-5 h-5 {{ !request()->is('/') ? 'text-primary' : ''  }}"/>
 
                     <span class="font-medium">Dashboard</span>
                 </a>
@@ -20,20 +20,20 @@
                 <a
                     @class([
                         'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                        'text-white bg-primary-500' => request()->is('my'),
-                        'hover:bg-gray-500/5 focus:bg-primary-500/10 focus:text-primary-600 focus:outline-none' => !request()->is('my')
+                        'text-white bg-primary' => request()->is('my'),
+                        'hover:bg-gray-500/5 focus:bg-primary/10 focus:text-primary-600 focus:outline-none' => !request()->is('my')
                     ])
                     href="{{ route('my') }}">
-                    <x-heroicon-o-view-boards class="w-5 h-5 {{ !request()->is('my') ? 'text-primary-500' : ''  }}"/>
+                    <x-heroicon-o-view-boards class="w-5 h-5 {{ !request()->is('my') ? 'text-primary' : ''  }}"/>
 
                     <span class="font-medium">My items</span>
                 </a>
             </li>
 
             <li>
-                <a class="flex items-center h-10 px-2 space-x-2 transition rounded-lg hover:bg-gray-500/5 focus:bg-primary-500/10 focus:text-primary-600 focus:outline-none"
+                <a class="flex items-center h-10 px-2 space-x-2 transition rounded-lg hover:bg-gray-500/5 focus:bg-primary/10 focus:text-primary-600 focus:outline-none"
                    href="#">
-                    <x-heroicon-o-user class="w-5 h-5 {{ !request()->is('profile') ? 'text-primary-500' : ''  }}"/>
+                    <x-heroicon-o-user class="w-5 h-5 {{ !request()->is('profile') ? 'text-primary' : ''  }}"/>
 
                     <span class="font-medium">Settings</span>
                 </a>
@@ -50,12 +50,12 @@
                     <li>
                         <a @class([
                                     'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                                    'text-white bg-primary-500' => (int)request()->segment(2) === $project->id,
-                                    'hover:bg-gray-500/5 focus:bg-primary-500/10 focus:text-primary-600 focus:outline-none' => (int)request()->segment(2) !== $project->id
+                                    'text-white bg-primary' => (int)request()->segment(2) === $project->id,
+                                    'hover:bg-gray-500/5 focus:bg-primary/10 focus:text-primary-600 focus:outline-none' => (int)request()->segment(2) !== $project->id
                                 ])
 
                            href="{{ route('projects.show', $project->id) }}">
-                            <x-heroicon-o-hashtag class="w-5 h-5 {{ request()->segment(2) == $project->id ? '' : 'text-primary-500'  }}"/>
+                            <x-heroicon-o-hashtag class="w-5 h-5 {{ request()->segment(2) == $project->id ? '' : 'text-primary'  }}"/>
 
                             <span class="font-medium">{{ $project->title }}</span>
                         </a>

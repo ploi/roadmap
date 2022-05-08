@@ -13,6 +13,14 @@
                     for free.
                 </p>
 
+                @if ($errors->any())
+                    <div class="alert-danger mt-8">
+                        @foreach ($errors->all() as $error)
+                            <div>{{ ucfirst($error) }}</div>
+                        @endforeach
+                    </div>
+                @endif
+
                 <form class="mt-8 space-y-6 md:mt-12"
                       method="post"
                       action="{{ route('login') }}">
@@ -25,6 +33,7 @@
                             class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-blue-600 focus:border-blue-600"
                             id="email"
                             name="email"
+                            value="{{ old('email') }}"
                             type="email">
                     </div>
 

@@ -8,6 +8,7 @@ return [
      */
     'settings' => [
         \App\Settings\GeneralSettings::class,
+        \App\Settings\ColorSettings::class,
     ],
 
     /*

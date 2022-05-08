@@ -23,6 +23,10 @@ class Comments extends Component implements HasForms
 
     public function submit()
     {
+        if (!auth()->user()) {
+            return redirect()->route('login');
+        }
+
         $formState = $this->form->getState();
 
         $comment = $this->item->comments()->create($formState);
@@ -35,7 +39,9 @@ class Comments extends Component implements HasForms
     protected function getFormSchema(): array
     {
         return [
-            Forms\Components\MarkdownEditor::make('content')->required()->minLength(3),
+            Forms\Components\MarkdownEditor::make('content')
+                ->required()
+                ->minLength(3),
         ];
     }
 
