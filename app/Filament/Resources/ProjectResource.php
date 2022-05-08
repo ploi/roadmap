@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Board;
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Board;
 use Ramsey\Uuid\Uuid;
 use App\Models\Project;
 use Filament\Resources\Form;

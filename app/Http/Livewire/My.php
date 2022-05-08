@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use Closure;
-use App\Models\Item;
 use Filament\Tables;
 use Livewire\Component;
 use Filament\Tables\Contracts\HasTable;

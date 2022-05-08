@@ -3,11 +3,11 @@
 namespace App\Http\Livewire\Welcome;
 
 use App\Models\Item;
-use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables;
+use Livewire\Component;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
-use Livewire\Component;
-use Filament\Tables;
+use Filament\Tables\Concerns\InteractsWithTable;
 
 class RecentItems extends Component implements HasTable
 {

@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire\Welcome;
 
+use Filament\Tables;
 use App\Models\Comment;
-use Filament\Tables\Concerns\InteractsWithTable;
+use Livewire\Component;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
-use Livewire\Component;
-use Filament\Tables;
+use Filament\Tables\Concerns\InteractsWithTable;
 
 class RecentComments extends Component implements HasTable
 {

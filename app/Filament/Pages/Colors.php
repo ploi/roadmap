@@ -3,12 +3,9 @@
 namespace App\Filament\Pages;
 
 use App\Settings\ColorSettings;
-use Filament\Forms\Components\ColorPicker;
 use Filament\Pages\SettingsPage;
-use App\Settings\GeneralSettings;
 use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\ColorPicker;
 
 class Colors extends SettingsPage
 {
