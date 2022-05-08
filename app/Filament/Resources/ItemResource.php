@@ -31,6 +31,7 @@ class ItemResource extends Resource
                     Forms\Components\BelongsToSelect::make('user_id')
                         ->relationship('user', 'name')
                         ->default(auth()->user()->id)
+                        ->columnSpan(2)
                         ->preload()
                         ->required()
                         ->searchable(),
