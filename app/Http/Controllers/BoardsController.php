@@ -9,6 +9,9 @@ class BoardsController extends Controller
 {
     public function show(Project $project, Board $board)
     {
-        return view('board', compact('project', 'board'));
+        return view('board', [
+            'project' => $project,
+            'board' => $board,
+        ]);
     }
 }

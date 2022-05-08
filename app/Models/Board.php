@@ -9,11 +9,15 @@ class Board extends Model
 {
     use HasFactory;
 
+    const SORT_ITEMS_BY_POPULAR = 'popular';
+    const SORT_ITEMS_BY_LATEST = 'latest';
+
     public $fillable = [
         'title',
         'visible',
         'description',
         'sort_order',
+        'sort_items_by',
         'can_users_create',
     ];
 

@@ -14,7 +14,7 @@
         </a>
 
         <div>
-            ... comments
+            {{ $comments }} {{ trans_choice('messages.comments', $comments) }}
         </div>
     </div>
 </li>

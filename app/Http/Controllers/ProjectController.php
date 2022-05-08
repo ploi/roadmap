@@ -8,12 +8,14 @@ class ProjectController extends Controller
 {
     public function show($id)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::query()->findOrFail($id);
 
         return view('project', [
             'project' => $project,
             'boards' => $project->boards()->visible()->with(['items' => function ($query) {
-                return $query->popular()->withCount('votes');
+                return $query
+                    ->popular()
+                    ->withCount('votes');
             }])->get()
         ]);
     }

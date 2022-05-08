@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'votes' => 'vote|votes'
+    'votes' => 'vote|votes',
+    'comments' => 'comment|comments'
 ];

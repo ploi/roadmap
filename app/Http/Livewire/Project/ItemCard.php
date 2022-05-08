@@ -3,13 +3,14 @@
 namespace App\Http\Livewire\Project;
 
 use App\Models\Item;
+use App\Models\Project;
 use Livewire\Component;
 
 class ItemCard extends Component
 {
     public Item $item;
-
-    public $project;
+    public Project $project;
+    public int $comments = 0;
 
     public function mount()
     {
@@ -24,6 +25,8 @@ class ItemCard extends Component
 
     public function render()
     {
+        $this->comments = $this->item->comments()->count();
+
         return view('livewire.board.item-card');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\Board;
 use Filament\Forms;
 use Filament\Tables;
 use Ramsey\Uuid\Uuid;
@@ -58,7 +59,14 @@ class ProjectResource extends Resource
 //                        })
                         ->schema([
                             Forms\Components\Toggle::make('visible')->helperText('Hides the board from the public view, but will still be accessible if you use the direct URL.'),
-                            Forms\Components\TextInput::make('title'),
+                            Forms\Components\Select::make('sort_items_by')
+                                ->options([
+                                    Board::SORT_ITEMS_BY_POPULAR => 'Popular',
+                                    Board::SORT_ITEMS_BY_LATEST => 'Latest',
+                                ])
+                                ->default(Board::SORT_ITEMS_BY_POPULAR)
+                                ->required(),
+                            Forms\Components\TextInput::make('title')->required(),
                             Forms\Components\Textarea::make('description'),
                         ]),
                 ])->columns()
