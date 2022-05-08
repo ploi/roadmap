@@ -2,7 +2,7 @@
             x-data="{ open: false }">
     <div class="w-full px-4 mx-auto sm:px-6 md:px-8 max-w-[1500px]">
         <nav class="flex items-center justify-between h-20">
-            <a class="text-3xl font-semibold tracking-tight"
+            <a class="text-2xl font-semibold tracking-tight"
                href="{{ route('home') }}">
                 {{ config('app.name') }}
             </a>
@@ -23,13 +23,13 @@
 
                 @guest
                     <li>
-                        <a class="flex items-center justify-center text-blue-500 hover:text-blue-600 focus:outline-none"
+                        <a class="flex items-center justify-center text-white hover:text-gray-50 focus:outline-none"
                            href="{{ route('login') }}">
                             Login
                         </a>
                     </li>
                     <li>
-                        <a class="flex items-center justify-center text-blue-500 hover:text-blue-600 focus:outline-none"
+                        <a class="flex items-center justify-center text-white hover:text-gray-50 focus:outline-none"
                            href="{{ route('register') }}">
                             Register
                         </a>
@@ -97,8 +97,6 @@
                 </li>
             </ul>
         </nav>
-
-        <div class="border-t border-primary-400"></div>
 
         <nav class="-mx-2 md:hidden"
              x-show="open"

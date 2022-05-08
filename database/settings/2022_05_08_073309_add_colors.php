@@ -6,6 +6,6 @@ class AddColors extends SettingsMigration
 {
     public function up(): void
     {
-        $this->migrator->add('colors.primary', '#3b82f6');
+        $this->migrator->add('colors.primary', '#2563EB');
     }
 }
