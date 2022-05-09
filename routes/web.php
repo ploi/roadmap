@@ -12,11 +12,13 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('my', MyController::class)->middleware('auth')->name('my');
 Route::get('projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
 Route::get('items/{item}', [ItemController::class, 'show'])->name('items.show');
 Route::get('projects/{project}/items/{item}', [ItemController::class, 'show'])->name('projects.items.show');
 Route::post('projects/{project}/items/{item}/vote', [ItemController::class, 'vote'])->middleware('auth')->name('projects.items.vote');
 Route::get('projects/{project}/boards/{board}', [BoardsController::class, 'show'])->name('projects.boards.show');
 
-Route::get('profile', [\App\Http\Controllers\Auth\ProfileController::class, 'show'])->name('profile');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('profile', [\App\Http\Controllers\Auth\ProfileController::class, 'show'])->name('profile');
+    Route::get('my', MyController::class)->name('my');
+});
