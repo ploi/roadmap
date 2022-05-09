@@ -31,11 +31,16 @@
             </li>
 
             <li>
-                <a class="flex items-center h-10 px-2 space-x-2 transition rounded-lg hover:bg-gray-500/5 focus:bg-primary/10 focus:text-primary-600 focus:outline-none"
-                   href="#">
+                <a
+                    @class([
+    'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
+    'text-white bg-primary' => request()->is('profile'),
+    'hover:bg-gray-500/5 focus:bg-primary/10 focus:text-primary-600 focus:outline-none' => !request()->is('profile')
+])
+                   href="{{ route('profile') }}">
                     <x-heroicon-o-user class="w-5 h-5 {{ !request()->is('profile') ? 'text-primary' : ''  }}"/>
 
-                    <span class="font-medium">Settings</span>
+                    <span class="font-medium">Profile</span>
                 </a>
             </li>
         </ul>
