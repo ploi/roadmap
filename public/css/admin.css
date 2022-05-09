@@ -2749,6 +2749,9 @@ select{
 .mt-3{
   margin-top: 0.75rem;
 }
+.mb-4{
+  margin-bottom: 1rem;
+}
 .mr-2{
   margin-right: 0.5rem;
 }
@@ -3788,6 +3791,9 @@ select{
 .pr-8{
   padding-right: 2rem;
 }
+.pl-24{
+  padding-left: 6rem;
+}
 .text-left{
   text-align: left;
 }
@@ -3822,17 +3828,17 @@ select{
   font-size: 1.125rem;
   line-height: 1.75rem;
 }
-.text-3xl{
-  font-size: 1.875rem;
-  line-height: 2.25rem;
+.text-2xl{
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 .text-xs{
   font-size: 0.75rem;
   line-height: 1rem;
 }
-.text-2xl{
-  font-size: 1.5rem;
-  line-height: 2rem;
+.text-3xl{
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 .font-medium{
   font-weight: 500;
@@ -4783,6 +4789,9 @@ select{
 }
 [dir="rtl"] .rtl\:pr-12{
   padding-right: 3rem;
+}
+[dir="rtl"] .rtl\:pr-24{
+  padding-right: 6rem;
 }
 [dir="rtl"] .rtl\:text-right{
   text-align: right;
