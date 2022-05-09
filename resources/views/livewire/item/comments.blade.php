@@ -1,4 +1,4 @@
-<div class="space-y-4">
+<div class="">
     @foreach($comments as $comment)
         <div class="block p-2 overflow-hidden transition">
             <header class="flex items-center px-4 py-2 space-x-2">
