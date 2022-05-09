@@ -26,12 +26,10 @@ class ItemResource extends Resource
                 Forms\Components\Card::make([
                     Forms\Components\TextInput::make('title')
                         ->required()
-                        ->maxLength(255)
-                        ->columnSpan(2),
+                        ->maxLength(255),
                     Forms\Components\BelongsToSelect::make('user_id')
                         ->relationship('user', 'name')
                         ->default(auth()->user()->id)
-                        ->columnSpan(2)
                         ->preload()
                         ->required()
                         ->searchable(),
