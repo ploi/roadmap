@@ -59,6 +59,7 @@ class ProjectResource extends Resource
 //                        })
                         ->schema([
                             Forms\Components\Toggle::make('visible')->helperText('Hides the board from the public view, but will still be accessible if you use the direct URL.'),
+                            Forms\Components\Toggle::make('can_users_create')->helperText('Allow users to create items in this board.'),
                             Forms\Components\Select::make('sort_items_by')
                                 ->options([
                                     Board::SORT_ITEMS_BY_POPULAR => 'Popular',

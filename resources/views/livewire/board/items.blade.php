@@ -21,7 +21,7 @@
                 <h2 class="text-xl font-semibold tracking-tight">You're all caught up</h2>
 
                 <p class="font-medium text-gray-500">
-                    There are no items in this board yet. You can create a item on the right.
+                    There are no items in this board yet. @if($board->canUsersCreateItem()) You can create an item on the right. @endif
                 </p>
             </header>
         </div>
