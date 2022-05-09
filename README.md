@@ -54,6 +54,7 @@ Each sponsor gets listed on in this readme.
 - [SebastiaanKloos](https://github.com/SebastiaanKloos)
 - [Filament Admin](https://filamentadmin.com/)
 - [Laravel](https://laravel.com/)
+- [Razor UI](https://razorui.com/)
 
 ## License
 
