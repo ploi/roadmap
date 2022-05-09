@@ -20,6 +20,7 @@ class LatestItems extends BaseWidget
     {
         return [
             Tables\Columns\TextColumn::make('title'),
+            Tables\Columns\TextColumn::make('total_votes'),
             Tables\Columns\TextColumn::make('board.title'),
             Tables\Columns\TextColumn::make('board.project.title')
                 ->label('Project'),
@@ -29,5 +30,10 @@ class LatestItems extends BaseWidget
     protected function getTableRecordUrlUsing(): ?Closure
     {
         return fn ($record) => ItemResource::getUrl('edit', $record);
+    }
+
+    protected function isTablePaginationEnabled(): bool
+    {
+        return false;
     }
 }

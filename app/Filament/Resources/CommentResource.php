@@ -43,10 +43,12 @@ class CommentResource extends Resource
                 Tables\Columns\TextColumn::make('content'),
                 Tables\Columns\TextColumn::make('item.title'),
                 Tables\Columns\TextColumn::make('user.name'),
+                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date'),
             ])
             ->filters([
                 //
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array
