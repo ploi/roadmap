@@ -10,7 +10,7 @@
 
     <style>
         :root {
-            --color-primary: {{ app(\App\Settings\ColorSettings::class)->primary }};
+            --color-brand: {{ app(\App\Settings\ColorSettings::class)->primary }};
         }
 
         body {
