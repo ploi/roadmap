@@ -8,10 +8,12 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
+    {!! $brandColors !!}
+
     <style>
-        :root {
-            --color-brand: {{ app(\App\Settings\ColorSettings::class)->primary }};
-        }
+        {{--:root {--}}
+        {{--    --color-brand: {{ app(\App\Settings\ColorSettings::class)->primary }};--}}
+        {{--}--}}
 
         body {
             font-family: 'Nunito', sans-serif;

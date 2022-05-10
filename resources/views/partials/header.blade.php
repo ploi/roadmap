@@ -1,4 +1,4 @@
-<header class="sticky top-0 z-10 w-full bg-brand shadow text-white"
+<header class="sticky top-0 z-10 w-full bg-brand-500 shadow text-white"
         x-data="{ open: false }">
     <div class="w-full px-4 mx-auto sm:px-6 md:px-8 max-w-[1500px]">
         <nav class="flex items-center justify-between h-20">
@@ -82,23 +82,23 @@
         <nav class="-mx-2 md:hidden"
              x-show="open"
              x-cloak>
-            <div class="border-t border-primary-400"></div>
+            <div class="border-t border-brand-400"></div>
 
             <ul class="flex flex-col py-2 space-y-1 text-sm font-medium text-white">
                 <li>
-                    <a class="block p-2 transition rounded-lg focus:outline-none hover:bg-brand-400"
+                    <a class="block p-2 transition rounded-lg focus:outline-none hover:bg-brand-500-400"
                        href="{{ route('home') }}">
                         Dashboard
                     </a>
                 </li>
 
                 <li>
-                    <a class="block p-2 transition rounded-lg focus:outline-none hover:bg-brand-400"
+                    <a class="block p-2 transition rounded-lg focus:outline-none hover:bg-brand-500-400"
                        href="{{ route('my') }}">My items</a>
                 </li>
 
                 <li>
-                    <a class="block p-2 transition rounded-lg focus:outline-none hover:bg-brand-400"
+                    <a class="block p-2 transition rounded-lg focus:outline-none hover:bg-brand-500-400"
                        href="#">Settings</a>
                 </li>
             </ul>
@@ -111,7 +111,7 @@
             <ul class="flex flex-col py-2 space-y-1 text-sm font-medium text-white">
                 @foreach($projects as $project)
                     <li>
-                        <a class="block p-2 transition rounded-lg focus:outline-none hover:bg-brand-400"
+                        <a class="block p-2 transition rounded-lg focus:outline-none hover:bg-brand-500-400"
                            href="{{ route('projects.show', $project->id) }}">
                             {{ $project->title }}
                         </a>

@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use App\Models\Project;
+use App\Services\Tailwind;
 use Illuminate\View\Component;
 use App\Settings\GeneralSettings;
 use Illuminate\Database\Eloquent\Collection;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 class App extends Component
 {
     public Collection $projects;
+    public string $brandColors;
 
     public function __construct(public array $breadcrumbs = [])
     {
@@ -27,6 +29,10 @@ class App extends Component
      */
     public function render()
     {
+        $tw = new Tailwind('brand', app(\App\Settings\ColorSettings::class)->primary);
+
+        $this->brandColors = $tw->getCssFormat();
+
         return view('components.app');
     }
 }
