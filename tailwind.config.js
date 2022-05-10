@@ -21,8 +21,9 @@ module.exports = {
     theme: {
         extend: {
             colors: {
+                brand: 'var(--color-brand)',
                 danger: colors.rose,
-                primary: 'var(--color-primary)',
+                primary: colors.blue,
                 success: colors.green,
                 warning: colors.yellow,
             },
