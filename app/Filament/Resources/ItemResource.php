@@ -71,6 +71,7 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('total_votes')->label('Votes')->sortable(),
                 Tables\Columns\TextColumn::make('board.project.title'),
                 Tables\Columns\TextColumn::make('board.title'),
+                Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

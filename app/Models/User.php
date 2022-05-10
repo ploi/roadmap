@@ -52,4 +52,9 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasManyThrough(Item::class, Vote::class, 'user_id', 'id', 'id', 'item_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

@@ -22,21 +22,6 @@ class ProjectResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $data = [];
-
-        $uuid1 = Uuid::uuid4()->toString();
-        $uuid2 = Uuid::uuid4()->toString();
-
-        $data[$uuid1] = [
-            'title' => 'Test 1234',
-            'description' => null,
-        ];
-
-        $data[$uuid2] = [
-            'title' => 'Test jklajsdlasd',
-            'description' => null,
-        ];
-
         return $form
             ->schema([
                 Forms\Components\Card::make([
@@ -54,9 +39,6 @@ class ProjectResource extends Resource
                         ->relationship('boards')
                         ->orderable('sort_order')
                         ->columnSpan(2)
-//                        ->afterStateHydrated(function ($component) use ($data) {
-////                            $component->state($data);
-//                        })
                         ->schema([
                             Forms\Components\Toggle::make('visible')->helperText('Hides the board from the public view, but will still be accessible if you use the direct URL.'),
                             Forms\Components\Toggle::make('can_users_create')->helperText('Allow users to create items in this board.'),
