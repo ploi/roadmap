@@ -30,6 +30,7 @@ class Settings extends SettingsPage
                     ->reactive(),
 
                 TagsInput::make('default_boards')->label('Default boards')
+                    ->helperText('These boards will automatically be prefilled when you create a project.')
                     ->visible(fn($get) => $get('create_default_boards')),
 
                 Toggle::make('show_projects_sidebar_without_boards')->label('Show projects in sidebar without boards')

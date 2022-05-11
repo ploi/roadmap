@@ -59,6 +59,11 @@ class Item extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function assignedUsers()
+    {
+        return $this->belongsToMany(User::class, 'item_user');
+    }
+
     public function scopePopular($query)
     {
         return $query->orderBy('total_votes', 'desc');

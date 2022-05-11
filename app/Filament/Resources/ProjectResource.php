@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Settings\GeneralSettings;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Board;
@@ -22,6 +23,13 @@ class ProjectResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $boards = collect(app(GeneralSettings::class)->default_boards)->mapWithKeys(function($board){
+            return [Uuid::uuid4()->toString() => [
+                'title' => $board,
+                'description' => null,
+            ]];
+        })->toArray();
+
         return $form
             ->schema([
                 Forms\Components\Card::make([
@@ -38,9 +46,10 @@ class ProjectResource extends Resource
                     Forms\Components\HasManyRepeater::make('boards')
                         ->relationship('boards')
                         ->orderable('sort_order')
+                        ->default($boards)
                         ->columnSpan(2)
                         ->schema([
-                            Forms\Components\Toggle::make('visible')->helperText('Hides the board from the public view, but will still be accessible if you use the direct URL.'),
+                            Forms\Components\Toggle::make('visible')->default(true)->helperText('Hides the board from the public view, but will still be accessible if you use the direct URL.'),
                             Forms\Components\Toggle::make('can_users_create')->helperText('Allow users to create items in this board.'),
                             Forms\Components\Select::make('sort_items_by')
                                 ->options([

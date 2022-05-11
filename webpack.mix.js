@@ -8,4 +8,5 @@ mix
     .postCss('resources/css/app.css', 'public/css/app.css', [
         tailwindcss('tailwind.config.js'),
     ])
-    .js('resources/js/app.js', 'public/js/app.js');
+    .js('resources/js/app.js', 'public/js/app.js')
+    .version();

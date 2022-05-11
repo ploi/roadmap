@@ -1748,6 +1748,9 @@ trix-editor .attachment__metadata .attachment__size {
   --tw-text-opacity: 1;
   color: rgb(59 130 246 / var(--tw-text-opacity));
 }
+[dir=rtl] .choices__list--multiple .choices__item > :not([hidden]) ~ :not([hidden]){
+  --tw-space-x-reverse: 1;
+}
 [dir=rtl] .choices__list--multiple .choices__item{
   overflow-wrap: normal;
   word-break: normal;
@@ -1780,6 +1783,7 @@ trix-editor .attachment__metadata .attachment__size {
 }
 .is-active.choices__list--dropdown, .is-active.choices__list[aria-expanded]{
   visibility: visible;
+  z-index: 10;
 }
 .choices__list--dropdown .choices__list, .choices__list[aria-expanded] .choices__list{
   position: relative;
