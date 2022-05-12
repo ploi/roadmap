@@ -29,7 +29,7 @@
     @include('partials.navbar')
 
     <main class="flex-1 h-full col-span-6 md:col-span-5 md:border-l md:pl-5 min-h-[600px]">
-        <div class="mb-4">
+        <div class="pb-4">
             <ul class="flex items-center -space-x-1 text-sm font-medium text-gray-600">
                 @foreach($breadcrumbs as $breadcrumb)
                     @if(!$loop->first)

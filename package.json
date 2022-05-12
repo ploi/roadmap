@@ -20,6 +20,7 @@
         "tippy.js": "^6.3.7"
     },
     "dependencies": {
+        "@alpinejs/focus": "^3.10.2",
         "alpinejs": "^3.10.2"
     }
 }

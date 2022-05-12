@@ -4,7 +4,10 @@ namespace App\Filament\Pages;
 
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\MultiSelect;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
 use Filament\Forms\Components\Card;
@@ -30,6 +33,7 @@ class Settings extends SettingsPage
                     ->reactive(),
 
                 TagsInput::make('default_boards')->label('Default boards')
+                    ->placeholder('Enter defaults to be created upon project creation')
                     ->helperText('These boards will automatically be prefilled when you create a project.')
                     ->visible(fn($get) => $get('create_default_boards')),
 
@@ -40,14 +44,19 @@ class Settings extends SettingsPage
                     ->helperText('This allows your users to create an item without a board.')
                     ->columnSpan(2),
 
-                MultiSelect::make('dashboard_items')
+                Repeater::make('dashboard_items')
                     ->columnSpan(2)
-                    ->placeholder('Select items to display on the dashboard')
-                    ->helperText('Determine which items you want to show on the dashboard (for all users).')
-                    ->options([
-                        'recent-items' => 'Recent items',
-                        'recent-comments' => 'Recent comments'
-                    ]),
+                    ->schema([
+                        Select::make('type')->options([
+                            'recent-items' => 'Recent items',
+                            'recent-comments' => 'Recent comments'
+                        ])->default('recent-items'),
+                        Select::make('column_span')->options([
+                            1 => 1,
+                            2 => 2,
+                        ])->default(1)
+                    ])->helperText('Determine which items you want to show on the dashboard (for all users).'),
+
 
                 RichEditor::make('welcome_text')
                     ->columnSpan(2)

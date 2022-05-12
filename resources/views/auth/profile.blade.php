@@ -1,3 +1,3 @@
 <x-app>
-    profile
+    <livewire:profile />
 </x-app>

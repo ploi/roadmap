@@ -5,19 +5,12 @@
         <div class="prose mb-4">{!! $text !!}</div>
     @endif
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        @if(in_array('recent-items', app(\App\Settings\GeneralSettings::class)->dashboard_items))
+        @foreach(app(\App\Settings\GeneralSettings::class)->dashboard_items as $item)
             <div class="space-y-2">
-                <h2 class="text-lg tracking-tight font-bold">Recent items</h2>
+                <h2 class="text-lg tracking-tight font-bold">{{ str($item['type'])->headline() }}</h2>
 
-                <livewire:welcome.recent-items/>
+                <livewire:is component="welcome.{{ $item['type'] }}"/>
             </div>
-        @endif
-        @if(in_array('recent-comments', app(\App\Settings\GeneralSettings::class)->dashboard_items))
-            <div class="space-y-2">
-                <h2 class="text-lg tracking-tight font-bold">Recent comments</h2>
-
-                <livewire:welcome.recent-comments/>
-            </div>
-        @endif
+        @endforeach
     </div>
 </x-app>

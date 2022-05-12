@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@alpinejs/focus@^3.10.2":
+  "integrity" "sha512-+bIoQZIM9Ls1Ers1Kc8G882OzXVs/Oaypisb50c+Rt0vc007NeqarFHR2fS7pgonEUbq3QGrbMjs2q4hvEAmPQ=="
+  "resolved" "https://registry.npmjs.org/@alpinejs/focus/-/focus-3.10.2.tgz"
+  "version" "3.10.2"
+  dependencies:
+    "focus-trap" "^6.6.1"
+
 "@ampproject/remapping@^2.1.0":
   "integrity" "sha512-qRmjj8nj9qmLTQXXmaR1cck3UXSRMPrbsLJAasZpF+t3riI71BXed5ebIOYwQntykeZuhjsdweEc9BxH5Jc26w=="
   "resolved" "https://registry.npmjs.org/@ampproject/remapping/-/remapping-2.2.0.tgz"
@@ -2763,6 +2770,13 @@
     "locate-path" "^5.0.0"
     "path-exists" "^4.0.0"
 
+"focus-trap@^6.6.1":
+  "integrity" "sha512-gBEuXOPNOKPrLdZpMFUSTyIo1eT2NSZRrwZ9r/0Jqw5tmT3Yvxfmu8KBHw8xW2XQkw6E/JoG+OlEq7UDtSUNgw=="
+  "resolved" "https://registry.npmjs.org/focus-trap/-/focus-trap-6.9.2.tgz"
+  "version" "6.9.2"
+  dependencies:
+    "tabbable" "^5.3.2"
+
 "follow-redirects@^1.0.0", "follow-redirects@^1.14.7":
   "integrity" "sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w=="
   "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.9.tgz"
@@ -4982,6 +4996,11 @@
     "csso" "^4.2.0"
     "picocolors" "^1.0.0"
     "stable" "^0.1.8"
+
+"tabbable@^5.3.2":
+  "integrity" "sha512-6G/8EWRFx8CiSe2++/xHhXkmCRq2rHtDtZbQFHx34cvDfZzIBfvwG9zGUNTWMXWLCYvDj3aQqOzdl3oCxKuBkQ=="
+  "resolved" "https://registry.npmjs.org/tabbable/-/tabbable-5.3.2.tgz"
+  "version" "5.3.2"
 
 "tailwindcss@^3.0.24", "tailwindcss@>=3.0.0 || >= 3.0.0-alpha.1", "tailwindcss@>=3.0.0 || >= 3.0.0-alpha.1 || insiders":
   "integrity" "sha512-H3uMmZNWzG6aqmg9q07ZIRNIawoiEcNFKDfL+YzOPuPsXuDXxJxB9icqzLgdzKNwjG3SAro2h9SYav8ewXNgig=="
