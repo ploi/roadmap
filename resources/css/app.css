@@ -23,3 +23,8 @@
 .attachment__caption {
     display: none;
 }
+
+/* Notification toast fix coming from Filament */
+.bg-success-50\/50 {
+    background-color: rgb(240 253 244 / 1);
+}

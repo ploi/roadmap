@@ -5,12 +5,13 @@ namespace App\Http\Livewire;
 use App\Models\User;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Http\Livewire\Concerns\CanNotify;
 use Livewire\Component;
 use Filament\Forms;
 
 class Profile extends Component implements HasForms
 {
-    use InteractsWithForms;
+    use InteractsWithForms, CanNotify;
 
     public $name;
     public $email;
@@ -44,6 +45,15 @@ class Profile extends Component implements HasForms
             'name' => $data['name'],
             'email' => $data['email'],
         ]);
+
+        $this->notify('success', 'Profile has been saved.');
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+
+        return redirect()->route('home');
     }
 
     public function render()

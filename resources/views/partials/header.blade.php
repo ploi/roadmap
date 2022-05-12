@@ -15,13 +15,6 @@
                     </x-filament::button>
                 </li>
 
-                <li>
-                    <a class="flex items-center justify-center w-10 h-10 text-blue-500 transition rounded-full hover:bg-gray-500/5 focus:bg-blue-500/10 focus:outline-none"
-                       href="#">
-                        <x-heroicon-o-filter class="w-7 h-7 text-white"/>
-                    </a>
-                </li>
-
                 @guest
                     <li>
                         <a class="flex items-center justify-center text-white hover:text-gray-50 focus:outline-none"
