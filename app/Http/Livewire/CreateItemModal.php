@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Item;
 use Filament\Facades\Filament;
+use Filament\Http\Livewire\Concerns\CanNotify;
 use LivewireUI\Modal\ModalComponent;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\TextInput;
@@ -12,7 +13,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 
 class CreateItemModal extends ModalComponent implements HasForms
 {
-    use InteractsWithForms;
+    use InteractsWithForms, CanNotify;
 
     public function mount()
     {
@@ -33,6 +34,10 @@ class CreateItemModal extends ModalComponent implements HasForms
 
     public function submit()
     {
+        if (!auth()->user()) {
+            return redirect()->route('login');
+        }
+
         $data = $this->form->getState();
 
         $item = Item::create([
@@ -46,7 +51,9 @@ class CreateItemModal extends ModalComponent implements HasForms
 
         $this->closeModal();
 
-        Filament::notify('success', 'Item created');
+        $this->notify('success', 'Item created');
+
+        return route('items.show', $item->id);
     }
 
     public function render()

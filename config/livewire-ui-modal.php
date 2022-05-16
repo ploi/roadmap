@@ -39,8 +39,8 @@ return [
     | 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl', '7xl'
     */
     'component_defaults' => [
-        'modal_max_width' => '2xl',
-        
+        'modal_max_width' => '3xl',
+
         'close_modal_on_click_away' => true,
 
         'close_modal_on_escape' => true,
@@ -48,7 +48,7 @@ return [
         'close_modal_on_escape_is_forceful' => true,
 
         'dispatch_close_event' => false,
-        
+
         'destroy_on_close' => false,
     ],
 ];

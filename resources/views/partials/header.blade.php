@@ -8,13 +8,6 @@
             </a>
 
             <ul class="items-center hidden space-x-3 text-sm font-medium text-gray-600 md:flex">
-                <li>
-                    <x-filament::button color="secondary" onclick="Livewire.emit('openModal', 'create-item-modal')"
-                                        icon="heroicon-o-plus-circle">
-                        Submit item
-                    </x-filament::button>
-                </li>
-
                 @guest
                     <li>
                         <a class="flex items-center justify-center text-white hover:text-gray-50 focus:outline-none"
@@ -51,6 +44,13 @@
                         </a>
                     </li>
                 @endauth
+
+                    <li>
+                        <x-filament::button color="secondary" onclick="Livewire.emit('openModal', 'create-item-modal')"
+                                            icon="heroicon-o-plus-circle">
+                            Submit item
+                        </x-filament::button>
+                    </li>
             </ul>
 
             <!-- Hamburger -->

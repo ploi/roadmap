@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\ItemResource\RelationManagers\ActivitiesRelationManager;
 use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;
@@ -36,6 +37,7 @@ class ItemResource extends Resource
                     Forms\Components\MarkdownEditor::make('content')
                         ->columnSpan(2)
                         ->required()
+                        ->minLength(5)
                         ->maxLength(65535),
                 ])->columns()->columnSpan(3),
 
@@ -86,7 +88,7 @@ class ItemResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ActivitiesRelationManager::class,
         ];
     }
 

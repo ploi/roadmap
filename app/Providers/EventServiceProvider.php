@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Item;
 use App\Models\Vote;
 use App\Models\Project;
+use App\Observers\ItemObserver;
 use App\Observers\VoteObserver;
 use App\Observers\ProjectObserver;
 use Illuminate\Auth\Events\Registered;
@@ -26,6 +28,7 @@ class EventServiceProvider extends ServiceProvider
     protected $observers = [
         Vote::class => [VoteObserver::class],
         Project::class => [ProjectObserver::class],
+        Item::class => [ItemObserver::class]
     ];
 
     /**

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Activitylog\ActivitylogServiceProvider;
 
 class Item extends Model
 {
@@ -62,6 +64,11 @@ class Item extends Model
     public function assignedUsers()
     {
         return $this->belongsToMany(User::class, 'item_user');
+    }
+
+    public function activities(): MorphMany
+    {
+        return $this->morphMany(ActivitylogServiceProvider::determineActivityModel(), 'subject');
     }
 
     public function scopePopular($query)
