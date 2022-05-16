@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Arr;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -43,9 +44,9 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Item::class);
     }
 
-    public function votes()
+    public function votes(): MorphMany
     {
-        return $this->hasMany(Vote::class);
+        return $this->morphMany(Vote::class, 'model');
     }
 
     public function votedItems()

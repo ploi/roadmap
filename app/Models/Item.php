@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -51,9 +52,9 @@ class Item extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function votes(): HasMany
+    public function votes(): MorphMany
     {
-        return $this->hasMany(Vote::class);
+        return $this->morphMany(Vote::class, 'model');
     }
 
     public function comments(): HasMany
@@ -61,7 +62,7 @@ class Item extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function assignedUsers()
+    public function assignedUsers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'item_user');
     }
