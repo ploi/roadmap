@@ -2,17 +2,14 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Forms\Components\MarkdownEditor;
-use Filament\Forms\Components\MultiSelect;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\RichEditor;
 
 class Settings extends SettingsPage
 {
@@ -35,7 +32,7 @@ class Settings extends SettingsPage
                 TagsInput::make('default_boards')->label('Default boards')
                     ->placeholder('Enter defaults to be created upon project creation')
                     ->helperText('These boards will automatically be prefilled when you create a project.')
-                    ->visible(fn($get) => $get('create_default_boards')),
+                    ->visible(fn ($get) => $get('create_default_boards')),
 
                 Toggle::make('show_projects_sidebar_without_boards')->label('Show projects in sidebar without boards')
                     ->helperText('If you don\'t want to show projects without boards in the sidebar, toggle this off.')

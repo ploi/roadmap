@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\ItemResource\Pages;
 
-use App\Filament\Resources\ItemResource;
 use App\Models\Board;
 use App\Models\Project;
+use App\Filament\Resources\ItemResource;
 use Filament\Resources\Pages\EditRecord;
 
 class EditItem extends EditRecord

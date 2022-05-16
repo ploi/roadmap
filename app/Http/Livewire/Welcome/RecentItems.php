@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Welcome;
 
-use App\Models\Item;
 use Closure;
+use App\Models\Item;
 use Filament\Tables;
 use Livewire\Component;
 use Filament\Tables\Contracts\HasTable;

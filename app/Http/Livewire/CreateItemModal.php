@@ -3,12 +3,11 @@
 namespace App\Http\Livewire;
 
 use App\Models\Item;
-use Filament\Facades\Filament;
-use Filament\Http\Livewire\Concerns\CanNotify;
 use LivewireUI\Modal\ModalComponent;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\MarkdownEditor;
+use Filament\Http\Livewire\Concerns\CanNotify;
 use Filament\Forms\Concerns\InteractsWithForms;
 
 class CreateItemModal extends ModalComponent implements HasForms

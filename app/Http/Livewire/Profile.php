@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire;
 
+use Filament\Forms;
 use App\Models\User;
-use Filament\Forms\Concerns\InteractsWithForms;
+use Livewire\Component;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Http\Livewire\Concerns\CanNotify;
-use Livewire\Component;
-use Filament\Forms;
+use Filament\Forms\Concerns\InteractsWithForms;
 
 class Profile extends Component implements HasForms
 {

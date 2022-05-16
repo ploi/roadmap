@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Settings\GeneralSettings;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Board;
@@ -11,6 +10,7 @@ use App\Models\Project;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
+use App\Settings\GeneralSettings;
 use App\Filament\Resources\ProjectResource\Pages;
 
 class ProjectResource extends Resource
@@ -23,7 +23,7 @@ class ProjectResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $boards = collect(app(GeneralSettings::class)->default_boards)->mapWithKeys(function($board){
+        $boards = collect(app(GeneralSettings::class)->default_boards)->mapWithKeys(function ($board) {
             return [Uuid::uuid4()->toString() => [
                 'title' => $board,
                 'description' => null,
