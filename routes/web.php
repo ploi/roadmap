@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\PasswordProtectionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
 use App\Http\Controllers\ItemController;
@@ -7,6 +8,9 @@ use App\Http\Controllers\BoardsController;
 use App\Http\Controllers\ProjectController;
 
 Auth::routes();
+
+Route::get('password-protection', PasswordProtectionController::class)->name('password.protection');
+Route::post('password-protection', [PasswordProtectionController::class, 'login'])->name('password.protection.login');
 
 Route::get('/', function () {
     return view('welcome');

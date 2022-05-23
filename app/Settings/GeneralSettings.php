@@ -14,9 +14,18 @@ class GeneralSettings extends Settings
     public array $dashboard_items;
     public array $send_notifications_to;
     public string|null $welcome_text;
+    public string|null $favicon;
+    public $password;
 
     public static function group(): string
     {
         return 'general';
+    }
+
+    public static function encrypted(): array
+    {
+        return [
+            'password'
+        ];
     }
 }
