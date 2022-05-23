@@ -2,20 +2,20 @@
 
 namespace App\Http\Middleware;
 
-use App\Settings\GeneralSettings;
 use Closure;
 use Illuminate\Http\Request;
+use App\Settings\GeneralSettings;
 
 class PasswordProtected
 {
     public function handle(Request $request, Closure $next)
     {
-        if(
+        if (
             app(GeneralSettings::class)->password &&
             !session('password-login-authorized') &&
             $request->route()->getName() !== 'password.protection' &&
             $request->route()->getName() !== 'password.protection.login'
-        ){
+        ) {
             return redirect()->route('password.protection');
         }
 

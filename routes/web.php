@@ -1,20 +1,18 @@
 <?php
 
-use App\Http\Controllers\Auth\PasswordProtectionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\BoardsController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\Auth\PasswordProtectionController;
 
 Auth::routes();
 
 Route::get('password-protection', PasswordProtectionController::class)->name('password.protection');
 Route::post('password-protection', [PasswordProtectionController::class, 'login'])->name('password.protection.login');
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', \App\Http\Controllers\HomeController::class)->name('home');
 
 Route::get('projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
 Route::get('items/{item}', [ItemController::class, 'show'])->name('items.show');

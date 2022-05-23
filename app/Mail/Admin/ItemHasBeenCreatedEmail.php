@@ -4,9 +4,9 @@ namespace App\Mail\Admin;
 
 use App\Models\Item;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ItemHasBeenCreatedEmail extends Mailable implements ShouldQueue
 {

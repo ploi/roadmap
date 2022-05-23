@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Services\Tailwind;
-use App\Settings\GeneralSettings;
 use Illuminate\Http\Request;
+use App\Settings\GeneralSettings;
+use App\Http\Controllers\Controller;
 
 class PasswordProtectionController extends Controller
 {
@@ -20,7 +20,7 @@ class PasswordProtectionController extends Controller
 
     public function login(Request $request)
     {
-        if(app(GeneralSettings::class)->password !== $request->input('password')){
+        if (app(GeneralSettings::class)->password !== $request->input('password')) {
             return redirect()->back()->withErrors([
                 'This is the wrong password.'
             ]);
