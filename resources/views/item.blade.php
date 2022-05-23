@@ -53,7 +53,7 @@
                 @if(auth()->check() && auth()->user()->canAccessFilament())
                     <div class="border-t mb-2"></div>
 
-                    <a class="text-red-500 hover:text-red-700 block"
+                    <a class="text-red-500 hover:text-red-700 block ml-1"
                        href="{{ route('filament.resources.items.edit', $item->id) }}">Administer item</a>
                 @endif
             </x-card>
@@ -87,9 +87,9 @@
                                     {{ $activity->description }}
                                 </p>
 
-                                <p class="mt-1 text-xs font-medium text-gray-500"
+                                <span class="mt-1 text-xs font-medium text-gray-500"
                                    x-data="{ tooltip: '{{ $activity->created_at }}' }"
-                                   x-tooltip="tooltip">{{ $activity->created_at->diffForHumans() }}</p>
+                                   x-tooltip="tooltip">{{ $activity->created_at->diffForHumans() }}</span>
                             </div>
                         </li>
                     @endforeach

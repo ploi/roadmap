@@ -23,4 +23,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('my', MyController::class)->name('my');
 
     Route::get('mention-search', \App\Http\Controllers\MentionSearchController::class)->name('mention-search');
+    Route::get('user/{username}', \App\Http\Controllers\PublicUserController::class)->name('public-user');
 });

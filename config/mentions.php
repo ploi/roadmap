@@ -10,7 +10,7 @@ return [
             'column' => 'username',
 
             // The route used to generate the user link.
-            'route' => '/users/profile/@',
+            'route' => '/user/',
 
             // Notification class to use when this model is mentioned.
             'notification' => App\Notifications\MentionNotification::class,

@@ -14,7 +14,7 @@
     @apply rounded overflow-hidden list-none bg-white;
 }
 .tribute-container li {
-    @apply hover:bg-gray-100 cursor-pointer py-2 px-4;
+    @apply hover:bg-brand-50 cursor-pointer py-2 px-4;
 }
 .tribute-container li.highlight {
 

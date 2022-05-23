@@ -979,6 +979,11 @@
   "resolved" "https://registry.npmjs.org/@popperjs/core/-/core-2.11.5.tgz"
   "version" "2.11.5"
 
+"@ryangjchandler/alpine-clipboard@^2.2.0":
+  "integrity" "sha512-2kKHd2mA6K7RuYlC+1fikIUPVJeJLQlY2w9rNGrOgVfzXUZRotjTP+EjxouDizTEvqNRkVTJnmmNle32Uhb4zw=="
+  "resolved" "https://registry.npmjs.org/@ryangjchandler/alpine-clipboard/-/alpine-clipboard-2.2.0.tgz"
+  "version" "2.2.0"
+
 "@ryangjchandler/alpine-tooltip@^1.2.0":
   "integrity" "sha512-PzShzyYPoDTMvfayQRoNAnoxOkcfVYrrYrtiqX/Dg09Jp2qpNDB8IkcShs3BQwK0D4RnaYFtFXCqtXGhGU0dPA=="
   "resolved" "https://registry.npmjs.org/@ryangjchandler/alpine-tooltip/-/alpine-tooltip-1.2.0.tgz"

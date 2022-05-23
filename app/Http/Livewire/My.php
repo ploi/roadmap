@@ -21,8 +21,8 @@ class My extends Component implements HasTable
             return auth()->user()->items()->with('board.project')->latest()->getQuery();
         }
 
-        return auth()->user()->items()->with('board.project')->latest()->getQuery();
-//        return auth()->user()->votedItems()->with('board.project')->latest('votes.created_at')->getQuery();
+//        return auth()->user()->items()->with('board.project')->latest()->getQuery();
+        return auth()->user()->votedItems()->with('board.project')->latest('votes.created_at')->getQuery();
     }
 
     protected function getTableColumns(): array

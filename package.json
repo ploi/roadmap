@@ -17,10 +17,9 @@
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "tailwindcss": "^3.0.24",
-        "tippy.js": "^6.3.7"
-    },
-    "dependencies": {
+        "tippy.js": "^6.3.7",
         "@alpinejs/focus": "^3.10.2",
+        "@ryangjchandler/alpine-clipboard": "^2.2.0",
         "@ryangjchandler/alpine-tooltip": "^1.2.0",
         "alpinejs": "^3.10.2",
         "tributejs": "^5.1.3"

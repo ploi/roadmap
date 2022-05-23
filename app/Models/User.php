@@ -55,7 +55,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function votedItems()
     {
-        return $this->hasManyThrough(Item::class, Vote::class, 'user_id', 'items.id', 'id', 'item_id');
+        return $this->hasManyThrough(Item::class, Vote::class, 'user_id', 'items.id', 'id', 'model_id');
     }
 
     public function comments()
