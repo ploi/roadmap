@@ -23,6 +23,10 @@
                         <div class="overflow-hidden font-medium">
                             <p>{{ $user->name }}</p>
                         </div>
+
+                        <div class="flex-1">
+                            <span class="float-right inline-flex items-center justify-center h-8 px-3 text-sm tracking-tight font-bold text-white rounded-full bg-brand-500">{{ $item->board->title }}</span>
+                        </div>
                     </div>
                 </header>
 
