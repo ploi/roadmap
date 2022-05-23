@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Item;
 
+use App\View\Components\MarkdownEditor;
 use Filament\Forms;
 use App\Models\Item;
 use Livewire\Component;
@@ -39,7 +40,7 @@ class Comments extends Component implements HasForms
     protected function getFormSchema(): array
     {
         return [
-            Forms\Components\MarkdownEditor::make('content')
+            MarkdownEditor::make('content')
                 ->required()
                 ->minLength(3),
         ];

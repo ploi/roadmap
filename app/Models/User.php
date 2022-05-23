@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
@@ -62,5 +63,12 @@ class User extends Authenticatable implements FilamentUser
     public function assignedItems()
     {
         return $this->belongsToMany(Item::class, 'item_user');
+    }
+
+    public static function booted()
+    {
+        static::creating(function (self $user) {
+            $user->username = Str::slug($user->name);
+        });
     }
 }

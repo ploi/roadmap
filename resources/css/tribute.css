@@ -1,0 +1,32 @@
+.tribute-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: auto;
+    max-height: 300px;
+    max-width: 500px;
+    overflow: auto;
+    display: block;
+    z-index: 999999;
+    @apply min-w-[75px];
+}
+.tribute-container ul {
+    @apply border border-primary-500 border-2 rounded overflow-hidden mt-2 list-none;
+}
+.tribute-container li {
+    padding: 5px 5px;
+    cursor: pointer;
+    @apply hover:bg-gray-100;
+}
+.tribute-container li.highlight {
+
+}
+.tribute-container li span {
+    font-weight: bold;
+}
+.tribute-container li.no-match {
+    cursor: default;
+}
+.tribute-container .menu-highlighted {
+    font-weight: bold;
+}
