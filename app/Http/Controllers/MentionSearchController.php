@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class MentionSearchController extends Controller
@@ -14,7 +15,11 @@ class MentionSearchController extends Controller
         }
 
         return User::query()
-            ->where('name', 'like', '%' . $request->input('query') . '%')
+            ->where(function (Builder $query) use ($request) {
+                return $query
+                    ->where('id', '!=', auth()->id())
+                    ->where('name', 'like', '%' . $request->input('query') . '%');
+            })
             ->get(['name', 'username', 'email'])
             ->map(function (User $user) {
                 return [
