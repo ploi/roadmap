@@ -4,7 +4,7 @@ Welcome to Roadmap, the open-source software for your roadmapping needs 🛣
 
 ## Requirements
 
-- PHP 8.1
+- PHP >= 8.1
 - Database (MySQL, PostgreSQL)
 
 ## Installation
@@ -55,6 +55,7 @@ Each sponsor gets listed on in this readme.
 - [Filament Admin](https://filamentadmin.com/)
 - [Laravel](https://laravel.com/)
 - [Razor UI](https://razorui.com/)
+- [Ploi](https://ploi.io)
 
 ## License
 

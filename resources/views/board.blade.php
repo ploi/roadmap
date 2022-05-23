@@ -1,3 +1,5 @@
+@section('title', $project->title . ' - ' . $board->title)
+
 <x-app :breadcrumbs="[
     ['title' => $project->title, 'url' => route('projects.show', $project->id)],
     ['title' => $board->title, 'url' => '']

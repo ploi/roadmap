@@ -1,3 +1,5 @@
+@section('title', 'My items')
+
 <x-app :breadcrumbs="[
     ['title' => 'My items', 'url' => route('my')]
 ]">

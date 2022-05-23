@@ -37,7 +37,7 @@
     'text-white bg-brand-500' => request()->is('profile'),
     'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => !request()->is('profile')
 ])
-                   href="{{ route('profile') }}">
+                    href="{{ route('profile') }}">
                     <x-heroicon-o-user class="w-5 h-5 {{ !request()->is('profile') ? 'text-primary' : ''  }}"/>
 
                     <span class="font-medium">Profile</span>
@@ -60,7 +60,8 @@
                                 ])
 
                            href="{{ route('projects.show', $project->id) }}">
-                            <x-heroicon-o-hashtag class="w-5 h-5 {{ request()->segment(2) == $project->id ? '' : 'text-primary'  }}"/>
+                            <x-heroicon-o-hashtag
+                                class="w-5 h-5 {{ request()->segment(2) == $project->id ? '' : 'text-primary'  }}"/>
 
                             <span class="font-medium">{{ $project->title }}</span>
                         </a>
@@ -73,4 +74,11 @@
             </div>
         @endif
     </nav>
+
+    <div class="text-gray-500 mt-12 px-2 text-xs">
+        <a href="https://github.com/ploi-deploy/roadmap" target="_blank" class="font-semibold border-b border-dotted">Open-source</a>
+        roadmapping software by <a href="https://ploi.io"
+                                   target="_blank"
+                                   class="font-semibold border-b border-dotted">ploi.io</a>
+    </div>
 </aside>
