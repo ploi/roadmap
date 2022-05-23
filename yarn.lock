@@ -979,6 +979,11 @@
   "resolved" "https://registry.npmjs.org/@popperjs/core/-/core-2.11.5.tgz"
   "version" "2.11.5"
 
+"@ryangjchandler/alpine-tooltip@^1.2.0":
+  "integrity" "sha512-PzShzyYPoDTMvfayQRoNAnoxOkcfVYrrYrtiqX/Dg09Jp2qpNDB8IkcShs3BQwK0D4RnaYFtFXCqtXGhGU0dPA=="
+  "resolved" "https://registry.npmjs.org/@ryangjchandler/alpine-tooltip/-/alpine-tooltip-1.2.0.tgz"
+  "version" "1.2.0"
+
 "@tailwindcss/forms@^0.5.1":
   "integrity" "sha512-QSwsFORnC2BAP0lRzQkz1pw+EzIiiPdk4e27vGQjyXkwJPeC7iLIRVndJzf9CJVbcrrIcirb/TfxF3gRTyFEVA=="
   "resolved" "https://registry.npmjs.org/@tailwindcss/forms/-/forms-0.5.1.tgz"

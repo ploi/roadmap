@@ -1,4 +1,9 @@
 @import '../../vendor/filament/filament/resources/css/app.css';
+@import 'tippy.js/dist/tippy.css';
+
+body {
+    font-family: 'Nunito', sans-serif;
+}
 
 .alert-success {
     @apply bg-success-100 border-l-4 border-success-500 text-success-700 p-4;

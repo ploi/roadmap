@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "@alpinejs/focus": "^3.10.2",
+        "@ryangjchandler/alpine-tooltip": "^1.2.0",
         "alpinejs": "^3.10.2"
     }
 }

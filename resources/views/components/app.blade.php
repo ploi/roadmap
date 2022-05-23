@@ -10,12 +10,6 @@
 
     {!! $brandColors !!}
 
-    <style>
-        body {
-            font-family: 'Nunito', sans-serif;
-        }
-    </style>
-
     <link rel="stylesheet"
           href="{{ mix('css/app.css') }}">
 

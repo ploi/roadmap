@@ -84,7 +84,7 @@
                                     {{ $activity->description }}
                                 </p>
 
-                                <p class="mt-1 text-xs font-medium text-gray-500">{{ $activity->created_at->diffForHumans() }}</p>
+                                <p class="mt-1 text-xs font-medium text-gray-500"  x-data="{ tooltip: '{{ $activity->created_at }}' }" x-tooltip="tooltip">{{ $activity->created_at->diffForHumans() }}</p>
                             </div>
                         </li>
                     @endforeach
