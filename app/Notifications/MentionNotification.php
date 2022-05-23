@@ -19,6 +19,10 @@ class MentionNotification extends Notification implements ShouldQueue
 
     public function via($notifiable)
     {
+        if (!$notifiable->wantsNotification('receive_mention_notifications')) {
+            return [];
+        }
+
         return ['mail'];
     }
 

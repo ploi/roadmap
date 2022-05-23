@@ -20,6 +20,7 @@ class User extends Authenticatable implements FilamentUser
         'email',
         'username',
         'password',
+        'notification_settings',
     ];
 
     protected $hidden = [
@@ -29,6 +30,7 @@ class User extends Authenticatable implements FilamentUser
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'notification_settings' => 'array'
     ];
 
     public function canAccessFilament(): bool
@@ -64,6 +66,11 @@ class User extends Authenticatable implements FilamentUser
     public function assignedItems()
     {
         return $this->belongsToMany(Item::class, 'item_user');
+    }
+
+    public function wantsNotification($type)
+    {
+        return in_array($type, $this->notification_settings ?? []);
     }
 
     public static function booted()

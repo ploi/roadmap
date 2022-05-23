@@ -25,6 +25,7 @@ class Profile extends Component implements HasForms
             'name' => $this->user->name,
             'username' => $this->user->username,
             'email' => $this->user->email,
+            'notification_settings' => $this->user->notification_settings,
         ]);
     }
 
@@ -38,7 +39,15 @@ class Profile extends Component implements HasForms
                     ->required()
                     ->unique(table: User::class, column: 'username', ignorable: auth()->user()),
                 Forms\Components\TextInput::make('email')->required()->email(),
-            ])
+            ]),
+
+            Forms\Components\Card::make()
+                ->schema([
+                    Forms\Components\CheckboxList::make('notification_settings')
+                        ->options([
+                            'receive_mention_notifications' => 'Receive mention notifications',
+                        ]),
+                ])
         ];
     }
 
@@ -50,6 +59,7 @@ class Profile extends Component implements HasForms
             'name' => $data['name'],
             'email' => $data['email'],
             'username' => $data['username'],
+            'notification_settings' => $data['notification_settings'],
         ]);
 
         $this->notify('success', 'Profile has been saved.');
