@@ -1,3 +1,5 @@
+![Alt text](/public/screenshots/screenshot.png)
+
 # Roadmap
 
 Welcome to Roadmap, the open-source software for your roadmapping needs 🛣
