@@ -8,10 +8,10 @@
     overflow: auto;
     display: block;
     z-index: 999999;
-    @apply min-w-[250px] shadow-lg;
+    @apply min-w-[250px] shadow-lg ring-1 ring-black/5 mt-2;
 }
 .tribute-container ul {
-    @apply rounded overflow-hidden mt-2 list-none bg-white;
+    @apply rounded overflow-hidden list-none bg-white;
 }
 .tribute-container li {
     @apply hover:bg-gray-100 cursor-pointer py-2 px-4;
