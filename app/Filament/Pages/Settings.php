@@ -33,6 +33,7 @@ class Settings extends SettingsPage
                 TagsInput::make('default_boards')->label('Default boards')
                     ->placeholder('Enter defaults to be created upon project creation')
                     ->helperText('These boards will automatically be prefilled when you create a project.')
+                    ->columnSpan(2)
                     ->visible(fn ($get) => $get('create_default_boards')),
 
                 Toggle::make('show_projects_sidebar_without_boards')->label('Show projects in sidebar without boards')
@@ -63,9 +64,12 @@ class Settings extends SettingsPage
                     ->helperText('This will send email notifications once a new item has been created.')
                     ->columnSpan(2),
 
+                TextInput::make('password')->helperText('Entering a password here will ask your users to enter a password before entering the roadmap.'),
+
                 RichEditor::make('welcome_text')
                     ->columnSpan(2)
-                    ->helperText('This content will show at the top of the dashboard for (for all users).')
+                    ->helperText('This content will show at the top of the dashboard for (for all users).'),
+
             ])->columns(),
         ];
     }
