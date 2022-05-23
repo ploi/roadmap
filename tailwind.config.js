@@ -15,7 +15,18 @@ module.exports = {
         "sm:max-w-4xl",
         "sm:max-w-5xl",
         "sm:max-w-6xl",
-        "sm:max-w-7xl"
+        "sm:max-w-7xl",
+
+        "lg:max-w-sm",
+        "lg:max-w-md",
+        "lg:max-w-lg",
+        "lg:max-w-xl",
+        "lg:max-w-2xl",
+        "lg:max-w-3xl",
+        "lg:max-w-4xl",
+        "lg:max-w-5xl",
+        "lg:max-w-6xl",
+        "lg:max-w-7xl"
     ],
     darkMode: 'class',
     theme: {
