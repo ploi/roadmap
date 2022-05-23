@@ -21,4 +21,6 @@ Route::get('projects/{project}/boards/{board}', [BoardsController::class, 'show'
 Route::group(['middleware' => 'auth'], function () {
     Route::get('profile', [\App\Http\Controllers\Auth\ProfileController::class, 'show'])->name('profile');
     Route::get('my', MyController::class)->name('my');
+
+    Route::get('mention-search', \App\Http\Controllers\MentionSearchController::class)->name('mention-search');
 });

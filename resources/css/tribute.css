@@ -8,10 +8,10 @@
     overflow: auto;
     display: block;
     z-index: 999999;
-    @apply min-w-[75px];
+    @apply min-w-[125px] shadow-lg;
 }
 .tribute-container ul {
-    @apply border border-primary-500 border-2 rounded overflow-hidden mt-2 list-none;
+    @apply border border-primary-500 border-dotted border-2 rounded overflow-hidden mt-2 list-none bg-white;
 }
 .tribute-container li {
     padding: 5px 5px;

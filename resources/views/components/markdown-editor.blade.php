@@ -18,7 +18,17 @@
         ()=> {
             let tribute = new Tribute({
                 trigger: "@",
-                values: @json($mentionables),
+                noMatchTemplate: "<span class=\"p-2\">No match found</span>",
+                values: [],
+                menuItemTemplate: function (item) {
+                   return "<div class=\"flex items-center space-x-2\"><img class=\"inline-block h-7 w-7 rounded-full\" src=\""+ item.original.avatar +"\"><div>" + item.string + "</div></div>";
+                },
+                values: function (text, cb) {
+                    if(!text) return;
+                    window.axios.get(`/mention-search?query=${text}`).then(response => {
+                       cb(response.data)
+                    });
+                },
             });
             tribute.attach($refs.textarea);
         }
