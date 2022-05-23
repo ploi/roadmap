@@ -24,4 +24,9 @@ class Vote extends Model
     {
         return $this->morphTo('model');
     }
+
+    public function getItemTitleAttribute()
+    {
+        return $this->item->title;
+    }
 }

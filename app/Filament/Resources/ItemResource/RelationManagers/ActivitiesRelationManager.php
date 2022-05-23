@@ -6,6 +6,7 @@ use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\RelationManagers\MorphManyRelationManager;
+use Illuminate\Database\Eloquent\Model;
 
 class ActivitiesRelationManager extends MorphManyRelationManager
 {
@@ -33,5 +34,15 @@ class ActivitiesRelationManager extends MorphManyRelationManager
                 //
             ])
             ->defaultSort('created_at', 'desc');
+    }
+
+    protected function canEdit(Model $record): bool
+    {
+        return false;
+    }
+
+    protected function canDelete(Model $record): bool
+    {
+        return false;
     }
 }

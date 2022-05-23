@@ -8,6 +8,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use App\Filament\Resources\VoteResource\Pages;
+use Illuminate\Database\Eloquent\Model;
 
 class VoteResource extends Resource
 {
@@ -30,7 +31,7 @@ class VoteResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('item.title'),
+                Tables\Columns\TextColumn::make('item_title'),
                 Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date'),
             ])
             ->filters([
@@ -53,5 +54,15 @@ class VoteResource extends Resource
             'create' => Pages\CreateVote::route('/create'),
             'edit' => Pages\EditVote::route('/{record}/edit'),
         ];
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return false;
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
     }
 }
