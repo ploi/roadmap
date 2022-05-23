@@ -3,11 +3,11 @@
 namespace App\Filament\Pages;
 
 use App\Settings\ColorSettings;
-use Filament\Forms\Components\FileUpload;
 use Filament\Pages\SettingsPage;
 use Filament\Forms\Components\Card;
-use Filament\Forms\Components\ColorPicker;
 use Livewire\TemporaryUploadedFile;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\ColorPicker;
 
 class Colors extends SettingsPage
 {
@@ -29,7 +29,7 @@ class Colors extends SettingsPage
                     ->imageResizeTargetHeight('64')
                     ->imageResizeTargetWidth('64')
                     ->maxSize(1024)
-                    ->getUploadedFileUrlUsing(function($record){
+                    ->getUploadedFileUrlUsing(function ($record) {
                         return storage_path('app/public/favicon.png');
                     })
                     ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {

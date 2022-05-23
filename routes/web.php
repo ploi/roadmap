@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\Auth\PasswordProtectionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\BoardsController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\Auth\PasswordProtectionController;
 
 Auth::routes();
 

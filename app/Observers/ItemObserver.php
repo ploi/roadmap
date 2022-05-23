@@ -2,13 +2,12 @@
 
 namespace App\Observers;
 
-use App\Mail\Admin\ItemHasBeenCreatedEmail;
-use App\Models\Board;
+use Mail;
 use App\Models\Item;
 use App\Models\User;
-use App\Notifications\Item\ItemUpdatedNotification;
 use App\Settings\GeneralSettings;
-use Mail;
+use App\Mail\Admin\ItemHasBeenCreatedEmail;
+use App\Notifications\Item\ItemUpdatedNotification;
 
 class ItemObserver
 {
@@ -18,8 +17,8 @@ class ItemObserver
             ->performedOn($item)
             ->log('opened');
 
-        if($receivers = app(GeneralSettings::class)->send_notifications_to){
-            foreach($receivers as $receiver){
+        if ($receivers = app(GeneralSettings::class)->send_notifications_to) {
+            foreach ($receivers as $receiver) {
                 Mail::to($receiver['email'])->send(new ItemHasBeenCreatedEmail($receiver, $item));
             }
         }
