@@ -109,7 +109,7 @@ class Item extends Model
         return $this->votes()->where('user_id', $user->id)->first();
     }
 
-    public function toggleUpvote(User $user = null): bool|\Illuminate\Http\RedirectResponse|Vote
+    public function toggleUpvote(User $user = null)
     {
         $user = $user ?? auth()->user();
 
