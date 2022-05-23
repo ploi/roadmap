@@ -4993,6 +4993,10 @@ select{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
+.group:hover .group-hover\:text-primary-500{
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity));
+}
 .group:focus .group-focus\:text-primary-100{
   --tw-text-opacity: 1;
   color: rgb(219 234 254 / var(--tw-text-opacity));
