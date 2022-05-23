@@ -16,6 +16,7 @@ class CreateGeneralSettings extends SettingsMigration
         $this->migrator->add('general.allow_general_creation_of_item', true);
         $this->migrator->add('general.dashboard_items', []);
         $this->migrator->add('general.welcome_text', 'Welcome to our roadmap!');
+        $this->migrator->add('general.send_notifications_to', []);
 
         // Colors
         $this->migrator->add('colors.primary', '#2563EB');

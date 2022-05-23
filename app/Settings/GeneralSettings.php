@@ -12,6 +12,7 @@ class GeneralSettings extends Settings
     public array $default_boards;
     public bool $allow_general_creation_of_item;
     public array $dashboard_items;
+    public array $send_notifications_to;
     public string|null $welcome_text;
 
     public static function group(): string

@@ -17,12 +17,14 @@
         "spatie/color": "^1.5",
         "spatie/laravel-activitylog": "^4.5",
         "spatie/laravel-ray": "^1.29",
+        "symfony/http-client": "^6.0",
+        "symfony/mailgun-mailer": "^6.0",
+        "symfony/postmark-mailer": "^6.0",
         "wire-elements/modal": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "friendsofphp/php-cs-fixer": "^3.8",
-        "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "pestphp/pest": "^1.21",

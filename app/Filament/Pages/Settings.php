@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use Filament\Forms\Components\TextInput;
 use Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
 use Filament\Forms\Components\Card;
@@ -54,6 +55,13 @@ class Settings extends SettingsPage
                         ])->default(1)
                     ])->helperText('Determine which items you want to show on the dashboard (for all users).'),
 
+                Repeater::make('send_notifications_to')
+                    ->schema([
+                        TextInput::make('name')->required(),
+                        TextInput::make('email')->required()->email(),
+                    ])
+                    ->helperText('This will send email notifications once a new item has been created.')
+                    ->columnSpan(2),
 
                 RichEditor::make('welcome_text')
                     ->columnSpan(2)

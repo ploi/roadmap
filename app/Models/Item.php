@@ -57,6 +57,11 @@ class Item extends Model
         return $this->morphMany(Vote::class, 'model');
     }
 
+    public function subscribedVotes(): MorphMany
+    {
+        return $this->votes()->where('subscribed', true);
+    }
+
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
@@ -104,7 +109,7 @@ class Item extends Model
         return $this->votes()->where('user_id', $user->id)->first();
     }
 
-    public function toggleUpvote(User $user = null): bool|Vote|\Livewire\Redirector
+    public function toggleUpvote(User $user = null): bool|\Illuminate\Http\RedirectResponse
     {
         $user = $user ?? auth()->user();
 

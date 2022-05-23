@@ -47,6 +47,12 @@
                 <div class="border-t"></div>
 
                 <livewire:item.vote-button :item="$item"/>
+
+                @if(auth()->check() && auth()->user()->canAccessFilament())
+                    <div class="border-t mb-2"></div>
+
+                    <a class="text-red-500 hover:text-red-700 block" href="{{ route('filament.resources.items.edit', $item->id) }}">Administer item</a>
+                @endif
             </x-card>
 
             <div class="relative">
