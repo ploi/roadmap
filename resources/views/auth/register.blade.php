@@ -24,6 +24,7 @@
                       method="post"
                       action="{{ route('register') }}">
                     @csrf
+                    <x-honeypot />
 
                     <div class="space-y-2">
                         <label class="inline-block text-sm font-medium text-gray-700"
