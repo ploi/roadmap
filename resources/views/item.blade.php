@@ -44,6 +44,10 @@
                     <time class="flex-shrink-0 text-sm font-medium text-gray-500">
                         {{ $item->created_at }}
                     </time>
+
+                    @if(app(\App\Settings\GeneralSettings::class)->enable_item_age)
+                        <span class="text-sm font-medium text-gray-500">({{ $item->created_at->diffInDays(now()) }} days ago)</span>
+                    @endif
                 </header>
 
                 <div class="border-t"></div>
