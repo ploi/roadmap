@@ -12,6 +12,10 @@
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
+    @if(file_exists($favIcon = storage_path('app/public/favicon.png')))
+        <link href="{{ asset('storage/favicon.png') }}?v={{ md5_file($favIcon) }}" rel="icon" type="image/x-icon"/>
+    @endif
+
     @livewireStyles
 </head>
 <body class="antialiased bg-gray-50">

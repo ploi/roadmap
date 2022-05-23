@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
@@ -11,6 +12,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\RichEditor;
+use Livewire\TemporaryUploadedFile;
 
 class Settings extends SettingsPage
 {
@@ -34,7 +36,7 @@ class Settings extends SettingsPage
                     ->placeholder('Enter defaults to be created upon project creation')
                     ->helperText('These boards will automatically be prefilled when you create a project.')
                     ->columnSpan(2)
-                    ->visible(fn ($get) => $get('create_default_boards')),
+                    ->visible(fn($get) => $get('create_default_boards')),
 
                 Toggle::make('show_projects_sidebar_without_boards')->label('Show projects in sidebar without boards')
                     ->helperText('If you don\'t want to show projects without boards in the sidebar, toggle this off.')
@@ -70,6 +72,20 @@ class Settings extends SettingsPage
                     ->columnSpan(2)
                     ->helperText('This content will show at the top of the dashboard for (for all users).'),
 
+
+                FileUpload::make('favicon')
+                    ->image()
+                    ->helperText('Make sure your storage is linked (by running php artisan storage:link).')
+                    ->disk('public')
+                    ->imageResizeTargetHeight('64')
+                    ->imageResizeTargetWidth('64')
+                    ->maxSize(1024)
+                    ->getUploadedFileUrlUsing(function($record){
+                        return storage_path('app/public/favicon.png');
+                    })
+                    ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                        return (string)'favicon.png';
+                    }),
             ])->columns(),
         ];
     }
