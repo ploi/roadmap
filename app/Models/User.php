@@ -77,6 +77,9 @@ class User extends Authenticatable implements FilamentUser
     {
         static::creating(function (self $user) {
             $user->username = Str::slug($user->name);
+            $user->notification_settings = [
+                'receive_mention_notifications'
+            ];
         });
 
         static::updating(function (self $user) {
