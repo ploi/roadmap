@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "516e6ab06f63605cec1d675a686f1a41",
+    "content-hash": "b13e00df8229d97ba393d37de11883b2",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -7536,6 +7536,121 @@
                 "source": "https://github.com/wire-elements/modal/tree/1.0.6"
             },
             "time": "2022-04-13T09:06:26+00:00"
+        },
+        {
+            "name": "xetaio/xetaravel-mentions",
+            "version": "9.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/XetaIO/Xetaravel-Mentions.git",
+                "reference": "1e3aab3503a2fa2d71aee11dc4223b95b0455b96"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/XetaIO/Xetaravel-Mentions/zipball/1e3aab3503a2fa2d71aee11dc4223b95b0455b96",
+                "reference": "1e3aab3503a2fa2d71aee11dc4223b95b0455b96",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^8.0 || ^9.0",
+                "illuminate/support": "^8.0 || ^9.0",
+                "php": ">=7.3",
+                "xety/configurator": "^1.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0 || ^7.0",
+                "phpunit/phpunit": "^9.5",
+                "squizlabs/php_codesniffer": "^3.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Xetaio\\Mentions\\Providers\\MentionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Xetaio\\Mentions\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Xety",
+                    "email": "zoro.fmt@gmail.com",
+                    "homepage": "https://github.com/Xety"
+                }
+            ],
+            "description": "A package to parse a @mention from a text and mention the user with a notification.",
+            "homepage": "https://github.com/XetaIO/Xetaravel-Mentions",
+            "keywords": [
+                "Users",
+                "laravel",
+                "laravel-5-package",
+                "mentions",
+                "notifications"
+            ],
+            "support": {
+                "issues": "https://github.com/XetaIO/Xetaravel-Mentions/issues",
+                "source": "https://github.com/XetaIO/Xetaravel-Mentions"
+            },
+            "time": "2022-03-30T14:03:33+00:00"
+        },
+        {
+            "name": "xety/configurator",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Xety/Configurator.git",
+                "reference": "cf3f7f5d81faf755722acc8458e90878c54253af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Xety/Configurator/zipball/cf3f7f5d81faf755722acc8458e90878c54253af",
+                "reference": "cf3f7f5d81faf755722acc8458e90878c54253af",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0",
+                "squizlabs/php_codesniffer": "~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Xety\\Configurator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Xety",
+                    "email": "emeric@xeta.io",
+                    "homepage": "https://github.com/Xety"
+                }
+            ],
+            "description": "A simple configuration class without dependencies that use the Fluent pattern.",
+            "homepage": "https://github.com/Xety/Configurator",
+            "keywords": [
+                "config",
+                "configuration",
+                "fluent"
+            ],
+            "support": {
+                "issues": "https://github.com/Xety/Configurator/issues",
+                "source": "https://github.com/Xety/Configurator"
+            },
+            "time": "2017-06-02T21:50:50+00:00"
         },
         {
             "name": "zbateson/mail-mime-parser",
