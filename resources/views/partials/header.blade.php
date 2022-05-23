@@ -92,7 +92,7 @@
 
                 <li>
                     <a class="block p-2 transition rounded-lg focus:outline-none hover:bg-brand-500-400"
-                       href="#">Settings</a>
+                       href="{{ route('profile') }}">Profile</a>
                 </li>
             </ul>
         </nav>
