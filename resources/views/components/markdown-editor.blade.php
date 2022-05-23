@@ -14,6 +14,7 @@
             state: $wire.{{ $applyStateBindingModifiers('entangle(\'' . $getStatePath() . '\')') }},
             tab: '{{ $isDisabled() ? 'preview' : 'edit' }}',
         })"
+        @auth
         x-init='
         ()=> {
             let tribute = new Tribute({
@@ -32,6 +33,7 @@
             });
             tribute.attach($refs.textarea);
         }
+        @endauth
     '
         wire:ignore
         {{ $attributes->merge($getExtraAttributes())->class('filament-forms-markdown-editor-component') }}

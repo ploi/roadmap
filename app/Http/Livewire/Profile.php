@@ -32,22 +32,22 @@ class Profile extends Component implements HasForms
     protected function getFormSchema(): array
     {
         return [
-            Forms\Components\Card::make([
+            Forms\Components\Section::make('Profile')->schema([
                 Forms\Components\TextInput::make('name')->required(),
                 Forms\Components\TextInput::make('username')
                     ->helperText('This username will be used to mention your name in comments.')
                     ->required()
                     ->unique(table: User::class, column: 'username', ignorable: auth()->user()),
                 Forms\Components\TextInput::make('email')->required()->email(),
-            ]),
+            ])->collapsible(),
 
-            Forms\Components\Card::make()
+            Forms\Components\Section::make('Notifications')
                 ->schema([
                     Forms\Components\CheckboxList::make('notification_settings')
                         ->options([
                             'receive_mention_notifications' => 'Receive mention notifications',
                         ]),
-                ])
+                ])->collapsible()
         ];
     }
 
