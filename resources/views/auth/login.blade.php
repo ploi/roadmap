@@ -48,9 +48,25 @@
                             type="password">
                     </div>
 
+                    <div class="flex space-x-3">
+                        <input
+                            class="text-brand-500 transition border border-gray-300 rounded shadow-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500"
+                            id="remember"
+                            name="remember"
+                            type="checkbox">
+
+                        <div class="flex flex-col space-y-1">
+                            <label class="inline-block text-sm font-medium leading-4 text-gray-700"
+                                   for="remember">
+                                Remember me
+                            </label>
+                        </div>
+                    </div>
+
                     <button
                         class="flex items-center justify-center w-full h-8 px-3 text-sm font-semibold tracking-tight text-white transition bg-brand-600 rounded-lg shadow hover:bg-brand-500 focus:bg-brand-700 focus:outline-none focus:ring-offset-2 focus:ring-offset-brand-700 focus:ring-2 focus:ring-white focus:ring-inset"
-                        type="submit">Log In</button>
+                        type="submit">Log In
+                    </button>
                 </form>
 
                 <div class="w-4 mx-auto mt-4 border-t border-gray-300"></div>

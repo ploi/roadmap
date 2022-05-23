@@ -35,7 +35,14 @@ class Comments extends Component implements HasForms
         $comment->user()->associate(auth()->user());
         $comment->save();
 
-        $parser = new MentionParser($comment);
+        $parser = new MentionParser($comment, [
+            'regex_replacement' => [
+                '{character}'  => '@',
+                '{pattern}'  => '[A-Za-z0-9_-]',
+                '{rules}'  => '{4,20}'
+            ]
+        ]);
+
         $content = $parser->parse($comment->content);
         $comment->content = $content;
         $comment->save();
