@@ -23,6 +23,7 @@ class Profile extends Component implements HasForms
 
         $this->form->fill([
             'name' => $this->user->name,
+            'username' => $this->user->username,
             'email' => $this->user->email,
         ]);
     }
@@ -32,6 +33,10 @@ class Profile extends Component implements HasForms
         return [
             Forms\Components\Card::make([
                 Forms\Components\TextInput::make('name')->required(),
+                Forms\Components\TextInput::make('username')
+                    ->helperText('This username will be used to mention your name in comments.')
+                    ->required()
+                    ->unique(table: User::class, column: 'username', ignorable: auth()->user()),
                 Forms\Components\TextInput::make('email')->required()->email(),
             ])
         ];
@@ -44,6 +49,7 @@ class Profile extends Component implements HasForms
         $this->user->update([
             'name' => $data['name'],
             'email' => $data['email'],
+            'username' => $data['username'],
         ]);
 
         $this->notify('success', 'Profile has been saved.');

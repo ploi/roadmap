@@ -18,6 +18,7 @@ class User extends Authenticatable implements FilamentUser
     protected $fillable = [
         'name',
         'email',
+        'username',
         'password',
     ];
 
@@ -69,6 +70,10 @@ class User extends Authenticatable implements FilamentUser
     {
         static::creating(function (self $user) {
             $user->username = Str::slug($user->name);
+        });
+
+        static::updating(function (self $user) {
+            $user->username = Str::lower($user->username);
         });
     }
 }
