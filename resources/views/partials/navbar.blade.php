@@ -69,8 +69,8 @@
                 @endforeach
             </ul>
         @else
-            <div class="px-4">
-                <span class="text-sm text-gray-500">There are no projects yet.</span>
+            <div class="px-2">
+                <span class="text-sm text-gray-500">There are no projects.</span>
             </div>
         @endif
     </nav>
