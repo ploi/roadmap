@@ -2,60 +2,32 @@
 
 namespace App\Notifications;
 
+use App\Models\Comment;
+use App\Models\Item;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class MentionNotification extends Notification
+class MentionNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function __construct(public Comment $comment)
     {
-        //
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
     public function via($notifiable)
     {
         return ['mail'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
+            ->subject('You got mentioned in item ' . $this->comment->item->title)
+            ->line('You got mentioned in the item ' . $this->comment->item->title . ' by ' . $this->comment->user->name . '.')
+            ->action('View item', route('items.show', $this->comment->item) . '#comment-' . $this->comment->id)
+            ->line('If you do not want to receive notifications like this anymore, you can unsubscribe from your profile.');
     }
 }

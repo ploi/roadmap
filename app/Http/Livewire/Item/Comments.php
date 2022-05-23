@@ -32,12 +32,12 @@ class Comments extends Component implements HasForms
         $formState = $this->form->getState();
 
         $comment = $this->item->comments()->create($formState);
+        $comment->user()->associate(auth()->user());
+        $comment->save();
 
         $parser = new MentionParser($comment);
         $content = $parser->parse($comment->content);
-
         $comment->content = $content;
-        $comment->user()->associate(auth()->user());
         $comment->save();
 
         $this->content = '';

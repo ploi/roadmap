@@ -55,5 +55,6 @@
 @livewire('livewire-ui-modal')
 @livewireScripts
 <script src="{{ mix('js/app.js') }}"></script>
+@stack('javascript')
 </body>
 </html>

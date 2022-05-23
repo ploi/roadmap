@@ -1,6 +1,6 @@
-<div class="">
+<div>
     @foreach($comments as $comment)
-        <div class="block p-2 overflow-hidden transition">
+        <div class="block p-2 overflow-hidden transition" id="comment-{{ $comment->id }}">
             <header class="flex items-center px-4 py-2 space-x-2">
                 <div class="flex items-center space-x-3 overflow-hidden">
                     <div class="relative flex-shrink-0 w-10 h-10 rounded-full">
@@ -33,7 +33,7 @@
         </div>
     @endforeach
 
-    <form wire:submit.prevent="submit" class="space-y-4">
+    <form wire:submit.prevent="submit" class="space-y-4 mt-2">
         {{ $this->form }}
 
         <x-filament::button wire:click="submit">
@@ -42,3 +42,15 @@
     </form>
 </div>
 
+@push('javascript')
+    <script>
+        (function() {
+            const hash = window.location.hash;
+
+            if(hash){
+                const commentElement = document.getElementById(hash.replace('#', ''));
+                commentElement.classList.add('bg-primary-50', 'rounded-lg');
+            }
+        })();
+    </script>
+@endpush
