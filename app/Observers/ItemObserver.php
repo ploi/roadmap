@@ -25,5 +25,6 @@ class ItemObserver
     public function deleting(Item $item)
     {
         $item->votes()->delete();
+        $item->comments()->delete();
     }
 }
