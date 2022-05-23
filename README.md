@@ -2,6 +2,13 @@
 
 Welcome to Roadmap, the open-source software for your roadmapping needs 🛣
 
+## Features
+
+- Completely customisable roadmapping software
+- Mention users in comments
+- Upvote items to see which has more priority
+- Filament admin panel 💛
+
 ## Requirements
 
 - PHP >= 8.1
