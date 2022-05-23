@@ -6,6 +6,6 @@ class UpdateGeneralFavicon extends SettingsMigration
 {
     public function up(): void
     {
-        $this->migrator->add('general.favicon', null);
+        $this->migrator->add('colors.favicon', null);
     }
 }

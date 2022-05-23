@@ -7,6 +7,7 @@ use Spatie\LaravelSettings\Settings;
 class ColorSettings extends Settings
 {
     public string $primary;
+    public string|null $favicon;
 
     public static function group(): string
     {

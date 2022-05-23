@@ -71,21 +71,6 @@ class Settings extends SettingsPage
                 RichEditor::make('welcome_text')
                     ->columnSpan(2)
                     ->helperText('This content will show at the top of the dashboard for (for all users).'),
-
-
-                FileUpload::make('favicon')
-                    ->image()
-                    ->helperText('Make sure your storage is linked (by running php artisan storage:link).')
-                    ->disk('public')
-                    ->imageResizeTargetHeight('64')
-                    ->imageResizeTargetWidth('64')
-                    ->maxSize(1024)
-                    ->getUploadedFileUrlUsing(function($record){
-                        return storage_path('app/public/favicon.png');
-                    })
-                    ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
-                        return (string)'favicon.png';
-                    }),
             ])->columns(),
         ];
     }
