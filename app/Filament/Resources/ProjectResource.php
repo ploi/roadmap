@@ -40,6 +40,10 @@ class ProjectResource extends Resource
                     Forms\Components\TextInput::make('url')
                         ->columnSpan(1)
                         ->maxLength(255),
+                    Forms\Components\TextInput::make('slug')
+                        ->helperText('Leave blank to generate one automatically')
+                        ->columnSpan(2)
+                        ->maxLength(255),
                     Forms\Components\MarkdownEditor::make('description')
                         ->columnSpan(2)
                         ->maxLength(65535),

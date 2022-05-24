@@ -31,7 +31,7 @@ class ViewItem extends SpotlightCommand
             ->get()
             ->map(function (Item $item) {
                 return new SpotlightSearchResult(
-                    $item->id,
+                    $item->slug,
                     $item->title,
                     sprintf('View item %s', $item->title)
                 );

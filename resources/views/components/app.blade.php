@@ -17,6 +17,8 @@
     @endif
 
     @livewireStyles
+
+    @include('partials.meta')
 </head>
 <body class="antialiased bg-gray-50">
 

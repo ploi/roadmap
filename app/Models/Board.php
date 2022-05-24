@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
+use App\Traits\HasOgImage;
+use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Board extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable, HasOgImage;
 
     const SORT_ITEMS_BY_POPULAR = 'popular';
     const SORT_ITEMS_BY_LATEST = 'latest';
 
     public $fillable = [
+        'slug',
         'title',
         'visible',
         'description',

@@ -1,4 +1,6 @@
 @section('title', $project->title)
+@section('image', $project->getOgImage($project->description, 'Roadmap - Project'))
+@section('description', $project->description)
 
 <x-app :breadcrumbs="[
     ['title' => $project->title, 'url' => route('projects.show', $project->id)]
@@ -15,7 +17,7 @@
                     <div
                         class="p-2 font-semibold text-center text-gray-800 border-b bg-gray-100/80 rounded-t-xl backdrop-blur-xl backdrop-saturate-150">
                         <a
-                            href="{{ route('projects.boards.show', [$project->id, $board->id]) }}"
+                            href="{{ route('projects.boards.show', [$project, $board]) }}"
                             class="border-b border-dotted border-black">
                             {{ $board->title }}
                         </a>
@@ -24,7 +26,7 @@
                     <ul class="p-2 space-y-2 overflow-y-scroll flex-1">
                         @forelse($board->items as $item)
                             <li>
-                                <a href="{{ route('projects.items.show', [$project->id, $item->id]) }}"
+                                <a href="{{ route('projects.items.show', [$project, $item]) }}"
                                    class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50">
                                     <p>
                                         {{ $item->title }}

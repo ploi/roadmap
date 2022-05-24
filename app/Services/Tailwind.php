@@ -7,7 +7,8 @@ use Spatie\Color\Rgb;
 
 class Tailwind
 {
-    protected array $shades = [];
+    public array $shades = [];
+
     protected array $intensityMap = [
         50 => 0.95,
         100 => 0.9,

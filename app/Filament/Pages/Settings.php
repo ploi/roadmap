@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use Filament\Pages\Actions\Action;
 use Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
 use Filament\Forms\Components\Tabs;
@@ -11,6 +12,8 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
+use Illuminate\Support\Str;
+use Storage;
 
 class Settings extends SettingsPage
 {
@@ -38,7 +41,7 @@ class Settings extends SettingsPage
                                 ->placeholder('Enter defaults to be created upon project creation')
                                 ->helperText('These boards will automatically be prefilled when you create a project.')
                                 ->columnSpan(2)
-                                ->visible(fn ($get) => $get('create_default_boards')),
+                                ->visible(fn($get) => $get('create_default_boards')),
 
                             Toggle::make('show_projects_sidebar_without_boards')->label('Show projects in sidebar without boards')
                                 ->helperText('If you don\'t want to show projects without boards in the sidebar, toggle this off.')
@@ -89,6 +92,34 @@ class Settings extends SettingsPage
                 ])
                 ->columns()
                 ->columnSpan(2),
+        ];
+    }
+
+    protected function getActions(): array
+    {
+        return [
+            Action::make('flush_og_images')
+                ->action(function () {
+                    $items = collect(Storage::disk('public')->allFiles())
+                        ->filter(function ($file) {
+                            return Str::startsWith($file, 'og-') && Str::endsWith($file, '.jpg');
+                        })
+                        ->each(function ($file) {
+                            Storage::disk('public')->delete($file);
+                        });
+
+                    if ($items->count() === 0) {
+                        $this->notify('primary', 'There are no OG images to flush ✅');
+                        return;
+                    }
+
+                    $this->notify('success', 'Flushed ' . $items->count() . ' OG image(s) 🎉');
+                })
+                ->label('Flush OG images')
+                ->color('secondary')
+                ->modalHeading('Delete OG images')
+                ->modalSubheading('Are you sure you\'d like to delete all the OG images? This could be especially handy if you have changed branding color, if you feel some images are not correct.')
+                ->requiresConfirmation(),
         ];
     }
 }

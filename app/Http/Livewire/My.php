@@ -40,14 +40,14 @@ class My extends Component implements HasTable
     {
         return function ($record) {
             if (!$record->board) {
-                return route('items.show', $record->id);
+                return route('items.show', $record);
             }
 
             if (!$record->project) {
-                return route('items.show', $record->id);
+                return route('items.show', $record);
             }
 
-            return route('projects.items.show', [$record->project->id, $record->id]);
+            return route('projects.items.show', [$record->project, $record]);
         };
     }
 

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\HasOgImage;
+use App\Traits\Sluggable;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -14,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Item extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable, HasOgImage;
 
     const STATUS_OPEN = 'open';
     const STATUS_REVIEW = 'under-review';
@@ -22,6 +24,7 @@ class Item extends Model
     const STATUS_LIVE = 'live';
 
     public $fillable = [
+        'slug',
         'title',
         'content',
         'project_id',
@@ -32,7 +35,7 @@ class Item extends Model
     {
         return Attribute::make(
             get: function ($value) {
-                return Str::limit(strip_tags(str($this->attributes['content'])->markdown()), 150);
+                return Str::limit(strip_tags(str($this->attributes['content'])->markdown()->trim()), 150);
             },
         );
     }

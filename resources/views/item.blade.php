@@ -1,12 +1,14 @@
 @section('title', $item->title)
+@section('image', $item->getOgImage('"' . $item->excerpt .'"', 'Roadmap - Item'))
+@section('description', $item->excerpt)
 
 <x-app :breadcrumbs="$project ? [
-    ['title' => $project->title, 'url' => route('projects.show', $project->id)],
-    ['title' => $board->title, 'url' => route('projects.boards.show', [$project->id, $board->id])],
-    ['title' => $item->title, 'url' => route('projects.items.show', [$project->id, $item->id])]
+    ['title' => $project->title, 'url' => route('projects.show', $project)],
+    ['title' => $board->title, 'url' => route('projects.boards.show', [$project, $board])],
+    ['title' => $item->title, 'url' => route('projects.items.show', [$project, $item])]
 ]: [
 ['title' => 'Dashboard', 'url' => route('home')],
-['title' => $item->title, 'url' => route('items.show', $item->id)],
+['title' => $item->title, 'url' => route('items.show', $item)],
 ]">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2 space-y-4">
@@ -25,9 +27,10 @@
                         </div>
 
                         @if($item->board)
-                        <div class="flex-1">
-                            <span class="float-right inline-flex items-center justify-center h-8 px-3 text-sm tracking-tight font-bold text-white rounded-lg bg-brand-500">{{ $item->board->title }}</span>
-                        </div>
+                            <div class="flex-1">
+                                <span
+                                    class="float-right inline-flex items-center justify-center h-8 px-3 text-sm tracking-tight font-bold text-white rounded-lg bg-brand-500">{{ $item->board->title }}</span>
+                            </div>
                         @endif
                     </div>
                 </header>
@@ -64,7 +67,7 @@
                     <div class="border-t mb-2"></div>
 
                     <a class="text-red-500 hover:text-red-700 block ml-1"
-                       href="{{ route('filament.resources.items.edit', $item->id) }}">Administer item</a>
+                       href="{{ route('filament.resources.items.edit', $item) }}">Administer item</a>
                 @endif
             </x-card>
 
@@ -98,8 +101,8 @@
                                 </p>
 
                                 <span class="mt-1 text-xs font-medium text-gray-500"
-                                   x-data="{ tooltip: '{{ $activity->created_at }}' }"
-                                   x-tooltip="tooltip">{{ $activity->created_at->diffForHumans() }}</span>
+                                      x-data="{ tooltip: '{{ $activity->created_at }}' }"
+                                      x-tooltip="tooltip">{{ $activity->created_at->diffForHumans() }}</span>
                             </div>
                         </li>
                     @endforeach
