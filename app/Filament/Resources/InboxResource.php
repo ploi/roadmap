@@ -2,8 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\InboxResource\RelationManagers\CommentsRelationManager;
-use App\Filament\Resources\InboxResource\RelationManagers\VotesRelationManager;
 use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;
@@ -12,6 +10,8 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use App\Filament\Resources\InboxResource\Pages;
+use App\Filament\Resources\InboxResource\RelationManagers\VotesRelationManager;
+use App\Filament\Resources\InboxResource\RelationManagers\CommentsRelationManager;
 
 class InboxResource extends Resource
 {

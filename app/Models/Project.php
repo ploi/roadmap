@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use App\Traits\HasOgImage;
 use App\Traits\Sluggable;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Traits\HasOgImage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Str;
 
 class Project extends Model
 {

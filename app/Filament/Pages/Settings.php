@@ -2,9 +2,11 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Pages\Actions\Action;
+use Storage;
+use Illuminate\Support\Str;
 use Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
+use Filament\Pages\Actions\Action;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
@@ -12,8 +14,6 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
-use Illuminate\Support\Str;
-use Storage;
 
 class Settings extends SettingsPage
 {
@@ -41,7 +41,7 @@ class Settings extends SettingsPage
                                 ->placeholder('Enter defaults to be created upon project creation')
                                 ->helperText('These boards will automatically be prefilled when you create a project.')
                                 ->columnSpan(2)
-                                ->visible(fn($get) => $get('create_default_boards')),
+                                ->visible(fn ($get) => $get('create_default_boards')),
 
                             Toggle::make('show_projects_sidebar_without_boards')->label('Show projects in sidebar without boards')
                                 ->helperText('If you don\'t want to show projects without boards in the sidebar, toggle this off.')
@@ -68,14 +68,23 @@ class Settings extends SettingsPage
                             Repeater::make('dashboard_items')
                                 ->columnSpan(2)
                                 ->schema([
-                                    Select::make('type')->options([
-                                        'recent-items' => 'Recent items',
-                                        'recent-comments' => 'Recent comments'
-                                    ])->default('recent-items'),
+                                    Select::make('type')
+                                        ->reactive()
+                                        ->options([
+                                            'recent-items' => 'Recent items',
+                                            'recent-comments' => 'Recent comments'
+                                        ])->default('recent-items'),
                                     Select::make('column_span')->options([
                                         1 => 1,
                                         2 => 2,
-                                    ])->default(1)
+                                    ])->default(1),
+                                    Toggle::make('must_have_board')
+                                        ->reactive()
+                                        ->visible(fn ($get) => $get('type') === 'recent-items')
+                                        ->helperText('Enable this to show items that have a board'),
+                                    Toggle::make('must_have_project')
+                                        ->visible(fn ($get) => $get('must_have_board') && $get('type') === 'recent-items')
+                                        ->helperText('Enable this to show items that have a project'),
                                 ])->helperText('Determine which items you want to show on the dashboard (for all users).'),
                         ]),
 

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration {
     /**
@@ -24,8 +24,8 @@ return new class extends Migration {
             $table->string('slug')->after('id')->index()->nullable();
         });
 
-        \App\Models\Project::each(fn(\App\Models\Project $project) => $project->update(['slug' => Str::slug($project->id . ' ' . $project->title)]));
-        \App\Models\Board::each(fn(\App\Models\Board $board) => $board->update(['slug' => Str::slug($board->id . ' ' . $board->title)]));
-        \App\Models\Item::each(fn(\App\Models\Item $item) => $item->update(['slug' => Str::slug($item->id . ' ' . $item->title)]));
+        \App\Models\Project::each(fn (\App\Models\Project $project) => $project->update(['slug' => Str::slug($project->id . ' ' . $project->title)]));
+        \App\Models\Board::each(fn (\App\Models\Board $board) => $board->update(['slug' => Str::slug($board->id . ' ' . $board->title)]));
+        \App\Models\Item::each(fn (\App\Models\Item $item) => $item->update(['slug' => Str::slug($item->id . ' ' . $item->title)]));
     }
 };

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Xetaio\Mentions\Models\Mention;
+use Illuminate\Database\Eloquent\Model;
 use Xetaio\Mentions\Models\Traits\HasMentionsTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 

@@ -6,6 +6,8 @@ use Closure;
 use App\Models\Item;
 use Filament\Tables;
 use Livewire\Component;
+use Illuminate\Support\Arr;
+use App\Settings\GeneralSettings;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -16,7 +18,18 @@ class RecentItems extends Component implements HasTable
 
     protected function getTableQuery(): Builder
     {
-        return Item::query()->with('board.project')->limit(10)->latest();
+        $recentItemsConfig = collect(app(GeneralSettings::class)->dashboard_items)->first();
+
+        return Item::query()
+            ->with('board.project')
+            ->when(Arr::get($recentItemsConfig, 'must_have_board'), function (Builder $query) {
+                return $query->has('board');
+            })
+            ->when(Arr::get($recentItemsConfig, 'must_have_project'), function (Builder $query) {
+                return $query->has('project');
+            })
+            ->limit(10)
+            ->latest();
     }
 
     protected function isTablePaginationEnabled(): bool

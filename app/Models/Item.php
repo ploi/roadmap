@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Traits\HasOgImage;
 use App\Traits\Sluggable;
+use App\Traits\HasOgImage;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;

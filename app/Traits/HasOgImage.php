@@ -3,8 +3,8 @@
 namespace App\Traits;
 
 use App\Services\Tailwind;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
 trait HasOgImage
@@ -26,7 +26,7 @@ trait HasOgImage
 
                 $img = Image::make(public_path('images/og-template.jpg'));
                 if ($subject) {
-                    $img->text(wordwrap($subject, 22, PHP_EOL), 78, $y - 65, function ($font) use($tailwind) {
+                    $img->text(wordwrap($subject, 22, PHP_EOL), 78, $y - 65, function ($font) use ($tailwind) {
                         $font->file(public_path('fonts/Lexend-Bold.ttf'));
                         $font->size(25);
                         $font->color($tailwind->shades['brand-500']);
@@ -53,7 +53,7 @@ trait HasOgImage
                     825,  630,
                 ];
 
-                $img->polygon($points, function ($draw) use($tailwind) {
+                $img->polygon($points, function ($draw) use ($tailwind) {
                     $draw->background($tailwind->shades['brand-100']);
                 });
 
