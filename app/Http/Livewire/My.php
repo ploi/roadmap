@@ -21,8 +21,12 @@ class My extends Component implements HasTable
             return auth()->user()->items()->with('board.project')->latest()->getQuery();
         }
 
-//        return auth()->user()->items()->with('board.project')->latest()->getQuery();
         return auth()->user()->votedItems()->with('board.project')->latest('votes.created_at')->getQuery();
+    }
+
+    protected function getTableRecordsPerPageSelectOptions(): array
+    {
+        return [5];
     }
 
     protected function getTableColumns(): array

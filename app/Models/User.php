@@ -68,6 +68,13 @@ class User extends Authenticatable implements FilamentUser
         return $this->belongsToMany(Item::class, 'item_user');
     }
 
+    public function mentions()
+    {
+        return $this
+            ->morphedByMany(Comment::class, 'model', 'mentions', 'recipient_id')
+            ->where('recipient_type', User::class);
+    }
+
     public function wantsNotification($type)
     {
         return in_array($type, $this->notification_settings ?? []);

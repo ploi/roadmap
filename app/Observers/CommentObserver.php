@@ -23,4 +23,9 @@ class CommentObserver
             'content' => $content,
         ]);
     }
+
+    public function deleting(Comment $comment)
+    {
+        $comment->mentions()->delete();
+    }
 }
