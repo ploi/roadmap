@@ -9,7 +9,10 @@ Welcome to Roadmap, the open-source software for your roadmapping needs 🛣
 - Completely customisable roadmapping software
 - Mention users in comments
 - Upvote items to see which has more priority
+- Automatic slug generation
 - Filament admin panel 💛
+- Automatic OG image generation including branding color you've setup (saves in your storage, around 70kb per image), example:
+![OG](https://roadmap.ploi.io/storage/og-20-ssl-via-api-force-request-skip-dns-verification-site-level-request-20.jpg?v=1653397308)
 
 ## Requirements
 
