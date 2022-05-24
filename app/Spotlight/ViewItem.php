@@ -26,7 +26,9 @@ class ViewItem extends SpotlightCommand
 
     public function searchItem($query)
     {
-        return Item::where('title', 'like', "%$query%")
+        return Item::query()
+            ->where('title', 'like', "%$query%")
+            ->limit(10)
             ->get()
             ->map(function(Item $item) {
                 return new SpotlightSearchResult(
