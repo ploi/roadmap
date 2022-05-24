@@ -10,7 +10,7 @@ class CreateGeneralSettings extends SettingsMigration
         $this->migrator->add('general.board_centered', false);
         $this->migrator->add('general.create_default_boards', true);
         $this->migrator->add('general.default_boards', [
-            'Planned', 'In progress', 'Live'
+            'Under review', 'Planned', 'In progress', 'Live', 'Closed'
         ]);
         $this->migrator->add('general.show_projects_sidebar_without_boards', true);
         $this->migrator->add('general.allow_general_creation_of_item', true);
