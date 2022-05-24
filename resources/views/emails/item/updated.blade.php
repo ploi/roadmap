@@ -1,7 +1,7 @@
 @component('mail::message')
 **Hi {{ $user->name }}**,
 
-The item **{{ $item->title }}** you're subscribed to have been updated.
+The item **{{ trim($item->title) }}** you're subscribed to have been updated.
 
 **Latest activity:**
 @component('mail::table')
