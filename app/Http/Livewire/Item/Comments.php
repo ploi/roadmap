@@ -28,11 +28,9 @@ class Comments extends Component implements HasForms
             return redirect()->route('login');
         }
 
-        $formState = $this->form->getState();
+        $formState = array_merge($this->form->getState(), ['user_id' => auth()->id()]);
 
-        $comment = $this->item->comments()->create($formState);
-        $comment->user()->associate(auth()->user());
-        $comment->save();
+        $this->item->comments()->create($formState);
 
         $this->content = '';
     }

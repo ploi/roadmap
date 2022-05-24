@@ -11,7 +11,8 @@ class Comment extends Model
     use HasFactory, HasMentionsTrait;
 
     public $fillable = [
-        'content'
+        'content',
+        'user_id'
     ];
 
     public function user()

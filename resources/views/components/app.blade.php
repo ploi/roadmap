@@ -55,7 +55,9 @@
 
 <x-filament::notification-manager/>
 
+@livewire('livewire-ui-spotlight')
 @livewire('livewire-ui-modal')
+
 @livewireScripts
 <script src="{{ mix('js/app.js') }}"></script>
 @stack('javascript')

@@ -31,7 +31,7 @@ class VoteResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('item_title'),
+                Tables\Columns\TextColumn::make('model.title')->label('Item'),
                 Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date'),
             ])
             ->filters([

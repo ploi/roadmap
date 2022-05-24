@@ -24,7 +24,7 @@
                     <span>&centerdot;</span>
 
                     <time
-                        class="flex-shrink-0 text-xs font-medium items-center text-gray-500 cursor-pointer border-b border-dotted">
+                        class="flex-shrink-0 text-xs font-medium items-center text-gray-500">
                         {{ $comment->created_at->diffForHumans() }}
                     </time>
                 </div>
