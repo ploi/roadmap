@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Services\Tailwind;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 trait HasOgImage
@@ -32,7 +33,7 @@ trait HasOgImage
                     });
                 }
 
-                $img->text(wordwrap(trim(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', mb_convert_encoding($this->title, "UTF-8"))), 22, PHP_EOL), 75, $y, function ($font) {
+                $img->text(wordwrap(trim(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', mb_convert_encoding(Str::limit($this->title, 15), "UTF-8"))), 22, PHP_EOL), 75, $y, function ($font) {
                     $font->file(public_path('fonts/Lexend-Bold.ttf'));
                     $font->size(60);
                     $font->color('#000');
@@ -60,7 +61,7 @@ trait HasOgImage
 
                 return asset('storage/og-' . $this->slug . '-' . $this->id . '.jpg?v=' . $this->updated_at->timestamp);
             } catch (\Throwable $exception) {
-                return asset('images/og.jpg');
+                return asset('images/og-template.jpg');
             }
         }
 

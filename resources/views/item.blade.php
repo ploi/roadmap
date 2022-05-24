@@ -37,7 +37,7 @@
 
                 <div class="border-t"></div>
 
-                <div class="p-4 prose">
+                <div class="p-4 prose break-words">
                     {!! str($item->content)->markdown() !!}
                 </div>
             </x-card>
