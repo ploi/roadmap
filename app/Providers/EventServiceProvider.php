@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
-use App\Models\Comment;
 use App\Models\Item;
 use App\Models\Vote;
+use App\Models\Comment;
 use App\Models\Project;
-use App\Observers\CommentObserver;
 use App\Observers\ItemObserver;
 use App\Observers\VoteObserver;
+use App\Observers\CommentObserver;
 use App\Observers\ProjectObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;

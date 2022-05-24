@@ -7,8 +7,8 @@ use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use App\Filament\Resources\VoteResource\Pages;
 use Illuminate\Database\Eloquent\Model;
+use App\Filament\Resources\VoteResource\Pages;
 
 class VoteResource extends Resource
 {

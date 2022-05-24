@@ -5,8 +5,8 @@ namespace App\Filament\Resources\ItemResource\RelationManagers;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use Filament\Resources\RelationManagers\MorphManyRelationManager;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Resources\RelationManagers\MorphManyRelationManager;
 
 class ActivitiesRelationManager extends MorphManyRelationManager
 {

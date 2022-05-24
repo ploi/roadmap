@@ -6,7 +6,6 @@ use App\Models\Item;
 use Livewire\Component;
 use Filament\Forms\Contracts\HasForms;
 use App\View\Components\MarkdownEditor;
-use Xetaio\Mentions\Parser\MentionParser;
 use Filament\Forms\Concerns\InteractsWithForms;
 
 class Comments extends Component implements HasForms

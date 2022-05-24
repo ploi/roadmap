@@ -2,10 +2,9 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Forms\Components\Tabs;
 use Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
-use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Repeater;

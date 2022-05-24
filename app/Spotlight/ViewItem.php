@@ -3,11 +3,10 @@
 namespace App\Spotlight;
 
 use App\Models\Item;
-use LivewireUI\Spotlight\Spotlight;
 use LivewireUI\Spotlight\SpotlightCommand;
-use LivewireUI\Spotlight\SpotlightCommandDependencies;
-use LivewireUI\Spotlight\SpotlightCommandDependency;
 use LivewireUI\Spotlight\SpotlightSearchResult;
+use LivewireUI\Spotlight\SpotlightCommandDependency;
+use LivewireUI\Spotlight\SpotlightCommandDependencies;
 
 class ViewItem extends SpotlightCommand
 {
@@ -30,7 +29,7 @@ class ViewItem extends SpotlightCommand
             ->where('title', 'like', "%$query%")
             ->limit(10)
             ->get()
-            ->map(function(Item $item) {
+            ->map(function (Item $item) {
                 return new SpotlightSearchResult(
                     $item->id,
                     $item->title,
