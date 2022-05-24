@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\ItemResource\RelationManagers\CommentsRelationManager;
 use App\Filament\Resources\ItemResource\RelationManagers\VotesRelationManager;
 use Filament\Forms;
 use App\Models\Item;
@@ -72,6 +73,7 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('title')->searchable(),
                 Tables\Columns\TextColumn::make('total_votes')->label('Votes')->sortable(),
+                Tables\Columns\TextColumn::make('comments_count')->counts('comments')->sortable(),
                 Tables\Columns\TextColumn::make('board.project.title'),
                 Tables\Columns\TextColumn::make('board.title'),
                 Tables\Columns\TextColumn::make('user.name'),
@@ -90,6 +92,7 @@ class ItemResource extends Resource
     {
         return [
             ActivitiesRelationManager::class,
+            CommentsRelationManager::class,
             VotesRelationManager::class,
         ];
     }

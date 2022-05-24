@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\InboxResource\RelationManagers\CommentsRelationManager;
+use App\Filament\Resources\InboxResource\RelationManagers\VotesRelationManager;
 use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;
@@ -92,7 +94,8 @@ class InboxResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CommentsRelationManager::class,
+            VotesRelationManager::class,
         ];
     }
 
