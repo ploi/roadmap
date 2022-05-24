@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\ItemResource\RelationManagers\VotesRelationManager;
 use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;
@@ -89,6 +90,7 @@ class ItemResource extends Resource
     {
         return [
             ActivitiesRelationManager::class,
+            VotesRelationManager::class,
         ];
     }
 
