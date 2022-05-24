@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use Illuminate\Support\Collection;
 use Storage;
 use Illuminate\Support\Str;
 use Filament\Pages\SettingsPage;
@@ -20,6 +21,18 @@ class Settings extends SettingsPage
     protected static ?string $navigationIcon = 'heroicon-o-cog';
 
     protected static string $settings = GeneralSettings::class;
+
+    public Collection $ogImages;
+
+    public function mount(): void
+    {
+        parent::mount();
+
+        $this->ogImages = collect(Storage::disk('public')->allFiles())
+            ->filter(function ($file) {
+                return Str::startsWith($file, 'og-') && Str::endsWith($file, '.jpg');
+            });
+    }
 
     protected function getFormSchema(): array
     {
@@ -41,7 +54,7 @@ class Settings extends SettingsPage
                                 ->placeholder('Enter defaults to be created upon project creation')
                                 ->helperText('These boards will automatically be prefilled when you create a project.')
                                 ->columnSpan(2)
-                                ->visible(fn ($get) => $get('create_default_boards')),
+                                ->visible(fn($get) => $get('create_default_boards')),
 
                             Toggle::make('show_projects_sidebar_without_boards')->label('Show projects in sidebar without boards')
                                 ->helperText('If you don\'t want to show projects without boards in the sidebar, toggle this off.')
@@ -80,10 +93,10 @@ class Settings extends SettingsPage
                                     ])->default(1),
                                     Toggle::make('must_have_board')
                                         ->reactive()
-                                        ->visible(fn ($get) => $get('type') === 'recent-items')
+                                        ->visible(fn($get) => $get('type') === 'recent-items')
                                         ->helperText('Enable this to show items that have a board'),
                                     Toggle::make('must_have_project')
-                                        ->visible(fn ($get) => $get('must_have_board') && $get('type') === 'recent-items')
+                                        ->visible(fn($get) => $get('must_have_board') && $get('type') === 'recent-items')
                                         ->helperText('Enable this to show items that have a project'),
                                 ])->helperText('Determine which items you want to show on the dashboard (for all users).'),
                         ]),
@@ -109,10 +122,7 @@ class Settings extends SettingsPage
         return [
             Action::make('flush_og_images')
                 ->action(function () {
-                    $items = collect(Storage::disk('public')->allFiles())
-                        ->filter(function ($file) {
-                            return Str::startsWith($file, 'og-') && Str::endsWith($file, '.jpg');
-                        })
+                    $items = $this->ogImages
                         ->each(function ($file) {
                             Storage::disk('public')->delete($file);
                         });
@@ -123,11 +133,14 @@ class Settings extends SettingsPage
                     }
 
                     $this->notify('success', 'Flushed ' . $items->count() . ' OG image(s) 🎉');
+
+                    $this->ogImages = collect();
                 })
-                ->label('Flush OG images')
+                ->disabled(!$this->ogImages->count())
+                ->label('Flush OG images (' . $this->ogImages->count() . ')')
                 ->color('secondary')
                 ->modalHeading('Delete OG images')
-                ->modalSubheading('Are you sure you\'d like to delete all the OG images? This could be especially handy if you have changed branding color, if you feel some images are not correct.')
+                ->modalSubheading('Are you sure you\'d like to delete all the OG images? There\'s currently ' . $this->ogImages->count() . ' image(s) in the storage. This could be especially handy if you have changed branding color, if you feel some images are not correct.')
                 ->requiresConfirmation(),
         ];
     }

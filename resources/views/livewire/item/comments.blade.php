@@ -7,7 +7,7 @@
                         <div class="relative flex-shrink-0 w-10 h-10 rounded-full">
                             <img class="absolute inset-0 object-cover rounded-full"
                                  src="{{ $comment->user->getGravatar() }}"
-                                 alt="">
+                                 alt="{{ $comment->user->name }}">
                         </div>
 
                         <div class="overflow-hidden font-medium flex items-center space-x-2">
@@ -24,6 +24,8 @@
                     <span>&centerdot;</span>
 
                     <time
+                        x-data="{ tooltip: '{{ $comment->created_at }}' }"
+                        x-tooltip="tooltip"
                         class="flex-shrink-0 text-xs font-medium items-center text-gray-500">
                         {{ $comment->created_at->diffForHumans() }}
                     </time>
