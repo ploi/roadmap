@@ -20,6 +20,7 @@ class MentionSearchController extends Controller
                     ->where('id', '!=', auth()->id())
                     ->where('name', 'like', '%' . $request->input('query') . '%');
             })
+            ->limit(10)
             ->get(['name', 'username', 'email'])
             ->map(function (User $user) {
                 return [

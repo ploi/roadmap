@@ -39,6 +39,7 @@ class Comments extends Component implements HasForms
     {
         return [
             MarkdownEditor::make('content')
+                ->helperText('You may use @ to mention someone.')
                 ->required()
                 ->minLength(3),
         ];
