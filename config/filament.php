@@ -220,7 +220,7 @@ return [
     |
     */
 
-    'favicon' => null,
+    'favicon' => file_exists(storage_path('app/public/favicon.png')) ? asset('storage/favicon.png') : null,
 
     /*
     |--------------------------------------------------------------------------
