@@ -60,6 +60,16 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 We appreciate sponsors, we still maintain this repository, server, emails and domain. [You can do that here](https://github.com/sponsors/Cannonb4ll).
 Each sponsor gets listed on in this readme.
 
+## Paid alternatives
+
+Obviously, if you do not want to self host, there's plenty of self-hosted solutions, a small rundown:
+
+- [UpVoty](https://upvoty.com)
+- [Canny](https://canny.io/)
+- [Craft](https://craft.io/)
+- [Convas](https://convas.io/)
+- [UserReport](https://www.userreport.com/)
+
 ## Credits
 
 - [Cannonb4ll](https://github.com/cannonb4ll)
