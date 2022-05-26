@@ -67,6 +67,12 @@
                         class="flex items-center justify-center w-full h-8 px-3 text-sm font-semibold tracking-tight text-white transition bg-brand-600 rounded-lg shadow hover:bg-brand-500 focus:bg-brand-700 focus:outline-none focus:ring-offset-2 focus:ring-offset-brand-700 focus:ring-2 focus:ring-white focus:ring-inset"
                         type="submit">Log In
                     </button>
+
+                    @if($hasSsoLoginAvailable)
+                        <a href="{{ route('oauth.login') }}" class="flex items-center justify-center w-full h-8 px-3 text-sm font-semibold tracking-tight text-white transition bg-brand-600 rounded-lg shadow hover:bg-brand-500 focus:bg-brand-700 focus:outline-none focus:ring-offset-2 focus:ring-offset-brand-700 focus:ring-2 focus:ring-white focus:ring-inset">
+                            {{ config('services.sso.title') }}
+                        </a>
+                    @endif
                 </form>
 
                 <div class="w-4 mx-auto mt-4 border-t border-gray-300"></div>

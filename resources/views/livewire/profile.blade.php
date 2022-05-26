@@ -1,4 +1,4 @@
-<div>
+<div class="space-y-6">
     <form class="space-y-4" wire:submit.prevent="submit">
         {{ $this->form }}
 
@@ -10,4 +10,13 @@
             Logout
         </x-filament::button>
     </form>
+
+    @if($hasSsoLoginAvailable)
+        <div>
+            <h2 class="text-lg tracking-tight font-bold">Social login</h2>
+            <p class="text-gray-500 text-sm">Here you'll find the social login's you've used to log in with your account.</p>
+        </div>
+
+        {{ $this->table }}
+    @endif
 </div>

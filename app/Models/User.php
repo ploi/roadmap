@@ -75,6 +75,11 @@ class User extends Authenticatable implements FilamentUser
             ->where('recipient_type', User::class);
     }
 
+    public function userSocials()
+    {
+        return $this->hasMany(UserSocial::class);
+    }
+
     public function wantsNotification($type)
     {
         return in_array($type, $this->notification_settings ?? []);
