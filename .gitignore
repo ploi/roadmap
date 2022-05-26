@@ -12,7 +12,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-/public/css/*.css
-/public/js/*.js
+/public/css/*
+/public/js/*
 /public/mix-manifest.json
 .php-cs-fixer.cache
