@@ -28,6 +28,8 @@ git clone https://github.com/ploi-deploy/roadmap.git
 composer install
 php -r "file_exists('.env') || copy('.env.example', '.env');"
 php artisan key:generate
+npm install
+npm run production
 ```
 
 Now edit your `.env` file and set up the database credentials, including the app name you want.
@@ -59,6 +61,16 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 We appreciate sponsors, we still maintain this repository, server, emails and domain. [You can do that here](https://github.com/sponsors/Cannonb4ll).
 Each sponsor gets listed on in this readme.
+
+## Paid alternatives
+
+Obviously, if you do not want to self host, there's plenty of self-hosted solutions, a small rundown:
+
+- [UpVoty](https://upvoty.com)
+- [Canny](https://canny.io/)
+- [Craft](https://craft.io/)
+- [Convas](https://convas.io/)
+- [UserReport](https://www.userreport.com/)
 
 ## Credits
 
