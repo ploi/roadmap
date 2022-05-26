@@ -37,6 +37,7 @@ return [
         'client_id' => env('SSO_CLIENT_ID'),
         'client_secret' => env('SSO_CLIENT_SECRET'),
         'redirect' => env('SSO_CALLBACK'),
+        'forced' => env('SSO_FORCED', false),
         'scopes' => env('SSO_SCOPES'),
         'http_verify' => env('SSO_HTTP_VERIFY', true),
         'endpoints' => [

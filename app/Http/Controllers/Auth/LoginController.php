@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Models\UserSocial;
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\SocialProviders\SsoProvider;
+use App\Providers\RouteServiceProvider;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -34,7 +35,7 @@ class LoginController extends Controller
             ]);
         }
 
-        $social = Socialite::driver('sso')->user();
+        $social = Socialite::driver($provider)->user();
 
         $userSocial = UserSocial::query()
             ->where('provider_id', $social->getId())
@@ -92,16 +93,12 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('auth.login', [
-            'hasSsoLoginAvailable' => $this->hasSsoLoginAvailable()
-        ]);
-    }
+        if (SsoProvider::isForced()) {
+            return to_route('oauth.login');
+        }
 
-    protected function hasSsoLoginAvailable()
-    {
-        return config('services.sso.url') &&
-            config('services.sso.client_id') &&
-            config('services.sso.client_secret') &&
-            config('services.sso.redirect');
+        return view('auth.login', [
+            'hasSsoLoginAvailable' => SsoProvider::isEnabled(),
+        ]);
     }
 }

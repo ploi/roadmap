@@ -72,14 +72,27 @@ class SsoProvider extends AbstractProvider implements ProviderInterface
         $user = Arr::get($user, 'data');
 
         if ($user === null || !Arr::has($user, ['id', 'email', 'name'])) {
-            throw new RuntimeException('The SSO user endpoint should return an `id`, `email` and `name` wrapped in the `data` field.');
+            throw new RuntimeException('The SSO user endpoint should return an `id`, `email` and `name` in the `data` field of the JSON response.');
         }
 
         return (new User)->setRaw($user)->map([
-            'id' => $user['id'],
-            'email' => $user['email'],
-            'name' => $user['name'],
+            'id'       => $user['id'],
+            'email'    => $user['email'],
+            'name'     => $user['name'],
             'nickname' => $user['name'],
         ]);
+    }
+
+    public static function isEnabled(): bool
+    {
+        return config('services.sso.url') &&
+               config('services.sso.client_id') &&
+               config('services.sso.client_secret') &&
+               config('services.sso.redirect');
+    }
+
+    public static function isForced(): bool
+    {
+        return self::isEnabled() && config('services.sso.forced') === true;
     }
 }
