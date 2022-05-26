@@ -34,7 +34,7 @@
                 <div class="p-2">
                     <button x-data
                             x-tooltip.raw="Click to copy link to this comment"
-                            x-clipboard.raw="{{ route('items.show', $item->id) .'#comment-' . $comment->id }}"
+                            x-clipboard.raw="{{ route('items.show', $item) .'#comment-' . $comment->id }}"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-500" fill="none"
                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

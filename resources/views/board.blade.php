@@ -3,7 +3,7 @@
 @section('description', $board->description)
 
 <x-app :breadcrumbs="[
-    ['title' => $project->title, 'url' => route('projects.show', $project->id)],
+    ['title' => $project->title, 'url' => route('projects.show', $project)],
     ['title' => $board->title, 'url' => '']
 ]">
     <main class="p-4 h-full flex space-x-10 mx-auto max-w-6xl">
