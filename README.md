@@ -57,14 +57,14 @@ It will ask you a few questions, an example how to answer these:
 ```
 $ php artisan passport:client
 
- Which user ID should the client be assigned to?:
- > 
+Which user ID should the client be assigned to?:
+> 
 
- What should we name the client?:
- > Roadmap SSO
+What should we name the client?:
+> Roadmap SSO
 
- Where should we redirect the request after authorization? [https://my-app.com/oauth/callback]:
- > 
+Where should we redirect the request after authorization? [https://my-app.com/oauth/callback]:
+> 
 
 New client created successfully.
 Client ID: 3
