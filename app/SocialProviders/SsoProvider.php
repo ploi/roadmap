@@ -11,9 +11,15 @@ use Laravel\Socialite\Two\ProviderInterface;
 
 class SsoProvider extends AbstractProvider implements ProviderInterface
 {
-    protected $scopes = [
-        'email',
-    ];
+    public function getScopes()
+    {
+        if (config('services.sso.scopes') !== null) {
+            return explode(',', config('services.sso.scopes'));
+        }
+
+        return ['email'];
+    }
+
     protected function getHttpClient()
     {
         if (is_null($this->httpClient)) {
