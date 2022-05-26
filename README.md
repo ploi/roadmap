@@ -1,4 +1,4 @@
-![Alt text](/public/screenshots/screenshot.png)
+![Roadmap screenshot](/public/screenshots/screenshot.png)
 
 # Roadmap
 
@@ -13,6 +13,7 @@ Welcome to Roadmap, the open-source software for your roadmapping needs 🛣
 - Filament admin panel 💛
 - Automatic OG image generation including branding color you've setup (saves in your storage, around 70kb per image), if title is too long it will strip automatically as well, example:
 ![OG](https://roadmap.ploi.io/storage/og-20-ssl-via-api-force-request-skip-dns-verification-site-level-request-20.jpg?v=1653397308)
+- OAuth 2 single sign-on with your own application
 
 ## Requirements
 
@@ -43,10 +44,10 @@ php artisan make:filament-user
 
 And login with the credentials you've provided.
 
-## Installing SSO (oAuth login with 3rd party app)
+## Installing SSO (OAuth 2 login with 3rd party app)
 
-It is possible to configure oAuth login with this roadmap software to make it easier to log in.
-In this example we're going to show how to set this up with a Laravel application example, but any other oAuth should be able to integrate as well.
+It is possible to configure OAuth 2 login with this roadmap software to make it easier to log in.
+In this example we're going to show how to set this up with a Laravel application example, but any other OAuth 2 capable application should be able to integrate as well.
 
 Start by installing Laravel Passport into your application, [consult their docs how to do this](https://laravel.com/docs/9.x/passport#installation).
 
@@ -146,7 +147,7 @@ Now head over to the login page in your roadmap software and view the log in but
 ## Testing
 
 ```bash
-./vendor/bin/pest
+composer test
 ```
 
 ## Changelog
