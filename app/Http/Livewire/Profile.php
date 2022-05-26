@@ -103,22 +103,11 @@ class Profile extends Component implements HasForms, HasTable
     {
         return [
             Tables\Actions\BulkAction::make('delete')
-                ->action(function (Collection $records) {
-                    foreach ($records as $record) {
-                        Http::withToken($record->access_token)
-                            ->timeout(5)
-                            ->delete(config('services.sso.url') . '/api/oauth/revoke');
+                                     ->action(function (Collection $records) {
+                                         foreach ($records as $record) {
+                                             $endpoint = config('services.sso.endpoints.revoke') ?? config('services.sso.url') . '/api/oauth/revoke';
 
-                        $record->delete();
-                    }
-                })
-                ->deselectRecordsAfterCompletion()
-                ->requiresConfirmation()
-                ->color('danger')
-                ->icon('heroicon-o-trash')
-
-        ];
-    }
+                                             $client = Http::withToken($record->access_token)->timeout(5);
 
     protected function hasSsoLoginAvailable()
     {
@@ -126,5 +115,20 @@ class Profile extends Component implements HasForms, HasTable
             config('services.sso.client_id') &&
             config('services.sso.client_secret') &&
             config('services.sso.redirect');
+                                             if (config('services.sso.http_verify') === false) {
+                                                 $client->withoutVerifying();
+                                             }
+
+                                             $client->delete($endpoint);
+
+                                             $record->delete();
+                                         }
+                                     })
+                                     ->deselectRecordsAfterCompletion()
+                                     ->requiresConfirmation()
+                                     ->color('danger')
+                                     ->icon('heroicon-o-trash'),
+
+        ];
     }
 }
