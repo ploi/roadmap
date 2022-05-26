@@ -6,6 +6,7 @@ use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
 use Livewire\Component;
+use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\Http;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Contracts\HasTable;
@@ -28,9 +29,9 @@ class Profile extends Component implements HasForms, HasTable
         $this->user = auth()->user();
 
         $this->form->fill([
-            'name' => $this->user->name,
-            'username' => $this->user->username,
-            'email' => $this->user->email,
+            'name'                  => $this->user->name,
+            'username'              => $this->user->username,
+            'email'                 => $this->user->email,
             'notification_settings' => $this->user->notification_settings,
         ]);
     }
@@ -41,19 +42,19 @@ class Profile extends Component implements HasForms, HasTable
             Forms\Components\Section::make('Profile')->schema([
                 Forms\Components\TextInput::make('name')->required(),
                 Forms\Components\TextInput::make('username')
-                    ->helperText('This username will be used to mention your name in comments.')
-                    ->required()
-                    ->unique(table: User::class, column: 'username', ignorable: auth()->user()),
+                                          ->helperText('This username will be used to mention your name in comments.')
+                                          ->required()
+                                          ->unique(table: User::class, column: 'username', ignorable: auth()->user()),
                 Forms\Components\TextInput::make('email')->required()->email(),
             ])->collapsible(),
 
             Forms\Components\Section::make('Notifications')
-                ->schema([
-                    Forms\Components\CheckboxList::make('notification_settings')
-                        ->options([
-                            'receive_mention_notifications' => 'Receive mention notifications',
-                        ]),
-                ])->collapsible()
+                                    ->schema([
+                                        Forms\Components\CheckboxList::make('notification_settings')
+                                                                     ->options([
+                                                                         'receive_mention_notifications' => 'Receive mention notifications',
+                                                                     ]),
+                                    ])->collapsible(),
         ];
     }
 
@@ -62,9 +63,9 @@ class Profile extends Component implements HasForms, HasTable
         $data = $this->form->getState();
 
         $this->user->update([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'username' => $data['username'],
+            'name'                  => $data['name'],
+            'email'                 => $data['email'],
+            'username'              => $data['username'],
             'notification_settings' => $data['notification_settings'],
         ]);
 
@@ -81,7 +82,7 @@ class Profile extends Component implements HasForms, HasTable
     public function render()
     {
         return view('livewire.profile', [
-            'hasSsoLoginAvailable' => $this->hasSsoLoginAvailable()
+            'hasSsoLoginAvailable' => SsoProvider::isEnabled(),
         ]);
     }
 
@@ -103,28 +104,26 @@ class Profile extends Component implements HasForms, HasTable
     {
         return [
             Tables\Actions\BulkAction::make('delete')
-                ->action(function (Collection $records) {
-                    foreach ($records as $record) {
-                        Http::withToken($record->access_token)
-                            ->timeout(5)
-                            ->delete(config('services.sso.url') . '/api/oauth/revoke');
+                                     ->action(function (Collection $records) {
+                                         foreach ($records as $record) {
+                                             $endpoint = config('services.sso.endpoints.revoke') ?? config('services.sso.url') . '/api/oauth/revoke';
 
-                        $record->delete();
-                    }
-                })
-                ->deselectRecordsAfterCompletion()
-                ->requiresConfirmation()
-                ->color('danger')
-                ->icon('heroicon-o-trash')
+                                             $client = Http::withToken($record->access_token)->timeout(5);
+
+                                             if (config('services.sso.http_verify') === false) {
+                                                 $client->withoutVerifying();
+                                             }
+
+                                             $client->delete($endpoint);
+
+                                             $record->delete();
+                                         }
+                                     })
+                                     ->deselectRecordsAfterCompletion()
+                                     ->requiresConfirmation()
+                                     ->color('danger')
+                                     ->icon('heroicon-o-trash'),
 
         ];
-    }
-
-    protected function hasSsoLoginAvailable()
-    {
-        return config('services.sso.url') &&
-            config('services.sso.client_id') &&
-            config('services.sso.client_secret') &&
-            config('services.sso.redirect');
     }
 }

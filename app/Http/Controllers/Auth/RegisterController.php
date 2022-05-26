@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use Spatie\Honeypot\ProtectAgainstSpam;
@@ -12,7 +13,9 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
-    use RegistersUsers;
+    use RegistersUsers {
+        showRegistrationForm as private laravelShowRegistrationForm;
+    }
 
     protected $redirectTo = RouteServiceProvider::HOME;
 
@@ -38,5 +41,14 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function showRegistrationForm()
+    {
+        if (SsoProvider::isForced()) {
+            return to_route('oauth.login');
+        }
+
+        return $this->laravelShowRegistrationForm();
     }
 }

@@ -32,10 +32,19 @@ return [
     ],
 
     'sso' => [
-        'title' => env('SSO_LOGIN_TITLE'),
+        'title' => env('SSO_LOGIN_TITLE', 'Login with SSO'),
         'url' => env('SSO_BASE_URL'),
         'client_id' => env('SSO_CLIENT_ID'),
         'client_secret' => env('SSO_CLIENT_SECRET'),
-        'redirect' => env('SSO_CALLBACK')
+        'redirect' => env('SSO_CALLBACK'),
+        'forced' => env('SSO_FORCED', false),
+        'scopes' => env('SSO_SCOPES'),
+        'http_verify' => env('SSO_HTTP_VERIFY', true),
+        'endpoints' => [
+            'authorize' => env('SSO_ENDPOINT_AUTHORIZE'),
+            'revoke' => env('SSO_ENDPOINT_REVOKE'),
+            'token' => env('SSO_ENDPOINT_TOKEN'),
+            'user' => env('SSO_ENDPOINT_USER'),
+        ],
     ]
 ];
