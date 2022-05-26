@@ -147,7 +147,7 @@ Now head over to the login page in your roadmap software and view the log in but
 ## Testing
 
 ```bash
-./vendor/bin/pest
+composer test
 ```
 
 ## Changelog
