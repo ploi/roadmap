@@ -1,4 +1,4 @@
-![Alt text](/public/screenshots/screenshot.png)
+![Roadmap screenshot](/public/screenshots/screenshot.png)
 
 # Roadmap
 
