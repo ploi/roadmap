@@ -108,7 +108,7 @@
                 @foreach($projects as $project)
                     <li>
                         <a class="block p-2 transition rounded-lg focus:outline-none hover:bg-brand-500-400"
-                           href="{{ route('projects.show', $project->id) }}">
+                           href="{{ route('projects.show', $project) }}">
                             {{ $project->title }}
                         </a>
                     </li>
