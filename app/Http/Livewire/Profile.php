@@ -2,20 +2,18 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\UserSocial;
 use Filament\Forms;
 use App\Models\User;
-use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables;
+use Livewire\Component;
+use Illuminate\Support\Facades\Http;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Client\Pool;
-use Illuminate\Support\Facades\Http;
-use Livewire\Component;
-use Filament\Tables;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Http\Livewire\Concerns\CanNotify;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Tables\Concerns\InteractsWithTable;
 
 class Profile extends Component implements HasForms, HasTable
 {

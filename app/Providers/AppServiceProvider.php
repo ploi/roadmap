@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\SocialProviders\SsoProvider;
 use Filament\Facades\Filament;
+use App\SocialProviders\SsoProvider;
 use Filament\Navigation\NavigationItem;
 use Illuminate\Support\ServiceProvider;
 
