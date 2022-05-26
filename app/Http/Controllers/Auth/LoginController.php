@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\UserSocial;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -25,8 +26,14 @@ class LoginController extends Controller
         return Socialite::driver($provider)->redirect();
     }
 
-    public function handleProviderCallback($provider = 'sso')
+    public function handleProviderCallback(Request $request, $provider = 'sso')
     {
+        if ($request->input('error') === 'access_denied') {
+            return redirect()->route('login')->withErrors([
+                'Denied access to login'
+            ]);
+        }
+
         $social = Socialite::driver('sso')->user();
 
         $userSocial = UserSocial::query()
