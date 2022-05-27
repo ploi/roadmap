@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
