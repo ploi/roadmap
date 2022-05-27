@@ -3,6 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Models\Item;
+use App\Models\Project;
+use App\Settings\GeneralSettings;
+use Filament\Forms\Components\Select;
 use LivewireUI\Modal\ModalComponent;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\TextInput;
@@ -21,14 +24,24 @@ class CreateItemModal extends ModalComponent implements HasForms
 
     protected function getFormSchema(): array
     {
-        return [
-            TextInput::make('title')
-                ->minLength(3)
-                ->required(),
-            MarkdownEditor::make('content')
-                ->minLength(10)
-                ->required(),
-        ];
+        $inputs = [];
+
+        $inputs[] = TextInput::make('title')
+            ->minLength(3)
+            ->required();
+
+        if (app(GeneralSettings::class)->select_project_when_creating_item) {
+            $inputs[] = Select::make('project_id')
+                ->label('Project')
+                ->options(Project::pluck('title', 'id'));
+        }
+
+        $inputs[] = MarkdownEditor::make('content')
+            ->minLength(10)
+            ->required();
+
+
+        return $inputs;
     }
 
     public function submit()
@@ -42,6 +55,7 @@ class CreateItemModal extends ModalComponent implements HasForms
         $item = Item::create([
             'title' => $data['title'],
             'content' => $data['content'],
+            'project_id' => $data['project_id'] ?? null
         ]);
 
         $item->user()->associate(auth()->user())->save();

@@ -33,7 +33,7 @@
                 Create
             </x-filament::button>
         @endauth
-        
+
         <x-filament::button color="secondary" wire:click="$emit('closeModal')">
             Close
         </x-filament::button>

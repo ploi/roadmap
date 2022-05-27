@@ -69,6 +69,14 @@ class Settings extends SettingsPage
                                 ->helperText('Enable this to show the age of an item on the details page.')
                                 ->columnSpan(2),
 
+                            Toggle::make('select_project_when_creating_item')
+                                ->label('Users can select a project when creating an item')
+                                ->columnSpan(2),
+
+                            Toggle::make('select_board_when_creating_item')
+                                ->label('Users can select a board when creating an item')
+                                ->columnSpan(2),
+
                             TextInput::make('password')->helperText('Entering a password here will ask your users to enter a password before entering the roadmap.'),
 
                             RichEditor::make('welcome_text')
