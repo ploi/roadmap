@@ -19,8 +19,16 @@ class Items extends Component
 
     public function render()
     {
-        $this->items = $this->board->items()->latest()->get();
+        $this->items = $this->board->items()->latest($this->getSortingColumn())->get();
 
         return view('livewire.board.items');
+    }
+
+    protected function getSortingColumn()
+    {
+        return match ($this->board->sort_items_by) {
+            'popular' => 'total_votes',
+            'latest' => 'created_at',
+        };
     }
 }

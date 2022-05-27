@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Board;
 use App\Models\Item;
 use App\Models\Project;
 use App\Settings\GeneralSettings;
@@ -33,8 +34,17 @@ class CreateItemModal extends ModalComponent implements HasForms
         if (app(GeneralSettings::class)->select_project_when_creating_item) {
             $inputs[] = Select::make('project_id')
                 ->label('Project')
-                ->options(Project::pluck('title', 'id'));
+                ->reactive()
+                ->options(Project::query()->pluck('title', 'id'));
         }
+
+        // TODO This still bugs out atm (repeats the markdown editor for some reason
+//        if (app(GeneralSettings::class)->select_board_when_creating_item) {
+//            $inputs[] = Select::make('board_id')
+//                ->label('Board')
+//                ->visible(fn ($get) => $get('project_id'))
+//                ->options(Board::query()->pluck('title', 'id'));
+//        }
 
         $inputs[] = MarkdownEditor::make('content')
             ->minLength(10)
