@@ -6,6 +6,7 @@ use App\Models\Board;
 use App\Models\Item;
 use App\Models\Project;
 use App\Settings\GeneralSettings;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use LivewireUI\Modal\ModalComponent;
 use Filament\Forms\Contracts\HasForms;
@@ -42,13 +43,15 @@ class CreateItemModal extends ModalComponent implements HasForms
         if (app(GeneralSettings::class)->select_board_when_creating_item) {
             $inputs[] = Select::make('board_id')
                 ->label('Board')
-                ->visible(fn ($get) => $get('project_id'))
+                ->visible(fn($get) => $get('project_id'))
                 ->options(Board::query()->pluck('title', 'id'));
         }
 
-        $inputs[] = MarkdownEditor::make('content')
-            ->minLength(10)
-            ->required();
+        $inputs[] = Group::make([
+            MarkdownEditor::make('content')
+                ->minLength(10)
+                ->required()
+        ]);
 
 
         return $inputs;
