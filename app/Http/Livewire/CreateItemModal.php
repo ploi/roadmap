@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\Item;
-use App\Models\Board;
 use App\Models\Project;
 use App\Settings\GeneralSettings;
 use Filament\Forms\Components\Group;
@@ -43,7 +42,7 @@ class CreateItemModal extends ModalComponent implements HasForms
             $inputs[] = Select::make('board_id')
                 ->label('Board')
                 ->visible(fn ($get) => $get('project_id'))
-                ->options(Board::query()->pluck('title', 'id'));
+                ->options(fn ($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'));
         }
 
         $inputs[] = Group::make([
