@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Services\OgImageGenerator;
 use Filament\Facades\Filament;
+use App\Services\OgImageGenerator;
 use App\SocialProviders\SsoProvider;
-use Filament\Navigation\NavigationItem;
 use Illuminate\Support\Facades\View;
+use Filament\Navigation\NavigationItem;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,7 +29,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('partials.meta', function ($view) {
-            $view->with('defaultImage', (new OgImageGenerator())
+            $view->with(
+                'defaultImage',
+                (new OgImageGenerator())
                 ->setSubject('Roadmap')
                 ->setTitle(config('app.name'))
                 ->setImageName('og.jpg')
@@ -47,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
                 ->sort(101)
                 ->label('Public view')
                 ->icon('heroicon-o-rewind')
-                ->isActiveWhen(fn(): bool => false)
+                ->isActiveWhen(fn (): bool => false)
                 ->url('/'),
         ]);
 

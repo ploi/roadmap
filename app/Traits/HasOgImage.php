@@ -3,10 +3,6 @@
 namespace App\Traits;
 
 use App\Services\OgImageGenerator;
-use App\Services\Tailwind;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image;
 
 trait HasOgImage
 {

@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Str;
 use App\Settings\ColorSettings;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class OgImageGenerator

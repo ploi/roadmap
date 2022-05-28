@@ -2,12 +2,12 @@
 
 namespace App\SocialProviders;
 
-use App\Exceptions\SsoException;
-use GuzzleHttp\Exception\ClientException;
 use RuntimeException;
 use GuzzleHttp\Client;
 use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\User;
+use App\Exceptions\SsoException;
+use GuzzleHttp\Exception\ClientException;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
 
