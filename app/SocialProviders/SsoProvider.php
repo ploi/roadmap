@@ -2,6 +2,8 @@
 
 namespace App\SocialProviders;
 
+use App\Exceptions\SsoException;
+use GuzzleHttp\Exception\ClientException;
 use RuntimeException;
 use GuzzleHttp\Client;
 use Illuminate\Support\Arr;
@@ -56,13 +58,18 @@ class SsoProvider extends AbstractProvider implements ProviderInterface
     {
         $endpoint = config('services.sso.endpoints.user') ?? config('services.sso.url') . '/api/oauth/user';
 
-        $response = $this->getHttpClient()->get($endpoint, [
-            'headers' => [
-                'Accept'        => 'application/json',
-                'Authorization' => 'Bearer ' . $token,
-            ],
-        ]);
+        try {
+            $response = $this->getHttpClient()->get($endpoint, [
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $token,
+                ],
+            ]);
+        } catch (ClientException $exception) {
+            $json = $exception->getResponse()->getBody()->getContents();
 
+            throw new SsoException($json);
+        }
 
         return json_decode($response->getBody(), true);
     }
@@ -76,9 +83,9 @@ class SsoProvider extends AbstractProvider implements ProviderInterface
         }
 
         return (new User)->setRaw($user)->map([
-            'id'       => $user['id'],
-            'email'    => $user['email'],
-            'name'     => $user['name'],
+            'id' => $user['id'],
+            'email' => $user['email'],
+            'name' => $user['name'],
             'nickname' => $user['name'],
         ]);
     }
@@ -86,9 +93,9 @@ class SsoProvider extends AbstractProvider implements ProviderInterface
     public static function isEnabled(): bool
     {
         return config('services.sso.url') &&
-               config('services.sso.client_id') &&
-               config('services.sso.client_secret') &&
-               config('services.sso.redirect');
+            config('services.sso.client_id') &&
+            config('services.sso.client_secret') &&
+            config('services.sso.redirect');
     }
 
     public static function isForced(): bool

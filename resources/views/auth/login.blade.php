@@ -17,7 +17,7 @@
                 </p>
 
                 @if ($errors->any())
-                    <div class="alert-danger mt-8">
+                    <div class="alert-danger mt-8 overflow-scroll">
                         @foreach ($errors->all() as $error)
                             <div>{{ ucfirst($error) }}</div>
                         @endforeach
