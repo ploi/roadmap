@@ -33,10 +33,10 @@
             <li>
                 <a
                     @class([
-    'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-    'text-white bg-brand-500' => request()->is('profile'),
-    'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => !request()->is('profile')
-])
+                        'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
+                        'text-white bg-brand-500' => request()->is('profile'),
+                        'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => !request()->is('profile')
+                    ])
                     href="{{ route('profile') }}">
                     <x-heroicon-o-user class="w-5 h-5 {{ !request()->is('profile') ? 'text-primary' : ''  }}"/>
 
@@ -54,14 +54,12 @@
                 @foreach($projects as $project)
                     <li>
                         <a @class([
-                                    'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                                    'text-white bg-brand-500' => request()->segment(2) === $project->slug,
-                                    'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => request()->segment(2) !== $project->slug
-                                ])
-
+                               'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
+                               'text-white bg-brand-500' => request()->segment(2) === $project->slug,
+                               'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => request()->segment(2) !== $project->slug
+                           ])
                            href="{{ route('projects.show', $project) }}">
-                            <x-heroicon-o-hashtag
-                                class="w-5 h-5 {{ request()->segment(2) == $project->slug ? '' : 'text-primary'  }}"/>
+                            <x-heroicon-o-hashtag class="w-5 h-5 {{ request()->segment(2) == $project->slug ? '' : 'text-primary'  }}"/>
 
                             <span class="font-medium">{{ $project->title }}</span>
                         </a>
