@@ -1,65 +1,91 @@
-@extends('layouts.app')
+@section('title', 'Reset password')
+@section('image', (new \App\Services\OgImageGenerator())->setSubject('Roadmap')->setTitle('Reset password')->setImageName('reset-password.jpg')->generateImage())
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+<x-app>
+    <div class=" relative overflow-hidden flex justify-center">
+        <div class="z-10 flex-1 w-full max-w-lg py-8 md:py-16">
+            <div class="w-full max-w-md px-4 mx-auto sm:px-6 md:px-8">
+                <h1 class="text-xl font-semibold tracking-tight md:text-2xl">
+                    Reset password
+                </h1>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
+                @if (session('status'))
+                    <div class="alert alert-success mt-8" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+                @if ($errors->any())
+                    <div class="alert-danger mt-8 overflow-scroll">
+                        @foreach ($errors->all() as $error)
+                            <div>{{ ucfirst($error) }}</div>
+                        @endforeach
+                    </div>
+                @endif
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                <form class="mt-8 space-y-6 md:mt-12"
+                      method="post"
+                      action="{{ route('password.update') }}">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+                    @csrf
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                    <input type="hidden" name="token" value="{{ $token }}">
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                    <div class="space-y-2">
+                        <label class="inline-block text-sm font-medium text-gray-700"
+                               for="email">Email address</label>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                        <input
+                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600"
+                            id="email"
+                            value="{{ $email ?? old('email') }}"
+                            required
+                            autocomplete="email"
+                            autofocus
+                            name="email"
+                            type="email">
+                    </div>
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                    <div class="space-y-2">
+                        <label class="inline-block text-sm font-medium text-gray-700"
+                               for="password">Password</label>
 
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                        <input
+                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600"
+                            id="password"
+                            required
+                            autofocus
+                            name="password"
+                            type="password">
+                    </div>
 
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
+                    <div class="space-y-2">
+                        <label class="inline-block text-sm font-medium text-gray-700"
+                               for="password_confirmation">Confirm password</label>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                        <input
+                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600"
+                            id="password_confirmation"
+                            required
+                            autofocus
+                            name="password_confirmation"
+                            type="password">
+                    </div>
+
+                    <button
+                        class="flex items-center justify-center w-full h-8 px-3 text-sm font-semibold tracking-tight text-white transition bg-brand-600 rounded-lg shadow hover:bg-brand-500 focus:bg-brand-700 focus:outline-none focus:ring-offset-2 focus:ring-offset-brand-700 focus:ring-2 focus:ring-white focus:ring-inset"
+                        type="submit">
+                        Reset password
+                    </button>
+
+                    <div class="w-4 mx-auto mt-4 border-t border-gray-300"></div>
+
+                    <p class="mt-3 text-sm font-medium text-center">
+                        <a class="text-brand-600 transition hover:text-brand-500 focus:outline-none focus:underline"
+                           href="{{ route('login') }}">Back to login</a>
+                    </p>
+                </form>
             </div>
         </div>
     </div>
-</div>
-@endsection
+</x-app>

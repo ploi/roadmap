@@ -43,7 +43,31 @@ php artisan migrate --force
 php artisan make:filament-user
 ```
 
-And login with the credentials you've provided.
+And login with the credentials you've provided. If you want to be admin user, change the `admin` column for your user from `0` to `1`.
+
+## Deployment
+
+To manage your servers and sites, we recommend using [Ploi.io](https://ploi.io/?ref=) to speed up things, obviously you're free to choose however you'd like to deploy this piece of software 💙
+
+That being said, here's an deployment script example:
+
+```sh
+cd /home/ploi/example.com
+git pull origin main
+composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+echo "" | sudo -S service php8.1-fpm reload
+
+php artisan route:cache
+php artisan view:clear
+php artisan migrate --force
+
+npm install
+npm run production
+
+echo "🚀 Application deployed!"
+```
+
+If you're using queue workers (which we recommend to do) also add `php artisan queue:restart` to your deployment script.
 
 ## Installing SSO (OAuth 2 login with 3rd party app)
 

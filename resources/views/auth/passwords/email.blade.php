@@ -1,47 +1,56 @@
-@extends('layouts.app')
+@section('title', 'Forgot password')
+@section('image', (new \App\Services\OgImageGenerator())->setSubject('Roadmap')->setTitle('Forgot password')->setImageName('forgot-password.jpg')->generateImage())
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+<x-app>
+    <div class=" relative overflow-hidden flex justify-center">
+        <div class="z-10 flex-1 w-full max-w-lg py-8 md:py-16">
+            <div class="w-full max-w-md px-4 mx-auto sm:px-6 md:px-8">
+                <h1 class="text-xl font-semibold tracking-tight md:text-2xl">
+                    Reset password
+                </h1>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                @if (session('status'))
+                    <div class="alert alert-success mt-8" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
 
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
+                @if ($errors->any())
+                    <div class="alert-danger mt-8 overflow-scroll">
+                        @foreach ($errors->all() as $error)
+                            <div>{{ ucfirst($error) }}</div>
+                        @endforeach
+                    </div>
+                @endif
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                <form class="mt-8 space-y-6 md:mt-12"
+                      method="post"
+                      action="{{ route('password.email') }}">
+                    @csrf
+                    <div class="space-y-2">
+                        <label class="inline-block text-sm font-medium text-gray-700"
+                               for="email">Email address</label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        <input
+                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600"
+                            id="email"
+                            name="email"
+                            type="email">
+                    </div>
+                    <button
+                        class="flex items-center justify-center w-full h-8 px-3 text-sm font-semibold tracking-tight text-white transition bg-brand-600 rounded-lg shadow hover:bg-brand-500 focus:bg-brand-700 focus:outline-none focus:ring-offset-2 focus:ring-offset-brand-700 focus:ring-2 focus:ring-white focus:ring-inset"
+                        type="submit">
+                        Send reset link
+                    </button>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                    <div class="w-4 mx-auto mt-4 border-t border-gray-300"></div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    <p class="mt-3 text-sm font-medium text-center">
+                        <a class="text-brand-600 transition hover:text-brand-500 focus:outline-none focus:underline"
+                           href="{{ route('login') }}">Back to login</a>
+                    </p>
+                </form>
             </div>
         </div>
     </div>
-</div>
-@endsection
+</x-app>

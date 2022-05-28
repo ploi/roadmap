@@ -82,7 +82,7 @@
 
                 <p class="mt-3 text-sm font-medium text-center">
                     <a class="text-brand-600 transition hover:text-brand-500 focus:outline-none focus:underline"
-                       href="#">Forgot password?</a>
+                       href="{{ route('password.request') }}">Forgot password?</a>
                 </p>
             </div>
         </div>
