@@ -61,6 +61,16 @@ class RecentItems extends Component implements HasTable
         ];
     }
 
+    protected function getDefaultTableSortColumn(): ?string
+    {
+        return 'created_at';
+    }
+
+    protected function getDefaultTableSortDirection(): ?string
+    {
+        return 'desc';
+    }
+
     public function render()
     {
         return view('livewire.welcome.recent-items');

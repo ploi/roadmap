@@ -1,3 +1,6 @@
+@section('title', 'Login')
+@section('image', (new \App\Services\OgImageGenerator())->setSubject('Roadmap')->setTitle('Login')->setImageName('login.jpg')->generateImage())
+
 <x-app>
     <div class=" relative overflow-hidden flex justify-center">
         <div class="z-10 flex-1 w-full max-w-lg py-8 md:py-16">

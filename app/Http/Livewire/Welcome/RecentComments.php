@@ -15,7 +15,7 @@ class RecentComments extends Component implements HasTable
 
     protected function getTableQuery(): Builder
     {
-        return Comment::query()->limit(10)->latest();
+        return Comment::query()->limit(10);
     }
 
     protected function isTablePaginationEnabled(): bool
@@ -29,6 +29,16 @@ class RecentComments extends Component implements HasTable
             Tables\Columns\TextColumn::make('content'),
             Tables\Columns\TextColumn::make('item.title'),
         ];
+    }
+
+    protected function getDefaultTableSortColumn(): ?string
+    {
+        return 'created_at';
+    }
+
+    protected function getDefaultTableSortDirection(): ?string
+    {
+        return 'desc';
     }
 
     public function render()

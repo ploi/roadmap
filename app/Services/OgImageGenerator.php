@@ -66,6 +66,14 @@ class OgImageGenerator
 
     public function getImageName(): string
     {
+        if (
+            $this->imageName &&
+            $this->imageName !== 'og.jpg' &&
+            !Str::startsWith($this->imageName, 'og-')
+        ) {
+            $this->imageName = 'og-' . $this->imageName;
+        }
+
         return $this->imageName ?? 'og-' . md5(time()) . '.jpg';
     }
 
