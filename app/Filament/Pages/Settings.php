@@ -31,7 +31,7 @@ class Settings extends SettingsPage
 
         $this->ogImages = collect(Storage::disk('public')->allFiles())
             ->filter(function ($file) {
-                return Str::startsWith($file, 'og-') && Str::endsWith($file, '.jpg');
+                return Str::startsWith($file, 'og') && Str::endsWith($file, '.jpg');
             });
     }
 
@@ -122,6 +122,12 @@ class Settings extends SettingsPage
                                 ->helperText('This will send email notifications once a new item has been created.')
                                 ->columnSpan(2),
                         ]),
+
+                    Tabs\Tab::make('SEO')
+                        ->schema([
+                            Toggle::make('block_robots')
+                                ->helperText('Instructs your roadmap to add the block robots META tag, it\'s up to the search engines to honor this request.')
+                        ])
                 ])
                 ->columns()
                 ->columnSpan(2),

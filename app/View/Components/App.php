@@ -12,6 +12,7 @@ class App extends Component
 {
     public Collection $projects;
     public string $brandColors;
+    public bool $blockRobots = false;
 
     public function __construct(public array $breadcrumbs = [])
     {
@@ -20,6 +21,8 @@ class App extends Component
                 return $query->has('boards');
             })
             ->get();
+
+        $this->blockRobots = app(GeneralSettings::class)->block_robots;
     }
 
     /**

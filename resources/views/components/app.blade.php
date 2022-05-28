@@ -19,6 +19,10 @@
     @livewireStyles
 
     @include('partials.meta')
+
+    @if($blockRobots)
+        <meta name="robots" content="noindex">
+    @endif
 </head>
 <body class="antialiased bg-gray-50">
 
