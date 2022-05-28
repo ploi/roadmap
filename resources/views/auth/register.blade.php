@@ -1,5 +1,5 @@
 @section('title', 'Register')
-@section('image', (new \App\Services\OgImageGenerator())->setSubject('Roadmap')->setTitle('Register')->setImageName('register.jpg')->generateImage())
+@section('image', App\Services\OgImageGenerator::make('Register')->withSubject('Roadmap')->withFilename('register.jpg')->generate()->getPublicUrl())
 
 <x-app>
     <div class=" relative overflow-hidden flex justify-center">
@@ -27,7 +27,7 @@
                       method="post"
                       action="{{ route('register') }}">
                     @csrf
-                    <x-honeypot />
+                    <x-honeypot/>
 
                     <div class="space-y-2">
                         <label class="inline-block text-sm font-medium text-gray-700"

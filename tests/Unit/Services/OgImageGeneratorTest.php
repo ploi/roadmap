@@ -4,15 +4,14 @@ use App\Services\OgImageGenerator;
 use Illuminate\Support\Facades\Storage;
 
 it('can generate a simple og image', function () {
-    $fileName = md5(time()) . '.jpg';
+    $filename = md5(time()) . '.jpg';
 
-    $service = new OgImageGenerator();
+    $generated = OgImageGenerator::make('Hi!')
+                                 ->withSubject('A subject')
+                                 ->withFilename($filename)
+                                 ->generate();
 
-    $service
-        ->setTitle('Hi!')
-        ->setSubject('A subject')
-        ->setImageName($fileName)
-        ->generateImage();
+    expect($generated->exists())->toBeTrue();
 
-    Storage::disk('public')->assertExists('og-' . $fileName)->delete('og-' . $fileName);
+    Storage::disk('public')->assertExists("og-{$filename}")->delete("og-{$filename}");
 });
