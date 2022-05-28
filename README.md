@@ -29,6 +29,7 @@ git clone https://github.com/ploi-deploy/roadmap.git
 composer install
 php -r "file_exists('.env') || copy('.env.example', '.env');"
 php artisan key:generate
+php artisan storage:link
 npm install
 npm run production
 ```

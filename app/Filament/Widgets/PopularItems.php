@@ -21,9 +21,9 @@ class PopularItems extends BaseWidget
         return [
             Tables\Columns\TextColumn::make('title'),
             Tables\Columns\TextColumn::make('total_votes'),
-            Tables\Columns\TextColumn::make('board.title'),
-            Tables\Columns\TextColumn::make('board.project.title')
+            Tables\Columns\TextColumn::make('project.title')
                 ->label('Project'),
+            Tables\Columns\TextColumn::make('board.title'),
         ];
     }
 

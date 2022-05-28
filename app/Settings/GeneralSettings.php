@@ -16,6 +16,8 @@ class GeneralSettings extends Settings
     public string|null $welcome_text;
     public string|null $password;
     public bool $enable_item_age;
+    public bool $select_board_when_creating_item;
+    public bool $select_project_when_creating_item;
 
     public static function group(): string
     {

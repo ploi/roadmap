@@ -36,7 +36,7 @@ class ItemObserver
             $isDirty = true;
         }
 
-        if ($item->isDirty('project_id')) {
+        if ($item->isDirty('project_id') && $item->project) {
             activity()
                 ->performedOn($item)
                 ->log('moved item to project ' . $item->project->title);

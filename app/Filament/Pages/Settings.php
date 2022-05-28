@@ -9,6 +9,7 @@ use App\Settings\GeneralSettings;
 use Filament\Pages\Actions\Action;
 use Illuminate\Support\Collection;
 use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Repeater;
@@ -50,10 +51,12 @@ class Settings extends SettingsPage
                                 ->reactive()
                                 ->columnSpan(2),
 
-                            TagsInput::make('default_boards')->label('Default boards')
-                                ->placeholder('Enter defaults to be created upon project creation')
-                                ->helperText('These boards will automatically be prefilled when you create a project.')
-                                ->columnSpan(2)
+                            Group::make([
+                                TagsInput::make('default_boards')->label('Default boards')
+                                    ->placeholder('Enter defaults to be created upon project creation')
+                                    ->helperText('These boards will automatically be prefilled when you create a project.')
+                                    ->columnSpan(2),
+                            ])
                                 ->visible(fn ($get) => $get('create_default_boards')),
 
                             Toggle::make('show_projects_sidebar_without_boards')->label('Show projects in sidebar without boards')
@@ -67,6 +70,14 @@ class Settings extends SettingsPage
                             Toggle::make('enable_item_age')
                                 ->label('Enable item age')
                                 ->helperText('Enable this to show the age of an item on the details page.')
+                                ->columnSpan(2),
+
+                            Toggle::make('select_project_when_creating_item')
+                                ->label('Users can select a project when creating an item')
+                                ->columnSpan(2),
+
+                            Toggle::make('select_board_when_creating_item')
+                                ->label('Users can select a board when creating an item')
                                 ->columnSpan(2),
 
                             TextInput::make('password')->helperText('Entering a password here will ask your users to enter a password before entering the roadmap.'),
