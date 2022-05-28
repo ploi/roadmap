@@ -10,8 +10,8 @@ use Intervention\Image\Facades\Image;
 class OgImageGenerator
 {
     public string $title;
-    public string $subject;
-    public string $description;
+    public string|null $subject = null;
+    public string|null $description = null;
     public string|null $templateFile = null;
     public string $imageName;
     public bool $enablePolygon = false;
@@ -24,14 +24,14 @@ class OgImageGenerator
         return $this;
     }
 
-    public function setSubject(string $subject): static
+    public function setSubject(string|null $subject): static
     {
         $this->subject = $subject;
 
         return $this;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(string|null $description): static
     {
         $this->description = $description;
 
@@ -69,14 +69,19 @@ class OgImageGenerator
         return $this->imageName ?? 'og-' . md5(time()) . '.jpg';
     }
 
-    public function getImagePath()
+    public function getImageStoragePath()
     {
         return storage_path('app/public/' . $this->getImageName());
     }
 
+    public function getImagePublicPath()
+    {
+        return asset('storage/' . $this->getImageName());
+    }
+
     public function generateImage()
     {
-        $pathToImage = $this->getImagePath();
+        $pathToImage = $this->getImageStoragePath();
 
         if (!File::exists($pathToImage)) {
             $image = Image::canvas(1200, 627, '#ffffff');
@@ -127,7 +132,7 @@ class OgImageGenerator
             $image->save($pathToImage);
         }
 
-        return asset($pathToImage);
+        return $this->getImagePublicPath();
     }
 
     protected function getBrandingColors(): Tailwind

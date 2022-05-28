@@ -28,8 +28,7 @@ class RecentItems extends Component implements HasTable
             ->when(Arr::get($recentItemsConfig, 'must_have_project'), function (Builder $query) {
                 return $query->has('project');
             })
-            ->limit(10)
-            ->latest();
+            ->limit(10);
     }
 
     protected function isTablePaginationEnabled(): bool
