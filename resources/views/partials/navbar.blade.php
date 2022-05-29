@@ -75,7 +75,7 @@
 
     <div class="text-gray-500 mt-12 px-2 text-xs">
         <a href="https://github.com/ploi-deploy/roadmap" target="_blank" class="font-semibold border-b border-dotted">Open-source</a>
-        roadmapping software by <a href="https://ploi.io"
+        roadmapping software by <a href="https://ploi.io/?ref=roadmap"
                                    target="_blank"
                                    class="font-semibold border-b border-dotted">ploi.io</a>
     </div>
