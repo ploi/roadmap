@@ -20,6 +20,8 @@ Welcome to Roadmap, the open-source software for your roadmapping needs 🛣
 
 - PHP >= 8.1
 - Database (MySQL, PostgreSQL)
+- GD Library (>=2.0) or
+- Imagick PHP extension (>=6.5.7)
 
 ## Installation
 
