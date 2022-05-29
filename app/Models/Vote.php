@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,5 +29,10 @@ class Vote extends Model
     public function model(): MorphTo
     {
         return $this->morphTo('model');
+    }
+
+    public function scopeSubscribed(Builder $query): Builder
+    {
+        return $query->where('subscribed', true);
     }
 }
