@@ -11,9 +11,10 @@ Welcome to Roadmap, the open-source software for your roadmapping needs 🛣
 - Upvote items to see which has more priority
 - Automatic slug generation
 - Filament admin panel 💛
-- Automatic OG image generation including branding color you've setup (saves in your storage, around 70kb per image), if title is too long it will strip automatically as well, example:
-![OG](https://roadmap.ploi.io/storage/og-20-ssl-via-api-force-request-skip-dns-verification-site-level-request-20.jpg?v=1653397308)
 - OAuth 2 single sign-on with your own application
+- Automatic OG image generation including branding color you've setup (saves in your storage, around 70kb per image), if title is too long it will strip automatically as well, example:
+
+![OG](https://roadmap.ploi.io/storage/og-20-ssl-via-api-force-request-skip-dns-verification-site-level-request-20.jpg?v=1653765303)
 
 ## Requirements
 

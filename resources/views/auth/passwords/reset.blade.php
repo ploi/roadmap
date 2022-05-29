@@ -1,5 +1,5 @@
 @section('title', 'Reset password')
-@section('image', (new \App\Services\OgImageGenerator())->setSubject('Roadmap')->setTitle('Reset password')->setImageName('reset-password.jpg')->generateImage())
+@section('image', App\Services\OgImageGenerator::make('Reset password')->withSubject('Roadmap')->withFilename('reset-password.jpg')->generate()->getPublicUrl())
 
 <x-app>
     <div class=" relative overflow-hidden flex justify-center">

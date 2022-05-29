@@ -1,5 +1,5 @@
 @section('title', 'Login')
-@section('image', (new \App\Services\OgImageGenerator())->setSubject('Roadmap')->setTitle('Login')->setImageName('login.jpg')->generateImage())
+@section('image', App\Services\OgImageGenerator::make('Login')->withSubject('Roadmap')->withFilename('login.jpg')->generate()->getPublicUrl())
 
 <x-app>
     <div class=" relative overflow-hidden flex justify-center">

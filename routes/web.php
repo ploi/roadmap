@@ -10,8 +10,8 @@ use App\Http\Controllers\Auth\PasswordProtectionController;
 Auth::routes();
 
 Route::get('oauth/login', [\App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider'])
-    ->middleware('guest')
-    ->name('oauth.login');
+     ->middleware('guest')
+     ->name('oauth.login');
 Route::get('oauth/callback', [\App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback'])->middleware('guest');
 
 Route::get('password-protection', PasswordProtectionController::class)->name('password.protection');
