@@ -12,7 +12,7 @@
 
                     <x-heroicon-o-home class="w-5 h-5 {{ !request()->is('/') ? 'text-primary' : ''  }}"/>
 
-                    <span class="font-medium">Dashboard</span>
+                    <span class="font-medium">{{ trans('general.dashboard') }}</span>
                 </a>
             </li>
 
@@ -26,7 +26,7 @@
                     href="{{ route('my') }}">
                     <x-heroicon-o-view-boards class="w-5 h-5 {{ !request()->is('my') ? 'text-primary' : ''  }}"/>
 
-                    <span class="font-medium">My items</span>
+                    <span class="font-medium">{{ trans('items.my-items') }}</span>
                 </a>
             </li>
 
@@ -40,14 +40,14 @@
                     href="{{ route('profile') }}">
                     <x-heroicon-o-user class="w-5 h-5 {{ !request()->is('profile') ? 'text-primary' : ''  }}"/>
 
-                    <span class="font-medium">Profile</span>
+                    <span class="font-medium">{{ trans('auth.profile') }}</span>
                 </a>
             </li>
         </ul>
     </nav>
 
     <nav class="my-4 space-y-2">
-        <p class="px-2 text-lg font-semibold">Projects</p>
+        <p class="px-2 text-lg font-semibold">{{ trans('projects.projects') }}</p>
 
         @if($projects->count() > 0)
             <ul class="space-y-1">
@@ -68,7 +68,7 @@
             </ul>
         @else
             <div class="px-2">
-                <span class="text-sm text-gray-500">There are no projects.</span>
+                <span class="text-sm text-gray-500">{{ trans('projects.no-projects') }}</span>
             </div>
         @endif
     </nav>
