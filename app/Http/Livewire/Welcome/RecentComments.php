@@ -26,8 +26,8 @@ class RecentComments extends Component implements HasTable
     protected function getTableColumns(): array
     {
         return [
-            Tables\Columns\TextColumn::make('content'),
-            Tables\Columns\TextColumn::make('item.title'),
+            Tables\Columns\TextColumn::make('content')->label(trans('table.content')),
+            Tables\Columns\TextColumn::make('item.title')->label(trans('table.item')),
         ];
     }
 

@@ -18,10 +18,10 @@
             </div>
 
             <header class="max-w-xs space-y-1">
-                <h2 class="text-xl font-semibold tracking-tight">You're all caught up</h2>
+                <h2 class="text-xl font-semibold tracking-tight">{{ trans('items.all-caught-up-title') }}</h2>
 
                 <p class="font-medium text-gray-500">
-                    There are no items in this board yet. @if($board->canUsersCreateItem()) You can create an item on the right. @endif
+                    {{ trans('items.all-caught-up-description') }} @if($board->canUsersCreateItem()) {{ trans('items.all-caught-up-can-create') }} @endif
                 </p>
             </header>
         </div>
