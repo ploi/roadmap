@@ -2,13 +2,23 @@
     <form class="space-y-4" wire:submit.prevent="submit">
         {{ $this->form }}
 
-        <x-filament::button wire:click="submit">
-            Save
-        </x-filament::button>
+        <div class="flex justify-between">
+            <div>
+                <x-filament::button wire:click="submit">
+                    Save
+                </x-filament::button>
 
-        <x-filament::button type="button" color="secondary" wire:click="logout">
-            Logout
-        </x-filament::button>
+                <x-filament::button type="button" color="secondary" wire:click="logout">
+                    Logout
+                </x-filament::button>
+            </div>
+
+            <div>
+                <x-filament::button type="button" color="danger" wire:click="delete">
+                    Remove account
+                </x-filament::button>
+            </div>
+        </div>
     </form>
 
     @if($hasSsoLoginAvailable)
