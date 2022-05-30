@@ -40,7 +40,8 @@
             Are you sure you'd like to delete?
         </x-slot>
 
-        This cannot be undone.
+        <p>Take note that this action cannot be undone, all your comment and votes will be deleted. Items will be unlinked
+            from your account.</p>
 
         <x-slot name="footer">
             <x-filament::modal.actions full-width>
@@ -49,7 +50,7 @@
                 </x-filament::button>
 
                 <x-filament::button wire:click="delete" color="danger">
-                    Delete comment
+                    Delete profile
                 </x-filament::button>
             </x-filament::modal.actions>
         </x-slot>
