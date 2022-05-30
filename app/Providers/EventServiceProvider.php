@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Models\Item;
+use App\Models\User;
 use App\Models\Vote;
 use App\Models\Comment;
 use App\Models\Project;
 use App\Observers\ItemObserver;
+use App\Observers\UserObserver;
 use App\Observers\VoteObserver;
 use App\Observers\CommentObserver;
 use App\Observers\ProjectObserver;
@@ -32,6 +34,7 @@ class EventServiceProvider extends ServiceProvider
         Project::class => [ProjectObserver::class],
         Item::class => [ItemObserver::class],
         Comment::class => [CommentObserver::class],
+        User::class => [UserObserver::class]
     ];
 
     /**

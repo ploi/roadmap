@@ -8,7 +8,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -54,9 +54,9 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         return $this->hasMany(Item::class);
     }
 
-    public function votes(): MorphMany
+    public function votes(): HasMany
     {
-        return $this->morphMany(Vote::class, 'model');
+        return $this->hasMany(Vote::class);
     }
 
     public function votedItems()

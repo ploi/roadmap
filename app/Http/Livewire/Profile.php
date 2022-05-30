@@ -39,7 +39,7 @@ class Profile extends Component implements HasForms, HasTable
     protected function getFormSchema(): array
     {
         return [
-            Forms\Components\Section::make('Profile')->schema([
+            Forms\Components\Section::make(trans('auth.profile'))->schema([
                 Forms\Components\TextInput::make('name')->required(),
                 Forms\Components\TextInput::make('username')
                     ->helperText('This username will be used to mention your name in comments.')
@@ -79,11 +79,23 @@ class Profile extends Component implements HasForms, HasTable
         return redirect()->route('home');
     }
 
+    public function deleteConfirm()
+    {
+        $this->dispatchBrowserEvent('open-modal', ['id' => 'deleteAccount']);
+    }
+
+    public function closeDeleteConfirm()
+    {
+        $this->dispatchBrowserEvent('close-modal', ['id' => 'deleteAccount']);
+    }
+
     public function delete()
     {
-        $user = auth()->user();
+        auth()->user()->delete();
 
-        dd($user);
+        auth()->logout();
+
+        return redirect()->route('home');
     }
 
     public function render()
