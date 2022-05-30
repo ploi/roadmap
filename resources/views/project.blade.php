@@ -48,7 +48,7 @@
                             <li>
                                 <div
                                     class="p-3 font-medium text-center text-gray-500 border border-gray-300 border-dashed rounded-xl opacity-70">
-                                    <p>There are no items here.</p>
+                                    <p>{{ trans('items.no-items') }}</p>
                                 </div>
                             </li>
                         @endforelse
@@ -69,12 +69,11 @@
                     </div>
 
                     <header class="max-w-xs space-y-1">
-                        <h2 class="text-xl font-semibold tracking-tight">You're all caught up</h2>
+                        <h2 class="text-xl font-semibold tracking-tight">{{ trans('items.all-caught-up-title') }}</h2>
 
                         <p class="font-medium text-gray-500">
                             There are no boards in this project. If you're an administrator, you can add new boards
-                            via
-                            the administration area.
+                            via the administration area.
                         </p>
                     </header>
                 </div>

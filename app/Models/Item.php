@@ -29,6 +29,7 @@ class Item extends Model
         'content',
         'project_id',
         'board_id',
+        'user_id'
     ];
 
     protected function excerpt(): Attribute
