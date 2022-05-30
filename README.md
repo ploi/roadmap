@@ -39,6 +39,9 @@ npm run production
 
 Now edit your `.env` file and set up the database credentials, including the app name you want.
 
+Optionally you may set up the language with `APP_LOCALE`, if your language is not working we accept PR's for new languages. We recommend copying those files from the `lang/en` folder.
+As well as the timezone can be set with `APP_TIMEZONE`, for example: `APP_TIMEZONE="Europe/Amsterdam"`.
+
 Now run the following:
 
 ```
