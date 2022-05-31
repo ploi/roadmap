@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use Closure;
 use Storage;
 use Illuminate\Support\Str;
 use Filament\Pages\SettingsPage;
@@ -74,10 +75,22 @@ class Settings extends SettingsPage
 
                             Toggle::make('select_project_when_creating_item')
                                 ->label('Users can select a project when creating an item')
-                                ->columnSpan(2),
+                                ->columnSpan(2)
+                                ->reactive(),
+
+                            Toggle::make('project_required_when_creating_item')
+                                  ->label('Project is required when creating an item')
+                                  ->hidden(fn (Closure $get) => $get('select_project_when_creating_item') === false)
+                                  ->columnSpan(2),
 
                             Toggle::make('select_board_when_creating_item')
                                 ->label('Users can select a board when creating an item')
+                                ->columnSpan(2)
+                                ->reactive(),
+
+                            Toggle::make('board_required_when_creating_item')
+                                ->label('Board is required when creating an item')
+                                ->hidden(fn (Closure $get) => $get('select_board_when_creating_item') === false)
                                 ->columnSpan(2),
 
                             TextInput::make('password')->helperText('Entering a password here will ask your users to enter a password before entering the roadmap.'),

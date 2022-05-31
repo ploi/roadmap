@@ -35,14 +35,16 @@ class CreateItemModal extends ModalComponent implements HasForms
             $inputs[] = Select::make('project_id')
                 ->label('Project')
                 ->reactive()
-                ->options(Project::query()->pluck('title', 'id'));
+                ->options(Project::query()->pluck('title', 'id'))
+                ->required(app(GeneralSettings::class)->project_required_when_creating_item);
         }
 
         if (app(GeneralSettings::class)->select_board_when_creating_item) {
             $inputs[] = Select::make('board_id')
                 ->label('Board')
                 ->visible(fn ($get) => $get('project_id'))
-                ->options(fn ($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'));
+                ->options(fn ($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
+                ->required(app(GeneralSettings::class)->board_required_when_creating_item);
         }
 
         $inputs[] = Group::make([
