@@ -16,7 +16,7 @@
     <div class="w-full max-w-lg py-8 bg-white md:py-16">
         <div class="w-full max-w-md px-4 mx-auto sm:px-6 md:px-8">
             <h1 class="text-xl font-semibold tracking-tight md:text-2xl">
-                Password protected
+                {{ trans('auth.password_protected') }}
             </h1>
 
             @if ($errors->any())
@@ -32,7 +32,7 @@
                 @csrf
                 <div class="space-y-2">
                     <label class="inline-block text-sm font-medium text-gray-700"
-                           for="password">Password</label>
+                           for="password">{{ trans('auth.password') }}</label>
 
                     <input
                         class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600"
@@ -43,7 +43,7 @@
 
                 <button
                     class="flex items-center justify-center w-full h-8 px-3 text-sm font-semibold tracking-tight text-white transition bg-brand-600 rounded-lg shadow hover:bg-brand-500 focus:bg-brand-700 focus:outline-none focus:ring-offset-2 focus:ring-offset-brand-700 focus:ring-2 focus:ring-white focus:ring-inset"
-                    type="submit">Continue</button>
+                    type="submit">{{ trans('auth.continue') }}</button>
             </form>
         </div>
     </div>

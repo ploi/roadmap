@@ -1,26 +1,26 @@
-@section('title', 'My items')
+@section('title', trans('items.my-items'))
 
 <x-app :breadcrumbs="[
-    ['title' => 'My items', 'url' => route('my')]
+    ['title' => trans('items.my-items'), 'url' => route('my')]
 ]">
     <div class="space-y-6">
         <div class="grid grid-cols-1 gap-4">
             <div class="space-y-2">
-                <h2 class="text-lg tracking-tight font-bold">Created items</h2>
-                <p class="text-gray-500 text-sm">These are the items you've created.</p>
+                <h2 class="text-lg tracking-tight font-bold">{{ trans('items.created-items') }}</h2>
+                <p class="text-gray-500 text-sm">{{ trans('items.created-items-description') }}</p>
                 <livewire:my />
             </div>
             <div class="space-y-2">
-                <h2 class="text-lg tracking-tight font-bold">Voted items</h2>
-                <p class="text-gray-500 text-sm">These are items you've voted on.</p>
+                <h2 class="text-lg tracking-tight font-bold">{{ trans('items.voted-items') }}</h2>
+                <p class="text-gray-500 text-sm">{{ trans('items.voted-items-description') }}</p>
                 <livewire:my type="voted" />
             </div>
         </div>
 
         <div>
             <div class="space-y-2">
-                <h2 class="text-lg tracking-tight font-bold">Recent mentions</h2>
-                <p class="text-gray-500 text-sm">These are items that you've been mentioned in, click on the comment to see it.</p>
+                <h2 class="text-lg tracking-tight font-bold">{{ trans('items.recent-mentions') }}</h2>
+                <p class="text-gray-500 text-sm">{{ trans('items.recent-mentions-description') }}</p>
                 <livewire:recent-mentions />
             </div>
         </div>

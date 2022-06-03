@@ -5,17 +5,17 @@
         <div class="flex justify-between">
             <div>
                 <x-filament::button wire:click="submit">
-                    Save
+                    {{ trans('profile.save') }}
                 </x-filament::button>
 
                 <x-filament::button type="button" color="secondary" wire:click="logout">
-                    Logout
+                    {{ trans('profile.logout') }}
                 </x-filament::button>
             </div>
 
             <div>
                 <x-filament::button type="button" color="danger" wire:click="deleteConfirm">
-                    Remove account
+                    {{ trans('profile.delete_account') }}
                 </x-filament::button>
             </div>
         </div>
