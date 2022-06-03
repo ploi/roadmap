@@ -15,13 +15,16 @@
                 <p class="text-gray-500 text-sm">{{ trans('items.voted-items-description') }}</p>
                 <livewire:my type="voted" />
             </div>
-        </div>
-
-        <div>
             <div class="space-y-2">
                 <h2 class="text-lg tracking-tight font-bold">{{ trans('items.recent-mentions') }}</h2>
                 <p class="text-gray-500 text-sm">{{ trans('items.recent-mentions-description') }}</p>
                 <livewire:recent-mentions />
+            </div>
+
+            <div class="space-y-2">
+                <h2 class="text-lg tracking-tight font-bold">{{ trans('items.commented-items') }}</h2>
+                <p class="text-gray-500 text-sm">{{ trans('items.commented-items-description') }}</p>
+                <livewire:my type="commentedOn" />
             </div>
         </div>
     </div>

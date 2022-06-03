@@ -8,4 +8,5 @@ return [
     'content' => 'Content',
     'item' => 'Item',
     'created_at' => 'Created at',
+    'commented_on' => 'Commented on',
 ];

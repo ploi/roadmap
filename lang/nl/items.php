@@ -7,6 +7,8 @@ return [
     'created-items-description' => 'Deze items zijn door jou aangemaakt.',
     'voted-items' => 'Gestemde items',
     'voted-items-description' => 'Op deze items heb je gestemd.',
+    'commented-items' => 'Items met opmerking',
+    'commented-items-description' => 'Op deze items heb je gereageerd.',
     'recent-mentions' => 'Recente vermeldingen',
     'recent-mentions-description' => 'In deze items ben je genoemd door iemand, klik erop om het te bekijken.',
     'no-items' => 'Er zijn hier geen items.',
