@@ -2,25 +2,27 @@
 
 namespace App\Spotlight;
 
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use LivewireUI\Spotlight\Spotlight;
 use LivewireUI\Spotlight\SpotlightCommand;
 
-class ViewProfile extends SpotlightCommand
+class Logout extends SpotlightCommand
 {
     public function getName(): string
     {
-        return trans('spotlight.profile.name');
+        return trans('spotlight.logout.name');
     }
 
     public function getDescription(): string
     {
-        return trans('spotlight.profile.description');
+        return trans('spotlight.logout.description');
     }
 
-    public function execute(Spotlight $spotlight): void
+    public function execute(Spotlight $spotlight, Guard $guard): void
     {
-        $spotlight->redirect(route('profile'));
+        $guard->logout();
+        $spotlight->redirect('/');
     }
 
     public function shouldBeShown(Request $request): bool
