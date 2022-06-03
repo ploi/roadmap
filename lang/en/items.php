@@ -7,6 +7,8 @@ return [
     'created-items-description' => 'These are the items you\'ve created.',
     'voted-items' => 'Voted items',
     'voted-items-description' => 'These are items you\'ve voted on.',
+    'commented-items' => 'Commented items',
+    'commented-items-description' => 'These are items you\'ve commented on.',
     'recent-mentions' => 'Recent mentions',
     'recent-mentions-description' => 'These are items that you\'ve been mentioned in, click on the comment to see it.',
     'no-items' => 'There are no items here.',
