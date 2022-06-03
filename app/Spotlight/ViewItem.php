@@ -10,9 +10,15 @@ use LivewireUI\Spotlight\SpotlightCommandDependencies;
 
 class ViewItem extends SpotlightCommand
 {
-    protected string $name = 'View item';
+    public function getName(): string
+    {
+        return trans('spotlight.view-item.name');
+    }
 
-    protected string $description = 'View a item';
+    public function getDescription(): string
+    {
+        return trans('spotlight.view-item.description');
+    }
 
     public function dependencies(): ?SpotlightCommandDependencies
     {

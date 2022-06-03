@@ -29,7 +29,7 @@ return [
     */
 
     'commands' => [
-        \LivewireUI\Spotlight\Commands\Logout::class,
+        \App\Spotlight\Logout::class,
         \App\Spotlight\ViewItem::class,
         \App\Spotlight\ViewProfile::class,
     ],
