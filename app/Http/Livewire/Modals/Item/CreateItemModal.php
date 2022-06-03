@@ -1,18 +1,23 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Modals\Item;
 
 use App\Models\Item;
 use App\Models\Project;
 use App\Settings\GeneralSettings;
 use Filament\Forms\Components\Group;
-use LivewireUI\Modal\ModalComponent;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\MarkdownEditor;
-use Filament\Http\Livewire\Concerns\CanNotify;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Http\Livewire\Concerns\CanNotify;
+use LivewireUI\Modal\ModalComponent;
+use function app;
+use function auth;
+use function redirect;
+use function route;
+use function view;
 
 class CreateItemModal extends ModalComponent implements HasForms
 {
@@ -52,7 +57,6 @@ class CreateItemModal extends ModalComponent implements HasForms
                 ->minLength(10)
                 ->required()
         ]);
-
 
         return $inputs;
     }

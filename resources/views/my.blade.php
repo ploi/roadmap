@@ -15,13 +15,16 @@
                 <p class="text-gray-500 text-sm">These are items you've voted on.</p>
                 <livewire:my type="voted" />
             </div>
-        </div>
-
-        <div>
             <div class="space-y-2">
                 <h2 class="text-lg tracking-tight font-bold">Recent mentions</h2>
                 <p class="text-gray-500 text-sm">These are items that you've been mentioned in, click on the comment to see it.</p>
                 <livewire:recent-mentions />
+            </div>
+
+            <div class="space-y-2">
+                <h2 class="text-lg tracking-tight font-bold">Commented items</h2>
+                <p class="text-gray-500 text-sm">These are items you've commented on.</p>
+                <livewire:my type="commentedOn" />
             </div>
         </div>
     </div>

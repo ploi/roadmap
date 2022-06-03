@@ -74,6 +74,18 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         return $this->belongsToMany(Item::class, 'item_user');
     }
 
+    public function commentedItems()
+    {
+        return $this->hasManyThrough(
+            Item::class,
+            Comment::class,
+            'user_id',
+            'id',
+            'id',
+            'item_id'
+        )->orderBy('comments.created_at', 'desc')->distinct();
+    }
+
     public function mentions()
     {
         return $this
