@@ -6,5 +6,7 @@ return [
     'project' => 'Project',
     'board' => 'Board',
     'content' => 'Content',
-    'item' => 'Item'
+    'item' => 'Item',
+    'created_at' => 'Created at',
+    'commented_on' => 'Commented on',
 ];

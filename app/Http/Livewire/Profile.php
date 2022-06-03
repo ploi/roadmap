@@ -40,19 +40,19 @@ class Profile extends Component implements HasForms, HasTable
     {
         return [
             Forms\Components\Section::make(trans('auth.profile'))->schema([
-                Forms\Components\TextInput::make('name')->required(),
-                Forms\Components\TextInput::make('username')
-                    ->helperText('This username will be used to mention your name in comments.')
+                Forms\Components\TextInput::make('name')->label(trans('auth.name'))->required(),
+                Forms\Components\TextInput::make('username')->label(trans('profile.username'))
+                    ->helperText(trans('profile.username_description'))
                     ->required()
                     ->unique(table: User::class, column: 'username', ignorable: auth()->user()),
-                Forms\Components\TextInput::make('email')->required()->email(),
+                Forms\Components\TextInput::make('email')->label(trans('auth.email'))->required()->email(),
             ])->collapsible(),
 
-            Forms\Components\Section::make('Notifications')
+            Forms\Components\Section::make(trans('profile.notifications'))
                 ->schema([
-                    Forms\Components\CheckboxList::make('notification_settings')
+                    Forms\Components\CheckboxList::make('notification_settings')->label(trans('profile.notification_settings'))
                         ->options([
-                            'receive_mention_notifications' => 'Receive mention notifications',
+                            'receive_mention_notifications' => trans('profile.receive_mention_notifications'),
                         ]),
                 ])->collapsible(),
         ];

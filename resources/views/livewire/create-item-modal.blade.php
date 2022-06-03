@@ -2,7 +2,7 @@
     <x-slot name="title">
         <div class="flex justify-between items-center">
             <div>
-                Create an item
+                {{ trans('items.create') }}
             </div>
             <div class="text-medium">
                 <button wire:click="$emit('closeModal')">
@@ -23,19 +23,19 @@
     @endauth
     @guest
         <x-slot name="content">
-            <p>Login to be able to submit an item.</p>
+            <p>{{ trans('items.login_to_submit_item') }}</p>
         </x-slot>
     @endguest
 
     <x-slot name="buttons">
         @auth
             <x-filament::button wire:click="submit">
-                Create
+                {{ trans('items.create') }}
             </x-filament::button>
         @endauth
 
         <x-filament::button color="secondary" wire:click="$emit('closeModal')">
-            Close
+            {{ trans('general.close') }}
         </x-filament::button>
     </x-slot>
 </x-modal>
