@@ -90,7 +90,7 @@ class CreateItemModal extends ModalComponent implements HasForms
 
     public function render()
     {
-        return view('livewire.create-item-modal');
+        return view('livewire.modals.create-item-modal');
     }
 
     public static function closeModalOnClickAway(): bool

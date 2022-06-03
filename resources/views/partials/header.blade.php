@@ -49,7 +49,7 @@
                 @endauth
 
                     <li>
-                        <x-filament::button color="secondary" onclick="Livewire.emit('openModal', 'create-item-modal')"
+                        <x-filament::button color="secondary" onclick="Livewire.emit('openModal', 'modals.item.create-item-modal')"
                                             icon="heroicon-o-plus-circle">
                             {{ trans('items.create') }}
                         </x-filament::button>
