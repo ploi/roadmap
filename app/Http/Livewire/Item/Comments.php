@@ -15,6 +15,7 @@ class Comments extends Component implements HasForms
     public Item $item;
     public $comments;
     public $content;
+    public $reply;
 
     public function mount()
     {
@@ -27,18 +28,23 @@ class Comments extends Component implements HasForms
             return redirect()->route('login');
         }
 
-        $formState = array_merge($this->form->getState(), ['user_id' => auth()->id()]);
+        $formState = array_merge($this->form->getState(), [
+            'parent_id' => $this->reply,
+            'user_id' => auth()->id(),
+        ]);
 
         $this->item->comments()->create($formState);
 
         $this->content = '';
+        $this->reply = null;
     }
 
     protected function getFormSchema(): array
     {
         return [
             MarkdownEditor::make('content')
-                ->helperText('You may use @ to mention someone.')
+                ->label(trans('comments.comment'))
+                ->helperText(trans('comments.mention-helper-text'))
                 ->required()
                 ->minLength(3),
         ];
@@ -46,8 +52,16 @@ class Comments extends Component implements HasForms
 
     public function render()
     {
-        $this->comments = $this->item->comments()->with('user:id,name,email')->oldest()->get();
+        $this->comments = $this->item->comments()
+                                     ->whereNull('parent_id')
+                                     ->with('user:id,name,email')
+                                     ->get();
 
         return view('livewire.item.comments');
+    }
+
+    public function reply(?int $id = null)
+    {
+        $this->reply = $id;
     }
 }

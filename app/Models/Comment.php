@@ -13,6 +13,7 @@ class Comment extends Model
 
     public $fillable = [
         'content',
+        'parent_id',
         'user_id'
     ];
 
@@ -24,6 +25,11 @@ class Comment extends Model
     public function item()
     {
         return $this->belongsTo(Item::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'parent_id');
     }
 
     public function mentions()
