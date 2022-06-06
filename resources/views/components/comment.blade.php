@@ -1,4 +1,4 @@
-<div @class(['ml-6' => $comment->parent_id !== null, 'bg-brand-50 rounded-lg ring-1 ring-brand-200' => $reply == $comment->id, 'block py-2 overflow-hidden transition']) id="comment-{{ $comment->id }}">
+<div @class(['ml-6' => $comment->parent_id !== null, 'mr-1 bg-brand-50 rounded-lg ring-1 ring-brand-200' => $reply == $comment->id, 'block py-2 overflow-hidden transition']) id="comment-{{ $comment->id }}">
     <header class="flex justify-between items-center">
         <div class="flex items-center px-4 py-2 space-x-2">
             <div class="flex items-center space-x-3 overflow-hidden">
