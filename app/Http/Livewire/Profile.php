@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Closure;
 use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
@@ -41,9 +42,13 @@ class Profile extends Component implements HasForms, HasTable
         return [
             Forms\Components\Section::make(trans('auth.profile'))->schema([
                 Forms\Components\TextInput::make('name')->label(trans('auth.name'))->required(),
-                Forms\Components\TextInput::make('username')->label(trans('profile.username'))
+                Forms\Components\TextInput::make('username')
+                    ->label(trans('profile.username'))
                     ->helperText(trans('profile.username_description'))
                     ->required()
+                    ->rules([
+                        'alpha_dash'
+                    ])
                     ->unique(table: User::class, column: 'username', ignorable: auth()->user()),
                 Forms\Components\TextInput::make('email')->label(trans('auth.email'))->required()->email(),
             ])->collapsible(),
