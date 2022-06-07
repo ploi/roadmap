@@ -38,7 +38,7 @@
                                                         {{ $item->created_at->format('d F') }}
                                                     </span>
 
-                                        <div>
+                                        <div class="text-gray-500 text-sm">
                                             {{ $item->total_votes }} {{ trans_choice('messages.votes', $item->total_votes) }}
                                         </div>
                                     </footer>
