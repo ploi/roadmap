@@ -53,11 +53,12 @@ class Comments extends Component implements HasForms
 
     public function render()
     {
-        $this->item->comments()
-                   ->with('user:id,name,email')
-                   ->orderByRaw('COALESCE(parent_id, id), parent_id IS NOT NULL, id')
-                   ->get()
-                   ->each(fn (Comment $comment) => $this->comments[(int) $comment->parent_id][] = $comment);
+        $this->item
+            ->comments()
+            ->with('user:id,name,email')
+            ->orderByRaw('COALESCE(parent_id, id), parent_id IS NOT NULL, id')
+            ->get()
+            ->each(fn (Comment $comment) => $this->comments[(int) $comment->parent_id][] = $comment);
 
         return view('livewire.item.comments');
     }
