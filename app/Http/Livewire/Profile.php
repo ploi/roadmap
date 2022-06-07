@@ -53,6 +53,7 @@ class Profile extends Component implements HasForms, HasTable
                     Forms\Components\CheckboxList::make('notification_settings')->label(trans('profile.notification_settings'))
                         ->options([
                             'receive_mention_notifications' => trans('profile.receive_mention_notifications'),
+                            'receive_comment_reply_notifications' => trans('profile.receive_comment_reply_notifications'),
                         ]),
                 ])->collapsible(),
         ];

@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Models\Comment;
+use App\Notifications\CommentHasReplyNotification;
 use Xetaio\Mentions\Parser\MentionParser;
 use App\Notifications\Item\ItemHasNewCommentNotification;
 
@@ -33,6 +34,8 @@ class CommentObserver
         User::query()->whereIn('id', $userIds->toArray())->get()->each(function (User $user) use ($comment) {
             $user->notify(new ItemHasNewCommentNotification($comment));
         });
+
+        $comment->parent?->user->notify(new CommentHasReplyNotification($comment));
     }
 
     public function deleting(Comment $comment)

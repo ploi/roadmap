@@ -1,5 +1,5 @@
 <div>
-    @foreach($comments[0] as $comment)
+    @foreach($comments[0] ?? [] as $comment)
         <x-comment :comments="$comments" :comment="$comment" :item="$item" :reply="$reply"></x-comment>
     @endforeach
 

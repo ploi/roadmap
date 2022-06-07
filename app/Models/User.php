@@ -108,7 +108,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         static::creating(function (self $user) {
             $user->username = Str::slug($user->name);
             $user->notification_settings = [
-                'receive_mention_notifications'
+                'receive_mention_notifications',
+                'receive_comment_reply_notifications',
             ];
         });
 
