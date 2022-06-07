@@ -1,6 +1,6 @@
 <div>
-    @foreach($comments as $comment)
-        <x-comment :comment="$comment" :reply="$reply"></x-comment>
+    @foreach($comments[0] as $comment)
+        <x-comment :comments="$comments" :comment="$comment" :item="$item" :reply="$reply"></x-comment>
     @endforeach
 
     @if($reply === null)

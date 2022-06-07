@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Item;
 
 use App\Models\Item;
+use App\Models\Comment;
 use Livewire\Component;
 use Filament\Forms\Contracts\HasForms;
 use App\View\Components\MarkdownEditor;
@@ -52,10 +53,11 @@ class Comments extends Component implements HasForms
 
     public function render()
     {
-        $this->comments = $this->item->comments()
-                                     ->whereNull('parent_id')
-                                     ->with('user:id,name,email')
-                                     ->get();
+        $this->item->comments()
+                   ->with('user:id,name,email')
+                   ->orderByRaw('COALESCE(parent_id, id), parent_id IS NOT NULL, id')
+                   ->get()
+                   ->each(fn (Comment $comment) => $this->comments[(int) $comment->parent_id][] = $comment);
 
         return view('livewire.item.comments');
     }

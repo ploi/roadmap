@@ -10,11 +10,11 @@
 
                 <div class="overflow-hidden font-medium flex items-center space-x-2">
                     <p>{{ $comment->user->name }}</p>
-                    @if($comment->user_id === $comment->item->user_id)
+                    @if($comment->user_id === $item->user_id)
                         <span
                             class="inline-flex items-center justify-center h-5 px-2 text-xs font-semibold tracking-tight text-blue-700 rounded-full bg-blue-500/10">
-                                {{ trans('comments.item-author') }}
-                            </span>
+                            {{ trans('comments.item-author') }}
+                        </span>
                     @endif
                 </div>
             </div>
@@ -38,7 +38,7 @@
 
             <button x-data
                     x-tooltip.raw="{{ trans('comments.click-to-copy') }}"
-                    x-clipboard.raw="{{ route('items.show', $comment->item) . '#comment-' . $comment->id }}"
+                    x-clipboard.raw="{{ route('items.show', $item) . '#comment-' . $comment->id }}"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-500" fill="none"
                      viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -67,8 +67,7 @@
         </form>
     @endif
 
-    @foreach($comment->comments as $replyComment)
-        <x-comment :comment="$replyComment" :reply="$reply"></x-comment>
+    @foreach($comments[$comment->id] ?? [] as $replyComment)
+        <x-comment :comments="$comments" :comment="$replyComment" :item="$item" :reply="$reply"></x-comment>
     @endforeach
-
 </div>
