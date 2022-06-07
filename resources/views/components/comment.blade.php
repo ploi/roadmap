@@ -1,4 +1,10 @@
-<div @class(['ml-6' => $comment->parent_id !== null, 'mr-1 bg-brand-50 rounded-lg ring-1 ring-brand-200' => $reply == $comment->id, 'block py-2 overflow-hidden transition']) id="comment-{{ $comment->id }}">
+<div
+    @class([
+        'ml-1 md:ml-6' => $comment->parent_id !== null,
+        'mr-1 bg-brand-50 rounded-lg ring-1 ring-brand-200' => $reply == $comment->id,
+        'block py-2 overflow-hidden transition'
+    ])
+    id="comment-{{ $comment->id }}">
     <header class="flex justify-between items-center">
         <div class="flex items-center px-4 py-2 space-x-2">
             <div class="flex items-center space-x-3 overflow-hidden">
@@ -9,10 +15,10 @@
                 </div>
 
                 <div class="overflow-hidden font-medium flex items-center space-x-2">
-                    <p>{{ $comment->user->name }}</p>
+                    <p class="truncate">{{ $comment->user->name }}</p>
                     @if($comment->user_id === $item->user_id)
                         <span
-                            class="inline-flex items-center justify-center h-5 px-2 text-xs font-semibold tracking-tight text-blue-700 rounded-full bg-blue-500/10">
+                            class="hidden md:block inline-flex items-center justify-center h-5 px-2 text-xs font-semibold tracking-tight text-blue-700 rounded-full bg-blue-500/10">
                             {{ trans('comments.item-author') }}
                         </span>
                     @endif
