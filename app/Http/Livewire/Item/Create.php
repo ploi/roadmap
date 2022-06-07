@@ -31,9 +31,11 @@ class Create extends Component implements HasForms
     {
         return [
             TextInput::make('title')
+                ->label(trans('table.title'))
                 ->minLength(3)
                 ->required(),
             MarkdownEditor::make('content')
+                ->label(trans('table.content'))
                 ->minLength(10)
                 ->required(),
         ];
@@ -52,7 +54,7 @@ class Create extends Component implements HasForms
 
         $item->toggleUpvote();
 
-        $this->notify('success', 'Item has been created!');
+        $this->notify('success', trans('items.item_created'));
 
         if (!$this->project) {
             return redirect()->route('home');

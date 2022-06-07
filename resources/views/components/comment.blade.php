@@ -22,7 +22,7 @@
             <span>&centerdot;</span>
 
             <time
-                x-data="{ tooltip: '{{ $comment->created_at }}' }"
+                x-data="{ tooltip: '{{ $comment->created_at->isoFormat('L LTS') }}' }"
                 x-tooltip="tooltip"
                 class="flex-shrink-0 text-xs font-medium items-center text-gray-500">
                 {{ $comment->created_at->diffForHumans() }}

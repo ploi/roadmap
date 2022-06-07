@@ -1,11 +1,11 @@
 <div>
-    <h3 class="mb-3">Create an item</h3>
+    <h3 class="mb-3">{{ trans('items.create') }}</h3>
 
     <form wire:submit.prevent="submit" class="space-y-5">
         {{ $this->form }}
 
         <x-filament::button wire:click="submit">
-            Create
+            {{ trans('items.create') }}
         </x-filament::button>
     </form>
 </div>
