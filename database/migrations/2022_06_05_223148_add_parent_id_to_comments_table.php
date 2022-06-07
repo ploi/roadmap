@@ -18,16 +18,4 @@ return new class extends Migration
             $table->foreign('parent_id')->references('id')->on('comments');
         });
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->dropColumn('parent_id');
-        });
-    }
 };
