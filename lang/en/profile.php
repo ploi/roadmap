@@ -9,4 +9,5 @@ return [
     'notifications' => 'Notifications',
     'notification_settings' => 'Notification settings',
     'receive_mention_notifications' => 'Receive mention notifications',
+    'receive_comment_reply_notifications' => 'Receive comment reply notifications',
 ];

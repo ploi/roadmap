@@ -9,4 +9,5 @@ return [
     'notifications' => 'Notificaties',
     'notification_settings' => 'Notificatie instellingen',
     'receive_mention_notifications' => 'Ontvang notificaties van vermeldingen',
+    'receive_comment_reply_notifications' => 'Ontvang notificaties van reacties op opmerkingen',
 ];
