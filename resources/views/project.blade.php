@@ -35,7 +35,7 @@
                                     <footer class="flex items-end justify-between">
                                                     <span
                                                         class="inline-flex items-center justify-center h-6 px-2 text-sm font-semibold tracking-tight text-gray-700 rounded-full bg-gray-50">
-                                                        {{ $item->created_at->format('d F') }}
+                                                        {{ $item->created_at->isoFormat('ll') }}
                                                     </span>
 
                                         <div class="text-gray-500 text-sm">

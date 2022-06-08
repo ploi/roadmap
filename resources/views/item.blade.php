@@ -52,11 +52,13 @@
                     <h2>{{ $item->title }}</h2>
 
                     <time class="flex-shrink-0 text-sm font-medium text-gray-500">
-                        {{ $item->created_at }}
+                        {{ $item->created_at->isoFormat('L LTS') }}
                     </time>
 
                     @if(app(\App\Settings\GeneralSettings::class)->enable_item_age)
-                        <span class="text-sm font-medium text-gray-500">({{ $item->created_at->diffInDays(now()) }} days ago)</span>
+                        <span class="text-sm font-medium text-gray-500">
+                            ({{ $item->created_at->diffInDays(now()) }} {{ trans_choice('items.days-ago', $item->created_at->diffInDays(now())) }})
+                        </span>
                     @endif
                 </header>
 
@@ -102,7 +104,7 @@
                                 </p>
 
                                 <span class="mt-1 text-xs font-medium text-gray-500"
-                                      x-data="{ tooltip: '{{ $activity->created_at }}' }"
+                                      x-data="{ tooltip: '{{ $activity->created_at->isoFormat('L LTS') }}' }"
                                       x-tooltip="tooltip">{{ $activity->created_at->diffForHumans() }}</span>
                             </div>
                         </li>
