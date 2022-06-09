@@ -90,8 +90,13 @@ class ItemResource extends Resource
             ->filters([
                 Filter::make('created_at')
                     ->form([
-                        Forms\Components\Select::make('project_id')->reactive()->options(Project::pluck('title', 'id')),
-                        Forms\Components\Select::make('board_id')->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
+                        Forms\Components\Select::make('project_id')
+                            ->label(trans('table.project'))
+                            ->reactive()
+                            ->options(Project::pluck('title', 'id')),
+                        Forms\Components\Select::make('board_id')
+                            ->label(trans('table.board'))
+                            ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
