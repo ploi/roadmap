@@ -15,20 +15,18 @@
         </x-filament::button>
     @endif
 
-    <span>{{ $item->total_votes }} total {{ trans_choice('messages.votes', $item->total_votes) }}</span>
+    <span>{{ trans_choice('messages.total-votes', $item->total_votes, ['votes' => $item->total_votes]) }}</span>
 
-    @if($this->vote)
-        @if($this->vote->subscribed)
+    @if($vote)
+        @if($vote->subscribed)
             <button class="border-b border-dotted font-semibold border-gray-500" x-data
-                    x-tooltip.raw="Unsubscribe so you don't receive any notifications anymore about this item"
-                    wire:click="unsubscribe">
-                unsubscribe
+                    x-tooltip.raw="{{ trans('items.unsubscribe-tooltip') }}" wire:click="unsubscribe">
+                {{ trans('items.unsubscribe') }}
             </button>
         @else
             <button class="border-b border-dotted font-semibold border-gray-500" x-data
-                    x-tooltip.raw="Subscribe to receive notifications about updates on this item"
-                    wire:click="subscribe">
-                subscribe
+                    x-tooltip.raw="{{ trans('items.subscribe-tooltip') }}" wire:click="subscribe">
+                {{ trans('items.subscribe') }}
             </button>
         @endif
     @endif
