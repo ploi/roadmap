@@ -53,17 +53,24 @@ class ProjectResource extends Resource
                         ->default($boards)
                         ->columnSpan(2)
                         ->schema([
-                            Forms\Components\Toggle::make('visible')->default(true)->helperText('Hides the board from the public view, but will still be accessible if you use the direct URL.'),
-                            Forms\Components\Toggle::make('can_users_create')->helperText('Allow users to create items in this board.'),
-                            Forms\Components\Select::make('sort_items_by')
-                                ->options([
-                                    Board::SORT_ITEMS_BY_POPULAR => 'Popular',
-                                    Board::SORT_ITEMS_BY_LATEST => 'Latest',
-                                ])
-                                ->default(Board::SORT_ITEMS_BY_POPULAR)
-                                ->required(),
-                            Forms\Components\TextInput::make('title')->required(),
-                            Forms\Components\Textarea::make('description'),
+                            Forms\Components\Grid::make(2)->schema([
+                                Forms\Components\Toggle::make('visible')->default(true)->helperText('Hides the board from the public view, but will still be accessible if you use the direct URL.'),
+                                Forms\Components\Toggle::make('can_users_create')->helperText('Allow users to create items in this board.'),
+                                Forms\Components\Toggle::make('block_comments')->helperText('Block users from commenting to items in this board.'),
+                                Forms\Components\Toggle::make('block_votes')->helperText('Block users from voting to items in this board.'),
+                            ]),
+                            Forms\Components\Grid::make(2)->schema([
+                                Forms\Components\TextInput::make('title')->required(),
+                                Forms\Components\Select::make('sort_items_by')
+                                    ->options([
+                                        Board::SORT_ITEMS_BY_POPULAR => 'Popular',
+                                        Board::SORT_ITEMS_BY_LATEST => 'Latest',
+                                    ])
+                                    ->default(Board::SORT_ITEMS_BY_POPULAR)
+                                    ->required(),
+                            ]),
+
+                            Forms\Components\Textarea::make('description')->helperText('Used as META description for SEO purposes.'),
                         ]),
                 ])->columns()
             ]);

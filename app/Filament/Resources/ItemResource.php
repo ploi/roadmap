@@ -13,6 +13,9 @@ use App\Filament\Resources\ItemResource\Pages;
 use App\Filament\Resources\ItemResource\RelationManagers\VotesRelationManager;
 use App\Filament\Resources\ItemResource\RelationManagers\CommentsRelationManager;
 use App\Filament\Resources\ItemResource\RelationManagers\ActivitiesRelationManager;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
 
 class ItemResource extends Resource
 {
@@ -21,6 +24,8 @@ class ItemResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-archive';
 
     protected static ?string $navigationGroup = 'Manage';
+
+    protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Form $form): Form
     {
@@ -83,7 +88,23 @@ class ItemResource extends Resource
                     ->label('Date'),
             ])
             ->filters([
-                //
+                Filter::make('created_at')
+                    ->form([
+                        Forms\Components\Select::make('project_id')->reactive()->options(Project::pluck('title', 'id')),
+                        Forms\Components\Select::make('board_id')->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['project_id'],
+                                fn (Builder $query, $projectId): Builder => $query->where('project_id', $projectId),
+                            )
+                            ->when(
+                                $data['board_id'],
+                                fn (Builder $query, $boardId): Builder => $query->where('board_id', $boardId),
+                            );
+                    })
+
             ])
             ->defaultSort('created_at', 'desc');
     }

@@ -18,14 +18,19 @@ class Board extends Model
         'slug',
         'title',
         'visible',
-        'description',
         'sort_order',
+        'description',
+        'block_votes',
         'sort_items_by',
+        'block_comments',
         'can_users_create',
     ];
 
     public $casts = [
-        'visible' => 'boolean'
+        'visible' => 'boolean',
+        'can_users_create' => 'boolean',
+        'block_comments' => 'boolean',
+        'block_votes' => 'boolean'
     ];
 
     public function project()

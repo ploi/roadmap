@@ -36,12 +36,14 @@
         </div>
 
         <div class="p-2 flex justify-between gap-2 items-center">
-            <a wire:click="reply({{ $comment->id }})" class="text-xs font-medium text-gray-500 hover:underline cursor-pointer">
-                {{ trans('comments.reply') }}
-            </a>
+            @if(!$item->board?->block_comments)
+                <a wire:click="reply({{ $comment->id }})"
+                   class="text-xs font-medium text-gray-500 hover:underline cursor-pointer">
+                    {{ trans('comments.reply') }}
+                </a>
 
-            &centerdot;
-
+                &centerdot;
+            @endif
             <button x-data
                     x-tooltip.raw="{{ trans('comments.click-to-copy') }}"
                     x-clipboard.raw="{{ route('items.show', $item) . '#comment-' . $comment->id }}"

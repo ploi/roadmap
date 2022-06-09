@@ -3,7 +3,7 @@
         <x-comment :comments="$comments" :comment="$comment" :item="$item" :reply="$reply"></x-comment>
     @endforeach
 
-    @if($reply === null)
+    @if($reply === null && !$item->board?->block_comments)
         <form wire:submit.prevent="submit" class="space-y-4 mt-4">
             {{ $this->form }}
 
