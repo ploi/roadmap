@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+  roadmap:
+    build:
+      context: ""
+      dockerfile: Dockerfile
+    container_name: roadmap
+    tty: true
+    environment:
+      SERVICE_NAME: roadmap
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ../.:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - roadmap
+
+  roadmap-webserver:
+    image: nginx:alpine
+    container_name: roadmap-webserver
+    tty: true
+    ports:
+      - "1337:81"
+      - "5577:443"
+    volumes:
+      - ../.:/var/www/
+      - ./nginx/:/etc/nginx/conf.d/
+    networks:
+      - roadmap
+    depends_on:
+      - roadmap
+
+  roadmap-db:
+    image: mysql:5.7.22
+    container_name: roadmap-db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3311:3306"
+    environment:
+      MYSQL_DATABASE: roadmap
+      MYSQL_ROOT_PASSWORD: secret
+      SERVICE_TAGS: dev
+      SERVICE_NAME: roadmap-mysql
+    volumes:
+      - ./mysql/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+      - ./dbdata:/var/lib/mysql/
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - roadmap
+
+  roadmap-myadmin:
+    image: phpmyadmin
+    container_name: roadmap-myadmin
+    restart: always
+    ports:
+      - 8010:80
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - roadmap
+
+networks:
+  roadmap:
+    driver: bridge
