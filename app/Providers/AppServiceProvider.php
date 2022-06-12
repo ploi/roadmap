@@ -7,6 +7,7 @@ use App\Services\OgImageGenerator;
 use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\View;
 use Filament\Navigation\NavigationItem;
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\Contracts\Factory as SocialiteFactory;
 
@@ -45,6 +46,8 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->bootSsoSocialite();
+
+        $this->bootCollectionMacros();
     }
 
     private function bootSsoSocialite(): void
@@ -55,6 +58,17 @@ class AppServiceProvider extends ServiceProvider
             $config = $app['config']['services.sso'];
 
             return $socialite->buildProvider(SsoProvider::class, $config);
+        });
+    }
+
+    private function bootCollectionMacros(): void
+    {
+        Collection::macro('prioritize', function($callback): Collection {
+           $nonPrioritized = $this->reject($callback);
+
+           return $this
+            ->filter($callback)
+            ->merge($nonPrioritized);
         });
     }
 }

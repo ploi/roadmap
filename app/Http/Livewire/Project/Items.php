@@ -19,7 +19,12 @@ class Items extends Component
 
     public function render()
     {
-        $this->items = $this->board->items()->latest($this->getSortingColumn())->get();
+        $this->items = $this->board->items()
+            ->latest($this->getSortingColumn())
+            ->get()
+            ->prioritize(function($item) {
+                return $item->isPinned();
+             });
 
         return view('livewire.board.items');
     }
