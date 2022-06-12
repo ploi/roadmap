@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('title')->nullable();
             $table->text('content')->nullable();
             $table->unsignedInteger('votes')->nullable()->default(0);
+            $table->boolean('pin')->default(false);
 
             $table->foreignId('board_id')->nullable()->constrained();
             $table->foreignId('user_id')->nullable()->constrained();
