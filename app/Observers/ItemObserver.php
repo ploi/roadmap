@@ -44,7 +44,7 @@ class ItemObserver
             $isDirty = true;
         }
 
-        if ($item->isDirty('pin') && $item->pin) {
+        if ($item->isDirty('pinned') && $item->pinned) {
             activity()
                 ->performedOn($item)
                 ->log('pinned');
@@ -52,7 +52,7 @@ class ItemObserver
             $isDirty = true;
         }
 
-        if ($item->isDirty('pin') && ! $item->pin) {
+        if ($item->isDirty('pinned') && ! $item->pinned) {
             activity()
                 ->performedOn($item)
                 ->log('un-pinned');

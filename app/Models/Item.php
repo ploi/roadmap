@@ -27,14 +27,14 @@ class Item extends Model
         'slug',
         'title',
         'content',
-        'pin',
+        'pinned',
         'project_id',
         'board_id',
         'user_id'
     ];
 
     protected $casts = [
-        'pin' => 'boolean',
+        'pinned' => 'boolean',
     ];
 
     protected function excerpt(): Attribute
@@ -142,6 +142,6 @@ class Item extends Model
 
     public function isPinned(): bool
     {
-        return $this->pin;
+        return $this->pinned;
     }
 }

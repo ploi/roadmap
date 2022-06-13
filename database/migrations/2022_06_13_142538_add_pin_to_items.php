@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->boolean('pin')->after('total_votes')->default(false);
+            $table->boolean('pinned')->after('total_votes')->default(false);
         });
     }
 };
