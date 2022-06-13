@@ -101,6 +101,12 @@
                         {{ trans('auth.profile') }}
                     </a>
                 </li>
+                <li>
+                    <x-filament::button color="secondary" onclick="Livewire.emit('openModal', 'modals.item.create-item-modal')"
+                                        icon="heroicon-o-plus-circle">
+                        {{ trans('items.create') }}
+                    </x-filament::button>
+                </li>
             </ul>
         </nav>
 
