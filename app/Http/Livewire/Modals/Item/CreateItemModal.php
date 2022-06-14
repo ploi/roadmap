@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Modals\Item;
 
+use Closure;
 use function app;
 use function auth;
 use function view;
@@ -26,6 +27,7 @@ class CreateItemModal extends ModalComponent implements HasForms
     public function mount()
     {
         $this->form->fill([]);
+        $this->similarItems = [];
     }
 
     protected function getFormSchema(): array
@@ -34,6 +36,10 @@ class CreateItemModal extends ModalComponent implements HasForms
 
         $inputs[] = TextInput::make('title')
             ->label(trans('table.title'))
+            ->lazy()
+            ->afterStateUpdated(function (Closure $set, $state) {
+                $set('similarItems', $state ? Item::where('title','LIKe','%'.$state.'%')->get(['title','slug']) : []);
+            })
             ->minLength(3)
             ->required();
 
