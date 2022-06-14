@@ -22,9 +22,9 @@ class Items extends Component
         $this->items = $this->board->items()
             ->latest($this->getSortingColumn())
             ->get()
-            ->prioritize(function($item) {
+            ->prioritize(function ($item) {
                 return $item->isPinned();
-             });
+            });
 
         return view('livewire.board.items');
     }

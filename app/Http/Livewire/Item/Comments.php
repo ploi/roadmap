@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Item;
 
 use App\Models\Item;
-use App\Models\Comment;
 use Livewire\Component;
 use Filament\Forms\Contracts\HasForms;
 use App\View\Components\MarkdownEditor;

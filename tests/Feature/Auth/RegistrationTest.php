@@ -3,7 +3,6 @@
 namespace App\Tests\Feature\Auth;
 
 test('registration screen can be rendered', function () {
-
     $response = $this->get(route('register'));
 
     $response->assertViewIs('auth.register');
@@ -11,7 +10,6 @@ test('registration screen can be rendered', function () {
 });
 
 test('new users can register', function () {
-
     $response = $this->post(route('register'), [
         'name' => 'Test User',
         'email' => 'test@example.com',
@@ -25,7 +23,6 @@ test('new users can register', function () {
 });
 
 test('validation rules are adhered to', function () {
-
     $response = $this->post(route('register'), [
         'name' => '',
         'email' => '',
@@ -37,7 +34,6 @@ test('validation rules are adhered to', function () {
 });
 
 test('authenticated users get redirected away from register view', function () {
-
     $user = createUser();
 
     $response = $this->actingAs($user)->get(route('register'));

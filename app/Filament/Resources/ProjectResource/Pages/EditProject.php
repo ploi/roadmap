@@ -13,7 +13,7 @@ class EditProject extends EditRecord
     public function getActions(): array
     {
         return [
-            Action::make('view_public')->color('secondary')->url(fn() => route('projects.show', $this->record)),
+            Action::make('view_public')->color('secondary')->url(fn () => route('projects.show', $this->record)),
             ...parent::getActions()
         ];
     }

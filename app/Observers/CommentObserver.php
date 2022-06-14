@@ -4,8 +4,8 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Models\Comment;
-use App\Notifications\CommentHasReplyNotification;
 use Xetaio\Mentions\Parser\MentionParser;
+use App\Notifications\CommentHasReplyNotification;
 use App\Notifications\Item\ItemHasNewCommentNotification;
 
 class CommentObserver

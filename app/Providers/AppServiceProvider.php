@@ -4,10 +4,10 @@ namespace App\Providers;
 
 use Filament\Facades\Filament;
 use App\Services\OgImageGenerator;
+use Illuminate\Support\Collection;
 use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\View;
 use Filament\Navigation\NavigationItem;
-use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\Contracts\Factory as SocialiteFactory;
 
@@ -63,10 +63,10 @@ class AppServiceProvider extends ServiceProvider
 
     private function bootCollectionMacros(): void
     {
-        Collection::macro('prioritize', function($callback): Collection {
-           $nonPrioritized = $this->reject($callback);
+        Collection::macro('prioritize', function ($callback): Collection {
+            $nonPrioritized = $this->reject($callback);
 
-           return $this
+            return $this
             ->filter($callback)
             ->merge($nonPrioritized);
         });

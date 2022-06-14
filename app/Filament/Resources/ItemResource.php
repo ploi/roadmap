@@ -9,13 +9,12 @@ use App\Models\Project;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
+use Filament\Tables\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ItemResource\Pages;
 use App\Filament\Resources\ItemResource\RelationManagers\VotesRelationManager;
 use App\Filament\Resources\ItemResource\RelationManagers\CommentsRelationManager;
 use App\Filament\Resources\ItemResource\RelationManagers\ActivitiesRelationManager;
-use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\SelectFilter;
-use Illuminate\Database\Eloquent\Builder;
 
 class ItemResource extends Resource
 {

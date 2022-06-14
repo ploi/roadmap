@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use Closure;
 use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
