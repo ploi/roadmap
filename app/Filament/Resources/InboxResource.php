@@ -61,6 +61,9 @@ class InboxResource extends Resource
                     Forms\Components\Select::make('board_id')
                         ->label('Board')
                         ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
+                    Forms\Components\Toggle::make('pinned')
+                        ->label('Pinned')
+                        ->default(false),
                     Forms\Components\Placeholder::make('created_at')
                         ->label('Created at')
                         ->visible(fn ($record) => filled($record))

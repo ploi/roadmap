@@ -44,6 +44,22 @@ class ItemObserver
             $isDirty = true;
         }
 
+        if ($item->isDirty('pinned') && $item->pinned) {
+            activity()
+                ->performedOn($item)
+                ->log('pinned');
+
+            $isDirty = true;
+        }
+
+        if ($item->isDirty('pinned') && ! $item->pinned) {
+            activity()
+                ->performedOn($item)
+                ->log('un-pinned');
+
+            $isDirty = true;
+        }
+
         if ($isDirty) {
             $users = $item->subscribedVotes()->with('user')->get()->pluck('user');
 

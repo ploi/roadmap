@@ -27,9 +27,14 @@ class Item extends Model
         'slug',
         'title',
         'content',
+        'pinned',
         'project_id',
         'board_id',
         'user_id'
+    ];
+
+    protected $casts = [
+        'pinned' => 'boolean',
     ];
 
     protected function excerpt(): Attribute
@@ -133,5 +138,10 @@ class Item extends Model
         $vote->user()->associate($user)->save();
 
         return $vote;
+    }
+
+    public function isPinned(): bool
+    {
+        return $this->pinned;
     }
 }

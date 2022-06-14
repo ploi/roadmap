@@ -58,6 +58,9 @@ class ItemResource extends Resource
                         ->label('Board')
                         ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? [])
                         ->required(),
+                    Forms\Components\Toggle::make('pinned')
+                        ->label('Pinned')
+                        ->default(false),
                     Forms\Components\Placeholder::make('created_at')
                         ->label('Created at')
                         ->visible(fn ($record) => filled($record))
@@ -86,6 +89,7 @@ class ItemResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->label('Date'),
+                Tables\Columns\BooleanColumn::make('pinned')->label('Pinned'),
             ])
             ->filters([
                 Filter::make('created_at')
@@ -97,6 +101,8 @@ class ItemResource extends Resource
                         Forms\Components\Select::make('board_id')
                             ->label(trans('table.board'))
                             ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
+                        Forms\Components\Toggle::make('pinned')
+                            ->label('Pinned'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -107,6 +113,10 @@ class ItemResource extends Resource
                             ->when(
                                 $data['board_id'],
                                 fn (Builder $query, $boardId): Builder => $query->where('board_id', $boardId),
+                            )
+                            ->when(
+                                $data['pinned'],
+                                fn (Builder $query): Builder => $query->where('pinned', $data['pinned']),
                             );
                     })
 
