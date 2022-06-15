@@ -38,6 +38,15 @@ class CreateItemModal extends ModalComponent implements HasForms
             ->label(trans('table.title'))
             ->lazy()
             ->afterStateUpdated(function (Closure $set, $state) {
+
+                // TODO:
+                // At some point we're going to want to exclude (filter from the array) common words (that should probably be configurable by the user)
+                // or having those common words inside the translation file, preference is to use the settings plugin
+                // we already have, so that the administrators can put in common words.
+                //
+                // Common words example: the, it, that, when, how, this, true, false, is, not, well, with, use, enable, of, for
+                // ^ These are words you don't want to search on in your database and exclude from the array.
+
                 $words = array_filter(explode(' ', $state));
 
                 $set('similarItems', $state ? Item::query()->where(function ($query) use ($words) {
