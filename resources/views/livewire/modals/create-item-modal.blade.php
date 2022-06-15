@@ -18,6 +18,20 @@
 
     @auth
         <x-slot name="content">
+            <ul class="max-h-20 overflow-y-auto">
+                @if($similarItems)
+                    <h3 class="mb-2"> Does this item already exist? </h3>
+                    @foreach($similarItems as $item)
+                        {{-- @if($loop->first)
+                        @endif --}}
+                        <li>
+                            <a href="{{ route('items.show', $item->slug) }}" class="flex justify-between focus:text-brand-600 focus:outline-none hover:text-white hover:bg-brand-500 hover:focus:text-white hover:focus:bg-brand-600">
+                                <span class="truncate"> {{ $item->title }}</span>
+                            </a>
+                        </li>
+                    @endforeach
+                @endif
+            </ul>
             {{ $this->form }}
         </x-slot>
     @endauth
