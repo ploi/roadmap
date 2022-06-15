@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
-use Filament\Commands\Concerns\CanValidateInput;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
+use Filament\Commands\Concerns\CanValidateInput;
 
 class Install extends Command
 {
@@ -35,15 +35,14 @@ class Install extends Command
 
     protected function runNpm()
     {
-
     }
 
     protected function getUserData(): array
     {
         return [
-            'name' => $this->validateInput(fn() => $this->ask('Name'), 'name', ['required']),
-            'email' => $this->validateInput(fn() => $this->ask('Email address'), 'email', ['required', 'email', 'unique:' . User::class]),
-            'password' => Hash::make($this->validateInput(fn() => $this->secret('Password'), 'password', ['required', 'min:8'])),
+            'name' => $this->validateInput(fn () => $this->ask('Name'), 'name', ['required']),
+            'email' => $this->validateInput(fn () => $this->ask('Email address'), 'email', ['required', 'email', 'unique:' . User::class]),
+            'password' => Hash::make($this->validateInput(fn () => $this->secret('Password'), 'password', ['required', 'min:8'])),
         ];
     }
 }
