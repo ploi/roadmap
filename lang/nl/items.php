@@ -21,5 +21,6 @@ return [
     'unsubscribe' => 'Ontvolgen',
     'subscribe-tooltip' => 'Volg om notificaties te ontvangen over updates van dit item',
     'unsubscribe-tooltip' => 'Ontvolg om geen notificaties meer te ontvangen over updates van dit item',
-    'days-ago' => 'dag geleden|dagen geleden'
+    'days-ago' => 'dag geleden|dagen geleden',
+    'similar-results' => 'Vergelijkbare bestaande resultaten:'
 ];

@@ -18,20 +18,20 @@
 
     @auth
         <x-slot name="content">
-            <ul class="max-h-20 overflow-y-auto">
-                @if($similarItems)
-                    <h3 class="mb-2"> Does this item already exist? </h3>
+            @if($similarItems && $similarItems->count())
+                <h3 class="mb-2">{{ trans('items.similar-results') }}</h3>
+                <ul class="max-h-20 overflow-y-auto list-disc list-inside">
                     @foreach($similarItems as $item)
-                        {{-- @if($loop->first)
-                        @endif --}}
                         <li>
-                            <a href="{{ route('items.show', $item->slug) }}" class="flex justify-between focus:text-brand-600 focus:outline-none hover:text-white hover:bg-brand-500 hover:focus:text-white hover:focus:bg-brand-600">
+                            <a href="{{ route('items.show', $item->slug) }}"
+                               class="border-b border-brand-500 border-dotted text-brand-500 hover:text-brand-700">
                                 <span class="truncate"> {{ $item->title }}</span>
                             </a>
                         </li>
                     @endforeach
-                @endif
-            </ul>
+                </ul>
+            @endif
+
             {{ $this->form }}
         </x-slot>
     @endauth

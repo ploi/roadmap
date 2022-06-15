@@ -38,7 +38,15 @@ class CreateItemModal extends ModalComponent implements HasForms
             ->label(trans('table.title'))
             ->lazy()
             ->afterStateUpdated(function (Closure $set, $state) {
-                $set('similarItems', $state ? Item::where('title','LIKe','%'.$state.'%')->get(['title','slug']) : []);
+                $words = array_filter(explode(' ', $state));
+
+                $set('similarItems', $state ? Item::query()->where(function ($query) use ($words) {
+                    foreach ($words as $word) {
+                        $query->orWhere('title', 'like', '%' . $word . '%');
+                    }
+
+                    return $query;
+                })->get(['title', 'slug']) : []);
             })
             ->minLength(3)
             ->required();
@@ -54,8 +62,8 @@ class CreateItemModal extends ModalComponent implements HasForms
         if (app(GeneralSettings::class)->select_board_when_creating_item) {
             $inputs[] = Select::make('board_id')
                 ->label(trans('table.board'))
-                ->visible(fn ($get) => $get('project_id'))
-                ->options(fn ($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
+                ->visible(fn($get) => $get('project_id'))
+                ->options(fn($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
                 ->required(app(GeneralSettings::class)->board_required_when_creating_item);
         }
 
@@ -96,7 +104,7 @@ class CreateItemModal extends ModalComponent implements HasForms
 
     public function render()
     {
-        return view('livewire.modals.create-item-modal');
+        return view('livewire.modals.items.create');
     }
 
     public static function closeModalOnClickAway(): bool
