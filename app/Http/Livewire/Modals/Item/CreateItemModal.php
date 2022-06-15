@@ -24,6 +24,8 @@ class CreateItemModal extends ModalComponent implements HasForms
 {
     use InteractsWithForms, CanNotify;
 
+    public $similarItems = [];
+
     public function mount()
     {
         $this->form->fill([]);
@@ -38,7 +40,6 @@ class CreateItemModal extends ModalComponent implements HasForms
             ->label(trans('table.title'))
             ->lazy()
             ->afterStateUpdated(function (Closure $set, $state) {
-
                 // TODO:
                 // At some point we're going to want to exclude (filter from the array) common words (that should probably be configurable by the user)
                 // or having those common words inside the translation file, preference is to use the settings plugin
