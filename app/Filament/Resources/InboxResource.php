@@ -16,7 +16,7 @@ use App\Filament\Resources\InboxResource\RelationManagers\CommentsRelationManage
 
 class InboxResource extends Resource
 {
-    protected static ?string $model = ItemInbox::class;
+    protected static ?string $model = Item::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-inbox';
 
