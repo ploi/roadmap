@@ -132,11 +132,11 @@ Next we're going to prepare the routes, controller & resource for your applicati
 Create these routes inside the `api.php` file:
 
 ```php
-Route::get('oauth/user', 'UserOAuthController@user')->middleware('scopes:email');
-Route::delete('oauth/revoke', 'UserOAuthController@revoke');
+Route::get('oauth/user', [Api\UserOAuthController::class, 'user'])->middleware('scopes:email');
+Route::delete('oauth/revoke', [Api\UserOAuthController::class, 'revoke']);
 ```
 
-Create the resource: `php artisan make:resource Api\UserOAuthResource` with the following contents in the `toArray()` method:
+Create the resource: `php artisan make:resource Api/UserOAuthResource` with the following contents in the `toArray()` method:
 
 ```php
 public function toArray($request)
@@ -149,7 +149,7 @@ public function toArray($request)
 }
 ```
 
-Create a controller `php artisan make:controller Api\UserOAuthController` and add these functions:
+Create a controller `php artisan make:controller Api/UserOAuthController` and add these functions:
 
 ```php
 use App\Http\Resources\Api\UserOAuthResource;
