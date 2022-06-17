@@ -83,12 +83,12 @@ class ItemResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')->searchable()->wrap(),
-                Tables\Columns\TextColumn::make('total_votes')->label('Votes')->sortable(),
-                Tables\Columns\TextColumn::make('comments_count')->label('Comments')->counts('comments')->sortable(),
+                Tables\Columns\TextColumn::make('total_votes')->label('Votes')->sortable()->toggleable()->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('comments_count')->label('Comments')->counts('comments')->sortable()->toggleable()->toggledHiddenByDefault(),
                 Tables\Columns\TextColumn::make('project.title'),
                 Tables\Columns\TextColumn::make('board.title'),
                 Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TagsColumn::make('assignedUsers.name')->visible(auth()->user()->hasRole(User::ROLE_ADMIN)),
+                Tables\Columns\TagsColumn::make('assignedUsers.name')->visible(auth()->user()->hasRole(User::ROLE_ADMIN))->toggleable()->toggledHiddenByDefault(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
