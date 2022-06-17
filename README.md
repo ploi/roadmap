@@ -11,7 +11,7 @@ Welcome to Roadmap, the open-source software for your roadmapping needs 🛣
 - Upvote items to see which has more priority
 - Automatic slug generation
 - Filament admin panel 💛
-- Simplified role system (Administrator, employee & user)
+- Simplified role system (administrator, employee & user)
 - OAuth 2 single sign-on with your own application
 - Automatic OG image generation including branding color you've setup (saves in your storage, around 70kb per image), if title is too long it will strip automatically as well, example:
 
