@@ -27,9 +27,9 @@ class CommentObserver
         ]);
 
         $userIds = $comment->item?->votes()
-            ->subscribed()
-            ->where('user_id', '!=', auth()->id()) // Don't get the current user, they obviously already know about the new comment
-            ->pluck('user_id') ?? collect();
+                ->subscribed()
+                ->where('user_id', '!=', auth()->id()) // Don't get the current user, they obviously already know about the new comment
+                ->pluck('user_id') ?? collect();
 
         User::query()->whereIn('id', $userIds->toArray())->get()->each(function (User $user) use ($comment) {
             $user->notify(new ItemHasNewCommentNotification($comment));
@@ -40,6 +40,10 @@ class CommentObserver
 
     public function deleting(Comment $comment)
     {
+        foreach ($comment->comments as $parentComment) {
+            $parentComment->delete();
+        }
+
         $comment->mentions()->delete();
     }
 }

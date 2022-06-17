@@ -72,6 +72,10 @@ class ItemObserver
     public function deleting(Item $item)
     {
         $item->votes()->delete();
+
+        foreach ($item->comments as $comment) {
+            $comment->delete();
+        }
         $item->comments()->delete();
     }
 }
