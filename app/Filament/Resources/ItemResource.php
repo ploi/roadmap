@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\User;
 use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;
@@ -55,19 +56,23 @@ class ItemResource extends Resource
                         ->required(),
                     Forms\Components\Select::make('board_id')
                         ->label('Board')
-                        ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? [])
+                        ->options(fn($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? [])
                         ->required(),
                     Forms\Components\Toggle::make('pinned')
                         ->label('Pinned')
                         ->default(false),
+                    Forms\Components\BelongsToManyMultiSelect::make('assigned_users')
+                        ->helperText('Assign admins/employees to items here.')
+                        ->preload()
+                        ->relationship('assignedUsers', 'name', fn(Builder $query) => $query->whereIn('role', [User::ROLE_ADMIN, User::ROLE_EMPLOYEE])),
                     Forms\Components\Placeholder::make('created_at')
                         ->label('Created at')
-                        ->visible(fn ($record) => filled($record))
-                        ->content(fn ($record) => $record->created_at->format('d-m-Y H:i:s')),
+                        ->visible(fn($record) => filled($record))
+                        ->content(fn($record) => $record->created_at->format('d-m-Y H:i:s')),
                     Forms\Components\Placeholder::make('updated_at')
                         ->label('Updated at')
-                        ->visible(fn ($record) => filled($record))
-                        ->content(fn ($record) => $record->updated_at->format('d-m-Y H:i:s')),
+                        ->visible(fn($record) => filled($record))
+                        ->content(fn($record) => $record->updated_at->format('d-m-Y H:i:s')),
                 ])->columnSpan(1),
             ])
             ->columns(4);
@@ -77,13 +82,13 @@ class ItemResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\TextColumn::make('title')->searchable(),
+                Tables\Columns\TextColumn::make('title')->searchable()->wrap(),
                 Tables\Columns\TextColumn::make('total_votes')->label('Votes')->sortable(),
-                Tables\Columns\TextColumn::make('comments_count')->counts('comments')->sortable(),
+                Tables\Columns\TextColumn::make('comments_count')->label('Comments')->counts('comments')->sortable(),
                 Tables\Columns\TextColumn::make('project.title'),
                 Tables\Columns\TextColumn::make('board.title'),
                 Tables\Columns\TextColumn::make('user.name'),
+                Tables\Columns\TagsColumn::make('assignedUsers.name')->visible(auth()->user()->hasRole(User::ROLE_ADMIN)),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -91,6 +96,13 @@ class ItemResource extends Resource
                 Tables\Columns\BooleanColumn::make('pinned')->label('Pinned'),
             ])
             ->filters([
+                Filter::make('assigned')
+                    ->label('Assigned to me')
+                    ->default(auth()->user()->hasRole(User::ROLE_EMPLOYEE))
+                    ->query(fn(Builder $query): Builder => $query->whereHas('assignedUsers', function ($query) {
+                        return $query->where('user_id', auth()->id());
+                    })),
+
                 Filter::make('created_at')
                     ->form([
                         Forms\Components\Select::make('project_id')
@@ -99,7 +111,7 @@ class ItemResource extends Resource
                             ->options(Project::pluck('title', 'id')),
                         Forms\Components\Select::make('board_id')
                             ->label(trans('table.board'))
-                            ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
+                            ->options(fn($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
                         Forms\Components\Toggle::make('pinned')
                             ->label('Pinned'),
                     ])
@@ -107,15 +119,15 @@ class ItemResource extends Resource
                         return $query
                             ->when(
                                 $data['project_id'],
-                                fn (Builder $query, $projectId): Builder => $query->where('project_id', $projectId),
+                                fn(Builder $query, $projectId): Builder => $query->where('project_id', $projectId),
                             )
                             ->when(
                                 $data['board_id'],
-                                fn (Builder $query, $boardId): Builder => $query->where('board_id', $boardId),
+                                fn(Builder $query, $boardId): Builder => $query->where('board_id', $boardId),
                             )
                             ->when(
                                 $data['pinned'],
-                                fn (Builder $query): Builder => $query->where('pinned', $data['pinned']),
+                                fn(Builder $query): Builder => $query->where('pinned', $data['pinned']),
                             );
                     })
 

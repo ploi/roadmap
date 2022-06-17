@@ -26,9 +26,16 @@ class Settings extends SettingsPage
 
     public Collection $ogImages;
 
+    protected static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()->hasRole('admin');
+    }
+
     public function mount(): void
     {
         parent::mount();
+
+        abort_unless(auth()->user()->hasRole('admin'), 403);
 
         $this->ogImages = collect(Storage::disk('public')->allFiles())
             ->filter(function ($file) {
