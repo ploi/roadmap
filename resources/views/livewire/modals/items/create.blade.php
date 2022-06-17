@@ -18,19 +18,19 @@
 
     @auth
         <x-slot name="content">
-            @if($similarItems && $similarItems->count())
+            <div @class(['hidden' => ! $similarItems && empty($similarItems)])>
                 <h3 class="mb-2">{{ trans('items.similar-results') }}</h3>
                 <ul class="max-h-20 overflow-y-auto list-disc list-inside">
                     @foreach($similarItems as $similarItem)
                         <li>
                             <a href="{{ route('items.show', $similarItem->slug ?? '') }}"
-                               class="border-b border-brand-500 border-dotted text-brand-500 hover:text-brand-700">
+                            class="border-b border-brand-500 border-dotted text-brand-500 hover:text-brand-700">
                                 <span class="truncate"> {{ $similarItem->title }}</span>
                             </a>
                         </li>
                     @endforeach
                 </ul>
-            @endif
+            </div>
 
             {{ $this->form }}
         </x-slot>
