@@ -13,9 +13,9 @@ it('can generate an username upon user creation', function () {
 });
 
 it('can create an admin user', function () {
-    $user = createUser(['admin' => true]);
+    $user = createUser(['role' => \App\Models\User::ROLE_ADMIN]);
 
-    expect($user->fresh()->admin)->toBeTruthy();
+    expect($user->fresh()->hasRole(\App\Models\User::ROLE_ADMIN))->toBeTruthy();
 });
 
 it('can check if a user wants a specific notification', function () {
