@@ -50,7 +50,7 @@ php artisan migrate --force
 php artisan make:filament-user
 ```
 
-And login with the credentials you've provided. If you want to be admin user, change the `admin` column for your user from `0` to `1`.
+And login with the credentials you've provided. If you want to be admin user, change the `role` column for your user to `admin`.
 
 ## Deployment
 
