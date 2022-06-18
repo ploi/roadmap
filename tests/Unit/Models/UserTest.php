@@ -87,3 +87,13 @@ it('can delete a user with items and comments and votes', function () {
 
     expect($user->fresh())->toBeNull();
 });
+
+it('can delete a user with social users', function () {
+    $user = createUser([], [
+        'userSocials' => \App\Models\UserSocial::factory(),
+    ]);
+
+    $user->delete();
+
+    expect($user->fresh())->toBeNull();
+});
