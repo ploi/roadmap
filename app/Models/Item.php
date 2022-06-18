@@ -28,6 +28,7 @@ class Item extends Model
         'title',
         'content',
         'pinned',
+        'private',
         'project_id',
         'board_id',
         'user_id'
@@ -35,6 +36,7 @@ class Item extends Model
 
     protected $casts = [
         'pinned' => 'boolean',
+        'private' => 'boolean',
     ];
 
     protected function excerpt(): Attribute
@@ -91,6 +93,15 @@ class Item extends Model
         return $query->orderBy('total_votes', 'desc');
     }
 
+    public function scopeVisibleForCurrentUser($query)
+    {
+        if (auth()->check() && auth()->user()->hasAdminAccess()) {
+            return $query;
+        }
+
+        return $query->where('private', false);
+    }
+
     public function scopeHasNoProjectAndBoard($query)
     {
         return $query->whereNull('project_id')->whereNull('board_id');
@@ -143,5 +154,10 @@ class Item extends Model
     public function isPinned(): bool
     {
         return $this->pinned;
+    }
+
+    public function isPrivate(): bool
+    {
+        return $this->private;
     }
 }

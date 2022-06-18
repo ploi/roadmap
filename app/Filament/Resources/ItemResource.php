@@ -61,6 +61,9 @@ class ItemResource extends Resource
                     Forms\Components\Toggle::make('pinned')
                         ->label('Pinned')
                         ->default(false),
+                    Forms\Components\Toggle::make('private')
+                        ->label('Private')
+                        ->default(false),
                     Forms\Components\BelongsToManyMultiSelect::make('assigned_users')
                         ->helperText('Assign admins/employees to items here.')
                         ->preload()
@@ -94,6 +97,7 @@ class ItemResource extends Resource
                     ->sortable()
                     ->label('Date'),
                 Tables\Columns\BooleanColumn::make('pinned')->label('Pinned'),
+                Tables\Columns\BooleanColumn::make('private')->label('Private'),
             ])
             ->filters([
                 Filter::make('assigned')
@@ -114,6 +118,8 @@ class ItemResource extends Resource
                             ->options(fn($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
                         Forms\Components\Toggle::make('pinned')
                             ->label('Pinned'),
+                        Forms\Components\Toggle::make('private')
+                            ->label('Private'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -128,6 +134,10 @@ class ItemResource extends Resource
                             ->when(
                                 $data['pinned'],
                                 fn(Builder $query): Builder => $query->where('pinned', $data['pinned']),
+                            )
+                            ->when(
+                                $data['private'],
+                                fn(Builder $query): Builder => $query->where('private', $data['private']),
                             );
                     })
 

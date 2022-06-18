@@ -112,7 +112,7 @@ class CreateItemModal extends ModalComponent implements HasForms
         // ^ These are words you don't want to search on in your database and exclude from the array.
         $words = array_filter(explode(' ', $state));
 
-        $this->similarItems = $state ? Item::query()->where(function ($query) use ($words) {
+        $this->similarItems = $state ? Item::query()->visibleForCurrentUser()->where(function ($query) use ($words) {
             foreach ($words as $word) {
                 $query->orWhere('title', 'like', '%' . $word . '%');
             }

@@ -23,5 +23,7 @@ return [
     'unsubscribe-tooltip' => 'Unsubscribe so you don\'t receive any notifications anymore about this item',
     'total-votes' => '1 total vote',
     'days-ago' => 'day ago | days ago',
-    'similar-results' => 'We\'ve found similar results:'
+    'similar-results' => 'We\'ve found similar results:',
+    'item-pinned' => 'This item is pinned',
+    'item-private' => 'This item is private'
 ];

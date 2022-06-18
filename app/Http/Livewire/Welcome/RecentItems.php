@@ -22,6 +22,7 @@ class RecentItems extends Component implements HasTable
 
         return Item::query()
             ->with('board.project')
+            ->visibleForCurrentUser()
             ->when(Arr::get($recentItemsConfig, 'must_have_board'), function (Builder $query) {
                 return $query->has('board');
             })
