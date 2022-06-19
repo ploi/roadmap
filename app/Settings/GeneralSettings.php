@@ -14,6 +14,7 @@ class GeneralSettings extends Settings
     public array $dashboard_items;
     public array $send_notifications_to;
     public string|null $welcome_text;
+    public string|null $custom_scripts;
     public string|null $password;
     public bool $enable_item_age;
     public bool $select_board_when_creating_item;

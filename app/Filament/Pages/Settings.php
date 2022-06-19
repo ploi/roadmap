@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use Closure;
+use SebastiaanKloos\FilamentCodeEditor\Components\CodeEditor;
 use Storage;
 use Illuminate\Support\Str;
 use Filament\Pages\SettingsPage;
@@ -105,6 +106,9 @@ class Settings extends SettingsPage
                             RichEditor::make('welcome_text')
                                 ->columnSpan(2)
                                 ->helperText('This content will show at the top of the dashboard for (for all users).'),
+
+                            CodeEditor::make('custom_scripts')
+                                ->columnSpan(2),
                         ]),
 
                     Tabs\Tab::make('Dashboard items')
