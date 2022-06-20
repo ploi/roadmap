@@ -2,13 +2,11 @@
 
 namespace App\Filament\Resources\ItemResource\RelationManagers;
 
-use App\Models\Vote;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\RelationManagers\HasManyRelationManager;
-use Illuminate\Database\Eloquent\Model;
 
 class VotesRelationManager extends HasManyRelationManager
 {

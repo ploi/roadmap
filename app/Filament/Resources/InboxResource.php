@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\ItemInbox;
 use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;

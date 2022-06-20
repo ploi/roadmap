@@ -3,7 +3,6 @@
 namespace App\Filament\Pages;
 
 use Closure;
-use SebastiaanKloos\FilamentCodeEditor\Components\CodeEditor;
 use Storage;
 use Illuminate\Support\Str;
 use Filament\Pages\SettingsPage;
@@ -18,6 +17,7 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
+use SebastiaanKloos\FilamentCodeEditor\Components\CodeEditor;
 
 class Settings extends SettingsPage
 {
