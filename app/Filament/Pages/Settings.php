@@ -106,9 +106,6 @@ class Settings extends SettingsPage
                             RichEditor::make('welcome_text')
                                 ->columnSpan(2)
                                 ->helperText('This content will show at the top of the dashboard for (for all users).'),
-
-                            CodeEditor::make('custom_scripts')
-                                ->columnSpan(2),
                         ]),
 
                     Tabs\Tab::make('Dashboard items')
@@ -151,6 +148,14 @@ class Settings extends SettingsPage
                         ->schema([
                             Toggle::make('block_robots')
                                 ->helperText('Instructs your roadmap to add the block robots META tag, it\'s up to the search engines to honor this request.')
+                        ]),
+
+                    Tabs\Tab::make('Scripts')
+                        ->schema([
+                            CodeEditor::make('custom_scripts')
+                                ->label('Custom header script')
+                                ->helperText('This allows you to add your own custom widget, or tracking tool. Code inside here will always be placed inside the head section.')
+                                ->columnSpan(2),
                         ])
                 ])
                 ->columns()
