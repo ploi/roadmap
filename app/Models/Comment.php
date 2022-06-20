@@ -14,7 +14,12 @@ class Comment extends Model
     public $fillable = [
         'content',
         'parent_id',
-        'user_id'
+        'user_id',
+        'private',
+    ];
+
+    protected $casts = [
+        'private' => 'boolean',
     ];
 
     public function user()
