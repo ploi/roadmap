@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Item;
 
 use App\Models\Item;
-use App\Models\User;
 use Filament\Forms\Components\Tabs;
 use Livewire\Component;
 use Filament\Forms\Contracts\HasForms;
@@ -56,29 +55,39 @@ class Comments extends Component implements HasForms
 
     protected function getFormSchema(): array
     {
-        $reply = $this->item->comments()->find($this->reply);
+        if (auth()->user()?->hasAdminAccess()) {
+            $reply = $this->item->comments()->find($this->reply);
+
+            return [
+                Tabs::make('')->tabs([
+                    Tabs\Tab::make(trans('comments.comment'))->schema([
+                        MarkdownEditor::make('content')
+                                      ->label(trans('comments.comment'))
+                                      ->helperText(trans('comments.mention-helper-text'))
+                                      ->minLength(3)
+                                      ->rules(['required_if:private_content,null,""', 'prohibited_unless:private_content,null,""']),
+                    ])
+                            ->hidden($reply?->private ?? false)
+                            ->id("public-{$this->reply}"),
+
+                    Tabs\Tab::make(trans('comments.private-note'))->schema([
+                        MarkdownEditor::make('private_content')
+                                      ->label(trans('comments.private-note'))
+                                      ->helperText(trans('comments.mention-helper-text'))
+                                      ->minLength(3)
+                                      ->visible(auth()->check() && auth()->user()->hasAdminAccess())
+                                      ->rules(['required_if:content,null,""', 'prohibited_unless:content,null,""']),
+                    ])->withAttributes(['class' => 'bg-yellow-50 rounded-xl'])->id("private-{$this->reply}"),
+                ]),
+            ];
+        }
 
         return [
-            Tabs::make('')->tabs([
-                Tabs\Tab::make(trans('comments.comment'))->schema([
-                    MarkdownEditor::make('content')
-                                  ->label(trans('comments.comment'))
-                                  ->helperText(trans('comments.mention-helper-text'))
-                                  ->minLength(3)
-                                  ->rules(['required_if:private_content,null,""', 'prohibited_unless:private_content,null,""']),
-                ])
-                    ->hidden($reply?->private ?? false)
-                    ->id("public-{$this->reply}"),
-
-                Tabs\Tab::make(trans('comments.private-note'))->schema([
-                    MarkdownEditor::make('private_content')
-                                  ->label(trans('comments.private-note'))
-                                  ->helperText(trans('comments.mention-helper-text'))
-                                  ->minLength(3)
-                                  ->visible(auth()->check() && auth()->user()->hasAdminAccess())
-                                  ->rules(['required_if:content,null,""', 'prohibited_unless:content,null,""']),
-                ])->withAttributes(['class' => 'bg-yellow-50 rounded-xl'])->id("private-{$this->reply}"),
-            ]),
+            MarkdownEditor::make('content')
+                          ->label(trans('comments.comment'))
+                          ->helperText(trans('comments.mention-helper-text'))
+                          ->minLength(3)
+                          ->required(),
         ];
     }
 

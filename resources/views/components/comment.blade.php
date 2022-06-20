@@ -2,7 +2,7 @@
     @class([
         'ml-1 md:ml-6' => $comment->parent_id !== null,
         'mr-1 bg-brand-50 rounded-lg ring-1 ring-brand-200' => $reply == $comment->id,
-		'bg-yellow-50 border border-yellow-700 rounded-md' => $comment->private && !$comment->parent?->private,
+		'bg-yellow-50 border border-yellow-700 rounded-md mt-1' => $comment->private && !$comment->parent?->private,
         'block py-2 overflow-hidden transition'
     ])
     id="comment-{{ $comment->id }}">
