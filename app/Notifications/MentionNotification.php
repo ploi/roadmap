@@ -22,6 +22,10 @@ class MentionNotification extends Notification implements ShouldQueue
             return [];
         }
 
+        if (!$notifiable->hasAdminAccess() && $this->comment->private) {
+            return [];
+        }
+
         return ['mail'];
     }
 
