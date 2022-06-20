@@ -67,5 +67,6 @@
 @livewireScripts
 <script src="{{ mix('js/app.js') }}"></script>
 @stack('javascript')
+{!! app(\App\Settings\GeneralSettings::class)->custom_scripts !!}
 </body>
 </html>
