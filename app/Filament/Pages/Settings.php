@@ -111,6 +111,7 @@ class Settings extends SettingsPage
                     Tabs\Tab::make('Dashboard items')
                         ->schema([
                             Repeater::make('dashboard_items')
+                                ->columns(2)
                                 ->columnSpan(2)
                                 ->schema([
                                     Select::make('type')
@@ -136,6 +137,7 @@ class Settings extends SettingsPage
                     Tabs\Tab::make('Notifications')
                         ->schema([
                             Repeater::make('send_notifications_to')
+                                ->columns(2)
                                 ->schema([
                                     TextInput::make('name')->required(),
                                     TextInput::make('email')->required()->email(),
