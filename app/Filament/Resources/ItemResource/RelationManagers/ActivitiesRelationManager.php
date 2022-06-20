@@ -45,4 +45,9 @@ class ActivitiesRelationManager extends MorphManyRelationManager
     {
         return false;
     }
+
+    public function canCreate(): bool
+    {
+        return false;
+    }
 }

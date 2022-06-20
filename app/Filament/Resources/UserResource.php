@@ -55,6 +55,7 @@ class UserResource extends Resource
         return [
             RelationManagers\ItemsRelationManager::class,
             RelationManagers\CommentsRelationManager::class,
+            RelationManagers\VotesRelationManager::class,
         ];
     }
 

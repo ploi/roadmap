@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\ItemResource\RelationManagers;
+namespace App\Filament\Resources\UserResource\RelationManagers;
 
-use App\Models\Vote;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\RelationManagers\HasManyRelationManager;
-use Illuminate\Database\Eloquent\Model;
 
 class VotesRelationManager extends HasManyRelationManager
 {
@@ -20,11 +18,6 @@ class VotesRelationManager extends HasManyRelationManager
     {
         return $form
             ->schema([
-                Forms\Components\BelongsToSelect::make('user_id')
-                    ->relationship('user', 'name')
-                    ->preload()
-                    ->required()
-                    ->searchable(),
                 Forms\Components\Toggle::make('subscribed')
                     ->label('Subscribed')
                     ->default(true),
@@ -35,13 +28,18 @@ class VotesRelationManager extends HasManyRelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date'),
+                Tables\Columns\TextColumn::make('model.title')->label('Item'),
+                Tables\Columns\TextColumn::make('model.project.title')->label('Project'),
                 Tables\Columns\BooleanColumn::make('subscribed')->label('Subscribed'),
             ])
             ->filters([
                 //
             ])
             ->defaultSort('created_at', 'desc');
+    }
+
+    protected function canCreate(): bool
+    {
+        return false;
     }
 }

@@ -15,7 +15,7 @@ class VotePolicy
         return $user->hasRole(User::ROLE_ADMIN, User::ROLE_EMPLOYEE);
     }
 
-    public function view(User $user, User $model)
+    public function view(User $user, Vote $model)
     {
         return $user->hasRole(User::ROLE_ADMIN);
     }
@@ -25,22 +25,22 @@ class VotePolicy
         return $user->hasRole(User::ROLE_ADMIN);
     }
 
-    public function update(User $user, User $model)
+    public function update(User $user, Vote $model)
     {
         return $user->hasRole(User::ROLE_ADMIN);
     }
 
-    public function delete(User $user, User $model)
+    public function delete(User $user, Vote $model)
     {
         return $user->hasRole(User::ROLE_ADMIN);
     }
 
-    public function restore(User $user, User $model)
+    public function restore(User $user, Vote $model)
     {
         return $user->hasRole(User::ROLE_ADMIN);
     }
 
-    public function forceDelete(User $user, User $model)
+    public function forceDelete(User $user, Vote $model)
     {
         return $user->hasRole(User::ROLE_ADMIN);
     }
