@@ -13,7 +13,7 @@ class LatestItems extends BaseWidget
 {
     protected function getTableQuery(): Builder
     {
-        return Item::query()->latest()->limit(5);
+        return Item::query()->visibleForCurrentUser()->latest()->limit(5);
     }
 
     protected function getTableColumns(): array

@@ -17,6 +17,7 @@ class ProjectController extends Controller
                 ->with(['items' => function ($query) {
                     return $query
                         ->orderBy('pinned', 'desc')
+                        ->visibleForCurrentUser()
                         ->popular() // TODO: This needs to be fixed to respect the sorting setting from the board itself (sort_items_by)
                         ->withCount('votes');
                 }])

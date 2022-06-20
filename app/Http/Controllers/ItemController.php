@@ -13,11 +13,11 @@ class ItemController extends Controller
         $project = null;
 
         if (!$itemId) {
-            $item = Item::query()->where('slug', $projectId)->firstOrFail();
+            $item = Item::query()->visibleForCurrentUser()->where('slug', $projectId)->firstOrFail();
         } else {
             $project = Project::query()->where('slug', $projectId)->firstOrFail();
 
-            $item = $project->items()->where('items.slug', $itemId)->firstOrFail();
+            $item = $project->items()->visibleForCurrentUser()->where('items.slug', $itemId)->firstOrFail();
         }
 
         return view('item', [

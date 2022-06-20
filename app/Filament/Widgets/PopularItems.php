@@ -13,7 +13,7 @@ class PopularItems extends BaseWidget
 {
     protected function getTableQuery(): Builder
     {
-        return Item::query()->popular()->limit(5);
+        return Item::query()->visibleForCurrentUser()->popular()->limit(5);
     }
 
     protected function getTableColumns(): array

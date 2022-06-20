@@ -60,6 +60,22 @@ class ItemObserver
             $isDirty = true;
         }
 
+        if ($item->isDirty('private') && $item->private) {
+            activity()
+                ->performedOn($item)
+                ->log('made item private');
+
+            $isDirty = true;
+        }
+
+        if ($item->isDirty('private') && !$item->private) {
+            activity()
+                ->performedOn($item)
+                ->log('made item public');
+
+            $isDirty = true;
+        }
+
         if ($isDirty) {
             $users = $item->subscribedVotes()->with('user')->get()->pluck('user');
 
