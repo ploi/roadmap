@@ -99,7 +99,7 @@ class ItemResource extends Resource
                     ->sortable()
                     ->label('Date'),
                 Tables\Columns\BooleanColumn::make('pinned')->label('Pinned'),
-                Tables\Columns\BooleanColumn::make('private')->label('Private'),
+                Tables\Columns\BooleanColumn::make('private')->label('Private')->toggleable()->toggledHiddenByDefault(),
             ])
             ->filters([
                 Filter::make('assigned')
