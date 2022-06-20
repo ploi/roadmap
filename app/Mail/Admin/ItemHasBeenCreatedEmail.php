@@ -12,14 +12,16 @@ class ItemHasBeenCreatedEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public array $receiver, public Item $item)
-    {
+    public function __construct(
+        public array $receiver,
+        public Item $item
+    ) {
     }
 
-    public function build()
+    public function build(): self
     {
         return $this
-            ->from($this->receiver['email'], $this->receiver['name'])
+            ->to($this->receiver['email'], $this->receiver['name'])
             ->subject('New item has been created on the roadmap')
             ->markdown('emails.admin.item-has-been-created');
     }
