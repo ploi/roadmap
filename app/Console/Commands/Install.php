@@ -72,10 +72,10 @@ class Install extends Command
 
     protected function runNpm()
     {
-        if ($this->confirm('Do you want to run npm install & npm run production to get the assets ready?')) {
+        if ($this->confirm('Do you want to run npm ci & npm run production to get the assets ready?')) {
             $this->info('Running NPM..');
 
-            shell_exec('npm install');
+            shell_exec('npm ci');
             shell_exec('npm run production');
 
             $this->info('NPM installation & mixing production done!');

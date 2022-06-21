@@ -50,7 +50,7 @@ And login with the credentials you've provided, the user you've created will aut
 
 ## Deployment
 
-To manage your servers and sites, we recommend using [Ploi.io](https://ploi.io/?ref=) to speed up things, obviously you're free to choose however you'd like to deploy this piece of software 💙
+To manage your servers and sites, we recommend using [Ploi.io](https://ploi.io/?ref=roadmap-readme) to speed up things, obviously you're free to choose however you'd like to deploy this piece of software 💙
 
 That being said, here's an deployment script example:
 
@@ -64,7 +64,7 @@ php artisan route:cache
 php artisan view:clear
 php artisan migrate --force
 
-npm install
+npm ci
 npm run production
 
 echo "🚀 Application deployed!"
@@ -209,7 +209,7 @@ Composer Install:
 
 NPM Install:
 
-`docker exec -it roadmap npm install`
+`docker exec -it roadmap npm ci`
 
 Running artisan commands:
 
