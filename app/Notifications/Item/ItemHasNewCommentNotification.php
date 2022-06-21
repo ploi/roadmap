@@ -24,9 +24,11 @@ class ItemHasNewCommentNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('New comment on roadmap item ' . $this->comment->item->title)
-            ->line('There is a new comment on a item you\'re subscribed too.')
-            ->action('View comment', route('items.show', $this->comment->item) . '#comment-' . $this->comment->id)
-            ->line('If you don\'t want these notifications anymore, you can unsubscribe from the item (but still keep the vote) via the unsubscribe button next to the upvote button.');
+            ->subject(trans('notifications.new-comment-subject', ['title' => $this->comment->item->title]))
+            ->greeting(trans('notifications.greeting', ['name' => $notifiable->name]))
+            ->line(trans('notifications.new-comment-body'))
+            ->action(trans('notifications.view-comment'), route('items.show', $this->comment->item) . '#comment-' . $this->comment->id)
+            ->line(trans('notifications.unsubscribe-info'))
+            ->salutation(trans('notifications.salutation') . "\n\r" . config('app.name'));
     }
 }
