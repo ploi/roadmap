@@ -10,7 +10,7 @@
 {{ trim($comment->content) }}
 @endcomponent
 
-{{ trans('If you no longer wish to receive notifications about this item, you can unsubscribe from future notifications by visiting the issue page and clicking "Unsubscribe". Your vote will not be changed.') }}
+{{ trans('If you no longer wish to receive notifications about this item, you can unsubscribe from future notifications by visiting the item page and clicking "Unsubscribe". Your vote will not be changed.') }}
 
 @component('mail::button', ['url' => $url])
     {{ trans('View comment') }}
