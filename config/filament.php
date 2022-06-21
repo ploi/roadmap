@@ -2,7 +2,6 @@
 
 use Filament\Pages;
 use Filament\Widgets;
-use Filament\Resources;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -203,11 +202,10 @@ return [
         ],
         'sidebar' => [
             'is_collapsible_on_desktop' => true,
-        ],
-        'tables' => [
-            'actions' => [
-                'type' => \Filament\Tables\Actions\LinkAction::class,
+            'groups' => [
+                'are_collapsible' => true,
             ],
+            'width' => null,
         ],
     ],
 
@@ -245,6 +243,21 @@ return [
     */
 
     'default_filesystem_disk' => env('FILAMENT_FILESYSTEM_DRIVER', 'public'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Google Fonts
+    |--------------------------------------------------------------------------
+    |
+    | This is the URL for Google Fonts that should be loaded. You may use any
+    | font, or set to `null` to prevent any Google Fonts from loading.
+    |
+    | When using a custom font, you should also set the font family in your
+    | custom theme's `tailwind.config.js` file.
+    |
+    */
+
+    'google_fonts' => 'https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap',
 
     /*
     |--------------------------------------------------------------------------
