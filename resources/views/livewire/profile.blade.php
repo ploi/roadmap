@@ -31,10 +31,6 @@
     @endif
 
     <x-filament::modal id="deleteAccount" width="md">
-        <x-slot name="trigger">
-            <button type="button">{{ trans('profile.delete-account') }}</button>
-        </x-slot>
-
         <x-slot name="heading">
             {{ trans('profile.delete-account-confirmation') }}
         </x-slot>

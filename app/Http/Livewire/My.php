@@ -40,9 +40,9 @@ class My extends Component implements HasTable
             Tables\Columns\TextColumn::make('total_votes')->label(trans('table.total-votes'))->sortable(),
             Tables\Columns\TextColumn::make('board.project.title')->label(trans('table.project')),
             Tables\Columns\TextColumn::make('board.title')->label(trans('table.board')),
-            Tables\Columns\TextColumn::make('created_at')->sortable()->label(function () {
+            Tables\Columns\TextColumn::make($this->type === 'commentedOn' ? 'comments_max_created_at' : 'created_at')->sortable()->label(function () {
                 if ($this->type === 'commentedOn') {
-                    return trans('table.commented_on');
+                    return trans('table.last_comment_posted_at');
                 }
 
                 return trans('table.created_at');

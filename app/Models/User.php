@@ -98,7 +98,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
             'id',
             'id',
             'item_id'
-        )->orderBy('comments.created_at', 'desc')->distinct();
+        )->withMax('comments', 'created_at')->distinct('comments.item_id');
     }
 
     public function mentions()
