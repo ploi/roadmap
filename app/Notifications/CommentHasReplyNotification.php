@@ -28,9 +28,11 @@ class CommentHasReplyNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('New reply on your comment on roadmap item ' . $this->comment->item->title)
-            ->line('There is a new reply on a comment you posted.')
-            ->action('View comment', route('items.show', $this->comment->item) . '#comment-' . $this->comment->id)
-            ->line('If you do not want to receive notifications like this anymore, you can unsubscribe from your profile.');
+            ->subject(trans('notifications.new-reply-subject', ['title' => $this->comment->item->title]))
+            ->greeting(trans('notifications.greeting', ['name' => $notifiable->name]))
+            ->line(trans('notifications.new-reply-body'))
+            ->action(trans('notifications.view-comment'), route('items.show', $this->comment->item) . '#comment-' . $this->comment->id)
+            ->line(trans('notifications.unsubscribe-info'))
+            ->salutation(trans('notifications.salutation') . "\n\r" . config('app.name'));
     }
 }
