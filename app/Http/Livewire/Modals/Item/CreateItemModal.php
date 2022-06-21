@@ -42,6 +42,7 @@ class CreateItemModal extends ModalComponent implements HasForms
         $inputs = [];
 
         $inputs[] = TextInput::make('title')
+            ->autofocus()
             ->label(trans('table.title'))
             ->lazy()
             ->afterStateUpdated(function (Closure $set, $state) {

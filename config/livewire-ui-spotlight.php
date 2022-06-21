@@ -31,6 +31,7 @@ return [
     'commands' => [
         \App\Spotlight\Logout::class,
         \App\Spotlight\ViewItem::class,
+        \App\Spotlight\CreateItem::class,
         \App\Spotlight\ViewProfile::class,
     ],
 
