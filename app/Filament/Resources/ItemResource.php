@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use App\Models\Item;
 use App\Models\User;
+use Filament\Forms\Components\Tabs;
 use Filament\Tables;
 use App\Models\Project;
 use Filament\Resources\Form;
@@ -31,22 +32,38 @@ class ItemResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make([
-                    Forms\Components\TextInput::make('title')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\BelongsToSelect::make('user_id')
-                        ->relationship('user', 'name')
-                        ->default(auth()->user()->id)
-                        ->preload()
-                        ->required()
-                        ->searchable(),
-                    Forms\Components\MarkdownEditor::make('content')
-                        ->columnSpan(2)
-                        ->required()
-                        ->minLength(5)
-                        ->maxLength(65535),
-                ])->columns()->columnSpan(3),
+                Tabs::make('Heading')
+                    ->tabs([
+                        Tabs\Tab::make('Item')
+                            ->schema([
+                                Forms\Components\TextInput::make('title')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\Select::make('user_id')
+                                    ->relationship('user', 'name')
+                                    ->default(auth()->user()->id)
+                                    ->preload()
+                                    ->required()
+                                    ->searchable(),
+                                Forms\Components\MarkdownEditor::make('content')
+                                    ->columnSpan(2)
+                                    ->required()
+                                    ->minLength(5)
+                                    ->maxLength(65535),
+                            ])->columns(2),
+
+                        Tabs\Tab::make('Management')
+                            ->schema([
+                                Forms\Components\Toggle::make('private')
+                                    ->helperText('Private items will only be visible to admins and employees')
+                                    ->label('Private')
+                                    ->default(false),
+                                Forms\Components\MultiSelect::make('assigned_users')
+                                    ->helperText('Assign admins/employees to items here.')
+                                    ->preload()
+                                    ->relationship('assignedUsers', 'name', fn(Builder $query) => $query->whereIn('role', [User::ROLE_ADMIN, User::ROLE_EMPLOYEE])),
+                            ]),
+                    ])->columnSpan(3),
 
                 Forms\Components\Card::make([
                     Forms\Components\Select::make('project_id')
@@ -56,28 +73,20 @@ class ItemResource extends Resource
                         ->required(),
                     Forms\Components\Select::make('board_id')
                         ->label('Board')
-                        ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? [])
+                        ->options(fn($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? [])
                         ->required(),
                     Forms\Components\Toggle::make('pinned')
                         ->helperText('Pinned items will always stay at top.')
                         ->label('Pinned')
                         ->default(false),
-                    Forms\Components\Toggle::make('private')
-                        ->helperText('Private items will only be visible to admins and employees')
-                        ->label('Private')
-                        ->default(false),
-                    Forms\Components\BelongsToManyMultiSelect::make('assigned_users')
-                        ->helperText('Assign admins/employees to items here.')
-                        ->preload()
-                        ->relationship('assignedUsers', 'name', fn (Builder $query) => $query->whereIn('role', [User::ROLE_ADMIN, User::ROLE_EMPLOYEE])),
                     Forms\Components\Placeholder::make('created_at')
                         ->label('Created at')
-                        ->visible(fn ($record) => filled($record))
-                        ->content(fn ($record) => $record->created_at->format('d-m-Y H:i:s')),
+                        ->visible(fn($record) => filled($record))
+                        ->content(fn($record) => $record->created_at->format('d-m-Y H:i:s')),
                     Forms\Components\Placeholder::make('updated_at')
                         ->label('Updated at')
-                        ->visible(fn ($record) => filled($record))
-                        ->content(fn ($record) => $record->updated_at->format('d-m-Y H:i:s')),
+                        ->visible(fn($record) => filled($record))
+                        ->content(fn($record) => $record->updated_at->format('d-m-Y H:i:s')),
                 ])->columnSpan(1),
             ])
             ->columns(4);
@@ -105,7 +114,7 @@ class ItemResource extends Resource
                 Filter::make('assigned')
                     ->label('Assigned to me')
                     ->default(auth()->user()->hasRole(User::ROLE_EMPLOYEE))
-                    ->query(fn (Builder $query): Builder => $query->whereHas('assignedUsers', function ($query) {
+                    ->query(fn(Builder $query): Builder => $query->whereHas('assignedUsers', function ($query) {
                         return $query->where('user_id', auth()->id());
                     })),
 
@@ -117,7 +126,7 @@ class ItemResource extends Resource
                             ->options(Project::pluck('title', 'id')),
                         Forms\Components\Select::make('board_id')
                             ->label(trans('table.board'))
-                            ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
+                            ->options(fn($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
                         Forms\Components\Toggle::make('pinned')
                             ->label('Pinned'),
                         Forms\Components\Toggle::make('private')
@@ -127,19 +136,19 @@ class ItemResource extends Resource
                         return $query
                             ->when(
                                 $data['project_id'],
-                                fn (Builder $query, $projectId): Builder => $query->where('project_id', $projectId),
+                                fn(Builder $query, $projectId): Builder => $query->where('project_id', $projectId),
                             )
                             ->when(
                                 $data['board_id'],
-                                fn (Builder $query, $boardId): Builder => $query->where('board_id', $boardId),
+                                fn(Builder $query, $boardId): Builder => $query->where('board_id', $boardId),
                             )
                             ->when(
                                 $data['pinned'],
-                                fn (Builder $query): Builder => $query->where('pinned', $data['pinned']),
+                                fn(Builder $query): Builder => $query->where('pinned', $data['pinned']),
                             )
                             ->when(
                                 $data['private'],
-                                fn (Builder $query): Builder => $query->where('private', $data['private']),
+                                fn(Builder $query): Builder => $query->where('private', $data['private']),
                             );
                     })
 
