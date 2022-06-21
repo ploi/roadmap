@@ -32,6 +32,7 @@ class VoteResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('model.title')->label('Item'),
+                Tables\Columns\BooleanColumn::make('subscribed'),
                 Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date'),
             ])
             ->filters([

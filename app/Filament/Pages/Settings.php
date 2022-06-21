@@ -17,6 +17,7 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
+use SebastiaanKloos\FilamentCodeEditor\Components\CodeEditor;
 
 class Settings extends SettingsPage
 {
@@ -26,9 +27,16 @@ class Settings extends SettingsPage
 
     public Collection $ogImages;
 
+    protected static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()->hasRole('admin');
+    }
+
     public function mount(): void
     {
         parent::mount();
+
+        abort_unless(auth()->user()->hasRole('admin'), 403);
 
         $this->ogImages = collect(Storage::disk('public')->allFiles())
             ->filter(function ($file) {
@@ -103,6 +111,7 @@ class Settings extends SettingsPage
                     Tabs\Tab::make('Dashboard items')
                         ->schema([
                             Repeater::make('dashboard_items')
+                                ->columns(2)
                                 ->columnSpan(2)
                                 ->schema([
                                     Select::make('type')
@@ -128,6 +137,7 @@ class Settings extends SettingsPage
                     Tabs\Tab::make('Notifications')
                         ->schema([
                             Repeater::make('send_notifications_to')
+                                ->columns(2)
                                 ->schema([
                                     TextInput::make('name')->required(),
                                     TextInput::make('email')->required()->email(),
@@ -140,6 +150,14 @@ class Settings extends SettingsPage
                         ->schema([
                             Toggle::make('block_robots')
                                 ->helperText('Instructs your roadmap to add the block robots META tag, it\'s up to the search engines to honor this request.')
+                        ]),
+
+                    Tabs\Tab::make('Scripts')
+                        ->schema([
+                            CodeEditor::make('custom_scripts')
+                                ->label('Custom header script')
+                                ->helperText('This allows you to add your own custom widget, or tracking tool. Code inside here will always be placed inside the head section.')
+                                ->columnSpan(2),
                         ])
                 ])
                 ->columns()

@@ -44,6 +44,38 @@ class ItemObserver
             $isDirty = true;
         }
 
+        if ($item->isDirty('pinned') && $item->pinned) {
+            activity()
+                ->performedOn($item)
+                ->log('pinned');
+
+            $isDirty = true;
+        }
+
+        if ($item->isDirty('pinned') && ! $item->pinned) {
+            activity()
+                ->performedOn($item)
+                ->log('un-pinned');
+
+            $isDirty = true;
+        }
+
+        if ($item->isDirty('private') && $item->private) {
+            activity()
+                ->performedOn($item)
+                ->log('made item private');
+
+            $isDirty = true;
+        }
+
+        if ($item->isDirty('private') && !$item->private) {
+            activity()
+                ->performedOn($item)
+                ->log('made item public');
+
+            $isDirty = true;
+        }
+
         if ($isDirty) {
             $users = $item->subscribedVotes()->with('user')->get()->pluck('user');
 
@@ -56,6 +88,10 @@ class ItemObserver
     public function deleting(Item $item)
     {
         $item->votes()->delete();
+
+        foreach ($item->comments as $comment) {
+            $comment->delete();
+        }
         $item->comments()->delete();
     }
 }

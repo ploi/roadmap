@@ -17,4 +17,12 @@ return [
     'all-caught-up-can-create' => 'Je kunt rechts een item aanmaken.',
     'login_to_submit_item' => 'Log in om een item aan te maken.',
     'item_created' => 'Item aangemaakt',
+    'subscribe' => 'Volgen',
+    'unsubscribe' => 'Ontvolgen',
+    'subscribe-tooltip' => 'Volg om notificaties te ontvangen over updates van dit item',
+    'unsubscribe-tooltip' => 'Ontvolg om geen notificaties meer te ontvangen over updates van dit item',
+    'days-ago' => 'dag geleden|dagen geleden',
+    'similar-results' => 'Vergelijkbare bestaande resultaten:',
+    'item-pinned' => 'Dit item is vastgezet',
+    'item-private' => 'Dit item is privé'
 ];

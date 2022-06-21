@@ -14,6 +14,7 @@ class UserObserver
         $user->mentions()->delete();
         $user->votes()->delete();
         $user->comments()->delete();
+        $user->userSocials()->delete();
         $user->items()->update(['user_id' => null]);
     }
 }

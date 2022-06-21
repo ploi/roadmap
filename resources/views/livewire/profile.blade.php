@@ -15,7 +15,7 @@
 
             <div>
                 <x-filament::button type="button" color="danger" wire:click="deleteConfirm">
-                    {{ trans('profile.delete_account') }}
+                    {{ trans('profile.delete-account') }}
                 </x-filament::button>
             </div>
         </div>
@@ -23,34 +23,28 @@
 
     @if($hasSsoLoginAvailable)
         <div>
-            <h2 class="text-lg tracking-tight font-bold">Social login</h2>
-            <p class="text-gray-500 text-sm">Here you'll find the social login's you've used to log in with your
-                account.</p>
+            <h2 class="text-lg tracking-tight font-bold">{{ trans('profile.social-login') }}</h2>
+            <p class="text-gray-500 text-sm">{{ trans('profile.social-login-description') }}</p>
         </div>
 
         {{ $this->table }}
     @endif
 
-    <x-filament::modal id="deleteAccount">
-        <x-slot name="trigger">
-            <button type="button">Delete profile</button>
-        </x-slot>
-
+    <x-filament::modal id="deleteAccount" width="md">
         <x-slot name="heading">
-            Are you sure you'd like to delete?
+            {{ trans('profile.delete-account-confirmation') }}
         </x-slot>
 
-        <p>Take note that this action cannot be undone, all your comment and votes will be deleted. Items will be unlinked
-            from your account.</p>
+        <p>{{ trans('profile.delete-account-warning') }}</p>
 
         <x-slot name="footer">
             <x-filament::modal.actions full-width>
                 <x-filament::button wire:click="closeDeleteConfirm" color="secondary">
-                    Cancel
+                    {{ trans('profile.delete-account-cancel') }}
                 </x-filament::button>
 
                 <x-filament::button wire:click="delete" color="danger">
-                    Delete profile
+                    {{ trans('profile.delete-account') }}
                 </x-filament::button>
             </x-filament::modal.actions>
         </x-slot>

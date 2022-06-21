@@ -1,21 +1,21 @@
 @component('mail::message')
-**Hi {{ $user->name }}**,
+**{{ trans('notifications.greeting', ['name' => $user->name]) }}**
 
-The item **{{ trim($item->title) }}** you're subscribed to have been updated.
+{{ trans('notifications.item-updated-body', ['title' => trim($item->title)]) }}
 
-**Latest activity:**
+**{{ trans('notifications.latest-activity') }}**
 @component('mail::table')
-| Log | Date |
-|:---:|:----:|
+| {{ trans('notifications.log') }} | {{ trans('notifications.date') }} |
+|:---:|:---:|
 @foreach($activities as $activity)
 | {{ ucfirst($activity->description) }} | {{ $activity->created_at }} |
 @endforeach
 @endcomponent
 
 @component('mail::button', ['url' => route('items.show', $item)])
-View item
+{{ trans('notifications.view-item') }}
 @endcomponent
 
-Best regards,<br>
+{{ trans('notifications.salutation') }}<br>
 {{ config('app.name') }}
 @endcomponent

@@ -11,6 +11,7 @@ Welcome to Roadmap, the open-source software for your roadmapping needs 🛣
 - Upvote items to see which has more priority
 - Automatic slug generation
 - Filament admin panel 💛
+- Simplified role system (administrator, employee & user)
 - OAuth 2 single sign-on with your own application
 - Automatic OG image generation including branding color you've setup (saves in your storage, around 70kb per image), if title is too long it will strip automatically as well, example:
 
@@ -32,9 +33,6 @@ git clone https://github.com/ploi-deploy/roadmap.git
 composer install
 php -r "file_exists('.env') || copy('.env.example', '.env');"
 php artisan key:generate
-php artisan storage:link
-npm install
-npm run production
 ```
 
 Now edit your `.env` file and set up the database credentials, including the app name you want.
@@ -45,15 +43,14 @@ As well as the timezone can be set with `APP_TIMEZONE`, for example: `APP_TIMEZO
 Now run the following:
 
 ```
-php artisan migrate --force
-php artisan make:filament-user
+php artisan roadmap:install
 ```
 
-And login with the credentials you've provided. If you want to be admin user, change the `admin` column for your user from `0` to `1`.
+And login with the credentials you've provided, the user you've created will automatically be admin.
 
 ## Deployment
 
-To manage your servers and sites, we recommend using [Ploi.io](https://ploi.io/?ref=) to speed up things, obviously you're free to choose however you'd like to deploy this piece of software 💙
+To manage your servers and sites, we recommend using [Ploi.io](https://ploi.io/?ref=roadmap-readme) to speed up things, obviously you're free to choose however you'd like to deploy this piece of software 💙
 
 That being said, here's an deployment script example:
 
@@ -67,13 +64,26 @@ php artisan route:cache
 php artisan view:clear
 php artisan migrate --force
 
-npm install
+npm ci
 npm run production
 
 echo "🚀 Application deployed!"
 ```
 
 If you're using queue workers (which we recommend to do) also add `php artisan queue:restart` to your deployment script.
+
+## Role system
+
+There's a simplified role system included in this roadmapping software. There's 3 roles: administrator, employee & user.
+
+What are these roles allowed to do?
+
+- Administrator
+  - Obviously anything to users, items, projects, access admin
+- Employee
+  - These can access the admin, and see their assigned items (via a filter). What they can't do: settings, theme, users, CRUD projects.
+- User
+  - This is your default user when someone registers, they don't have access to the administration and can only access the frontend.
 
 ## Installing SSO (OAuth 2 login with 3rd party app)
 
@@ -118,11 +128,11 @@ Next we're going to prepare the routes, controller & resource for your applicati
 Create these routes inside the `api.php` file:
 
 ```php
-Route::get('oauth/user', 'UserOAuthController@user')->middleware('scopes:email');
-Route::delete('oauth/revoke', 'UserOAuthController@revoke');
+Route::get('oauth/user', [Api\UserOAuthController::class, 'user'])->middleware('scopes:email');
+Route::delete('oauth/revoke', [Api\UserOAuthController::class, 'revoke']);
 ```
 
-Create the resource: `php artisan make:resource Api\UserOAuthResource` with the following contents in the `toArray()` method:
+Create the resource: `php artisan make:resource Api/UserOAuthResource` with the following contents in the `toArray()` method:
 
 ```php
 public function toArray($request)
@@ -135,7 +145,7 @@ public function toArray($request)
 }
 ```
 
-Create a controller `php artisan make:controller Api\UserOAuthController` and add these functions:
+Create a controller `php artisan make:controller Api/UserOAuthController` and add these functions:
 
 ```php
 use App\Http\Resources\Api\UserOAuthResource;
@@ -174,6 +184,58 @@ public function boot()
 ```
 
 Now head over to the login page in your roadmap software and view the log in button in action. The title of the button can be set with the `.env` variable: `SSO_LOGIN_TITLE=`
+
+
+## Docker Support
+
+### Getting up and running...
+
+Go into docker folder and run:
+`docker-compose up -d --build`
+
+Set your database .env variables:
+```
+DB_CONNECTION=mysql
+DB_HOST=roadmap-db
+DB_PORT=3306
+DB_DATABASE=roadmap
+DB_USERNAME=root
+DB_PASSWORD=secret
+```
+
+Composer Install:
+
+`docker exec -it roadmap composer install`
+
+NPM Install:
+
+`docker exec -it roadmap npm ci`
+
+Running artisan commands:
+
+`docker exec -it roadmap php artisan <command>`
+
+The Application will be running on `localhost:1337` and PhpMyAdmin is running on `localhost:8010`
+
+### Docker Considerations
+
+There are a few heroicons that were giving issues when running locally with docker.
+
+```
+Unable to locate a class or view for component <insert heroicon name here>
+```
+The problem was resolved by simply changing the following icons:
+
+x-heroicon-o-chevron-down -> x-heroicon-s-chevron-down (group.blade.php)
+heroicon-o-chat -> heroicon-s-chat (CommentResource)
+heroicon-o-archive -> heroicon-s-archive (ItemResource)
+heroicon-o-x-circle -> heroicon-o-collection (notifications.blade.php)
+
+Related Issues:
+
+[laravel-filament/filament#2677](https://github.com/laravel-filament/filament/issues/2677)
+
+[blade-ui-kit/blade-heroicons#9](https://github.com/blade-ui-kit/blade-heroicons/issues/9)
 
 ## Testing
 

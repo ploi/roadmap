@@ -22,15 +22,19 @@ class MentionNotification extends Notification implements ShouldQueue
             return [];
         }
 
+        if (!$notifiable->hasAdminAccess() && $this->comment->private) {
+            return [];
+        }
+
         return ['mail'];
     }
 
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('You got mentioned in item ' . $this->comment->item->title)
-            ->line('You got mentioned in the item ' . $this->comment->item->title . ' by ' . $this->comment->user->name . '.')
-            ->action('View item', route('items.show', $this->comment->item) . '#comment-' . $this->comment->id)
-            ->line('If you do not want to receive notifications like this anymore, you can unsubscribe from your profile.');
+            ->subject(trans('notifications.new-mention-subject', ['title' => $this->comment->item->title]))
+            ->line(trans('notifications.new-mention-body', ['title' => $this->comment->item->title, 'user' => $this->comment->user->name]))
+            ->action(trans('notifications.view-item'), route('items.show', $this->comment->item) . '#comment-' . $this->comment->id)
+            ->line(trans('notifications.unsubscribe-info'));
     }
 }

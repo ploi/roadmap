@@ -13,7 +13,13 @@ class Comment extends Model
 
     public $fillable = [
         'content',
-        'user_id'
+        'parent_id',
+        'user_id',
+        'private',
+    ];
+
+    protected $casts = [
+        'private' => 'boolean',
     ];
 
     public function user()
@@ -24,6 +30,16 @@ class Comment extends Model
     public function item()
     {
         return $this->belongsTo(Item::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Comment::class, 'parent_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'parent_id');
     }
 
     public function mentions()

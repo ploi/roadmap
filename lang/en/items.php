@@ -17,4 +17,13 @@ return [
     'all-caught-up-can-create' => 'You can create an item on the right.',
     'login_to_submit_item' => 'Login to be able to submit an item.',
     'item_created' => 'Item created',
+    'subscribe' => 'Subscribe',
+    'unsubscribe' => 'Unsubscribe',
+    'subscribe-tooltip' => 'Subscribe to receive notifications about updates on this item',
+    'unsubscribe-tooltip' => 'Unsubscribe so you don\'t receive any notifications anymore about this item',
+    'total-votes' => '1 total vote',
+    'days-ago' => 'day ago | days ago',
+    'similar-results' => 'We\'ve found similar results:',
+    'item-pinned' => 'This item is pinned',
+    'item-private' => 'This item is private'
 ];

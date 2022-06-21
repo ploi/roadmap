@@ -16,8 +16,13 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ROLE_ADMIN = 'admin';
+    const ROLE_EMPLOYEE = 'employee';
+    const ROLE_USER = 'user';
+
     protected $fillable = [
         'name',
+        'role',
         'email',
         'username',
         'password',
@@ -36,7 +41,17 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     public function canAccessFilament(): bool
     {
-        return $this->admin;
+        return $this->hasAdminAccess();
+    }
+
+    public function hasAdminAccess(): bool
+    {
+        return $this->role === self::ROLE_ADMIN || $this->role === self::ROLE_EMPLOYEE;
+    }
+
+    public function hasRole(...$roles): bool
+    {
+        return in_array($this->role, $roles);
     }
 
     public function getGravatar($size = 150)
@@ -83,7 +98,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
             'id',
             'id',
             'item_id'
-        )->orderBy('comments.created_at', 'desc')->distinct();
+        )->withMax('comments', 'created_at')->distinct('comments.item_id');
     }
 
     public function mentions()
@@ -108,7 +123,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         static::creating(function (self $user) {
             $user->username = Str::slug($user->name);
             $user->notification_settings = [
-                'receive_mention_notifications'
+                'receive_mention_notifications',
+                'receive_comment_reply_notifications',
             ];
         });
 

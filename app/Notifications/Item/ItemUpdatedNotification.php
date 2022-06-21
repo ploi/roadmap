@@ -24,7 +24,7 @@ class ItemUpdatedNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Item ' . $this->item->title . ' has new updates')
+            ->subject(trans('notifications.item-updated-subject', ['title' => $this->item->title]))
             ->markdown('emails.item.updated', [
                 'user' => $notifiable,
                 'item' => $this->item,

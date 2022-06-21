@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\Comment;
 use App\Models\Item;
 use App\Models\Vote;
+use App\Models\Comment;
 
 it('can generate an username upon user creation', function () {
     $user = createUser();
@@ -13,9 +13,9 @@ it('can generate an username upon user creation', function () {
 });
 
 it('can create an admin user', function () {
-    $user = createUser(['admin' => true]);
+    $user = createUser(['role' => \App\Models\User::ROLE_ADMIN]);
 
-    expect($user->fresh()->admin)->toBeTruthy();
+    expect($user->fresh()->hasRole(\App\Models\User::ROLE_ADMIN))->toBeTruthy();
 });
 
 it('can check if a user wants a specific notification', function () {
@@ -82,6 +82,16 @@ it('can delete a user with items and comments and votes', function () {
     $vote = $user->fresh()->items()->first()->votes()->first();
     $vote->user()->associate($user);
     $vote->save();
+
+    $user->delete();
+
+    expect($user->fresh())->toBeNull();
+});
+
+it('can delete a user with social users', function () {
+    $user = createUser([], [
+        'userSocials' => \App\Models\UserSocial::factory(),
+    ]);
 
     $user->delete();
 

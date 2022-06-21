@@ -24,6 +24,13 @@ class UserResource extends Resource
                 Forms\Components\Card::make([
                     Forms\Components\TextInput::make('name')->required(),
                     Forms\Components\TextInput::make('email')->email()->required(),
+                    Forms\Components\Select::make('role')
+                        ->required()
+                        ->options([
+                            User::ROLE_USER => 'User',
+                            User::ROLE_EMPLOYEE => 'Employee',
+                            User::ROLE_ADMIN => 'Administrator',
+                        ])
                 ])->columns(2)
             ]);
     }
@@ -34,6 +41,7 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('email')->searchable(),
+                Tables\Columns\TextColumn::make('role'),
                 Tables\Columns\TextColumn::make('created_at')->sortable()->dateTime()->label('Date'),
             ])
             ->filters([
@@ -47,6 +55,7 @@ class UserResource extends Resource
         return [
             RelationManagers\ItemsRelationManager::class,
             RelationManagers\CommentsRelationManager::class,
+            RelationManagers\VotesRelationManager::class,
         ];
     }
 

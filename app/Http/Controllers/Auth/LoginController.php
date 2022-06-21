@@ -57,12 +57,12 @@ class LoginController extends Controller
 
         if (!$user) {
             $user = User::create([
-                'name' => strstr($social->getEmail(), '@', true),
+                'name' => $social->getName(),
                 'email' => $social->getEmail(),
             ]);
 
             $user->userSocials()->create([
-                'name' => strstr($social->getEmail(), '@', true),
+                'name' => $social->getName(),
                 'provider' => 'sso',
                 'provider_id' => $social->getId(),
                 'access_token' => $social->token ? $social->token : null,
@@ -76,7 +76,7 @@ class LoginController extends Controller
 
         if ($user && !$userSocial) {
             $user->userSocials()->create([
-                'name' => strstr($social->getEmail(), '@', true),
+                'name' => $social->getName(),
                 'provider' => 'sso',
                 'provider_id' => $social->getId(),
                 'access_token' => $social->token ? $social->token : null,

@@ -13,11 +13,11 @@ class ItemController extends Controller
         $project = null;
 
         if (!$itemId) {
-            $item = Item::query()->where('slug', $projectId)->firstOrFail();
+            $item = Item::query()->visibleForCurrentUser()->where('slug', $projectId)->firstOrFail();
         } else {
             $project = Project::query()->where('slug', $projectId)->firstOrFail();
 
-            $item = $project->items()->where('items.slug', $itemId)->firstOrFail();
+            $item = $project->items()->visibleForCurrentUser()->where('items.slug', $itemId)->firstOrFail();
         }
 
         return view('item', [
@@ -25,7 +25,6 @@ class ItemController extends Controller
             'board' => $item->board,
             'item' => $item,
             'user' => $item->user,
-            'comments' => $item->comments()->with('user:id,name,email')->oldest()->get(),
             'activities' => $item->activities()->with('causer')->latest()->limit(10)->get()
         ]);
     }

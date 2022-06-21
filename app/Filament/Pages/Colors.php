@@ -17,6 +17,18 @@ class Colors extends SettingsPage
 
     protected static ?string $navigationLabel = 'Theme';
 
+    protected static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()->hasRole('admin');
+    }
+
+    public function mount(): void
+    {
+        parent::mount();
+
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+    }
+
     protected function getFormSchema(): array
     {
         return [

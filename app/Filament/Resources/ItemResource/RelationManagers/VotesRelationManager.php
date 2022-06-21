@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ItemResource\RelationManagers;
 
+use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
@@ -17,7 +18,14 @@ class VotesRelationManager extends HasManyRelationManager
     {
         return $form
             ->schema([
-                //
+                Forms\Components\BelongsToSelect::make('user_id')
+                    ->relationship('user', 'name')
+                    ->preload()
+                    ->required()
+                    ->searchable(),
+                Forms\Components\Toggle::make('subscribed')
+                    ->label('Subscribed')
+                    ->default(true),
             ]);
     }
 
@@ -27,6 +35,7 @@ class VotesRelationManager extends HasManyRelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date'),
+                Tables\Columns\BooleanColumn::make('subscribed')->label('Subscribed'),
             ])
             ->filters([
                 //

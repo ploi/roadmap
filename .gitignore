@@ -16,3 +16,6 @@ yarn-error.log
 /public/js/*
 /public/mix-manifest.json
 .php-cs-fixer.cache
+rr
+.rr.yaml
+/docker/dbdata

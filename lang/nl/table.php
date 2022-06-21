@@ -8,5 +8,5 @@ return [
     'content' => 'Inhoud',
     'item' => 'Item',
     'created_at' => 'Aangemaakt op',
-    'commented_on' => 'Geplaatst op',
+    'last_comment_posted_at' => 'Laatste opmerking geplaatst op',
 ];

@@ -27,7 +27,7 @@
                 @endguest
 
                 @auth
-                    @if(auth()->user()->admin)
+                    @if(auth()->user()->hasAdminAccess())
                         <li>
                             <a class="flex items-center justify-center w-10 h-10 text-red-500 transition rounded-full hover:bg-gray-500/5 focus:bg-blue-500/10 focus:outline-none"
                                href="{{ route('filament.pages.dashboard') }}">
@@ -100,6 +100,12 @@
                        href="{{ route('profile') }}">
                         {{ trans('auth.profile') }}
                     </a>
+                </li>
+                <li>
+                    <x-filament::button color="secondary" onclick="Livewire.emit('openModal', 'modals.item.create-item-modal')"
+                                        icon="heroicon-o-plus-circle">
+                        {{ trans('items.create') }}
+                    </x-filament::button>
                 </li>
             </ul>
         </nav>

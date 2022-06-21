@@ -25,7 +25,7 @@ class ItemHasNewCommentNotification extends Notification implements ShouldQueue
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(trans('New comment on ":title"', ['title' => $this->comment->item->title]))
+            ->subject(trans('notifications.new-comment-subject', ['title' => $this->comment->item->title]))
             ->markdown('emails.item.new-comment', [
                 'comment' => $this->comment,
                 'user' => $this->user,
