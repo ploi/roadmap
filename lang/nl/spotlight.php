@@ -1,8 +1,12 @@
 <?php
 
 return [
+    'create-item' => [
+        'name' => 'Item aanmaken',
+        'description' => 'Maak een item aan',
+    ],
     'view-item' => [
-        'name' => 'Bekijk item',
+        'name' => 'Item bekijken',
         'description' => 'Bekijk een item',
     ],
     'profile' => [
