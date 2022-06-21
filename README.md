@@ -189,6 +189,58 @@ public function boot()
 
 Now head over to the login page in your roadmap software and view the log in button in action. The title of the button can be set with the `.env` variable: `SSO_LOGIN_TITLE=`
 
+
+## Docker Support
+
+### Getting up and running...
+
+Go into docker folder and run:
+`docker-compose up -d --build`
+
+Set your database .env variables:
+```
+DB_CONNECTION=mysql
+DB_HOST=roadmap-db
+DB_PORT=3306
+DB_DATABASE=roadmap
+DB_USERNAME=root
+DB_PASSWORD=secret
+```
+
+Composer Install:
+
+`docker exec -it roadmap composer install`
+
+NPM Install:
+
+`docker exec -it roadmap npm install`
+
+Running artisan commands:
+
+`docker exec -it roadmap php artisan <command>`
+
+The Application will be running on `localhost:1337` and PhpMyAdmin is running on `localhost:8010`
+
+### Docker Considerations
+
+There are a few heroicons that were giving issues when running locally with docker.
+
+```
+Unable to locate a class or view for component <insert heroicon name here>
+```
+The problem was resolved by simply changing the following icons:
+
+x-heroicon-o-chevron-down -> x-heroicon-s-chevron-down (group.blade.php)
+heroicon-o-chat -> heroicon-s-chat (CommentResource)
+heroicon-o-archive -> heroicon-s-archive (ItemResource)
+heroicon-o-x-circle -> heroicon-o-collection (notifications.blade.php)
+
+Related Issues:
+
+[laravel-filament/filament#2677](https://github.com/laravel-filament/filament/issues/2677)
+
+[blade-ui-kit/blade-heroicons#9](https://github.com/blade-ui-kit/blade-heroicons/issues/9)
+
 ## Testing
 
 ```bash
