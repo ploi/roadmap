@@ -23,7 +23,7 @@ class GeneralSettings extends Settings
     public bool $board_required_when_creating_item;
     public bool $project_required_when_creating_item;
     public bool $block_robots;
-    public int $inbox_workflow;
+    public string $inbox_workflow;
 
     public function getInboxWorkflow(): InboxWorkflow
     {
