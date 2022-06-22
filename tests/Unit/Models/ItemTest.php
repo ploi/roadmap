@@ -74,7 +74,7 @@ test('scope returns items that have no project and board', function () {
         'board_id' => Board::factory()->create()->getKey(),
     ]);
 
-    $items = Item::query()->hasNoProjectAndBoard()->get();
+    $items = Item::query()->whereNull(['project_id', 'board_id'])->get();
 
     expect($items->contains($itemNoAssociations))->toBe(true)
         ->and($items->contains($itemWithAssociations))->toBe(false);
