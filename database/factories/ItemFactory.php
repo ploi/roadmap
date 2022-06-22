@@ -18,7 +18,8 @@ class ItemFactory extends Factory
     {
         return [
             'title' => ucfirst($this->faker->domainWord),
-            'content' => $this->faker->text(500)
+            'content' => $this->faker->text(500),
+            'slug' => $this->faker->word,
         ];
     }
 }
