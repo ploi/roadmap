@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserRole;
 use App\Models\Board;
 use App\Models\Item;
 use App\Models\Project;
@@ -182,7 +183,7 @@ test('A guest cant render a private item page that has an associated project', f
 test('A user with admin access can render a private item page that has no associated project', function () {
 
     $user = createUser();
-    $user->forceFill(['role' => User::ROLE_ADMIN]);
+    $user->forceFill(['role' => UserRole::Admin]);
 
     $item = Item::factory()->create(['user_id' => $user, 'private' => true]);
 
@@ -198,7 +199,7 @@ test('A user with admin access can render a private item page that has no associ
 test('A user with admin access can render their a private item page that has an associated project', function () {
 
     $user = createUser();
-    $user->forceFill(['role' => User::ROLE_ADMIN]);
+    $user->forceFill(['role' => UserRole::Admin]);
 
     private_item_setup();
 

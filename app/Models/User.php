@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserRole;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
@@ -15,10 +16,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     use HasApiTokens, HasFactory, Notifiable;
-
-    const ROLE_ADMIN = 'admin';
-    const ROLE_EMPLOYEE = 'employee';
-    const ROLE_USER = 'user';
 
     protected $fillable = [
         'name',
@@ -36,7 +33,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'notification_settings' => 'array'
+        'notification_settings' => 'array',
+        'role' => UserRole::class,
     ];
 
     public function canAccessFilament(): bool
@@ -46,10 +44,10 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     public function hasAdminAccess(): bool
     {
-        return $this->role === self::ROLE_ADMIN || $this->role === self::ROLE_EMPLOYEE;
+        return in_array($this->role, [UserRole::Admin, UserRole::Employee]);
     }
 
-    public function hasRole(...$roles): bool
+    public function hasRole(UserRole ...$roles): bool
     {
         return in_array($this->role, $roles);
     }

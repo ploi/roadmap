@@ -1,9 +1,9 @@
 <?php
 
+use App\Enums\UserRole;
 use App\Models\Board;
 use App\Models\Item;
 use App\Models\Project;
-use App\Models\User;
 use App\Models\Vote;
 
 test('popular scope returns highest voted items', function () {
@@ -37,7 +37,7 @@ test('admins can see private items on visible scope', function () {
     $adminOnlyItem = Item::factory()->create(['private' => true]);
     $publicItem = Item::factory()->create(['private' => false]);
 
-    $user = createUser(['role' => User::ROLE_ADMIN]);
+    $user = createUser(['role' => UserRole::Admin]);
 
     $this->actingAs($user);
 
@@ -54,7 +54,7 @@ test('employees can see private items on visible scope', function () {
     $adminOnlyItem = Item::factory()->create(['private' => true]);
     $publicItem = Item::factory()->create(['private' => false]);
 
-    $user = createUser(['role' => User::ROLE_EMPLOYEE]);
+    $user = createUser(['role' => UserRole::Employee]);
 
     $this->actingAs($user);
 
