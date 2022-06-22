@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Enums\InboxWorkflow;
+use App\Enums\UserRole;
 use Closure;
 use Filament\Forms\Components\Grid;
 use Storage;
@@ -31,14 +32,14 @@ class Settings extends SettingsPage
 
     protected static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->hasRole('admin');
+        return auth()->user()->hasRole(UserRole::Admin);
     }
 
     public function mount(): void
     {
         parent::mount();
 
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasRole(UserRole::Admin), 403);
 
         $this->ogImages = collect(Storage::disk('public')->allFiles())
             ->filter(function ($file) {
