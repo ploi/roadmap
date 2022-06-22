@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserRole;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,11 +14,11 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->nullable()->default(\App\Models\User::ROLE_USER)->after('password');
+            $table->string('role')->nullable()->default(UserRole::User->value)->after('password');
         });
 
         foreach (\App\Models\User::where('admin', true)->get() as $user) {
-            $user->role = \App\Models\User::ROLE_ADMIN;
+            $user->role = UserRole::Admin;
             $user->save();
         }
 

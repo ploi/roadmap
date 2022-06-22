@@ -20,11 +20,6 @@ class Item extends Model
 {
     use HasFactory, Sluggable, HasOgImage;
 
-    const STATUS_OPEN = 'open';
-    const STATUS_REVIEW = 'under-review';
-    const STATUS_PLANNED = 'planned';
-    const STATUS_LIVE = 'live';
-
     public $fillable = [
         'slug',
         'title',

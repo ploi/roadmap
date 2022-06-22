@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserRole;
 use App\Models\Board;
 use App\Models\Item;
 use App\Models\Project;
@@ -81,7 +82,7 @@ test('A guest cannot vote on an item', function () {
 test('A user with admin access can vote on an item', function () {
 
     $user = User::first();
-    $user->forceFill(['role' => User::ROLE_ADMIN])->save();
+    $user->forceFill(['role' => UserRole::Admin])->save();
 
     $item = Item::first();
     $project = Project::first();

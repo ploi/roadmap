@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\UserRole;
 use Filament\Forms;
 use App\Models\Item;
 use App\Models\User;
@@ -61,7 +62,7 @@ class ItemResource extends Resource
                                 Forms\Components\MultiSelect::make('assigned_users')
                                     ->helperText('Assign admins/employees to items here.')
                                     ->preload()
-                                    ->relationship('assignedUsers', 'name', fn (Builder $query) => $query->whereIn('role', [User::ROLE_ADMIN, User::ROLE_EMPLOYEE])),
+                                    ->relationship('assignedUsers', 'name', fn (Builder $query) => $query->whereIn('role', [UserRole::Admin, UserRole::Employee])),
                             ]),
                     ])->columnSpan(3),
 
@@ -102,7 +103,7 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('project.title'),
                 Tables\Columns\TextColumn::make('board.title'),
                 Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TagsColumn::make('assignedUsers.name')->visible(auth()->user()->hasRole(User::ROLE_ADMIN))->toggleable()->toggledHiddenByDefault(),
+                Tables\Columns\TagsColumn::make('assignedUsers.name')->visible(auth()->user()->hasRole(UserRole::Admin))->toggleable()->toggledHiddenByDefault(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -113,7 +114,7 @@ class ItemResource extends Resource
             ->filters([
                 Filter::make('assigned')
                     ->label('Assigned to me')
-                    ->default(auth()->user()->hasRole(User::ROLE_EMPLOYEE))
+                    ->default(auth()->user()->hasRole(UserRole::Employee))
                     ->query(fn (Builder $query): Builder => $query->whereHas('assignedUsers', function ($query) {
                         return $query->where('user_id', auth()->id());
                     })),

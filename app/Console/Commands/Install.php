@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
@@ -55,7 +56,7 @@ class Install extends Command
         $this->info('Let\'s create a user.');
 
         $user = User::create($this->getUserData());
-        $user->role = User::ROLE_ADMIN;
+        $user->role = UserRole::Admin;
         $user->save();
 
         $this->info('User created!');
