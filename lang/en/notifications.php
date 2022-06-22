@@ -8,7 +8,7 @@ return [
     'item-updated-body' => 'The item **:title** you\'re subscribed to have been updated.',
 
     'new-comment-subject' => 'New comment on roadmap item :title',
-    'new-comment-body' => 'There is a new comment on a item you\'re subscribed too.',
+    'new-comment-body' => 'There is a new comment on item **:title**, which you are subscribed to.',
 
     'new-reply-subject' => 'New reply on your comment on roadmap item :title',
     'new-reply-body' => 'There is a new reply on a comment you posted.',
@@ -21,6 +21,9 @@ return [
     'date' => 'Date',
     'view-item' => 'View item',
     'view-comment' => 'View comment',
+    'comment' => 'Comment',
+    'from' => 'From',
+    'on' => 'on',
 
     'unsubscribe-info' => 'If you do not want to receive notifications like this anymore, you can unsubscribe from your profile.',
 ];
