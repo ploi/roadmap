@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\Sluggable;
 use App\Traits\HasOgImage;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -115,7 +116,7 @@ class Item extends Model
             return false;
         }
 
-        return (bool)$this->votes()->where('user_id', $user->id)->exists();
+        return (bool) $this->votes()->where('user_id', $user->id)->exists();
     }
 
     public function getUserVote(User $user = null): Vote|null
@@ -159,5 +160,26 @@ class Item extends Model
     public function isPrivate(): bool
     {
         return $this->private;
+    }
+
+    /**
+     *  Returns a collection of the most recent users who have voted for this item.
+     *
+     * @param  int  $count Displays five users by default.
+     * @return Collection|\Illuminate\Support\Collection
+     */
+    public function getRecentVoterDetails(int $count = 5): Collection|\Illuminate\Support\Collection
+    {
+        return $this->votes()
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->take($count)
+            ->get()
+            ->map(function ($vote) {
+                return [
+                    'name' => $vote->user->name,
+                    'avatar' => $vote->user->getGravatar('50'),
+                ];
+            });
     }
 }

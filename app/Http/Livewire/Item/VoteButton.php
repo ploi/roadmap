@@ -4,12 +4,14 @@ namespace App\Http\Livewire\Item;
 
 use App\Models\Item;
 use App\Models\Vote;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class VoteButton extends Component
 {
     public Item $item;
     public Vote|null $vote;
+    public Collection $recentVoters;
 
     public function toggleUpvote()
     {
@@ -34,6 +36,8 @@ class VoteButton extends Component
     public function render()
     {
         $this->vote = $this->item->getUserVote();
+
+        $this->recentVoters = $this->item->getRecentVoterDetails();
 
         return view('livewire.item.vote-button');
     }

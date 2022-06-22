@@ -158,3 +158,19 @@ test('returns false if item is public', function () {
 
     expect($item->isPrivate())->toBeFalsy();
 });
+
+test('returns the five most recent voter details', function () {
+
+    $item = Item::factory()->create();
+
+    $users = User::factory(5)->create();
+
+    $users->each(function ($user) use ($item) {
+        $user->votes()->saveMany(Vote::factory(1)->create(['model_type' => 'App\Models\Item', 'model_id' => $item->getKey()]));
+    });
+
+    $item->getRecentVoterDetails()->each(function ($user) {
+        expect($user['name'])->toBeTruthy()
+            ->and($user['avatar'])->toBeTruthy();
+    });
+});

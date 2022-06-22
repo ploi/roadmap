@@ -15,6 +15,18 @@
         </x-filament::button>
     @endif
 
+    @if(app(\App\Settings\GeneralSettings::class)->show_voter_avatars)
+        <div>
+            <div class="flex -space-x-1 overflow-hidden">
+                @foreach($this->recentVoters as $voter)
+                    <img src="{{ $voter['avatar'] }}"
+                         class="inline-block h-7 w-7 rounded-full border-2 border-white"
+                         alt="{{ $voter['name'] }}">
+                @endforeach
+            </div>
+        </div>
+    @endif
+
     <span>{{ trans_choice('messages.total-votes', $item->total_votes, ['votes' => $item->total_votes]) }}</span>
 
     @if($vote)
