@@ -107,7 +107,7 @@ class Settings extends SettingsPage
                                 Select::make('inbox_workflow')
                                       ->options(InboxWorkflow::getSelectOptions())
                                       ->default(InboxWorkflow::WithoutBoardAndProject)
-                                      ->helperText('This allows you to change which items show up in the Inbox'),
+                                      ->helperText('This allows you to change which items show up in the inbox in the sidebar.'),
                             ]),
 
                             TextInput::make('password')->helperText('Entering a password here will ask your users to enter a password before entering the roadmap.'),
