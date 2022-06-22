@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use Illuminate\Support\Facades\Storage;
 use Mail;
 use App\Models\Item;
 use App\Models\User;
@@ -52,7 +53,7 @@ class ItemObserver
             $isDirty = true;
         }
 
-        if ($item->isDirty('pinned') && ! $item->pinned) {
+        if ($item->isDirty('pinned') && !$item->pinned) {
             activity()
                 ->performedOn($item)
                 ->log('un-pinned');
@@ -87,6 +88,12 @@ class ItemObserver
 
     public function deleting(Item $item)
     {
+        try {
+            Storage::delete('public/og-' . $item->slug . '-' . $item->id . '.jpg');
+        } catch (\Throwable $exception) {
+            
+        }
+
         $item->votes()->delete();
 
         foreach ($item->comments as $comment) {
