@@ -2,7 +2,9 @@
 
 namespace App\Filament\Pages;
 
+use App\Enums\InboxWorkflow;
 use Closure;
+use Filament\Forms\Components\Grid;
 use Storage;
 use Illuminate\Support\Str;
 use Filament\Pages\SettingsPage;
@@ -105,6 +107,13 @@ class Settings extends SettingsPage
                                 ->label('Board is required when creating an item')
                                 ->hidden(fn (Closure $get) => $get('select_board_when_creating_item') === false)
                                 ->columnSpan(2),
+
+                            Grid::make()->schema([
+                                Select::make('inbox_workflow')
+                                      ->options(InboxWorkflow::getSelectOptions())
+                                      ->default(InboxWorkflow::WithoutBoardAndProject)
+                                      ->helperText('This allows you to change which items show up in the inbox in the sidebar.'),
+                            ]),
 
                             TextInput::make('password')->helperText('Entering a password here will ask your users to enter a password before entering the roadmap.'),
 

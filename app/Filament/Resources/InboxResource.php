@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\InboxWorkflow;
+use App\Settings\GeneralSettings;
 use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;
@@ -27,54 +29,19 @@ class InboxResource extends Resource
 
     protected static ?string $slug = 'inbox';
 
+    protected static function shouldRegisterNavigation(): bool
+    {
+        return app(GeneralSettings::class)->getInboxWorkflow() != InboxWorkflow::Disabled;
+    }
+
     protected static function getNavigationBadge(): ?string
     {
-        return Item::query()->hasNoProjectAndBoard()->count();
+        return Item::query()->forInbox()->count();
     }
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\Card::make([
-                    Forms\Components\TextInput::make('title')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\BelongsToSelect::make('user_id')
-                        ->relationship('user', 'name')
-                        ->default(auth()->user()->id)
-                        ->disabled()
-                        ->preload()
-                        ->required()
-                        ->searchable(),
-                    Forms\Components\MarkdownEditor::make('content')
-                        ->columnSpan(2)
-                        ->required()
-                        ->maxLength(65535),
-                ])->columns()->columnSpan(3),
-
-                Forms\Components\Card::make([
-                    Forms\Components\Select::make('project_id')
-                        ->label('Project')
-                        ->options(Project::query()->pluck('title', 'id'))
-                        ->reactive(),
-                    Forms\Components\Select::make('board_id')
-                        ->label('Board')
-                        ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
-                    Forms\Components\Toggle::make('pinned')
-                        ->label('Pinned')
-                        ->default(false),
-                    Forms\Components\Placeholder::make('created_at')
-                        ->label('Created at')
-                        ->visible(fn ($record) => filled($record))
-                        ->content(fn ($record) => $record->created_at->format('d-m-Y H:i:s')),
-                    Forms\Components\Placeholder::make('updated_at')
-                        ->label('Updated at')
-                        ->visible(fn ($record) => filled($record))
-                        ->content(fn ($record) => $record->updated_at->format('d-m-Y H:i:s')),
-                ])->columnSpan(1),
-            ])
-            ->columns(4);
+        return ItemResource::form($form);
     }
 
     public static function table(Table $table): Table
@@ -82,7 +49,9 @@ class InboxResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')->searchable(),
-                Tables\Columns\TextColumn::make('user.email'),
+                Tables\Columns\TextColumn::make('project.title')
+                    ->visible(app(GeneralSettings::class)->getInboxWorkflow() === InboxWorkflow::WithoutBoard),
+                Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -109,5 +78,10 @@ class InboxResource extends Resource
             'create' => Pages\CreateInbox::route('/create'),
             'edit' => Pages\EditInbox::route('/{record}/edit'),
         ];
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
     }
 }

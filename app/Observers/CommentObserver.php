@@ -32,7 +32,7 @@ class CommentObserver
                 ->pluck('user_id') ?? collect();
 
         User::query()->whereIn('id', $userIds->toArray())->get()->each(function (User $user) use ($comment) {
-            $user->notify(new ItemHasNewCommentNotification($comment));
+            $user->notify(new ItemHasNewCommentNotification($comment, $user));
         });
 
         $comment->parent?->user->notify(new CommentHasReplyNotification($comment));

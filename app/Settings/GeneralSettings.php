@@ -2,6 +2,7 @@
 
 namespace App\Settings;
 
+use App\Enums\InboxWorkflow;
 use Spatie\LaravelSettings\Settings;
 
 class GeneralSettings extends Settings
@@ -23,6 +24,12 @@ class GeneralSettings extends Settings
     public bool $board_required_when_creating_item;
     public bool $project_required_when_creating_item;
     public bool $block_robots;
+    public string $inbox_workflow;
+
+    public function getInboxWorkflow(): InboxWorkflow
+    {
+        return InboxWorkflow::from($this->inbox_workflow);
+    }
 
     public static function group(): string
     {

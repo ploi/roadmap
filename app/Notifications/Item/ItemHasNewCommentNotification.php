@@ -3,6 +3,7 @@
 namespace App\Notifications\Item;
 
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -12,7 +13,7 @@ class ItemHasNewCommentNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public Comment $comment)
+    public function __construct(public Comment $comment, public User $user)
     {
     }
 
@@ -21,12 +22,14 @@ class ItemHasNewCommentNotification extends Notification implements ShouldQueue
         return ['mail'];
     }
 
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('New comment on roadmap item ' . $this->comment->item->title)
-            ->line('There is a new comment on a item you\'re subscribed too.')
-            ->action('View comment', route('items.show', $this->comment->item) . '#comment-' . $this->comment->id)
-            ->line('If you don\'t want these notifications anymore, you can unsubscribe from the item (but still keep the vote) via the unsubscribe button next to the upvote button.');
+            ->subject(trans('notifications.new-comment-subject', ['title' => $this->comment->item->title]))
+            ->markdown('emails.item.new-comment', [
+                'comment' => $this->comment,
+                'user' => $this->user,
+                'url' => route('items.show', $this->comment->item). '#comment-'.$this->comment->id,
+            ]);
     }
 }
