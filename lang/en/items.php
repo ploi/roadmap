@@ -25,5 +25,6 @@ return [
     'days-ago' => 'day ago | days ago',
     'similar-results' => 'We\'ve found similar results:',
     'item-pinned' => 'This item is pinned',
-    'item-private' => 'This item is private'
+    'item-private' => 'This item is private',
+    'not-allowed-to-create-items' => 'You are not allowed to create items in this board.',
 ];

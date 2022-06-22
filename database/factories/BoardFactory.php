@@ -17,7 +17,9 @@ class BoardFactory extends Factory
     public function definition()
     {
         return [
-            'title' => ucfirst($this->faker->domainWord)
+            'title' => ucfirst($this->faker->domainWord),
+            'slug' => $this->faker->word,
+            'can_users_create' => true,
         ];
     }
 }
