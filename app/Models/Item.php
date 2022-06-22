@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\InboxWorkflow;
+use App\Settings\GeneralSettings;
 use App\Traits\Sluggable;
 use App\Traits\HasOgImage;
 use Illuminate\Support\Str;
@@ -102,9 +104,13 @@ class Item extends Model
         return $query->where('private', false);
     }
 
-    public function scopeHasNoProjectAndBoard($query)
+    public function scopeForInbox($query)
     {
-        return $query->whereNull('project_id')->whereNull('board_id');
+        return match (app(GeneralSettings::class)->getInboxWorkflow()) {
+            InboxWorkflow::WithoutBoardAndProject => $query->whereNull('project_id')->whereNull('board_id'),
+            InboxWorkflow::WithoutBoard => $query->whereNotNull('project_id')->whereNull('board_id'),
+            InboxWorkflow::Disabled => null,
+        };
     }
 
     public function hasVoted(User $user = null): bool
