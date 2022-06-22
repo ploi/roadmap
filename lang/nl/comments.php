@@ -9,4 +9,9 @@ return [
     'reply' => 'Reageren',
     'cancel' => 'Annuleren',
     'submit' => 'Versturen',
+    'edit' => 'Bewerken',
+    'edited' => 'Bewerkt',
+    'edit-comment' => 'Opmerking bewerken',
+    'comment-updated' => 'Opmerking aangepast',
+    'activity' => 'Activiteit',
 ];

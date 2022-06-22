@@ -8,4 +8,5 @@ return [
     'recent-comments' => 'Recent comments',
 
     'close' => 'Close',
+    'save' => 'Save',
 ];

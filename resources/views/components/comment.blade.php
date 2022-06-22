@@ -19,7 +19,7 @@
                     <p class="truncate">{{ $comment->user->name }}</p>
                     @if($comment->user_id === $item->user_id)
                         <span
-                            class="hidden md:block inline-flex items-center justify-center h-5 px-2 text-xs font-semibold tracking-tight text-blue-700 rounded-full bg-blue-500/10">
+                            class="hidden md:block inline-flex items-center justify-center py-0.5 px-2 text-xs font-semibold tracking-tight text-brand-900 rounded-full bg-brand-200">
                             {{ trans('comments.item-author') }}
                         </span>
                     @endif
@@ -34,9 +34,29 @@
                 class="flex-shrink-0 text-xs font-medium items-center text-gray-500">
                 {{ $comment->created_at->diffForHumans() }}
             </time>
+
+            @if($comment->created_at != $comment->updated_at)
+                <span>&centerdot;</span>
+
+                <span
+                    wire:click="showActivitylog({{ $comment->id }})"
+                    x-data="{ tooltip: '{{ $comment->updated_at->isoFormat('L LTS') }}' }"
+                    x-tooltip="tooltip"
+                    class="hidden md:block cursor-pointer inline-flex items-center justify-center py-0.5 px-2 text-xs font-medium tracking-tight text-gray-700 rounded-full bg-gray-500/10">
+                    {{ trans('comments.edited') }}
+                </span>
+            @endif
         </div>
 
         <div class="p-2 flex justify-between gap-2 items-center">
+            @if($comment->user->is(auth()->user()))
+                <a wire:click="edit({{ $comment->id }})"
+                   class="text-xs font-medium text-gray-500 hover:underline cursor-pointer">
+                    {{ trans('comments.edit') }}
+                </a>
+
+                &centerdot;
+            @endif
             @if(!$item->board?->block_comments)
                 <a wire:click="reply({{ $comment->id }})"
                    class="text-xs font-medium text-gray-500 hover:underline cursor-pointer">

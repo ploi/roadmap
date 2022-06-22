@@ -9,4 +9,9 @@ return [
     'reply' => 'Reply',
     'cancel' => 'Cancel',
     'submit' => 'Submit',
+    'edit' => 'Edit',
+    'edited' => 'Edited',
+    'edit-comment' => 'Edit comment',
+    'comment-updated' => 'Comment updated',
+    'activity' => 'Activity'
 ];

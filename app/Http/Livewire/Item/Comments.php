@@ -19,6 +19,8 @@ class Comments extends Component implements HasForms
     public $private_content;
     public $reply;
 
+    protected $listeners = ['updatedComment' => '$refresh'];
+
     public function mount()
     {
         $this->form->fill();
@@ -109,5 +111,15 @@ class Comments extends Component implements HasForms
     public function reply(?int $id = null)
     {
         $this->reply = $id;
+    }
+
+    public function edit(int $id)
+    {
+        $this->emit('openModal', 'modals.item.comment.edit-comment-modal', ['comment' => $id]);
+    }
+
+    public function showActivitylog(int $id)
+    {
+        $this->emit('openModal', 'modals.item.comment.show-comment-activities-modal', ['comment' => $id]);
     }
 }
