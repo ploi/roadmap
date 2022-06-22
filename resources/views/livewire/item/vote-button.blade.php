@@ -15,18 +15,6 @@
         </x-filament::button>
     @endif
 
-    @if(app(\App\Settings\GeneralSettings::class)->show_voter_avatars)
-        <div>
-            <div class="flex -space-x-1 overflow-hidden">
-                @foreach($this->recentVoters as $voter)
-                    <img src="{{ $voter['avatar'] }}"
-                         class="inline-block h-7 w-7 rounded-full border-2 border-white"
-                         alt="{{ $voter['name'] }}">
-                @endforeach
-            </div>
-        </div>
-    @endif
-
     <span>{{ trans_choice('messages.total-votes', $item->total_votes, ['votes' => $item->total_votes]) }}</span>
 
     @if($vote)
@@ -42,5 +30,21 @@
             </button>
         @endif
     @endif
-
+</div>
+<div class="py-1 mx-2">
+    @if(app(\App\Settings\GeneralSettings::class)->show_voter_avatars)
+        @if($this->recentVoters->count() > 0)
+            <div class="flex -space-x-2">
+                @foreach($this->recentVoters as $voter)
+                    <img src="{{ $voter['avatar'] }}"
+                         class="inline object-cover w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
+                         alt="{{ $voter['name'] }}" x-data x-tooltip.raw="{{ $voter['name'] }}">
+                    @if($loop->last && $this->item->votes->count() > $this->recentVotersToShow)
+                        <a class="shrink-0 flex items-center justify-center w-8 h-8 text-xs font-medium text-white bg-gray-400 border-2 border-white rounded-full cursor-auto"
+                           href="#">+ {{ $this->item->votes->count() - $this->recentVotersToShow }} </a>
+                    @endif
+                @endforeach
+            </div>
+        @endif
+    @endif
 </div>
