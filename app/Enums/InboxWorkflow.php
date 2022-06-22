@@ -4,11 +4,11 @@ namespace App\Enums;
 
 use Illuminate\Support\Collection;
 
-enum InboxWorkflow: int
+enum InboxWorkflow: string
 {
-    case Disabled = 0;
-    case WithoutBoardAndProject = 1;
-    case WithoutBoard = 2;
+    case Disabled = 'disabled';
+    case WithoutBoardAndProject = 'without-board-and-project';
+    case WithoutBoard = 'without-board';
 
     public static function getSelectOptions(): Collection
     {
