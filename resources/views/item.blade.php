@@ -116,7 +116,7 @@
                             <div>
                                 <p class="text-sm font-medium">
                                     <span class="font-semibold">
-                                        {{ $activity->causer->name ?? 'Unknown user' }}
+                                        {{ $activity->causer->name ?? trans('item-activity.unknown-user') }}
                                     </span>
                                     {{ $activity->description }}
                                 </p>
