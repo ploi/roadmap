@@ -22,7 +22,7 @@ class CommentHasReplyNotification extends Notification implements ShouldQueue
             return [];
         }
 
-        if (!$notifiable->hasAdminAccess() && $this->comment->private) {
+        if ($this->comment->private) {
             return [];
         }
 
