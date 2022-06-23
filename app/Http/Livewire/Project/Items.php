@@ -20,6 +20,7 @@ class Items extends Component
     public function render()
     {
         $this->items = $this->board->items()
+            ->visibleForCurrentUser()
             ->latest($this->getSortingColumn())
             ->get()
             ->prioritize(function ($item) {

@@ -97,7 +97,7 @@ class Item extends Model
             return $query;
         }
 
-        return $query->where('private', false);
+        return $query->where('private', false)->whereRelation('project', 'private', false);
     }
 
     public function scopeForInbox($query)

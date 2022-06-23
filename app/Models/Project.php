@@ -15,7 +15,8 @@ class Project extends Model
         'title',
         'slug',
         'url',
-        'description'
+        'description',
+        'private',
     ];
 
     public function boards()
@@ -26,5 +27,14 @@ class Project extends Model
     public function items()
     {
         return $this->hasManyThrough(Item::class, Board::class);
+    }
+
+    public function scopeVisibleForCurrentUser($query)
+    {
+        if (auth()->check() && auth()->user()->hasAdminAccess()) {
+            return $query;
+        }
+
+        return $query->where('private', false);
     }
 }

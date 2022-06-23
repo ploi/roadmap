@@ -17,7 +17,7 @@ class ItemController extends Controller
         if (!$itemId) {
             $item = Item::query()->visibleForCurrentUser()->where('slug', $projectId)->firstOrFail();
         } else {
-            $project = Project::query()->where('slug', $projectId)->firstOrFail();
+            $project = Project::query()->visibleForCurrentUser()->where('slug', $projectId)->firstOrFail();
 
             $item = $project->items()->visibleForCurrentUser()->where('items.slug', $itemId)->firstOrFail();
         }
@@ -45,7 +45,7 @@ class ItemController extends Controller
     {
         $project = Project::findOrFail($projectId);
 
-        $item = $project->items()->findOrfail($itemId);
+        $item = $project->items()->visibleForCurrentUser()->findOrfail($itemId);
 
         $item->toggleUpvote();
 

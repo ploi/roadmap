@@ -55,7 +55,7 @@ class CreateItemModal extends ModalComponent implements HasForms
             $inputs[] = Select::make('project_id')
                 ->label(trans('table.project'))
                 ->reactive()
-                ->options(Project::query()->pluck('title', 'id'))
+                ->options(Project::query()->visibleForCurrentUser()->pluck('title', 'id'))
                 ->required(app(GeneralSettings::class)->project_required_when_creating_item);
         }
 
