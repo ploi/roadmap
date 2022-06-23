@@ -19,6 +19,10 @@ class ItemHasNewCommentNotification extends Notification implements ShouldQueue
 
     public function via($notifiable)
     {
+        if (!$notifiable->hasAdminAccess() && $this->comment->private) {
+            return [];
+        }
+
         return ['mail'];
     }
 
