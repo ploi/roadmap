@@ -38,7 +38,7 @@ class ItemObserver
 
         if ($item->isDirty('project_id') && $item->project) {
             ItemActivity::createForItem($item, ItemActivity::MovedToProject, [
-                'board' => $item->project->title,
+                'project' => $item->project->title,
             ]);
 
             $isDirty = true;

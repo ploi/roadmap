@@ -31,7 +31,7 @@ class Project extends Model
 
     public function scopeVisibleForCurrentUser($query)
     {
-        if (auth()->check() && auth()->user()->hasAdminAccess()) {
+        if (auth()->user()?->hasAdminAccess()) {
             return $query;
         }
 

@@ -6,6 +6,7 @@ use App\Enums\InboxWorkflow;
 use App\Settings\GeneralSettings;
 use App\Traits\Sluggable;
 use App\Traits\HasOgImage;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
@@ -93,11 +94,12 @@ class Item extends Model
 
     public function scopeVisibleForCurrentUser($query)
     {
-        if (auth()->check() && auth()->user()->hasAdminAccess()) {
+        if (auth()->user()?->hasAdminAccess()) {
             return $query;
         }
 
-        return $query->where('private', false)->whereRelation('project', 'private', false);
+        return $query->where('private', false)
+                     ->when($this->project, fn ($query) => $query->whereRelation('project', 'private', false));
     }
 
     public function scopeForInbox($query)
