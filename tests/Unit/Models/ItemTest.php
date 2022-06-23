@@ -4,6 +4,7 @@ use App\Enums\UserRole;
 use App\Models\Board;
 use App\Models\Item;
 use App\Models\Project;
+use App\Models\User;
 use App\Models\Vote;
 
 test('popular scope returns highest voted items', function () {
