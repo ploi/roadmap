@@ -84,6 +84,11 @@ class Settings extends SettingsPage
                                 ->helperText('Enable this to show the age of an item on the details page.')
                                 ->columnSpan(2),
 
+                            Toggle::make('show_voter_avatars')
+                                ->label('Enable voter avatars when viewing an item')
+                                ->helperText('Enabling this will show the avatars of the most recent voters when viewing an item.')
+                                ->columnSpan(2),
+
                             Toggle::make('select_project_when_creating_item')
                                 ->label('Users can select a project when creating an item')
                                 ->columnSpan(2)
