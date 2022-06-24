@@ -21,7 +21,7 @@
 
             if (hash) {
                 const commentElement = document.getElementById(hash.replace('#', ''));
-                commentElement.classList.add('bg-brand-50', 'rounded-lg', 'ring-1', 'ring-brand-200');
+                commentElement.classList.add('bg-brand-50', 'rounded-lg', 'ring-1', 'ring-brand-200', 'mt-2', 'mb-2');
             }
         })();
     </script>

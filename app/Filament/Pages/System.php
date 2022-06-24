@@ -2,8 +2,8 @@
 
 namespace App\Filament\Pages;
 
-use App\Filament\Pages\Widgets\System\SystemInfo;
 use Filament\Pages\Page;
+use App\Filament\Pages\Widgets\System\SystemInfo;
 
 class System extends Page
 {

@@ -57,6 +57,7 @@ class Install extends Command
 
         $user = User::create($this->getUserData());
         $user->role = UserRole::Admin;
+        $user->email_verified_at = now();
         $user->save();
 
         $this->info('User created!');

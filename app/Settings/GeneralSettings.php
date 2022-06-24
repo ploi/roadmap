@@ -25,6 +25,7 @@ class GeneralSettings extends Settings
     public bool $project_required_when_creating_item;
     public bool $block_robots;
     public string $inbox_workflow;
+    public bool $users_must_verify_email;
 
     public function getInboxWorkflow(): InboxWorkflow
     {

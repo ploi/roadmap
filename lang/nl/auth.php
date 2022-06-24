@@ -13,6 +13,7 @@
 
 return [
     'login' => 'Inloggen',
+    'verify-email' => 'Verifieer email',
     'register' => 'Registreren',
     'profile' => 'Profiel',
     'register_for_free' => 'Of <a class="text-brand-600 transition hover:text-brand-500 focus:outline-none focus:underline" href=":route">maak een gratis account aan</a>.',

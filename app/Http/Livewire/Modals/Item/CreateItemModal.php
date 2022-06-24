@@ -83,6 +83,12 @@ class CreateItemModal extends ModalComponent implements HasForms
             return redirect()->route('login');
         }
 
+        if (app(GeneralSettings::class)->users_must_verify_email && !auth()->user()->hasVerifiedEmail()) {
+            $this->notify('primary', 'Please verify your email before submitting items.');
+
+            return redirect()->route('verification.notice');
+        }
+
         $data = $this->form->getState();
 
         $item = Item::create([
