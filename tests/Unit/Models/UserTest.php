@@ -1,8 +1,8 @@
 <?php
 
-use App\Enums\UserRole;
 use App\Models\Item;
 use App\Models\Vote;
+use App\Enums\UserRole;
 use App\Models\Comment;
 
 it('can generate an username upon user creation', function () {

@@ -22,6 +22,10 @@ class CommentHasReplyNotification extends Notification implements ShouldQueue
             return [];
         }
 
+        if ($this->comment->private) {
+            return [];
+        }
+
         return ['mail'];
     }
 

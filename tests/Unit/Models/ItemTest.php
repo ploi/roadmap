@@ -1,14 +1,13 @@
 <?php
 
-use App\Enums\UserRole;
-use App\Models\Board;
 use App\Models\Item;
-use App\Models\Project;
 use App\Models\User;
 use App\Models\Vote;
+use App\Models\Board;
+use App\Enums\UserRole;
+use App\Models\Project;
 
 test('popular scope returns highest voted items', function () {
-
     $items = Item::factory(10)->create();
 
     $items->each(function ($item) {
@@ -22,7 +21,6 @@ test('popular scope returns highest voted items', function () {
 });
 
 test('visible scope returns items the user can see', function () {
-
     $adminOnlyItem = Item::factory()->create(['private' => true]);
     $publicItem = Item::factory()->create(['private' => false]);
 
@@ -34,7 +32,6 @@ test('visible scope returns items the user can see', function () {
 });
 
 test('admins can see private items on visible scope', function () {
-
     $adminOnlyItem = Item::factory()->create(['private' => true]);
     $publicItem = Item::factory()->create(['private' => false]);
 
@@ -51,7 +48,6 @@ test('admins can see private items on visible scope', function () {
 });
 
 test('employees can see private items on visible scope', function () {
-
     $adminOnlyItem = Item::factory()->create(['private' => true]);
     $publicItem = Item::factory()->create(['private' => false]);
 
@@ -68,7 +64,6 @@ test('employees can see private items on visible scope', function () {
 });
 
 test('scope returns items that have no project and board', function () {
-
     $itemNoAssociations = Item::factory()->create();
     $itemWithAssociations = Item::factory()->create([
         'project_id' => Project::factory()->create()->getKey(),
@@ -82,7 +77,6 @@ test('scope returns items that have no project and board', function () {
 });
 
 test('returns true if the user has voted on an item', function () {
-
     $user = createUser();
     $item = Item::factory()->create();
 
@@ -94,7 +88,6 @@ test('returns true if the user has voted on an item', function () {
 
 
 test('returns false if the user has not voted on an item', function () {
-
     $user = createUser();
     $item = Item::factory()->create();
 
@@ -103,7 +96,6 @@ test('returns false if the user has not voted on an item', function () {
 });
 
 test('returns the vote details for a user', function () {
-
     $user = createUser();
     $item = Item::factory()->create();
 
@@ -113,7 +105,6 @@ test('returns the vote details for a user', function () {
 });
 
 test('increments the vote for a user', function () {
-
     $user = createUser();
     $item = Item::factory()->create();
 
@@ -122,7 +113,6 @@ test('increments the vote for a user', function () {
 });
 
 test('deincriments the vote for a user', function () {
-
     $user = createUser();
     $item = Item::factory()->create();
 
@@ -133,35 +123,30 @@ test('deincriments the vote for a user', function () {
 });
 
 test('returns true if item is pinned', function () {
-
     $item = Item::factory()->create(['pinned' => true]);
 
     expect($item->isPinned())->toBeTruthy();
 });
 
 test('returns false if item is not pinned', function () {
-
     $item = Item::factory()->create(['pinned' => false]);
 
     expect($item->isPinned())->toBeFalsy();
 });
 
 test('returns true if item is private', function () {
-
     $item = Item::factory()->create(['private' => true]);
 
     expect($item->isPrivate())->toBeTruthy();
 });
 
 test('returns false if item is public', function () {
-
     $item = Item::factory()->create(['private' => false]);
 
     expect($item->isPrivate())->toBeFalsy();
 });
 
 test('returns the five most recent voter details', function () {
-
     $item = Item::factory()->create();
 
     $users = User::factory(5)->create();

@@ -2,15 +2,13 @@
 
 namespace App\Filament\Resources;
 
-use App\Enums\InboxWorkflow;
-use App\Settings\GeneralSettings;
-use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;
-use App\Models\Project;
+use App\Enums\InboxWorkflow;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
+use App\Settings\GeneralSettings;
 use App\Filament\Resources\InboxResource\Pages;
 use App\Filament\Resources\InboxResource\RelationManagers\VotesRelationManager;
 use App\Filament\Resources\InboxResource\RelationManagers\CommentsRelationManager;

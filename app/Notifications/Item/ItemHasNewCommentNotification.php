@@ -2,8 +2,8 @@
 
 namespace App\Notifications\Item;
 
-use App\Models\Comment;
 use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -19,6 +19,10 @@ class ItemHasNewCommentNotification extends Notification implements ShouldQueue
 
     public function via($notifiable)
     {
+        if ($this->comment->private) {
+            return [];
+        }
+
         return ['mail'];
     }
 

@@ -1,10 +1,10 @@
 <?php
 
-use App\Enums\UserRole;
-use App\Models\Board;
 use App\Models\Item;
-use App\Models\Project;
 use App\Models\User;
+use App\Models\Board;
+use App\Enums\UserRole;
+use App\Models\Project;
 
 beforeEach(function () {
     // disables Observers/ItemObserver.php
@@ -24,7 +24,6 @@ beforeEach(function () {
 });
 
 test('A user can render their public item page that has no associated project', function () {
-
     $user = User::first();
     $item = Item::factory()->create(['user_id' => $user]);
 
@@ -38,7 +37,6 @@ test('A user can render their public item page that has no associated project', 
 });
 
 test('A user can render their own public item page that has an associated project', function () {
-
     $user = User::first();
     $project = Project::first();
     $item = Item::first();
@@ -56,7 +54,6 @@ test('A user can render their own public item page that has an associated projec
 });
 
 test('A guest can render a public item page that has no associated project', function () {
-
     $item = Item::first();
 
     $this->get(route('items.show', $item->getAttributeValue('slug')))
@@ -67,7 +64,6 @@ test('A guest can render a public item page that has no associated project', fun
 });
 
 test('A guest can render a public item page that has an associated project', function () {
-
     $project = Project::first();
     $item = Item::first();
 
@@ -82,7 +78,6 @@ test('A guest can render a public item page that has an associated project', fun
 });
 
 test('Another user can render a public item page that has no associated project', function () {
-
     $userTwo = User::find(2);
     $item = Item::factory()->create();
 
@@ -95,7 +90,6 @@ test('Another user can render a public item page that has no associated project'
 });
 
 test('Another user can render a own public item page that has an associated project', function () {
-
     $userTwo = User::find(2);
     $project = Project::first();
     $item = Item::first();
@@ -112,7 +106,6 @@ test('Another user can render a own public item page that has an associated proj
 });
 
 test('A user cant render their private item page that has no associated project', function () {
-
     $user = createUser();
 
     $item = Item::factory()->create(['user_id' => $user, 'private' => true]);
@@ -127,7 +120,6 @@ test('A user cant render their private item page that has no associated project'
 });
 
 test('A user cant render their own private item page that has an associated project', function () {
-
     $user = createUser();
 
     $project = Project::factory()->create();
@@ -151,7 +143,6 @@ test('A user cant render their own private item page that has an associated proj
 });
 
 test('A guest cant render a private item page that has no associated project', function () {
-
     $user = createUser();
 
     $item = Item::factory()->create(['user_id' => $user, 'private' => true]);
@@ -164,7 +155,6 @@ test('A guest cant render a private item page that has no associated project', f
 });
 
 test('A guest cant render a private item page that has an associated project', function () {
-
     private_item_setup();
 
     $project = Project::skip(1)->first();
@@ -181,7 +171,6 @@ test('A guest cant render a private item page that has an associated project', f
 });
 
 test('A user with admin access can render a private item page that has no associated project', function () {
-
     $user = createUser();
     $user->forceFill(['role' => UserRole::Admin]);
 
@@ -197,7 +186,6 @@ test('A user with admin access can render a private item page that has no associ
 });
 
 test('A user with admin access can render their a private item page that has an associated project', function () {
-
     $user = createUser();
     $user->forceFill(['role' => UserRole::Admin]);
 
