@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages;
 
-use App\Filament\Widgets\SystemInfo;
+use App\Filament\Pages\Widgets\System\SystemInfo;
 use Filament\Pages\Page;
 
 class System extends Page

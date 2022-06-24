@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace App\Filament\Pages\Widgets\System;
 
 use App\Services\SystemChecker;
 use Filament\Widgets\Widget;
