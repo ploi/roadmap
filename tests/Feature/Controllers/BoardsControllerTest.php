@@ -1,7 +1,10 @@
 <?php
 
+use App\Enums\UserRole;
 use App\Models\Board;
+use App\Models\Item;
 use App\Models\Project;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use function Pest\Laravel\get;
 use App\Http\Livewire\Item\Create;
 
@@ -46,3 +49,24 @@ test('view does not contain item.create if users cannot create Item for board', 
 
     get(route('projects.boards.show', [$project,$board]))->assertDontSeeLivewire(Create::class);
 });
+
+test('private items are not visible for users', function (UserRole $userRole, bool $shouldBeVisible) {
+    $project = Project::factory()->create();
+    $board = Board::factory()->for($project)
+                  ->has(
+                      Item::factory(2)->state(new Sequence(
+                          ['title' => 'item 1', 'private' => false],
+                          ['title' => 'item 2', 'private' => true]
+                      ))
+                  )->create();
+
+    createAndLoginUser(['role' => $userRole]);
+
+    get(route('projects.boards.show', [$project, $board]))
+        ->assertSeeText('item 1')
+        ->{$shouldBeVisible ? 'assertSeeText' : 'assertDontSeeText'}('item 2');
+})->with([
+    [UserRole::User, false],
+    [UserRole::Employee, true],
+    [UserRole::Admin, true],
+]);

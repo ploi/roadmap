@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\UserRole;
+use App\Models\Project;
 use function Pest\Laravel\get;
 
 use App\Settings\GeneralSettings;
@@ -20,4 +22,16 @@ test('the dashboard items are shown', function ($setting, $value) {
 })->with([
     'recent items' =>['setting' => ["type" => "recent-items", "column_span" => 1, "must_have_board" => false, "must_have_project" => false], 'value' => 'Recent items'],
     'recent comments' => ['setting' => ["type" => "recent-comments", "column_span" => 1, "must_have_board" => false, "must_have_project" => false], 'value' => 'Recent activities'],
+]);
+
+test('private projects are not visible in navbar for users', function(?UserRole $userRole, bool $shouldBeVisible) {
+    $project = Project::factory()->private()->create();
+
+    createAndLoginUser(['role' => $userRole]);
+
+    get('/')->{$shouldBeVisible ? 'assertSeeText' : 'assertDontSeeText'}($project->title);
+})->with([
+    [UserRole::User, false],
+    [UserRole::Employee, true],
+    [UserRole::Admin, true],
 ]);

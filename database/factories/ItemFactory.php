@@ -22,4 +22,13 @@ class ItemFactory extends Factory
             'slug' => $this->faker->word,
         ];
     }
+
+    public function private()
+    {
+        return $this->state(function () {
+            return [
+                'private' => true,
+            ];
+        });
+    }
 }
