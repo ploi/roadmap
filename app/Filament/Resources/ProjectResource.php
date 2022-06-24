@@ -42,8 +42,11 @@ class ProjectResource extends Resource
                         ->maxLength(255),
                     Forms\Components\TextInput::make('slug')
                         ->helperText('Leave blank to generate one automatically')
-                        ->columnSpan(2)
+                        ->columnSpan(1)
                         ->maxLength(255),
+                    Forms\Components\Toggle::make('private')
+                        ->default(false)
+                        ->helperText('Private projects are only visible for employees and admins'),
                     Forms\Components\MarkdownEditor::make('description')
                         ->columnSpan(2)
                         ->maxLength(65535),
@@ -83,6 +86,7 @@ class ProjectResource extends Resource
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('title')->searchable(),
                 Tables\Columns\TextColumn::make('boards_count')->sortable()->counts('boards'),
+                Tables\Columns\BooleanColumn::make('private'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

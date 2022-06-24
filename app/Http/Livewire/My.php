@@ -38,7 +38,7 @@ class My extends Component implements HasTable
         return [
             Tables\Columns\TextColumn::make('title')->label(trans('table.title'))->searchable(),
             Tables\Columns\TextColumn::make('total_votes')->label(trans('table.total-votes'))->sortable(),
-            Tables\Columns\TextColumn::make('board.project.title')->label(trans('table.project')),
+            Tables\Columns\TextColumn::make('project.title')->label(trans('table.project')),
             Tables\Columns\TextColumn::make('board.title')->label(trans('table.board')),
             Tables\Columns\TextColumn::make($this->type === 'commentedOn' ? 'comments_max_created_at' : 'created_at')->sortable()->label(function () {
                 if ($this->type === 'commentedOn') {

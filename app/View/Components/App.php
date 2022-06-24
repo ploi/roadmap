@@ -17,6 +17,7 @@ class App extends Component
     public function __construct(public array $breadcrumbs = [])
     {
         $this->projects = Project::query()
+            ->visibleForCurrentUser()
             ->when(app(GeneralSettings::class)->show_projects_sidebar_without_boards === false, function ($query) {
                 return $query->has('boards');
             })

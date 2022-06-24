@@ -8,7 +8,7 @@ class ProjectController extends Controller
 {
     public function show($id)
     {
-        $project = Project::query()->where('slug', $id)->firstOrFail();
+        $project = Project::query()->visibleForCurrentUser()->where('slug', $id)->firstOrFail();
 
         return view('project', [
             'project' => $project,
