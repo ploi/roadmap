@@ -4,8 +4,6 @@ namespace App\Models;
 
 use App\Traits\Sluggable;
 use App\Traits\HasOgImage;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use App\Enums\InboxWorkflow;
 use App\Settings\GeneralSettings;
