@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\ItemActivity;
 use App\Models\Item;
 use App\Models\Project;
+use App\Enums\ItemActivity;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 

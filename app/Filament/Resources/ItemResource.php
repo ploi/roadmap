@@ -2,11 +2,10 @@
 
 namespace App\Filament\Resources;
 
-use App\Enums\UserRole;
 use Filament\Forms;
 use App\Models\Item;
-use App\Models\User;
 use Filament\Tables;
+use App\Enums\UserRole;
 use App\Models\Project;
 use Filament\Resources\Form;
 use Filament\Resources\Table;

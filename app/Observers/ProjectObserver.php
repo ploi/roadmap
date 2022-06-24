@@ -13,9 +13,8 @@ class ProjectObserver
         try {
             Storage::delete('public/og-' . $project->slug . '-' . $project->id . '.jpg');
         } catch (\Throwable $exception) {
-
         }
 
-        $project->boards->each(fn(Board $board) => $board->delete());
+        $project->boards->each(fn (Board $board) => $board->delete());
     }
 }

@@ -2,12 +2,12 @@
 
 namespace App\Observers;
 
-use App\Enums\ItemActivity;
-use Illuminate\Support\Facades\Storage;
 use Mail;
 use App\Models\Item;
 use App\Models\User;
+use App\Enums\ItemActivity;
 use App\Settings\GeneralSettings;
+use Illuminate\Support\Facades\Storage;
 use App\Mail\Admin\ItemHasBeenCreatedEmail;
 use App\Notifications\Item\ItemUpdatedNotification;
 
@@ -82,7 +82,6 @@ class ItemObserver
         try {
             Storage::delete('public/og-' . $item->slug . '-' . $item->id . '.jpg');
         } catch (\Throwable $exception) {
-
         }
 
         $item->votes()->delete();

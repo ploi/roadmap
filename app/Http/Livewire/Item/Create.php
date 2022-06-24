@@ -43,8 +43,7 @@ class Create extends Component implements HasForms
 
     public function submit()
     {
-        if ($this->board && !$this->board->canUsersCreateItem())
-        {
+        if ($this->board && !$this->board->canUsersCreateItem()) {
             $this->notify('error', trans('items.not-allowed-to-create-items'));
             return redirect()->route('home');
         }

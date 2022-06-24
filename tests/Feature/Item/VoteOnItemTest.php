@@ -1,10 +1,10 @@
 <?php
 
-use App\Enums\UserRole;
-use App\Models\Board;
 use App\Models\Item;
-use App\Models\Project;
 use App\Models\User;
+use App\Models\Board;
+use App\Enums\UserRole;
+use App\Models\Project;
 
 beforeEach(function () {
     // disables Observers/ItemObserver.php
@@ -26,7 +26,6 @@ beforeEach(function () {
 });
 
 test('A user can vote on their own item', function () {
-
     $user = User::first();
     $item = Item::first();
     $project = Project::first();
@@ -45,7 +44,6 @@ test('A user can vote on their own item', function () {
 });
 
 test('Another user can vote on an item', function () {
-
     $anotherUser = User::find(2);
     $item = Item::first();
     $project = Project::first();
@@ -64,7 +62,6 @@ test('Another user can vote on an item', function () {
 });
 
 test('A guest cannot vote on an item', function () {
-
     $item = Item::first();
     $project = Project::first();
 
@@ -80,7 +77,6 @@ test('A guest cannot vote on an item', function () {
 });
 
 test('A user with admin access can vote on an item', function () {
-
     $user = User::first();
     $user->forceFill(['role' => UserRole::Admin])->save();
 
@@ -102,7 +98,6 @@ test('A user with admin access can vote on an item', function () {
 });
 
 test('A user cant vote on an item that belongs to a board which disables voting', function () {
-
     $user = User::first();
 
     $board = Board::factory()->create(['block_votes' => true]);

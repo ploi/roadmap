@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Xetaio\Mentions\Models\Mention;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Xetaio\Mentions\Models\Traits\HasMentionsTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 

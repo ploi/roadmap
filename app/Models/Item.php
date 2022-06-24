@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Enums\InboxWorkflow;
-use App\Settings\GeneralSettings;
 use App\Traits\Sluggable;
 use App\Traits\HasOgImage;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
+use App\Enums\InboxWorkflow;
+use App\Settings\GeneralSettings;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Spatie\Activitylog\ActivitylogServiceProvider;
 use Illuminate\Database\Eloquent\Relations\HasMany;

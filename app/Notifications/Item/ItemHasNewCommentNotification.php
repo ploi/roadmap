@@ -2,8 +2,8 @@
 
 namespace App\Notifications\Item;
 
-use App\Models\Comment;
 use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;

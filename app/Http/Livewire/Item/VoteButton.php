@@ -4,8 +4,8 @@ namespace App\Http\Livewire\Item;
 
 use App\Models\Item;
 use App\Models\Vote;
-use Illuminate\Support\Collection;
 use Livewire\Component;
+use Illuminate\Support\Collection;
 
 class VoteButton extends Component
 {
