@@ -14,6 +14,7 @@ test('install command works', function () {
         ->expectsQuestion('Name', 'John Doe')
         ->expectsQuestion('Email address', 'johndoe@ploi.io')
         ->expectsQuestion('Password', 'ploiisawesome')
+        ->expectsConfirmation('Your storage does not seem to be linked, do you want me to do this?')
         ->expectsConfirmation('Do you want to run npm ci & npm run production to get the assets ready?')
         ->expectsConfirmation('Would you like to show some love by starring the repo?');
 
