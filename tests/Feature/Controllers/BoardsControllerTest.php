@@ -66,7 +66,7 @@ test('private items are not visible for users', function (UserRole $userRole, bo
         ->assertSeeText('item 1')
         ->{$shouldBeVisible ? 'assertSeeText' : 'assertDontSeeText'}('item 2');
 })->with([
-    [UserRole::User, false],
-    [UserRole::Employee, true],
-    [UserRole::Admin, true],
+    'User' => [UserRole::User, false],
+    'Employee' => [UserRole::Employee, true],
+    'Admin' => [UserRole::Admin, true],
 ]);
