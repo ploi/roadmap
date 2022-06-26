@@ -15,7 +15,7 @@ class RecentComments extends Component implements HasTable
 
     protected function getTableQuery(): Builder
     {
-        return Comment::query()->limit(10);
+        return Comment::query()->public()->limit(10);
     }
 
     protected function isTablePaginationEnabled(): bool
