@@ -143,13 +143,13 @@ class Settings extends SettingsPage
                                         1 => 1,
                                         2 => 2,
                                     ])->default(1),
-                                    Toggle::make('must_have_board')
-                                        ->reactive()
-                                        ->visible(fn ($get) => $get('type') === 'recent-items')
-                                        ->helperText('Enable this to show items that have a board'),
                                     Toggle::make('must_have_project')
-                                        ->visible(fn ($get) => $get('must_have_board') && $get('type') === 'recent-items')
-                                        ->helperText('Enable this to show items that have a project'),
+                                          ->reactive()
+                                          ->visible(fn ($get) => $get('type') === 'recent-items')
+                                          ->helperText('Enable this to show items that have a project'),
+                                    Toggle::make('must_have_board')
+                                        ->visible(fn ($get) => $get('must_have_project') && $get('type') === 'recent-items')
+                                        ->helperText('Enable this to show items that have a board'),
                                 ])->helperText('Determine which items you want to show on the dashboard (for all users).'),
                         ]),
 

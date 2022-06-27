@@ -46,5 +46,9 @@ return [
             'token' => env('SSO_ENDPOINT_TOKEN'),
             'user' => env('SSO_ENDPOINT_USER'),
         ],
-    ]
+    ],
+
+    'gravatar' => [
+        'base_url' => rtrim(env('GRAVATAR_BASE_URL', 'https://www.gravatar.com/avatar'), '/'),
+    ],
 ];

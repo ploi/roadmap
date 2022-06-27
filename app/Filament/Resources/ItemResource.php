@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Closure;
 use App\Filament\Resources\ItemResource\RelationManagers\ChangelogsRelationManager;
 use Filament\Forms;
 use App\Models\Item;
@@ -63,7 +64,7 @@ class ItemResource extends Resource
                                 Forms\Components\MultiSelect::make('assigned_users')
                                     ->helperText('Assign admins/employees to items here.')
                                     ->preload()
-                                    ->relationship('assignedUsers', 'name', fn (Builder $query) => $query->whereIn('role', [UserRole::Admin, UserRole::Employee])),
+                                    ->relationship('assignedUsers', 'name', fn(Builder $query) => $query->whereIn('role', [UserRole::Admin, UserRole::Employee])),
                             ]),
                     ])->columnSpan(3),
 
@@ -75,7 +76,7 @@ class ItemResource extends Resource
                         ->required(),
                     Forms\Components\Select::make('board_id')
                         ->label('Board')
-                        ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? [])
+                        ->options(fn($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? [])
                         ->required(),
                     Forms\Components\Toggle::make('pinned')
                         ->helperText('Pinned items will always stay at top.')
@@ -83,12 +84,12 @@ class ItemResource extends Resource
                         ->default(false),
                     Forms\Components\Placeholder::make('created_at')
                         ->label('Created at')
-                        ->visible(fn ($record) => filled($record))
-                        ->content(fn ($record) => $record->created_at->format('d-m-Y H:i:s')),
+                        ->visible(fn($record) => filled($record))
+                        ->content(fn($record) => $record->created_at->format('d-m-Y H:i:s')),
                     Forms\Components\Placeholder::make('updated_at')
                         ->label('Updated at')
-                        ->visible(fn ($record) => filled($record))
-                        ->content(fn ($record) => $record->updated_at->format('d-m-Y H:i:s')),
+                        ->visible(fn($record) => filled($record))
+                        ->content(fn($record) => $record->updated_at->format('d-m-Y H:i:s')),
                 ])->columnSpan(1),
             ])
             ->columns(4);
@@ -116,22 +117,45 @@ class ItemResource extends Resource
                 Filter::make('assigned')
                     ->label('Assigned to me')
                     ->default(auth()->user()->hasRole(UserRole::Employee))
-                    ->query(fn (Builder $query): Builder => $query->whereHas('assignedUsers', function ($query) {
+                    ->query(fn(Builder $query): Builder => $query->whereHas('assignedUsers', function ($query) {
                         return $query->where('user_id', auth()->id());
                     })),
 
-                Filter::make('item_filters')
+                Filter::make('assignees')
                     ->form([
                         Forms\Components\MultiSelect::make('users')
                             ->label('Assigned to')
-                            ->options(User::whereIn('role', [UserRole::Employee->value, UserRole::Admin->value])->pluck('name', 'id')),
+                            ->options(
+                                User::query()
+                                    ->whereIn('role', [UserRole::Employee->value, UserRole::Admin->value])
+                                    ->pluck('name', 'id')
+                            )
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['users'],
+                                fn(Builder $query, $users): Builder => $query->whereHas('assignedUsers', function ($query) use ($users) {
+                                    return $query->whereIn('users.id', $users);
+                                }),
+                            );
+                    }),
+
+                Filter::make('item_filters')
+                    ->form([
                         Forms\Components\Select::make('project_id')
                             ->label(trans('table.project'))
+                            ->afterStateUpdated(function (Closure $set, Closure $get) {
+                                if($get('board_id')){
+                                    $set('board_id', null);
+                                }
+                            })
                             ->reactive()
                             ->options(Project::pluck('title', 'id')),
-                        Forms\Components\Select::make('board_id')
+                        Forms\Components\MultiSelect::make('board_id')
                             ->label(trans('table.board'))
-                            ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
+                            ->preload()
+                            ->options(fn($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
                         Forms\Components\Toggle::make('pinned')
                             ->label('Pinned'),
                         Forms\Components\Toggle::make('private')
@@ -141,25 +165,21 @@ class ItemResource extends Resource
                         return $query
                             ->when(
                                 $data['project_id'],
-                                fn (Builder $query, $projectId): Builder => $query->where('project_id', $projectId),
+                                fn(Builder $query, $projectId): Builder => $query->where('project_id', $projectId),
                             )
                             ->when(
                                 $data['board_id'],
-                                fn (Builder $query, $boardId): Builder => $query->where('board_id', $boardId),
+                                fn(Builder $query, $boardIds): Builder => $query->whereHas('board', function ($query) use ($boardIds) {
+                                    return $query->whereIn('id', $boardIds);
+                                }),
                             )
                             ->when(
                                 $data['pinned'],
-                                fn (Builder $query): Builder => $query->where('pinned', $data['pinned']),
+                                fn(Builder $query): Builder => $query->where('pinned', $data['pinned']),
                             )
                             ->when(
                                 $data['private'],
-                                fn (Builder $query): Builder => $query->where('private', $data['private']),
-                            )
-                            ->when(
-                                $data['users'],
-                                fn (Builder $query): Builder => $query->whereHas('assignedUsers', function ($query) use ($data) {
-                                    return $query->whereIn('id', $data['users']);
-                                }),
+                                fn(Builder $query): Builder => $query->where('private', $data['private']),
                             );
                     })
 
