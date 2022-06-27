@@ -19,6 +19,10 @@ class Project extends Model
         'private',
     ];
 
+    protected $casts = [
+        'private' => 'boolean',
+    ];
+
     public function boards()
     {
         return $this->hasMany(Board::class)->orderBy('sort_order');
