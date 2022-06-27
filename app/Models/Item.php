@@ -98,7 +98,7 @@ class Item extends Model
         }
 
         return $query->where('private', false)
-                     ->when($this->project, fn ($query) => $query->whereRelation('project', 'private', false));
+                     ->when($this->project_id, fn ($query) => $query->whereRelation('project', 'private', false));
     }
 
     public function scopeForInbox($query)

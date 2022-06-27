@@ -55,4 +55,9 @@ class Comment extends Model
     {
         return LogOptions::defaults()->logOnly(['content'])->logOnlyDirty();
     }
+
+    public function scopePublic($query)
+    {
+        return $query->where('private', false);
+    }
 }
