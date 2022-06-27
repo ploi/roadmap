@@ -13,15 +13,16 @@ test('install command works', function () {
         ->expectsOutput('Let\'s create a user.')
         ->expectsQuestion('Name', 'John Doe')
         ->expectsQuestion('Email address', 'johndoe@ploi.io')
-        ->expectsQuestion('Password', 'ploiisawesome')
-        ->expectsConfirmation('Do you want to run npm ci & npm run production to get the assets ready?')
-        ->expectsConfirmation('Would you like to show some love by starring the repo?');
+        ->expectsQuestion('Password', 'ploiisawesome');
 
     if (!file_exists(public_path('storage'))) {
         $command->expectsConfirmation('Your storage does not seem to be linked, do you want me to do this?');
     }
 
-    $command->run();
+    $command
+        ->expectsConfirmation('Do you want to run npm ci & npm run production to get the assets ready?')
+        ->expectsConfirmation('Would you like to show some love by starring the repo?')
+        ->run();
 
     assertDatabaseCount(User::class, 1);
 
