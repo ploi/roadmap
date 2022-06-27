@@ -53,9 +53,14 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         return in_array($this->role, $roles);
     }
 
-    public function getGravatar($size = 150)
+    public function getGravatar($size = 150): string
     {
-        return 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(Arr::get($this->attributes, 'email')))) . '?s=' . (int)$size;
+        return sprintf(
+            '%s/%s?s=%d',
+            config('services.gravatar.base_url'),
+            md5(strtolower(trim(Arr::get($this->attributes, 'email')))),
+            (int)$size
+        );
     }
 
     public function getFilamentAvatarUrl(): ?string
