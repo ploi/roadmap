@@ -28,7 +28,7 @@ class ItemObserver
     {
         $isDirty = false;
 
-        if ($item->isDirty('board_id')) {
+        if ($item->isDirty('board_id') && $item->board) {
             ItemActivity::createForItem($item, ItemActivity::MovedToBoard, [
                 'board' => $item->board->title,
             ]);

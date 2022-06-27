@@ -39,6 +39,10 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\PasswordProtected::class,
         ],
 
+        'authed' => [
+            'auth',
+        ],
+
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',

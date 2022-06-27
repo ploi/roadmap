@@ -13,7 +13,7 @@
     >
         @forelse($boards as $board)
             <section class="h-full">
-                <div class="bg-gray-100 rounded-xl min-w-[18rem] lg:min-w-[23rem] flex flex-col max-h-full">
+                <div class="bg-gray-100 rounded-xl min-w-[18rem] lg:w-[23rem] flex flex-col max-h-full">
                     <div
                         class="p-2 font-semibold text-center text-gray-800 border-b bg-gray-100/80 rounded-t-xl backdrop-blur-xl backdrop-saturate-150">
                         <a

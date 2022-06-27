@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\Kernel;
 use Filament\Facades\Filament;
+use App\Settings\GeneralSettings;
 use App\Services\OgImageGenerator;
 use Illuminate\Support\Collection;
 use App\SocialProviders\SsoProvider;
@@ -13,17 +15,17 @@ use Laravel\Socialite\Contracts\Factory as SocialiteFactory;
 
 class AppServiceProvider extends ServiceProvider
 {
-    public function boot(): void
+    public function boot(Kernel $kernel): void
     {
         View::composer('partials.meta', static function ($view) {
             $view->with(
                 'defaultImage',
                 OgImageGenerator::make(config('app.name'))
-                                ->withSubject('Roadmap')
-                                ->withPolygonDecoration()
-                                ->withFilename('og.jpg')
-                                ->generate()
-                                ->getPublicUrl()
+                    ->withSubject('Roadmap')
+                    ->withPolygonDecoration()
+                    ->withFilename('og.jpg')
+                    ->generate()
+                    ->getPublicUrl()
             );
         });
 
@@ -33,12 +35,12 @@ class AppServiceProvider extends ServiceProvider
 
         Filament::registerNavigationItems([
             NavigationItem::make()
-                          ->group('External')
-                          ->sort(101)
-                          ->label('Public view')
-                          ->icon('heroicon-o-rewind')
-                          ->isActiveWhen(fn (): bool => false)
-                          ->url('/'),
+                ->group('External')
+                ->sort(101)
+                ->label('Public view')
+                ->icon('heroicon-o-rewind')
+                ->isActiveWhen(fn (): bool => false)
+                ->url('/'),
         ]);
 
         if (file_exists($favIcon = storage_path('app/public/favicon.png'))) {
@@ -46,8 +48,11 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->bootSsoSocialite();
-
         $this->bootCollectionMacros();
+
+//        if (app(GeneralSettings::class)->users_must_verify_email) {
+//            $this->addVerificationMiddleware($kernel);
+//        }
     }
 
     private function bootSsoSocialite(): void
@@ -67,8 +72,13 @@ class AppServiceProvider extends ServiceProvider
             $nonPrioritized = $this->reject($callback);
 
             return $this
-            ->filter($callback)
-            ->merge($nonPrioritized);
+                ->filter($callback)
+                ->merge($nonPrioritized);
         });
+    }
+
+    protected function addVerificationMiddleware(Kernel $kernel)
+    {
+        $kernel->appendMiddlewareToGroup('authed', 'verified');
     }
 }

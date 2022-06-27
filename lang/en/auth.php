@@ -2,6 +2,7 @@
 
 return [
     'login' => 'Log in',
+    'verify-email' => 'Verify email',
     'register' => 'Register',
     'profile' => 'Profile',
     'register_for_free' => 'Or <a class="text-brand-600 transition hover:text-brand-500 focus:outline-none focus:underline" href=":route">register</a> for free.',

@@ -19,7 +19,7 @@ test('it shows breadcrumbs', function () {
     actingAs($user)->get(route('my'))->assertSee('My items');
 });
 
-test('view has live compoents', function ($component) {
+test('view has live components', function ($component) {
     $user = User::factory()->create();
 
     actingAs($user)->get(route('my'))->assertSeeLivewire($component);

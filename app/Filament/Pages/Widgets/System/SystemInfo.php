@@ -2,8 +2,8 @@
 
 namespace App\Filament\Pages\Widgets\System;
 
-use App\Services\SystemChecker;
 use Filament\Widgets\Widget;
+use App\Services\SystemChecker;
 
 class SystemInfo extends Widget
 {

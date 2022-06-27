@@ -109,6 +109,10 @@ class Settings extends SettingsPage
                                 ->hidden(fn (Closure $get) => $get('select_board_when_creating_item') === false)
                                 ->columnSpan(2),
 
+                            Toggle::make('users_must_verify_email')
+                                ->label('Users must verify their email before they can submit items, or reply to items.')
+                                ->columnSpan(2),
+
                             Grid::make()->schema([
                                 Select::make('inbox_workflow')
                                       ->options(InboxWorkflow::getSelectOptions())

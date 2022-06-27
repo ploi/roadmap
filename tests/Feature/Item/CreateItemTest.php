@@ -1,76 +1,72 @@
 <?php
 
-use App\Models\Item;
+use App\Mail\Admin\ItemHasBeenCreatedEmail;
 use App\Models\Board;
+use App\Models\Item;
+use App\Models\Vote;
+use App\Settings\GeneralSettings;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Livewire;
 use App\Models\Project;
 use App\Http\Livewire\Item\Create;
+use function Pest\Laravel\assertDatabaseCount;
+use function Pest\Laravel\assertDatabaseHas;
 
 beforeEach(function () {
-    // disables Observers/ItemObserver.php
-    Item::unsetEventDispatcher();
+    Mail::fake();
 
-    $project = Project::factory()->create();
-    Board::factory()->create(['project_id' => $project->getAttributeValue('id')]);
+    $this->project = Project::factory()->create();
+    $this->board = Board::factory()->create(['project_id' => $this->project->getAttributeValue('id')]);
+
+    app(GeneralSettings::class)->send_notifications_to = [['email' => 'info@ploi.io']];
 });
 
-test('A user can submit a new item to the roadmap', function () {
-    $user = createUser();
-    $this->actingAs($user);
+test('A user can submit a new item via the board page', function () {
+    $user = createAndLoginUser();
 
-    Livewire::test(Create::class)
+    $livewire = Livewire::test(Create::class, ['project' => $this->project, 'board' => $this->board])
         ->set('title', 'An example title')
         ->set('content', 'The content of an item.')
         ->call('submit');
 
     $item = $user->items()->first();
 
-    $this->assertEquals('An example title', $item->getAttributeValue('title'));
-    $this->assertEquals('The content of an item.', $item->getAttributeValue('content'));
-    $this->assertEquals(1, $item->votes()->where('user_id', $user->getAttributeValue('id'))->count());
+    $livewire->assertRedirect(route('projects.items.show', [$item->project, $item]));
+
+    assertDatabaseHas(Item::class, [
+        'title' => 'An example title',
+        'content' => 'The content of an item.',
+        'project_id' => $this->project->id,
+        'board_id' => $this->board->id,
+        'total_votes' => 1,
+    ]);
+
+    assertDatabaseHas(Vote::class, [
+        'model_id' => $item->id,
+        'user_id' => $item->user->id,
+    ]);
+
+    Mail::assertQueued(ItemHasBeenCreatedEmail::class);
 });
 
 test('validation rules are enforced when creating an item', function () {
-    Livewire::test(Create::class)
+    Livewire::test(Create::class, ['project' => $this->project, 'board' => $this->board])
         ->set('title', '')
         ->set('content', '')
         ->call('submit')
         ->assertHasErrors(['title' => 'required', 'content' => 'required']);
 });
 
-test('redirected to /home if item does not belong to a project', function () {
-    Livewire::test(Create::class)
+test('A user can not submit a new item via the board page if disabled', function () {
+    createAndLoginUser();
+
+    $this->board->updateQuietly(['can_users_create' => false]);
+
+    Livewire::test(Create::class, ['project' => $this->project, 'board' => $this->board])
         ->set('title', 'An example title')
         ->set('content', 'The content of an item.')
         ->call('submit')
-        ->assertRedirect(route('home'));
-});
+        ->assertRedirect(route('projects.boards.show', [$this->project, $this->board]));
 
-test('redirected to project view if item belongs to a project', function () {
-    $project = Project::first();
-    $board = Board::first();
-
-    Livewire::test(Create::class, ['project' => $project, 'board' => $board])
-        ->set('title', 'An example title')
-        ->set('content', 'The content of an item.')
-        ->call('submit')
-        ->assertRedirect(route(
-            'projects.boards.show',
-            [$project->getAttributeValue('id'), $board->getAttributeValue('id')]
-        ));
-});
-
-// Boards can have "can_users_create" set to false which disables the creation of items. Let's check for this!
-test('an item isnt created if it belongs to a board which disables item creation', function () {
-    $project = Project::first();
-    $board = Board::factory()->create(['project_id' => $project->getKey(), 'can_users_create' => false]);
-
-    Livewire::test(Create::class, ['project' => $project, 'board' => $board])
-        ->set('title', 'An example title')
-        ->set('content', 'The content of an item.')
-        ->call('submit')
-        ->assertRedirect(route('home'));
-
-    $this->assertFalse($board->canUsersCreateItem());
-    $this->assertEquals(0, Item::count());
+    assertDatabaseCount(Item::class, 0);
 });
