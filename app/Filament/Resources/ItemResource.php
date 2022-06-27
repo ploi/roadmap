@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use App\Models\Item;
+use App\Models\User;
 use Filament\Tables;
 use App\Enums\UserRole;
 use App\Models\Project;
@@ -118,8 +119,11 @@ class ItemResource extends Resource
                         return $query->where('user_id', auth()->id());
                     })),
 
-                Filter::make('created_at')
+                Filter::make('item_filters')
                     ->form([
+                        Forms\Components\MultiSelect::make('users')
+                            ->label('Assigned to')
+                            ->options(User::whereIn('role', [UserRole::Employee->value, UserRole::Admin->value])->pluck('name', 'id')),
                         Forms\Components\Select::make('project_id')
                             ->label(trans('table.project'))
                             ->reactive()
@@ -149,6 +153,12 @@ class ItemResource extends Resource
                             ->when(
                                 $data['private'],
                                 fn (Builder $query): Builder => $query->where('private', $data['private']),
+                            )
+                            ->when(
+                                $data['users'],
+                                fn (Builder $query): Builder => $query->whereHas('assignedUsers', function ($query) use ($data) {
+                                    return $query->whereIn('id', $data['users']);
+                                }),
                             );
                     })
 

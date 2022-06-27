@@ -61,9 +61,9 @@ test('pinned itemsa are at the top', function () {
             Board::factory()
             ->has(
                 Item::factory(2)->state(new Sequence(
-                ['title' => 'item 1', 'pinned' => false, 'total_votes' => 10],
-                ['title' => 'item 2', 'pinned' => true, 'total_votes' => 1]
-            ))
+                    ['title' => 'item 1', 'pinned' => false, 'total_votes' => 10],
+                    ['title' => 'item 2', 'pinned' => true, 'total_votes' => 1]
+                ))
             )
         )->create();
 
@@ -76,9 +76,9 @@ test('items are sorted by vote count', function () {
             Board::factory()
             ->has(
                 Item::factory(2)->state(new Sequence(
-                ['title' => 'item 1', 'total_votes' => 1],
-                ['title' => 'item 2', 'total_votes' => 10]
-            ))
+                    ['title' => 'item 1', 'total_votes' => 1],
+                    ['title' => 'item 2', 'total_votes' => 10]
+                ))
             )
         )->create();
 
