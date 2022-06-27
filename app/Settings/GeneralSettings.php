@@ -26,6 +26,9 @@ class GeneralSettings extends Settings
     public bool $block_robots;
     public string $inbox_workflow;
     public bool $users_must_verify_email;
+    public bool $enable_changelog;
+    public bool $show_changelog_author;
+    public bool $show_changelog_related_items;
 
     public function getInboxWorkflow(): InboxWorkflow
     {

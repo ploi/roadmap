@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\ItemResource\RelationManagers\ChangelogsRelationManager;
 use Filament\Forms;
 use App\Models\Item;
 use App\Models\User;
@@ -172,6 +173,7 @@ class ItemResource extends Resource
             ActivitiesRelationManager::class,
             CommentsRelationManager::class,
             VotesRelationManager::class,
+            ChangelogsRelationManager::class,
         ];
     }
 

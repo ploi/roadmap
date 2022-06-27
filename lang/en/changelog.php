@@ -1,0 +1,5 @@
+<?php
+
+return [
+    'changelog' => 'Changelog',
+];

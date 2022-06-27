@@ -81,6 +81,11 @@ class Item extends Model
         return $this->belongsToMany(User::class, 'item_user');
     }
 
+    public function changelogs(): BelongsToMany
+    {
+        return $this->belongsToMany(Changelog::class);
+    }
+
     public function activities(): MorphMany
     {
         return $this->morphMany(ActivitylogServiceProvider::determineActivityModel(), 'subject');
