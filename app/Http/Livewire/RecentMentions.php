@@ -26,7 +26,7 @@ class RecentMentions extends Component implements HasTable
     protected function getTableColumns(): array
     {
         return [
-            Tables\Columns\TextColumn::make('content')->label(trans('table.content'))->searchable(),
+            Tables\Columns\TextColumn::make('content')->wrap()->label(trans('table.content'))->searchable(),
             Tables\Columns\TextColumn::make('item.title')->label(trans('table.title'))->searchable(),
             Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label(trans('table.created_at')),
         ];
