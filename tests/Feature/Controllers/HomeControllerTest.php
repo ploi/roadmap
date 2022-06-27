@@ -25,7 +25,7 @@ test('the dashboard items are shown', function ($setting, $value) {
     'recent comments' => ['setting' => ["type" => "recent-comments", "column_span" => 1, "must_have_board" => false, "must_have_project" => false], 'value' => 'Recent activities'],
 ]);
 
-test('recent items will not contain private items for users', function (?UserRole $userRole, bool $shouldBeVisible) {
+test('recent items will not contain private items for users', function (UserRole $userRole, bool $shouldBeVisible) {
     GeneralSettings::fake(['dashboard_items' => [["type" => "recent-items", "column_span" => 1, "must_have_board" => false, "must_have_project" => false]]]);
 
     Item::factory()->private()->create(['title' => 'Private item']);
@@ -39,7 +39,7 @@ test('recent items will not contain private items for users', function (?UserRol
     'Admin' => [UserRole::Admin, true],
 ]);
 
-test('recent items will not contain items from private projects for users', function (?UserRole $userRole, bool $shouldBeVisible) {
+test('recent items will not contain items from private projects for users', function (UserRole $userRole, bool $shouldBeVisible) {
     GeneralSettings::fake(['dashboard_items' => [["type" => "recent-items", "column_span" => 1, "must_have_board" => false, "must_have_project" => true]]]);
 
     $project = Project::factory()->private()->create();
@@ -54,7 +54,7 @@ test('recent items will not contain items from private projects for users', func
     'Admin' => [UserRole::Admin, true],
 ]);
 
-test('private projects are not visible in navbar for users', function (?UserRole $userRole, bool $shouldBeVisible) {
+test('private projects are not visible in navbar for users', function (UserRole $userRole, bool $shouldBeVisible) {
     $project = Project::factory()->private()->create();
 
     createAndLoginUser(['role' => $userRole]);
