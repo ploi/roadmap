@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Enums\InboxWorkflow;
 use App\Settings\GeneralSettings;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Spatie\Activitylog\ActivitylogServiceProvider;
@@ -91,14 +92,14 @@ class Item extends Model
         return $query->orderBy('total_votes', 'desc');
     }
 
-    public function scopeVisibleForCurrentUser($query)
+    public function scopeVisibleForCurrentUser(Builder $query)
     {
         if (auth()->user()?->hasAdminAccess()) {
             return $query;
         }
 
         return $query->where('private', false)
-                     ->when($this->project_id, fn ($query) => $query->whereRelation('project', 'private', false));
+                     ->when($query->has('project'), fn (Builder $query) => $query->whereRelation('project', 'private', false));
     }
 
     public function scopeForInbox($query)
