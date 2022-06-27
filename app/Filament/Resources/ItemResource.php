@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Closure;
 use Filament\Forms;
 use App\Models\Item;
 use App\Models\User;
@@ -143,6 +144,11 @@ class ItemResource extends Resource
                     ->form([
                         Forms\Components\Select::make('project_id')
                             ->label(trans('table.project'))
+                            ->afterStateUpdated(function (Closure $set, Closure $get) {
+                                if($get('board_id')){
+                                    $set('board_id', null);
+                                }
+                            })
                             ->reactive()
                             ->options(Project::pluck('title', 'id')),
                         Forms\Components\MultiSelect::make('board_id')
