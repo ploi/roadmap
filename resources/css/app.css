@@ -1,6 +1,7 @@
 @import '../../vendor/filament/filament/resources/css/app.css';
 @import 'tippy.js/dist/tippy.css';
 @import 'tribute.css';
+@import 'fonts.css';
 
 body {
     font-family: 'Nunito', sans-serif;
