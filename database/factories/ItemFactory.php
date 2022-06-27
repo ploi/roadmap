@@ -20,6 +20,7 @@ class ItemFactory extends Factory
             'title' => ucfirst($this->faker->domainWord),
             'content' => $this->faker->text(500),
             'slug' => $this->faker->word,
+            'private' => false,
         ];
     }
 
