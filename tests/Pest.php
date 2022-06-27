@@ -4,6 +4,7 @@ use App\Models\User;
 use Tests\CreatesApplication;
 use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use function Pest\Laravel\actingAs;
 
 uses(
     TestCase::class,
