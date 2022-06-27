@@ -57,8 +57,22 @@ class RecentItems extends Component implements HasTable
         return [
             Tables\Columns\TextColumn::make('title')->label(trans('table.title')),
             Tables\Columns\TextColumn::make('total_votes')->label(trans('table.total-votes'))->sortable(),
-            Tables\Columns\TextColumn::make('board.project.title')->label(trans('table.project')),
-            Tables\Columns\TextColumn::make('board.title')->label(trans('table.board')),
+            Tables\Columns\TextColumn::make('project.title')->label(trans('table.project'))
+                ->url(function ($record) {
+                    if ($project = $record->project) {
+                        return route('projects.show', $project);
+                    }
+
+                    return null;
+                }),
+            Tables\Columns\TextColumn::make('board.title')->label(trans('table.board'))
+                ->url(function ($record) {
+                    if ($board = $record->board) {
+                        return route('projects.boards.show', [$record->project, $board]);
+                    }
+
+                    return null;
+                }),
         ];
     }
 
