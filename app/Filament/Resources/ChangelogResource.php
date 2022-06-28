@@ -35,27 +35,30 @@ class ChangelogResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                                          ->required()
-                                          ->maxLength(255)
-                                          ->columnSpan(2),
-                Forms\Components\DateTimePicker::make('published_at'),
-                Forms\Components\Select::make('user_id')
-                                       ->relationship('user', 'name')
-                                       ->label('Author')
-                                       ->default(auth()->user()->id)
-                                       ->preload()
-                                       ->required()
-                                       ->searchable(),
-                Forms\Components\MarkdownEditor::make('content')
-                                               ->columnSpan(2)
-                                               ->required()
-                                               ->minLength(5)
-                                               ->maxLength(65535),
-                Forms\Components\MultiSelect::make('related_items')
-                    ->preload()->label('Related items')
-                    ->relationship('items', 'title')
-                    ->getOptionLabelFromRecordUsing(fn (Item $record) => $record->title . ($record->project ? ' (' . $record->project->title . ')' : '')),
+                Forms\Components\Card::make([
+                    Forms\Components\TextInput::make('title')
+                                              ->required()
+                                              ->maxLength(255),
+                    Forms\Components\Select::make('user_id')
+                                           ->relationship('user', 'name')
+                                           ->label('Author')
+                                           ->default(auth()->user()->id)
+                                           ->preload()
+                                           ->required()
+                                           ->searchable(),
+
+                    Forms\Components\DateTimePicker::make('published_at'),
+                    Forms\Components\MultiSelect::make('related_items')
+                                                ->preload()->label('Related items')
+                                                ->relationship('items', 'title')
+                                                ->getOptionLabelFromRecordUsing(fn (Item $record) => $record->title . ($record->project ? ' (' . $record->project->title . ')' : '')),
+
+                    Forms\Components\MarkdownEditor::make('content')
+                                                   ->columnSpan(2)
+                                                   ->required()
+                                                   ->minLength(5)
+                                                   ->maxLength(65535),
+                ])->columns(),
             ]);
     }
 
