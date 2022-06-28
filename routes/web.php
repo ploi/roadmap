@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChangelogController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
 use App\Http\Controllers\ItemController;
@@ -19,6 +20,9 @@ Route::get('password-protection', PasswordProtectionController::class)->name('pa
 Route::post('password-protection', [PasswordProtectionController::class, 'login'])->name('password.protection.login');
 
 Route::get('/', \App\Http\Controllers\HomeController::class)->name('home');
+
+Route::get('changelog', [ChangelogController::class, 'index'])->name('changelog');
+Route::get('changelog/{changelog}', [ChangelogController::class, 'show'])->name('changelog.show');
 
 Route::get('projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
 Route::get('items/{item}', [ItemController::class, 'show'])->name('items.show');

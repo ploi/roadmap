@@ -153,6 +153,22 @@ class Settings extends SettingsPage
                                 ])->helperText('Determine which items you want to show on the dashboard (for all users).'),
                         ]),
 
+                    Tabs\Tab::make('Changelog')
+                            ->schema([
+                                Toggle::make('enable_changelog')
+                                      ->reactive()
+                                      ->label('Enable changelog in the roadmap')
+                                      ->columnSpan(2),
+                                Toggle::make('show_changelog_author')
+                                      ->label('Show the author of the changelog.')
+                                      ->visible(fn ($get) => $get('enable_changelog'))
+                                      ->columnSpan(2),
+                                Toggle::make('show_changelog_related_items')
+                                      ->label('Show the related items on the changelog.')
+                                      ->visible(fn ($get) => $get('enable_changelog'))
+                                      ->columnSpan(2),
+                            ]),
+
                     Tabs\Tab::make('Notifications')
                         ->schema([
                             Repeater::make('send_notifications_to')
