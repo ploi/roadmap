@@ -68,7 +68,7 @@ class ChangelogResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')->searchable()->wrap(),
                 Tables\Columns\BooleanColumn::make('published')
-                    ->getStateUsing(fn ($record) => now()->greaterThanOrEqualTo($record->published_at)),
+                    ->getStateUsing(fn ($record) => filled($record->published_at) && now()->greaterThanOrEqualTo($record->published_at)),
                 Tables\Columns\TextColumn::make('published_at')->dateTime()->since()->sortable(),
                 Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable(),
             ])
