@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Services\SystemChecker;
 use Filament\Pages\Page;
 use App\Filament\Pages\Widgets\System\SystemInfo;
 
@@ -18,5 +19,16 @@ class System extends Page
         return [
             SystemInfo::class
         ];
+    }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        $systemChecker = new SystemChecker();
+
+        if ($systemChecker->isOutOfDate()) {
+            return 'Update available';
+        }
+
+        return null;
     }
 }
