@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Services\SystemChecker;
+use Filament\Pages\Actions\Action;
 use Filament\Pages\Page;
 use App\Filament\Pages\Widgets\System\SystemInfo;
 
@@ -30,5 +31,21 @@ class System extends Page
         }
 
         return null;
+    }
+
+    protected function getActions(): array
+    {
+        return [
+            Action::make('refresh_versions')
+                ->color('secondary')
+                ->action(function () {
+                    (new SystemChecker())->flushVersionData();
+
+                    $this->notify('success', 'Version data has been cleared', true);
+
+                    return redirect(System::getUrl());
+                })
+                ->requiresConfirmation(),
+        ];
     }
 }

@@ -7,6 +7,9 @@ class SystemChecker
     public $remoteVersion;
     public $currentVersion;
 
+    public string $cacheKeyCurrent = 'roadmap-current-version';
+    public string $cacheKeyRemote = 'roadmap-remote-version';
+
     public function getVersions(): self
     {
         $this->remoteVersion = trim($this->getRemoteVersion());
@@ -17,14 +20,14 @@ class SystemChecker
 
     public function getApplicationVersion()
     {
-        return cache()->remember('roadmap-current-version', now()->addDay(), function () {
+        return cache()->remember($this->cacheKeyCurrent, now()->addDay(), function () {
             return shell_exec('git describe --tag --abbrev=0');
         });
     }
 
     public function getRemoteVersion()
     {
-        return cache()->remember('roadmap-remote-version', now()->addDay(), function () {
+        return cache()->remember($this->cacheKeyRemote, now()->addDay(), function () {
             shell_exec('git fetch --tags');
             return shell_exec('git describe --tags $(git rev-list --tags --max-count=1)');
         });
@@ -38,8 +41,8 @@ class SystemChecker
     public function flushVersionData()
     {
         try {
-            cache()->forget('roadmap-current-version');
-            cache()->forget('roadmap-remote-version');
+            cache()->forget($this->cacheKeyCurrent);
+            cache()->forget($this->cacheKeyRemote);
         } catch (\Exception $exception) {
         }
     }
