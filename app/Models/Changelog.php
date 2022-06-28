@@ -28,7 +28,7 @@ class Changelog extends Model
 
     public function scopePublished(Builder $query)
     {
-        return $query->where('published_at', '<=', now())->latest();
+        return $query->where('published_at', '<=', now())->latest('published_at');
     }
 
     public function user(): BelongsTo

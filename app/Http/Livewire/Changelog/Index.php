@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Changelog;
 
-use App\Models\Changelog;
 use Livewire\Component;
 
 class Index extends Component
