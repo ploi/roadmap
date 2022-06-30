@@ -28,6 +28,7 @@ class Item extends Model
         'content',
         'pinned',
         'private',
+        'notify_subscribers',
         'project_id',
         'board_id',
         'user_id'
@@ -36,6 +37,7 @@ class Item extends Model
     protected $casts = [
         'pinned' => 'boolean',
         'private' => 'boolean',
+        'notify_subscribers' => 'boolean',
     ];
 
     protected function excerpt(): Attribute
