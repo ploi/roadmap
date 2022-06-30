@@ -68,13 +68,15 @@ class ItemObserver
             $isDirty = true;
         }
 
-        if ($isDirty) {
+        if ($isDirty && $item->notify_subscribers) {
             $users = $item->subscribedVotes()->with('user')->get()->pluck('user');
 
             $users->each(function (User $user) use ($item) {
                 $user->notify(new ItemUpdatedNotification($item));
             });
         }
+
+        $item->updateQuietly(['notify_subscribers' => true]);
     }
 
     public function deleting(Item $item)

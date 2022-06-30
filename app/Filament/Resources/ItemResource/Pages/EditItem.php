@@ -29,4 +29,9 @@ class EditItem extends EditRecord
             ...parent::getActions()
         ];
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('edit', ['record' => $this->record]);
+    }
 }
