@@ -108,7 +108,7 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('total_votes')->label('Votes')->sortable()->toggleable()->toggledHiddenByDefault(),
                 Tables\Columns\TextColumn::make('comments_count')->label('Comments')->counts('comments')->sortable()->toggleable()->toggledHiddenByDefault(),
                 Tables\Columns\TextColumn::make('project.title'),
-                Tables\Columns\TextColumn::make('board.title'),
+                Tables\Columns\TextColumn::make('board.title')->sortable(),
                 Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TagsColumn::make('assignedUsers.name')->visible(auth()->user()->hasRole(UserRole::Admin))->toggleable()->toggledHiddenByDefault(),
                 Tables\Columns\TextColumn::make('created_at')

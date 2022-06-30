@@ -1,8 +1,10 @@
 /node_modules
+/node_modules.nosync
 /public/hot
 /public/storage
 /storage/*.key
 /vendor
+/vendor.nosync
 .env
 .env.backup
 .phpunit.result.cache
