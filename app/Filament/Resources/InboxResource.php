@@ -46,7 +46,7 @@ class InboxResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')->searchable(),
+                Tables\Columns\TextColumn::make('title')->wrap()->searchable(),
                 Tables\Columns\TextColumn::make('project.title')
                     ->visible(app(GeneralSettings::class)->getInboxWorkflow() === InboxWorkflow::WithoutBoard),
                 Tables\Columns\TextColumn::make('comments_count')->label(ucfirst(trans_choice('messages.comments', 2)))->counts('comments'),

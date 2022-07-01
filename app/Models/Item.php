@@ -114,6 +114,7 @@ class Item extends Model
     {
         return match (app(GeneralSettings::class)->getInboxWorkflow()) {
             InboxWorkflow::WithoutBoardAndProject => $query->whereNull('project_id')->whereNull('board_id'),
+            InboxWorkflow::WithoutBoardOrProject => $query->where(fn ($query) => $query->orWhereNull('project_id')->orWhereNull('board_id')),
             InboxWorkflow::WithoutBoard => $query->whereNotNull('project_id')->whereNull('board_id'),
             InboxWorkflow::Disabled => null,
         };
@@ -127,7 +128,7 @@ class Item extends Model
             return false;
         }
 
-        return (bool) $this->votes()->where('user_id', $user->id)->exists();
+        return (bool)$this->votes()->where('user_id', $user->id)->exists();
     }
 
     public function getUserVote(User $user = null): Vote|null
@@ -176,7 +177,7 @@ class Item extends Model
     /**
      *  Returns a collection of the most recent users who have voted for this item.
      *
-     * @param  int  $count Displays five users by default.
+     * @param int $count Displays five users by default.
      * @return Collection|\Illuminate\Support\Collection
      */
     public function getRecentVoterDetails(int $count = 5): Collection|\Illuminate\Support\Collection
