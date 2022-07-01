@@ -35,6 +35,8 @@ class SystemChecker
 
     public function isOutOfDate()
     {
+        $this->getVersions();
+
         return $this->currentVersion < $this->remoteVersion || $this->currentVersion != $this->remoteVersion;
     }
 
