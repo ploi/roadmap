@@ -79,7 +79,7 @@
     </header>
 
     <div class="p-4 prose">
-        {!! str($comment->content)->markdown() !!}
+        {!! str($comment->content)->markdown()->sanitizeHtml() !!}
     </div>
 
     @if($reply == $comment->id)
