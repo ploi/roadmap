@@ -2570,6 +2570,37 @@
   "resolved" "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-0.9.3.tgz"
   "version" "0.9.3"
 
+"esbuild-darwin-arm64@0.14.48":
+  "integrity" "sha512-bFjnNEXjhZT+IZ8RvRGNJthLWNHV5JkCtuOFOnjvo5pC0sk2/QVk0Qc06g2PV3J0TcU6kaPC3RN9yy9w2PSLEA=="
+  "resolved" "https://registry.npmjs.org/esbuild-darwin-arm64/-/esbuild-darwin-arm64-0.14.48.tgz"
+  "version" "0.14.48"
+
+"esbuild@^0.14.27":
+  "integrity" "sha512-w6N1Yn5MtqK2U1/WZTX9ZqUVb8IOLZkZ5AdHkT6x3cHDMVsYWC7WPdiLmx19w3i4Rwzy5LqsEMtVihG3e4rFzA=="
+  "resolved" "https://registry.npmjs.org/esbuild/-/esbuild-0.14.48.tgz"
+  "version" "0.14.48"
+  optionalDependencies:
+    "esbuild-android-64" "0.14.48"
+    "esbuild-android-arm64" "0.14.48"
+    "esbuild-darwin-64" "0.14.48"
+    "esbuild-darwin-arm64" "0.14.48"
+    "esbuild-freebsd-64" "0.14.48"
+    "esbuild-freebsd-arm64" "0.14.48"
+    "esbuild-linux-32" "0.14.48"
+    "esbuild-linux-64" "0.14.48"
+    "esbuild-linux-arm" "0.14.48"
+    "esbuild-linux-arm64" "0.14.48"
+    "esbuild-linux-mips64le" "0.14.48"
+    "esbuild-linux-ppc64le" "0.14.48"
+    "esbuild-linux-riscv64" "0.14.48"
+    "esbuild-linux-s390x" "0.14.48"
+    "esbuild-netbsd-64" "0.14.48"
+    "esbuild-openbsd-64" "0.14.48"
+    "esbuild-sunos-64" "0.14.48"
+    "esbuild-windows-32" "0.14.48"
+    "esbuild-windows-64" "0.14.48"
+    "esbuild-windows-arm64" "0.14.48"
+
 "escalade@^3.1.1":
   "integrity" "sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw=="
   "resolved" "https://registry.npmjs.org/escalade/-/escalade-3.1.1.tgz"
@@ -3420,6 +3451,13 @@
     "webpack-notifier" "^1.14.1"
     "webpackbar" "^5.0.0-3"
     "yargs" "^17.2.1"
+
+"laravel-vite-plugin@^0.3.0":
+  "integrity" "sha512-lLtDt6XhGY7D094jubnNmyQnscVwv+w4ol24yMhglu6PHiICSzRv4v7gBUYYwFiE1coeBooNcJ0bFbdbcS3Izg=="
+  "resolved" "https://registry.npmjs.org/laravel-vite-plugin/-/laravel-vite-plugin-0.3.0.tgz"
+  "version" "0.3.0"
+  dependencies:
+    "vite-plugin-full-reload" "^1.0.1"
 
 "lilconfig@^2.0.3", "lilconfig@^2.0.5":
   "integrity" "sha512-xaYmXZtTHPAw5m+xLN8ab9C+3a8YmV3asNSPOATITbtwrfbwaLJj8h66H1WMIpALCkqsIzK3h7oQ+PdX+LQ9Eg=="
@@ -4294,7 +4332,7 @@
   "resolved" "https://registry.npmjs.org/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz"
   "version" "4.2.0"
 
-"postcss@^7.0.0 || ^8.0.1", "postcss@^8.0.9", "postcss@^8.1.0", "postcss@^8.1.14", "postcss@^8.2.14", "postcss@^8.2.15", "postcss@^8.2.2", "postcss@^8.3.11", "postcss@^8.3.3", "postcss@^8.4.12", "postcss@>=8.0.9":
+"postcss@^7.0.0 || ^8.0.1", "postcss@^8.0.9", "postcss@^8.1.0", "postcss@^8.1.14", "postcss@^8.2.14", "postcss@^8.2.15", "postcss@^8.2.2", "postcss@^8.3.11", "postcss@^8.3.3", "postcss@^8.4.12", "postcss@^8.4.13", "postcss@>=8.0.9":
   "integrity" "sha512-jtL6eTBrza5MPzy8oJLFuUscHDXTV5KcLlqAWHl5q5WYRfnNRGSmOZmOZ1T6Gy7A99mOZfqungmZMpMmCVJ8ZA=="
   "resolved" "https://registry.npmjs.org/postcss/-/postcss-8.4.13.tgz"
   "version" "8.4.13"
@@ -4578,6 +4616,13 @@
   dependencies:
     "hash-base" "^3.0.0"
     "inherits" "^2.0.1"
+
+"rollup@^2.59.0":
+  "integrity" "sha512-VSE1iy0eaAYNCxEXaleThdFXqZJ42qDBatAwrfnPlENEZ8erQ+0LYX4JXOLPceWfZpV1VtZwZ3dFCuOZiSyFtQ=="
+  "resolved" "https://registry.npmjs.org/rollup/-/rollup-2.75.7.tgz"
+  "version" "2.75.7"
+  optionalDependencies:
+    "fsevents" "~2.3.2"
 
 "run-parallel@^1.1.9":
   "integrity" "sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA=="
@@ -5226,6 +5271,26 @@
   "integrity" "sha1-IpnwLG3tMNSllhsLn3RSShj2NPw="
   "resolved" "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz"
   "version" "1.1.2"
+
+"vite-plugin-full-reload@^1.0.1":
+  "integrity" "sha512-G/IXcDjuhfDAK4zEzWTM/kL0DiAVv0+Dox+zGZeJyUWhwtg34Q9XtJkNXveku+mTSKE20TMp3TF8D7bFEhmvfA=="
+  "resolved" "https://registry.npmjs.org/vite-plugin-full-reload/-/vite-plugin-full-reload-1.0.1.tgz"
+  "version" "1.0.1"
+  dependencies:
+    "picocolors" "^1.0.0"
+    "picomatch" "^2.3.1"
+
+"vite@^2.9.13", "vite@^2.9.9":
+  "integrity" "sha512-AsOBAaT0AD7Mhe8DuK+/kE4aWYFMx/i0ZNi98hJclxb4e0OhQcZYUrvLjIaQ8e59Ui7txcvKMiJC1yftqpQoDw=="
+  "resolved" "https://registry.npmjs.org/vite/-/vite-2.9.13.tgz"
+  "version" "2.9.13"
+  dependencies:
+    "esbuild" "^0.14.27"
+    "postcss" "^8.4.13"
+    "resolve" "^1.22.0"
+    "rollup" "^2.59.0"
+  optionalDependencies:
+    "fsevents" "~2.3.2"
 
 "vm-browserify@^1.0.1":
   "integrity" "sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ=="
