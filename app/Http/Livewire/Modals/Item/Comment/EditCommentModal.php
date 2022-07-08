@@ -32,6 +32,7 @@ class EditCommentModal extends ModalComponent implements HasForms
             Group::make([
                 MarkdownEditor::make('content')
                               ->label(trans('comments.comment'))
+                              ->id('edit-comment' . $this->comment->id)
                               ->required(),
             ])
         ];
