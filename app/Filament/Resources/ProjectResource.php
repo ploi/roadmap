@@ -50,7 +50,9 @@ class ProjectResource extends Resource
                     Forms\Components\MarkdownEditor::make('description')
                         ->columnSpan(2)
                         ->maxLength(65535),
-                    Forms\Components\HasManyRepeater::make('boards')
+                    Forms\Components\Repeater::make('boards')
+                        ->collapsible()
+                        //->collapsed() // We can enable this when Filament has a way to set header titles
                         ->relationship('boards')
                         ->orderable('sort_order')
                         ->default($boards)
