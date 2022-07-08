@@ -1,5 +1,5 @@
 <div>
-    <aside class="col-span-1 hidden lg:block fixed">
+    <aside class="col-span-1 hidden lg:block fixed overflow-scroll h-full lg:w-56">
         <nav class="my-2 space-y-2">
             <ul class="space-y-1">
                 <li>
@@ -70,7 +70,9 @@
                 <ul class="space-y-1">
                     @foreach($projects as $project)
                         <li>
-                            <a @class([
+                            <a
+                                title="{{ $project->title }}"
+                                @class([
                                'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
                                'text-white bg-brand-500' => request()->segment(2) === $project->slug,
                                'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => request()->segment(2) !== $project->slug
@@ -82,7 +84,7 @@
                                     <x-heroicon-o-hashtag class="w-5 h-5 {{ request()->segment(2) == $project->slug ? '' : 'text-primary'  }}"/>
                                 @endif
 
-                                <span class="font-medium">{{ $project->title }}</span>
+                                <span class="font-medium truncate">{{ $project->title }}</span>
                             </a>
                         </li>
                     @endforeach
