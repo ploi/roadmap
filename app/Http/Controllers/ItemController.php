@@ -41,6 +41,15 @@ class ItemController extends Controller
         ]);
     }
 
+    public function edit($id)
+    {
+        $item = auth()->user()->items()->findOrFail($id);
+
+        return view('edit-item', [
+            'item' => $item
+        ]);
+    }
+
     public function vote(Request $request, $projectId, $itemId)
     {
         $project = Project::findOrFail($projectId);

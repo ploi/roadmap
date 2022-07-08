@@ -60,7 +60,7 @@
                     @endif
                     @if($item->isPrivate())
                         <span x-data x-tooltip.raw="{{ trans('items.item-private') }}" class="float-right">
-                            <x-heroicon-s-lock-closed class="text-gray-500 fill-gray-500 w-5 h-5" />
+                            <x-heroicon-s-lock-closed class="text-gray-500 fill-gray-500 w-5 h-5"/>
                         </span>
                     @endif
                     <h2>{{ $item->title }}</h2>
@@ -80,11 +80,23 @@
 
                 <livewire:item.vote-button :item="$item"/>
 
+                @if(auth()->check() && $user && $user->is(auth()->user()))
+                    <div class="border-t mb-2"></div>
+
+                    <div>
+                        <a class="text-primary-500 hover:text-primary-700 border-b ml-1"
+                           href="{{ route('items.edit', $item) }}">Edit item</a>
+                    </div>
+
+                @endif
+
                 @if(auth()->check() && auth()->user()->canAccessFilament())
                     <div class="border-t mb-2"></div>
 
-                    <a class="text-red-500 hover:text-red-700 block ml-1"
-                       href="{{ route('filament.resources.items.edit', $item) }}">Administer item</a>
+                    <div>
+                        <a class="text-red-500 hover:text-red-700 border-b ml-1"
+                           href="{{ route('filament.resources.items.edit', $item) }}">Administer item</a>
+                    </div>
                 @endif
             </x-card>
 
