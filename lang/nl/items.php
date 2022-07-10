@@ -2,6 +2,8 @@
 
 return [
     'create' => 'Item aanmaken',
+    'update' => 'Item bijwerken',
+    'edit' => 'Item bewerken',
     'my-items' => 'Mijn items',
     'created-items' => 'Aangemaakte items',
     'created-items-description' => 'Deze items zijn door jou aangemaakt.',
