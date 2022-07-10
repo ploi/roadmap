@@ -38,8 +38,8 @@ jobs:
       - name: Run npm install
         run: npm install
 
-      - name: Run npm run prod
-        run: npm run prod
+      - name: Run npm run production
+        run: npm run production
 
       - name: Run test suite
         run: ./vendor/bin/pest

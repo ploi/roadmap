@@ -8,7 +8,8 @@
 
     {!! $brandColors !!}
 
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    @vite('resources/css/app.css')
+
 
     @if(file_exists($favIcon = storage_path('app/public/favicon.png')))
         <link href="{{ asset('storage/favicon.png') }}?v={{ md5_file($favIcon) }}" rel="icon" type="image/x-icon"/>
@@ -78,7 +79,7 @@
 @livewire('livewire-ui-modal')
 
 @livewireScripts
-<script src="{{ mix('js/app.js') }}"></script>
+@vite('resources/js/app.js')
 @stack('javascript')
 {!! app(\App\Settings\GeneralSettings::class)->custom_scripts !!}
 </body>

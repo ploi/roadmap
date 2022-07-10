@@ -4,7 +4,9 @@ import focus from '@alpinejs/focus'
 import Tooltip from "@ryangjchandler/alpine-tooltip";
 import Clipboard from "@ryangjchandler/alpine-clipboard"
 import Tribute from "tributejs";
-window.axios = require('axios').default;
+import axios from 'axios';
+
+window.axios = axios;
 
 Alpine.plugin(focus)
 Alpine.plugin(Tooltip);
