@@ -6,6 +6,7 @@ use App\Http\Kernel;
 use Filament\Facades\Filament;
 use App\Settings\GeneralSettings;
 use App\Services\OgImageGenerator;
+use Illuminate\Foundation\Vite;
 use Illuminate\Support\Collection;
 use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\View;
@@ -29,17 +30,20 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
-        Filament::serving(static function () {
-            Filament::registerTheme(mix('css/admin.css'));
+        Filament::serving(function () {
+            Filament::registerRenderHook(
+                'head.end',
+                static fn() => (new Vite)(['resources/css/admin.css'])
+            );
         });
-
+        
         Filament::registerNavigationItems([
             NavigationItem::make()
                 ->group('External')
                 ->sort(101)
                 ->label('Public view')
                 ->icon('heroicon-o-rewind')
-                ->isActiveWhen(fn (): bool => false)
+                ->isActiveWhen(fn(): bool => false)
                 ->url('/'),
         ]);
 

@@ -2,6 +2,8 @@
 
 return [
     'create' => 'Submit item',
+    'update' => 'Update item',
+    'edit' => 'Edit item',
     'my-items' => 'My items',
     'created-items' => 'Created items',
     'created-items-description' => 'These are the items you\'ve created.',

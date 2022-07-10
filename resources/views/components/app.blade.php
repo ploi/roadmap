@@ -8,7 +8,8 @@
 
     {!! $brandColors !!}
 
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    @vite('resources/css/app.css')
+
 
     @if(file_exists($favIcon = storage_path('app/public/favicon.png')))
         <link href="{{ asset('storage/favicon.png') }}?v={{ md5_file($favIcon) }}" rel="icon" type="image/x-icon"/>
@@ -44,7 +45,7 @@
 <div class="w-full mx-auto py-5 md:space-x-10 h-full grid grid-cols-6 w-full px-2 sm:px-6 md:px-8 max-w-[1500px]">
     @include('partials.navbar')
 
-    <main class="flex-1 h-full col-span-6 md:col-span-5 md:border-l md:pl-5 min-h-[600px]">
+    <main class="flex-1 h-full col-span-6 lg:col-span-5 lg:border-l lg:pl-5 min-h-[600px]">
         <div class="pb-4">
             <ul class="flex items-center -space-x-1 text-sm font-medium text-gray-600">
                 @foreach($breadcrumbs as $breadcrumb)
@@ -78,7 +79,7 @@
 @livewire('livewire-ui-modal')
 
 @livewireScripts
-<script src="{{ mix('js/app.js') }}"></script>
+@vite('resources/js/app.js')
 @stack('javascript')
 {!! app(\App\Settings\GeneralSettings::class)->custom_scripts !!}
 </body>

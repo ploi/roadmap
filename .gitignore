@@ -16,6 +16,7 @@ yarn-error.log
 /.vscode
 /public/css/*
 /public/js/*
+/public/build/*
 /public/mix-manifest.json
 .php-cs-fixer.cache
 rr
