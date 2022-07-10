@@ -75,13 +75,15 @@
                                'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => request()->segment(2) !== $project->slug
                            ])
                            href="{{ route('projects.show', $project) }}">
-                            @if($project->private)
-                                <x-heroicon-s-lock-closed class="w-5 h-5 {{ request()->segment(2) == $project->slug ? '' : 'text-primary'  }}"/>
-                            @else
-                                <x-heroicon-o-hashtag class="w-5 h-5 {{ request()->segment(2) == $project->slug ? '' : 'text-primary'  }}"/>
-                            @endif
+                            <x-dynamic-component :component="$project->icon ?? 'heroicon-o-hashtag'" class="w-5 h-5 {{ request()->segment(2) == $project->slug ? '' : 'text-primary'  }}" />
 
                             <span class="font-medium">{{ $project->title }}</span>
+
+                            @if($project->private)
+                                <div class="flex-1 flex justify-end">
+                                    <x-heroicon-s-lock-closed class="w-4 h-4 {{ request()->segment(2) == $project->slug ? '' : 'text-primary'  }}"/>
+                                </div>
+                            @endif
                         </a>
                     </li>
                 @endforeach
