@@ -13,11 +13,13 @@ class ItemHasNewCommentNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public Comment $comment, public User $user)
-    {
+    public function __construct(
+        public readonly Comment $comment,
+        public readonly User $user
+    ) {
     }
 
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         if ($this->comment->private) {
             return [];
@@ -32,8 +34,8 @@ class ItemHasNewCommentNotification extends Notification implements ShouldQueue
             ->subject(trans('notifications.new-comment-subject', ['title' => $this->comment->item->title]))
             ->markdown('emails.item.new-comment', [
                 'comment' => $this->comment,
-                'user' => $this->user,
-                'url' => route('items.show', $this->comment->item). '#comment-'.$this->comment->id,
+                'user'    => $this->user,
+                'url'     => route('items.show', $this->comment->item) . '#comment-' . $this->comment->id,
             ]);
     }
 }

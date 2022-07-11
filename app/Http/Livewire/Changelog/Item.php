@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Changelog;
 
-use App\Models\Changelog;
 use Livewire\Component;
+use App\Models\Changelog;
 
 class Item extends Component
 {

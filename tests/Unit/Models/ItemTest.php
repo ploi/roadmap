@@ -112,7 +112,7 @@ test('increments the vote for a user', function () {
     $this->assertEquals(1, $user->votes()->count());
 });
 
-test('deincriments the vote for a user', function () {
+test('decrements the vote for a user', function () {
     $user = createUser();
     $item = Item::factory()->create();
 

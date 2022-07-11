@@ -2,18 +2,18 @@
 
 namespace App\Providers;
 
-use App\Models\Changelog;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\Vote;
 use App\Models\Comment;
 use App\Models\Project;
-use App\Observers\ChangelogObserver;
+use App\Models\Changelog;
 use App\Observers\ItemObserver;
 use App\Observers\UserObserver;
 use App\Observers\VoteObserver;
 use App\Observers\CommentObserver;
 use App\Observers\ProjectObserver;
+use App\Observers\ChangelogObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;

@@ -1,14 +1,14 @@
 <?php
 
-use App\Enums\UserRole;
-use App\Models\Board;
 use App\Models\Item;
+use App\Models\Board;
+use App\Enums\UserRole;
 use App\Models\Project;
-use Illuminate\Database\Eloquent\Factories\Sequence;
 use function Pest\Laravel\get;
 use App\Http\Livewire\Item\Create;
-
 use App\Http\Livewire\Project\Items;
+
+use Illuminate\Database\Eloquent\Factories\Sequence;
 
 it('renders the view', function () {
     $project = Project::factory()->create();

@@ -1,16 +1,16 @@
 <?php
 
-use App\Mail\Admin\ItemHasBeenCreatedEmail;
-use App\Models\Board;
 use App\Models\Item;
 use App\Models\Vote;
-use App\Settings\GeneralSettings;
-use Illuminate\Support\Facades\Mail;
+use App\Models\Board;
 use Livewire\Livewire;
 use App\Models\Project;
+use App\Settings\GeneralSettings;
 use App\Http\Livewire\Item\Create;
-use function Pest\Laravel\assertDatabaseCount;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Admin\ItemHasBeenCreatedEmail;
 use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\assertDatabaseCount;
 
 beforeEach(function () {
     Mail::fake();

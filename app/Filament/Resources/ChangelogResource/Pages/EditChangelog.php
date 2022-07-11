@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\ChangelogResource\Pages;
 
-use App\Filament\Resources\ChangelogResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\ChangelogResource;
 
 class EditChangelog extends EditRecord
 {

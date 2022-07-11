@@ -25,7 +25,7 @@ class ProjectFactory extends Factory
 
     public function private()
     {
-        return $this->state(function() {
+        return $this->state(function () {
             return [
                 'private' => true,
             ];

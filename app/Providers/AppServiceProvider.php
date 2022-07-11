@@ -4,9 +4,9 @@ namespace App\Providers;
 
 use App\Http\Kernel;
 use Filament\Facades\Filament;
+use Illuminate\Foundation\Vite;
 use App\Settings\GeneralSettings;
 use App\Services\OgImageGenerator;
-use Illuminate\Foundation\Vite;
 use Illuminate\Support\Collection;
 use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\View;
@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         Filament::serving(function () {
             Filament::registerRenderHook(
                 'head.end',
-                static fn() => (new Vite)(['resources/css/admin.css'])
+                static fn () => (new Vite)(['resources/css/admin.css'])
             );
         });
         
@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
                 ->sort(101)
                 ->label('Public view')
                 ->icon('heroicon-o-rewind')
-                ->isActiveWhen(fn(): bool => false)
+                ->isActiveWhen(fn (): bool => false)
                 ->url('/'),
         ]);
 
