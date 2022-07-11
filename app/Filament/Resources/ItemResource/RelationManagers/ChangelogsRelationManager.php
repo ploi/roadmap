@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\ItemResource\RelationManagers;
 
-use App\Filament\Resources\ChangelogResource;
 use Filament\Resources\Table;
+use App\Filament\Resources\ChangelogResource;
 use Filament\Resources\RelationManagers\RelationManager;
 
 class ChangelogsRelationManager extends RelationManager

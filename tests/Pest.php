@@ -2,9 +2,9 @@
 
 use App\Models\User;
 use Tests\CreatesApplication;
+use function Pest\Laravel\actingAs;
 use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use function Pest\Laravel\actingAs;
 
 uses(
     TestCase::class,

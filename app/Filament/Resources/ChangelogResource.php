@@ -2,17 +2,16 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ChangelogResource\Pages;
-use App\Filament\Resources\ChangelogResource\RelationManagers;
-use App\Models\Changelog;
-use App\Models\Item;
-use App\Settings\GeneralSettings;
 use Filament\Forms;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use App\Models\Item;
 use Filament\Tables;
+use App\Models\Changelog;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
+use App\Settings\GeneralSettings;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\ChangelogResource\Pages;
 
 class ChangelogResource extends Resource
 {

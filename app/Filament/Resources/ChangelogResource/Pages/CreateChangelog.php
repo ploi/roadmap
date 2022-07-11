@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources\ChangelogResource\Pages;
 
-use App\Filament\Resources\ChangelogResource;
-use Filament\Pages\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use App\Filament\Resources\ChangelogResource;
 
 class CreateChangelog extends CreateRecord
 {

@@ -60,7 +60,7 @@ test('view contains item.vote-button component', function () {
     get(route('items.show', $item))->assertSeeLivewire(VoteButton::class);
 });
 
-test('user can not view private item', function(?UserRole $userRole, int $expectedStatusCode) {
+test('user can not view private item', function (?UserRole $userRole, int $expectedStatusCode) {
     $item = Item::factory()->private()->create();
 
     if ($userRole !== null) {
@@ -75,7 +75,7 @@ test('user can not view private item', function(?UserRole $userRole, int $expect
     [UserRole::Admin, 200],
 ]);
 
-test('user can not see private note field', function(UserRole $userRole, bool $shouldBeVisible) {
+test('user can not see private note field', function (UserRole $userRole, bool $shouldBeVisible) {
     $item = Item::factory()->private()->create();
 
     createAndLoginUser(['role' => $userRole]);

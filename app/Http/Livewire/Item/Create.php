@@ -6,7 +6,6 @@ use function auth;
 use function view;
 use App\Models\Item;
 use App\Models\Board;
-use function redirect;
 use App\Models\Project;
 use Livewire\Component;
 use Filament\Forms\Contracts\HasForms;

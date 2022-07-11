@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Board;
 use App\Models\Changelog;
-use App\Models\Project;
 use App\Settings\GeneralSettings;
 
 class ChangelogController extends Controller

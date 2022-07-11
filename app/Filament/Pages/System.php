@@ -3,9 +3,9 @@
 namespace App\Filament\Pages;
 
 use App\Enums\UserRole;
+use Filament\Pages\Page;
 use App\Services\SystemChecker;
 use Filament\Pages\Actions\Action;
-use Filament\Pages\Page;
 use App\Filament\Pages\Widgets\System\SystemInfo;
 
 class System extends Page
