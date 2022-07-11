@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\User;
 use App\Models\Comment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
@@ -12,12 +13,17 @@ class CommentHasReplyNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public Comment $comment)
-    {
+    public function __construct(
+        public readonly Comment $comment
+    ) {
     }
 
-    public function via($notifiable)
+    public function via(User $notifiable): array
     {
+        if ($this->comment->user->is($notifiable)) {
+            return [];
+        }
+
         if (!$notifiable->wantsNotification('receive_comment_reply_notifications')) {
             return [];
         }
@@ -29,7 +35,7 @@ class CommentHasReplyNotification extends Notification implements ShouldQueue
         return ['mail'];
     }
 
-    public function toMail($notifiable)
+    public function toMail(User $notifiable): MailMessage
     {
         return (new MailMessage)
             ->subject(trans('notifications.new-reply-subject', ['title' => $this->comment->item->title]))

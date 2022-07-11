@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\User;
 use App\Models\Comment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
@@ -12,24 +13,29 @@ class MentionNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public Comment $comment)
-    {
+    public function __construct(
+        public readonly Comment $comment
+    ) {
     }
 
-    public function via($notifiable)
+    public function via(User $notifiable): array
     {
+        if ($this->comment->user->is($notifiable)) {
+            return [];
+        }
+
         if (!$notifiable->wantsNotification('receive_mention_notifications')) {
             return [];
         }
 
-        if (!$notifiable->hasAdminAccess() && $this->comment->private) {
+        if ($this->comment->private && !$notifiable->hasAdminAccess()) {
             return [];
         }
 
         return ['mail'];
     }
 
-    public function toMail($notifiable)
+    public function toMail(User $notifiable): MailMessage
     {
         return (new MailMessage)
             ->subject(trans('notifications.new-mention-subject', ['title' => $this->comment->item->title]))
