@@ -6,6 +6,8 @@ use App\Services\Icons;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Board;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
 use Ramsey\Uuid\Uuid;
 use App\Models\Project;
 use Filament\Resources\Form;
