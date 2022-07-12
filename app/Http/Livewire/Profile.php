@@ -84,6 +84,16 @@ class Profile extends Component implements HasForms, HasTable
         return redirect()->route('home');
     }
 
+    public function logoutConfirm()
+    {
+        $this->dispatchBrowserEvent('open-modal', ['id' => 'logoutConfirm']);
+    }
+
+    public function closeLogoutConfirm()
+    {
+        $this->dispatchBrowserEvent('close-modal', ['id' => 'logoutConfirm']);
+    }
+
     public function deleteConfirm()
     {
         $this->dispatchBrowserEvent('open-modal', ['id' => 'deleteAccount']);

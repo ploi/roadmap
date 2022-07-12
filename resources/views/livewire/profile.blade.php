@@ -8,7 +8,7 @@
                     {{ trans('profile.save') }}
                 </x-filament::button>
 
-                <x-filament::button type="button" color="secondary" wire:click="logout">
+                <x-filament::button type="button" color="secondary" wire:click="logoutConfirm">
                     {{ trans('profile.logout') }}
                 </x-filament::button>
             </div>
@@ -29,6 +29,26 @@
 
         {{ $this->table }}
     @endif
+
+    <x-filament::modal id="logoutConfirm" width="md">
+        <x-slot name="heading">
+            {{ trans('profile.logout-confirmation') }}
+        </x-slot>
+
+        <p>{{ trans('profile.logout-warning') }}</p>
+
+        <x-slot name="footer">
+            <x-filament::modal.actions full-width>
+                <x-filament::button wire:click="closeLogoutConfirm" color="secondary">
+                    {{ trans('profile.logout-cancel') }}
+                </x-filament::button>
+
+                <x-filament::button wire:click="logout" color="primary">
+                    {{ trans('profile.logout') }}
+                </x-filament::button>
+            </x-filament::modal.actions>
+        </x-slot>
+    </x-filament::modal>
 
     <x-filament::modal id="deleteAccount" width="md">
         <x-slot name="heading">
