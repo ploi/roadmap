@@ -7,7 +7,7 @@ it('returns a collection of icons', function () {
 });
 
 it('has a few icons', function () {
-   $icons = \App\Services\Icons::all();
+    $icons = \App\Services\Icons::all();
    
-   expect($icons->count())->toBeGreaterThan(0);
+    expect($icons->count())->toBeGreaterThan(0);
 });

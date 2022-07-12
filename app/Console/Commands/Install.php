@@ -7,10 +7,11 @@ use App\Enums\UserRole;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 use Filament\Commands\Concerns\CanValidateInput;
+use App\Console\Commands\Concerns\CanShowAnIntro;
 
 class Install extends Command
 {
-    use CanValidateInput;
+    use CanValidateInput, CanShowAnIntro;
 
     protected $signature = 'roadmap:install';
 
@@ -30,18 +31,6 @@ class Install extends Command
         $this->line(' ');
 
         $this->info('All done! You can now login at ' . route('filament.auth.login'));
-    }
-
-    protected function intro()
-    {
-        $this->writeSeparationLine();
-        $this->line('Roadmap Installation');
-        $this->line('Laravel version: ' . app()->version());
-        $this->line('PHP version: ' . trim(phpversion()));
-        $this->line(' ');
-        $this->line('Github: https://github.com/ploi-deploy/roadmap');
-        $this->writeSeparationLine();
-        $this->line('');
     }
 
     protected function refreshDatabase()
@@ -106,10 +95,5 @@ class Install extends Command
             'email' => $this->validateInput(fn () => $this->ask('Email address'), 'email', ['required', 'email', 'unique:' . User::class]),
             'password' => Hash::make($this->validateInput(fn () => $this->secret('Password'), 'password', ['required', 'min:8'])),
         ];
-    }
-
-    protected function writeSeparationLine()
-    {
-        $this->info('*---------------------------------------------------------------------------*');
     }
 }

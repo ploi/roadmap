@@ -70,6 +70,22 @@ npm run production
 echo "🚀 Application deployed!"
 ```
 
+Alternatively you can also use the upgrade command to clean up your deployment script:
+
+```sh
+cd /home/ploi/example.com
+git pull origin main
+composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+echo "" | sudo -S service php8.1-fpm reload
+
+php artisan roadmap:upgrade
+
+npm ci
+npm run production
+
+echo "🚀 Application deployed!"
+```
+
 If you're using queue workers (which we recommend to do) also add `php artisan queue:restart` to your deployment script.
 
 ## Role system
