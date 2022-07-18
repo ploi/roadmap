@@ -177,7 +177,7 @@ class Settings extends SettingsPage
                                     TextInput::make('name')->required(),
                                     TextInput::make('email')->required()->email(),
                                 ])
-                                ->helperText('This will send email notifications once a new item has been created.')
+                                ->helperText('This will send email notifications once a new item has been created or when there is a new version of the roadmap software.')
                                 ->columnSpan(2),
                         ]),
 
