@@ -7,7 +7,7 @@
                 {{ config('app.name') }}
             </a>
 
-            <ul class="items-center hidden space-x-3 text-sm font-medium text-gray-600 md:flex">
+            <ul class="items-center hidden space-x-3 text-sm font-medium text-gray-600 lg:flex">
                 <li>
                     <kbd @click="$dispatch('toggle-spotlight')" class="cursor-pointer p-1 items-center shadow justify-center rounded border border-gray-400 hover:bg-gray-200 bg-white font-semibold text-gray-900">{{ trans('general.navbar-search') }}</kbd>
                 </li>
@@ -57,7 +57,7 @@
             </ul>
 
             <!-- Hamburger -->
-            <div class="md:hidden">
+            <div class="lg:hidden">
                 <button
                     class="text-white flex items-center justify-center w-10 h-10 -mr-2 transition rounded-full focus:outline-none"
                     x-on:click="open = !open"
@@ -75,7 +75,7 @@
         </nav>
 
         <!-- Mobile menu -->
-        <nav class="-mx-2 md:hidden"
+        <nav class="-mx-2 lg:hidden"
              x-show="open"
              x-cloak>
             <div class="border-t border-brand-400"></div>
@@ -110,7 +110,7 @@
             </ul>
         </nav>
 
-        <nav class="-mx-2 md:hidden"
+        <nav class="-mx-2 lg:hidden"
              x-show="open"
              x-cloak>
 

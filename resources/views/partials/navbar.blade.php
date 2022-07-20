@@ -1,7 +1,7 @@
-<div>
-    <aside class="col-span-1 hidden lg:block fixed overflow-scroll h-full lg:w-56">
-        <nav class="my-2 space-y-2">
-            <ul class="space-y-1">
+<div class="hidden lg:block">
+    <aside class="w-60" aria-label="Sidebar">
+        <div class="overflow-y-auto p-2 space-y-4">
+            <ul class="space-y-2">
                 <li>
                     <a
                         @class([
@@ -11,9 +11,10 @@
                             ])
                         href="{{ route('home') }}">
 
-                        <x-heroicon-o-home class="w-5 h-5 {{ !request()->is('/') ? 'text-primary' : ''  }}"/>
+                        <x-heroicon-o-home class="w-5 h-5 {{ !request()->is('/') ? 'text-gray-500' : ''  }}"/>
 
-                        <span class="font-medium">{{ trans('general.dashboard') }}</span>
+                        <span
+                            class="font-normal {{ !request()->is('/') ? 'text-gray-900' : ''  }}">{{ trans('general.dashboard') }}</span>
                     </a>
                 </li>
 
@@ -25,7 +26,7 @@
                             'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => !request()->is('my')
                         ])
                         href="{{ route('my') }}">
-                        <x-heroicon-o-view-boards class="w-5 h-5 {{ !request()->is('my') ? 'text-primary' : ''  }}"/>
+                        <x-heroicon-o-view-boards class="w-5 h-5 {{ !request()->is('my') ? 'text-gray-500' : ''  }}"/>
 
                         <span class="font-medium">{{ trans('items.my-items') }}</span>
                     </a>
@@ -39,7 +40,7 @@
                             'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => !request()->is('profile')
                         ])
                         href="{{ route('profile') }}">
-                        <x-heroicon-o-user class="w-5 h-5 {{ !request()->is('profile') ? 'text-primary' : ''  }}"/>
+                        <x-heroicon-o-user class="w-5 h-5 {{ !request()->is('profile') ? 'text-gray-500' : ''  }}"/>
 
                         <span class="font-medium">{{ trans('auth.profile') }}</span>
                     </a>
@@ -54,56 +55,57 @@
                                 'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => !request()->is('changelog*')
                             ])
                             href="{{ route('changelog') }}">
-                            <x-heroicon-o-rss class="w-5 h-5 {{ !request()->is('changelog.*') ? 'text-primary' : ''  }}"/>
+                            <x-heroicon-o-rss
+                                class="w-5 h-5 {{ !request()->is('changelog*') ? 'text-gray-500' : ''  }}"/>
 
                             <span class="font-medium">{{ trans('changelog.changelog') }}</span>
                         </a>
                     </li>
                 @endif
             </ul>
-        </nav>
+            <div>
+                <p class="px-2 text-lg font-semibold mb-2">{{ trans('projects.projects') }}</p>
+                @if($projects->count() > 0)
+                    <ul class="space-y-2">
+                        @foreach($projects as $project)
+                            <li>
+                                <a
+                                    title="{{ $project->title }}"
+                                    @class([
+                                   'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
+                                   'text-white bg-brand-500' => request()->segment(2) === $project->slug,
+                                   'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => request()->segment(2) !== $project->slug
+                               ])
+                                    href="{{ route('projects.show', $project) }}">
+                                    <x-dynamic-component :component="$project->icon ?? 'heroicon-o-hashtag'"
+                                                         class="flex-shrink-0 w-5 h-5 {{ request()->segment(2) == $project->slug ? '' : 'text-gray-500'  }}"/>
 
-        <nav class="my-4 space-y-2">
-            <p class="px-2 text-lg font-semibold">{{ trans('projects.projects') }}</p>
+                                    <span class="font-normal truncate">{{ $project->title }}</span>
 
-            @if($projects->count() > 0)
-                <ul class="space-y-1">
-                    @foreach($projects as $project)
-                        <li>
-                            <a
-                                title="{{ $project->title }}"
-                                @class([
-                               'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                               'text-white bg-brand-500' => request()->segment(2) === $project->slug,
-                               'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => request()->segment(2) !== $project->slug
-                           ])
-                               href="{{ route('projects.show', $project) }}">
-                                <x-dynamic-component :component="$project->icon ?? 'heroicon-o-hashtag'" class="w-5 h-5 {{ request()->segment(2) == $project->slug ? '' : 'text-primary'  }}" />
+                                    @if($project->private)
+                                        <div class="flex-1 flex justify-end">
+                                            <x-heroicon-s-lock-closed
+                                                class="w-4 h-4 {{ request()->segment(2) == $project->slug ? '' : 'text-primary'  }}"/>
+                                        </div>
+                                    @endif
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <div class="px-2">
+                        <span class="text-sm text-gray-500">{{ trans('projects.no-projects') }}</span>
+                    </div>
+                @endif
+            </div>
 
-                                <span class="font-medium truncate">{{ $project->title }}</span>
-
-                                @if($project->private)
-                                    <div class="flex-1 flex justify-end">
-                                        <x-heroicon-s-lock-closed class="w-4 h-4 {{ request()->segment(2) == $project->slug ? '' : 'text-primary'  }}"/>
-                                    </div>
-                                @endif
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            @else
-                <div class="px-2">
-                    <span class="text-sm text-gray-500">{{ trans('projects.no-projects') }}</span>
-                </div>
-            @endif
-        </nav>
-
-        <div class="text-gray-500 mt-12 px-2 text-xs">
-            <a href="https://github.com/ploi-deploy/roadmap" target="_blank" class="font-semibold border-b border-dotted">Open-source</a>
-            roadmapping software by <a href="https://ploi.io/?ref=roadmap"
-                                       target="_blank"
-                                       class="font-semibold border-b border-dotted">ploi.io</a>
+            <div id="dropdown-cta" class="p-4 mt-6 bg-gray-100 rounded-lg" role="alert">
+                <p class="text-sm text-gray-500">
+                    <a href="https://github.com/ploi-deploy/roadmap" target="_blank" class="font-semibold border-b border-dotted">Open-source</a>
+                    roadmapping software by
+                    <a href="https://ploi.io/?ref=roadmap" target="_blank" class="font-semibold border-b border-dotted">ploi.io</a>
+                </p>
+            </div>
         </div>
     </aside>
-
 </div>
