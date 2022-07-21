@@ -29,7 +29,7 @@
     @if(app(App\Settings\GeneralSettings::class)->show_changelog_related_items && $changelog->items->count())
         <div class="border-t border-gray-200 w-full py-2">
             <p class="font-semibold mb-2">{{ trans('changelog.included-items') }}</p>
-            <div class="grid grid-cols-4 gap-x-4 gap-y-2">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2">
                 @foreach($changelog->items as $item)
                     <a title="{{ $item->title }}"
                        href="{{ route('items.show', $item) }}"
