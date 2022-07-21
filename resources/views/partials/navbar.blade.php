@@ -1,6 +1,6 @@
 <div class="hidden lg:block">
     <aside class="w-60" aria-label="Sidebar">
-        <div class="overflow-y-auto p-2 space-y-4">
+        <div class="overflow-y-auto space-y-4">
             <ul class="space-y-2">
                 <li>
                     <a
