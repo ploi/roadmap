@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\UserRole;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use App\Settings\GeneralSettings;
 use Laravel\Sanctum\HasApiTokens;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Notifications\Notifiable;
@@ -120,6 +121,12 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
     public function wantsNotification($type)
     {
         return in_array($type, $this->notification_settings ?? []);
+    }
+
+    public function needsToVerifyEmail() : bool
+    {
+       return app(GeneralSettings::class)->users_must_verify_email &&
+            !auth()->user()->hasVerifiedEmail();
     }
 
     public static function booted()

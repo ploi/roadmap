@@ -4,6 +4,7 @@ use App\Models\Item;
 use App\Models\Vote;
 use App\Enums\UserRole;
 use App\Models\Comment;
+use App\Settings\GeneralSettings;
 
 it('can generate an username upon user creation', function () {
     $user = createUser();
@@ -32,6 +33,18 @@ it('can check if a user does not want a notification', function () {
 
     expect($user->fresh()->wantsNotification('receive_mention_notifications'))->toBeFalsy();
 });
+
+it('can check if a user needs to verify their email', function ($mustVerifyEmail, $verifiedAt, $needsVerification) {
+    $user = createAndLoginUser(['email_verified_at' => $verifiedAt]);
+    app(GeneralSettings::class)->users_must_verify_email = $mustVerifyEmail;
+
+    expect($user->fresh()->needsToVerifyEmail())->toBe($needsVerification);
+})->with([
+    '! email needs verification && email verified' => [$mustVerifyEmail = false, $verifiedAt = now(), $needsVerification = false],
+    '! email needs verification && ! email verified' => [$mustVerifyEmail = false, $verifiedAt = null, $needsVerification = false],
+    'email needs verification && email verified' => [$mustVerifyEmail = true, $verifiedAt = now(), $needsVerification = false],
+    'email needs verification && ! email verified' => [$mustVerifyEmail = true, $verifiedAt = null, $needsVerification = true],
+]);
 
 it('can delete a user', function () {
     $user = createUser();
