@@ -81,6 +81,7 @@
 @livewireScripts
 @vite('resources/js/app.js')
 @stack('javascript')
+@livewire('notifications')
 {!! app(\App\Settings\GeneralSettings::class)->custom_scripts !!}
 </body>
 </html>
