@@ -18,6 +18,7 @@ class Project extends Model
         'url',
         'description',
         'private',
+        'sort_order',
     ];
 
     protected $casts = [

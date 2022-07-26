@@ -22,6 +22,7 @@ class App extends Component
             ->when(app(GeneralSettings::class)->show_projects_sidebar_without_boards === false, function ($query) {
                 return $query->has('boards');
             })
+            ->orderBy('sort_order')
             ->orderBy('title')
             ->get();
 

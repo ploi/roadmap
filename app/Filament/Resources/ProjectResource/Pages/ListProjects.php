@@ -8,4 +8,9 @@ use App\Filament\Resources\ProjectResource;
 class ListProjects extends ListRecords
 {
     protected static string $resource = ProjectResource::class;
+
+    protected function getTableReorderColumn(): ?string
+    {
+        return 'sort_order';
+    }
 }

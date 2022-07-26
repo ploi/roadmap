@@ -91,17 +91,14 @@ class ProjectResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('title')->searchable(),
-                Tables\Columns\TextColumn::make('boards_count')->sortable()->counts('boards'),
+                Tables\Columns\TextColumn::make('boards_count')->counts('boards'),
                 Tables\Columns\BooleanColumn::make('private'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->label('Date'),
+                Tables\Columns\TextColumn::make('created_at')->dateTime()->label('Date'),
             ])
             ->filters([
                 //
             ])
-            ->defaultSort('created_at', 'desc');
+            ->defaultSort('sort_order');
     }
 
     public static function getRelations(): array
