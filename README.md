@@ -137,6 +137,18 @@ SSO_BASE_URL=https://external-app.com
 SSO_CLIENT_ID=3
 SSO_CLIENT_SECRET=9Mqb2ssCDwk0BBiRwyRZPVupzkdphgfuBgEsgpjQ
 SSO_CALLBACK=${APP_URL}/oauth/callback
+# By default, your sso provider user endpoint response is wrapped in a `data` key.
+# for example: { "data": "id": "name": "John Doe", "email": "john@example.com" }
+# If you would like to use a custom key instead of data, you may define it here.
+# or you can set it to null if sso provider user endpoint response is not wrapped in a key.
+SSO_PROVIDER_USER_ENDPOINT_DATA_WRAP_KEY="data"
+# The keys that should be present in the sso provider user endpoint response
+SSO_PROVIDER_USER_ENDPOINT_KEYS="id,email,name"
+# The provider id returned by the sso provider for the user identification. sometimes its `uuid` instead of `id`
+SSO_PROVIDER_ID="id"
+SSO_ENDPOINT_AUTHORIZE=${SSO_BASE_URL}/oauth/authorize
+SSO_ENDPOINT_TOKEN=${SSO_BASE_URL}/oauth/token
+SSO_ENDPOINT_USER=${SSO_BASE_URL}/oauth/user
 ```
 
 Next we're going to prepare the routes, controller & resource for your application.
