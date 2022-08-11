@@ -137,7 +137,7 @@ SSO_BASE_URL=https://external-app.com
 SSO_CLIENT_ID=3
 SSO_CLIENT_SECRET=9Mqb2ssCDwk0BBiRwyRZPVupzkdphgfuBgEsgpjQ
 SSO_CALLBACK=${APP_URL}/oauth/callback
-# By default, your sso provider user endpoint response is wrapped in a `data` key.
+# Mostly, your sso provider user endpoint response is wrapped in a `data` key.
 # for example: { "data": "id": "name": "John Doe", "email": "john@example.com" }
 # If you would like to use a custom key instead of data, you may define it here.
 # or you can set it to null if sso provider user endpoint response is not wrapped in a key.
