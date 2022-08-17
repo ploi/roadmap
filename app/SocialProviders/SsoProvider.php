@@ -76,7 +76,7 @@ class SsoProvider extends AbstractProvider implements ProviderInterface
 
     protected function mapUserToObject(array $user)
     {
-        $providerUserEndpointDataWrapKey = config('services.sso.provider_user_endpoint_data_wrap_key');
+        $providerUserEndpointDataWrapKey = config('services.sso.provider_user_endpoint_data_wrap_key') ?? 'data';
         $providerUserEndpointKeys = config('services.sso.provider_user_endpoint_keys') ?? 'id,email,name';
         $providerId = config('services.sso.provider_id') ?? 'id';
 
