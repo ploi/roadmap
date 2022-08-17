@@ -84,7 +84,7 @@ class SsoProvider extends AbstractProvider implements ProviderInterface
             $user = Arr::get($user, $providerUserEndpointDataWrapKey);
         }
         
-        if ($user === null || !empty(array_intersect($user, explode(',', $providerUserEndpointKeys)))) {
+        if ($user === null || !Arr::has($user, explode(',', $providerUserEndpointKeys))) {
             if($providerUserEndpointDataWrapKey !== null) {
               throw new RuntimeException("The SSO user endpoint should return an {$providerUserEndpointKeys} in the `{$providerUserEndpointDataWrapKey}` field of the JSON response.");
             } else {
