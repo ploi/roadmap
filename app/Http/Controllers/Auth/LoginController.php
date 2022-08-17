@@ -46,6 +46,8 @@ class LoginController extends Controller
         if ($userSocial) {
             $user = $userSocial->user;
 
+            $user->markEmailAsVerified();
+
             auth()->guard()->login($user, remember: true);
 
             return redirect()->intended($this->redirectPath());
@@ -60,6 +62,8 @@ class LoginController extends Controller
                 'name' => $social->getName(),
                 'email' => $social->getEmail(),
             ]);
+
+            $user->markEmailAsVerified();
 
             $user->userSocials()->create([
                 'name' => $social->getName(),
@@ -82,6 +86,8 @@ class LoginController extends Controller
                 'access_token' => $social->token ? $social->token : null,
                 'refresh_token' => $social->refreshToken ? $social->refreshToken : null
             ]);
+
+            $user->markEmailAsVerified();
 
             auth()->guard()->login($user, remember: true);
 
