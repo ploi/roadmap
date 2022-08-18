@@ -76,14 +76,24 @@ class SsoProvider extends AbstractProvider implements ProviderInterface
 
     protected function mapUserToObject(array $user)
     {
-        $user = Arr::get($user, 'data');
+        $providerUserEndpointDataWrapKey = config('services.sso.provider_user_endpoint_data_wrap_key') ?? 'data';
+        $providerUserEndpointKeys = config('services.sso.provider_user_endpoint_keys') ?? 'id,email,name';
+        $providerId = config('services.sso.provider_id') ?? 'id';
 
-        if ($user === null || !Arr::has($user, ['id', 'email', 'name'])) {
-            throw new RuntimeException('The SSO user endpoint should return an `id`, `email` and `name` in the `data` field of the JSON response.');
+        if($providerUserEndpointDataWrapKey !== null) {
+            $user = Arr::get($user, $providerUserEndpointDataWrapKey);
+        }
+        
+        if ($user === null || !Arr::has($user, explode(',', $providerUserEndpointKeys))) {
+            if($providerUserEndpointDataWrapKey !== null) {
+              throw new RuntimeException("The SSO user endpoint should return an {$providerUserEndpointKeys} in the `{$providerUserEndpointDataWrapKey}` field of the JSON response.");
+            } else {
+              throw new RuntimeException("The SSO user endpoint should return an {$providerUserEndpointKeys} in the JSON response.");
+            }
         }
 
         return (new User)->setRaw($user)->map([
-            'id' => $user['id'],
+            'id' => Arr::get($user, $providerId),
             'email' => $user['email'],
             'name' => $user['name'],
             'nickname' => $user['name'],

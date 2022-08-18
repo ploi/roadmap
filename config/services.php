@@ -40,6 +40,18 @@ return [
         'forced' => env('SSO_FORCED', false),
         'scopes' => env('SSO_SCOPES'),
         'http_verify' => env('SSO_HTTP_VERIFY', true),
+        /**
+         * Mostly your sso provider user endpoint response is wrapped in a `data` key.
+         * for example: { "data": "id": "name": "John Doe", "email": "john@example.com" }
+         * If you would like to use a custom key instead of data, you may define it here.
+         * you can also set something like 'data.user' if its nested.
+         * or you can set it to null if sso provider user endpoint response is not wrapped in a key.
+         */
+        'provider_user_endpoint_data_wrap_key' => env('SSO_PROVIDER_USER_ENDPOINT_DATA_WRAP_KEY'),
+        // The keys that should be present in the sso provider user endpoint response
+        'provider_user_endpoint_keys' => env('SSO_PROVIDER_USER_ENDPOINT_KEYS', 'id,email,name'),
+        // The provider id returned by the sso provider for the user identification. sometimes its `uuid` instead of `id`
+        'provider_id' => env('SSO_PROVIDER_ID', 'id'),
         'endpoints' => [
             'authorize' => env('SSO_ENDPOINT_AUTHORIZE'),
             'revoke' => env('SSO_ENDPOINT_REVOKE'),
