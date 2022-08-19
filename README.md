@@ -140,7 +140,9 @@ SSO_CALLBACK=${APP_URL}/oauth/callback
 # Mostly, your sso provider user endpoint response is wrapped in a `data` key.
 # for example: { "data": "id": "name": "John Doe", "email": "john@example.com" }
 # If you would like to use a custom key instead of data, you may define it here.
-# or you can set it to null if sso provider user endpoint response is not wrapped in a key.
+# you can also do something like 'data.user' if its nested.
+# or you can set it to nothing (do not set it to value 'null'. just leave it empty value) 
+# if sso provider user endpoint response is not wrapped in a key.
 SSO_PROVIDER_USER_ENDPOINT_DATA_WRAP_KEY="data"
 # The keys that should be present in the sso provider user endpoint response
 SSO_PROVIDER_USER_ENDPOINT_KEYS="id,email,name"
