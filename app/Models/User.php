@@ -26,6 +26,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         'username',
         'password',
         'notification_settings',
+        'per_page_setting'
     ];
 
     protected $hidden = [
@@ -36,6 +37,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
     protected $casts = [
         'email_verified_at' => 'datetime',
         'notification_settings' => 'array',
+        'per_page_setting' => 'array',
         'role' => UserRole::class,
     ];
 
@@ -137,6 +139,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
                 'receive_mention_notifications',
                 'receive_comment_reply_notifications',
             ];
+            $user->per_page_setting = ['5','15','25'];
         });
 
         static::updating(function (self $user) {

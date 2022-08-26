@@ -30,7 +30,7 @@ class My extends Component implements HasTable
 
     protected function getTableRecordsPerPageSelectOptions(): array
     {
-        return [5];
+        return auth()->user()->per_page_setting;
     }
 
     protected function getTableColumns(): array

@@ -33,6 +33,7 @@ class Profile extends Component implements HasForms, HasTable
             'username' => $this->user->username,
             'email' => $this->user->email,
             'notification_settings' => $this->user->notification_settings,
+            'per_page_setting' => $this->user->per_page_setting
         ]);
     }
 
@@ -60,6 +61,20 @@ class Profile extends Component implements HasForms, HasTable
                             'receive_comment_reply_notifications' => trans('profile.receive_comment_reply_notifications'),
                         ]),
                 ])->collapsible(),
+
+            Forms\Components\Section::make(trans('profile.settings'))
+            ->schema([
+                Forms\Components\MultiSelect::make('per_page_setting')->label(trans('profile.per_page_setting'))
+                    ->options([
+                        5 => '5',
+                        10 => '10',
+                        15 => '15',
+                        25 => '25',
+                        50 => '50',
+                    ])
+                    ->required()
+                    ->rules(['array', 'in:5,10,15,25,50'])
+            ])->collapsible(),
         ];
     }
 
@@ -72,6 +87,7 @@ class Profile extends Component implements HasForms, HasTable
             'email' => $data['email'],
             'username' => $data['username'],
             'notification_settings' => $data['notification_settings'],
+            'per_page_setting' => $data['per_page_setting'],
         ]);
 
         $this->notify('success', 'Profile has been saved.');
