@@ -33,7 +33,7 @@ class Profile extends Component implements HasForms, HasTable
             'username' => $this->user->username,
             'email' => $this->user->email,
             'notification_settings' => $this->user->notification_settings,
-            'per_page_setting' => $this->user->per_page_setting
+            'per_page_setting' => $this->user->per_page_setting ?? [5]
         ]);
     }
 

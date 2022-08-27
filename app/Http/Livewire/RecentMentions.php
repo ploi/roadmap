@@ -20,7 +20,7 @@ class RecentMentions extends Component implements HasTable
 
     protected function getTableRecordsPerPageSelectOptions(): array
     {
-        return auth()->user()->per_page_setting;
+        return auth()->user()->per_page_setting ?? [5];
     }
 
     protected function getTableColumns(): array

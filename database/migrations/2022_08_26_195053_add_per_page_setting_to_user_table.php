@@ -15,7 +15,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->json('per_page_setting')->default(new Expression('(JSON_ARRAY(5))'))->after('notification_settings');
+            $table->json('per_page_setting')->nullable()->after('notification_settings');
         });
     }
 
