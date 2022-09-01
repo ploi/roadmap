@@ -43,7 +43,7 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('email')->searchable(),
                 Tables\Columns\TextColumn::make('role'),
-                Tables\Columns\TextColumn::make('created_at')->sortable()->dateTime()->label('Date'),
+                Tables\Columns\TextColumn::make('created_at')->sortable()->dateTime(Auth()->user()->date_time_format)->label('Date'),
             ])
             ->filters([
                 //

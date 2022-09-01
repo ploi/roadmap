@@ -44,7 +44,7 @@ class BoardResource extends Resource
                 Tables\Columns\TextColumn::make('title'),
                 Tables\Columns\TextColumn::make('project.title'),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime(Auth()->user()->date_time_format )
                     ->sortable()
                     ->label('Date'),
             ])

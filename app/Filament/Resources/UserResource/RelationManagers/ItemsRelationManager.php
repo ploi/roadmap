@@ -48,7 +48,7 @@ class ItemsRelationManager extends HasManyRelationManager
                 Tables\Columns\TextColumn::make('board.project.title'),
                 Tables\Columns\TextColumn::make('board.title'),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime(Auth()->user()->date_time_format)
                     ->sortable()
                     ->label('Date'),
             ])

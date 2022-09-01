@@ -43,7 +43,7 @@ class CommentResource extends Resource
                 Tables\Columns\TextColumn::make('content')->wrap()->searchable(),
                 Tables\Columns\TextColumn::make('item.title'),
                 Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date'),
+                Tables\Columns\TextColumn::make('created_at')->dateTime(Auth()->user()->date_time_format)->sortable()->label('Date'),
             ])
             ->filters([
                 //

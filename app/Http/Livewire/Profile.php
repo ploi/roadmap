@@ -147,6 +147,7 @@ class Profile extends Component implements HasForms, HasTable
         return [
             Tables\Columns\TextColumn::make('name'),
             Tables\Columns\TextColumn::make('provider'),
+            Tables\Columns\TextColumn::make('created_at')->label('Date')->sortable()->dateTime(Auth()->user()->date_time_format),
         ];
     }
 

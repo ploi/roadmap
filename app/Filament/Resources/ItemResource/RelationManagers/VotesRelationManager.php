@@ -34,7 +34,7 @@ class VotesRelationManager extends HasManyRelationManager
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date'),
+                Tables\Columns\TextColumn::make('created_at')->dateTime(Auth()->user()->date_time_format)->sortable()->label('Date'),
                 Tables\Columns\BooleanColumn::make('subscribed')->label('Subscribed'),
             ])
             ->filters([

@@ -52,7 +52,7 @@ class InboxResource extends Resource
                 Tables\Columns\TextColumn::make('comments_count')->label(ucfirst(trans_choice('messages.comments', 2)))->counts('comments'),
                 Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime(Auth()->user()->date_time_format)
                     ->sortable()
                     ->label('Date'),
             ])

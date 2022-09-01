@@ -93,7 +93,7 @@ class ProjectResource extends Resource
                 Tables\Columns\TextColumn::make('title')->searchable(),
                 Tables\Columns\TextColumn::make('boards_count')->counts('boards'),
                 Tables\Columns\BooleanColumn::make('private'),
-                Tables\Columns\TextColumn::make('created_at')->dateTime()->label('Date'),
+                Tables\Columns\TextColumn::make('created_at')->dateTime(Auth()->user()->date_time_format)->label('Date'),
             ])
             ->filters([
                 //

@@ -49,7 +49,7 @@ class My extends Component implements HasTable
 
                     return trans('table.created_at');
                 })
-                ->dateTime(),
+                ->dateTime(Auth()->user()->date_time_format),
         ];
     }
 

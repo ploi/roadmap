@@ -28,7 +28,7 @@ class ActivitiesRelationManager extends MorphManyRelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('causer.name'),
                 Tables\Columns\TextColumn::make('description'),
-                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date'),
+                Tables\Columns\TextColumn::make('created_at')->dateTime(Auth()->user()->date_time_format)->sortable()->label('Date'),
             ])
             ->filters([
                 //
