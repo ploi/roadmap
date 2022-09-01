@@ -42,7 +42,7 @@ class CommentsRelationManager extends HasManyRelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('content')->searchable(),
+                Tables\Columns\TextColumn::make('content')->searchable()->wrap(),
                 Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->label('Date'),
             ])
