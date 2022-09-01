@@ -73,6 +73,7 @@ class Profile extends Component implements HasForms, HasTable
                         50 => '50',
                     ])
                     ->required()
+                    ->helperText('Determine how many pages should be available for the items in the "My" page for example.')
                     ->rules(['array', 'in:5,10,15,25,50'])
             ])->collapsible(),
         ];
