@@ -20,4 +20,5 @@ return [
     'social-login-description' => 'Here you\'ll find the social login\'s you\'ve used to log in with your account.',
     'settings' => 'Settings',
     'date_format'=> 'Date Time format setting'
+    'per_page_setting' => 'Per page setting',
 ];

@@ -34,6 +34,7 @@ class Profile extends Component implements HasForms, HasTable
             'email' => $this->user->email,
             'notification_settings' => $this->user->notification_settings,
             'date_time_format' => $this->user->date_time_format,
+            'per_page_setting' => $this->user->per_page_setting ?? [5]
         ]);
     }
 
@@ -74,8 +75,19 @@ class Profile extends Component implements HasForms, HasTable
                                 'm-d-Y h:i:s A' => now()->format('m-d-Y h:i:s A'),
                                 'd-m-Y h:i:s A' => now()->format('d-m-Y h:i:s A'),
                             ]
-                        ),
-                ])
+                        )->helperText('Determine how you would like date time data to be displayed'),
+                  Forms\Components\MultiSelect::make('per_page_setting')->label(trans('profile.per_page_setting'))
+                      ->options([
+                          5 => '5',
+                          10 => '10',
+                          15 => '15',
+                          25 => '25',
+                          50 => '50',
+                      ])
+                      ->required()
+                      ->helperText('Determine how many pages should be available for the items in the "My" page for example.')
+                      ->rules(['array', 'in:5,10,15,25,50'])
+            ])->collapsible(),
         ];
     }
 
@@ -88,7 +100,8 @@ class Profile extends Component implements HasForms, HasTable
             'email' => $data['email'],
             'username' => $data['username'],
             'notification_settings' => $data['notification_settings'],
-            'date_time_format' => $data['date_time_format']
+            'date_time_format' => $data['date_time_format'],
+            'per_page_setting' => $data['per_page_setting'],
         ]);
 
         $this->notify('success', 'Profile has been saved.');
