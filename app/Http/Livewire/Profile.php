@@ -33,6 +33,7 @@ class Profile extends Component implements HasForms, HasTable
             'username' => $this->user->username,
             'email' => $this->user->email,
             'notification_settings' => $this->user->notification_settings,
+            'date_time_format' => $this->user->date_time_format,
         ]);
     }
 
@@ -60,6 +61,21 @@ class Profile extends Component implements HasForms, HasTable
                             'receive_comment_reply_notifications' => trans('profile.receive_comment_reply_notifications'),
                         ]),
                 ])->collapsible(),
+
+            Forms\Components\Section::make(trans('profile.settings'))
+                ->schema([
+                    Forms\Components\Select::make('date_time_format')->label(trans('profile.date_format'))
+                        ->options(
+                            [
+                                'Y-m-d H:i:s' => now()->format('Y-m-d H:i:s'),
+                                'm-d-Y H:i:s' => now()->format('m-d-Y H:i:s'),
+                                'd-m-Y H:i:s' => now()->format('d-m-Y H:i:s'),
+                                'Y-m-d h:i:s A' => now()->format('Y-m-d h:i:s A'),
+                                'm-d-Y h:i:s A' => now()->format('m-d-Y h:i:s A'),
+                                'd-m-Y h:i:s A' => now()->format('d-m-Y h:i:s A'),
+                            ]
+                        ),
+                ])
         ];
     }
 
@@ -72,6 +88,7 @@ class Profile extends Component implements HasForms, HasTable
             'email' => $data['email'],
             'username' => $data['username'],
             'notification_settings' => $data['notification_settings'],
+            'date_time_format' => $data['date_time_format']
         ]);
 
         $this->notify('success', 'Profile has been saved.');
@@ -130,7 +147,6 @@ class Profile extends Component implements HasForms, HasTable
         return [
             Tables\Columns\TextColumn::make('name'),
             Tables\Columns\TextColumn::make('provider'),
-            Tables\Columns\TextColumn::make('created_at')->label('Date')->sortable()->dateTime(),
         ];
     }
 
