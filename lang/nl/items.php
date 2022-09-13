@@ -26,5 +26,6 @@ return [
     'days-ago' => 'dag geleden|dagen geleden',
     'similar-results' => 'Vergelijkbare bestaande resultaten:',
     'item-pinned' => 'Dit item is vastgezet',
-    'item-private' => 'Dit item is privé'
+    'item-private' => 'Dit item is privé',
+    'update-board-success' => 'Het item is succesvol verplaats naar het bord :board',
 ];

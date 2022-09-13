@@ -29,8 +29,21 @@
 
                         @if($item->board)
                             <div class="flex-1">
-                                <span
-                                    class="float-right inline-flex items-center justify-center h-8 px-3 text-sm tracking-tight font-bold text-gray-700 border border-gray-400 rounded-lg bg-white">{{ $item->board->title }}</span>
+                                @if(auth()->check() && auth()->user()->canAccessFilament() && $item->project)
+                                    <form method="post" action="{{ route('projects.items.update-board', [$item->project, $item]) }}">
+                                        @csrf
+                                        <select name="board_id" x-data x-on:change.debounce="$event.target.form.submit()"
+                                                class="float-right inline-flex items-center justify-center h-8 px-3 pt-1.5 pr-8 text-sm tracking-tight font-bold text-gray-700 border border-gray-400 rounded-lg bg-white">
+                                            @foreach($item->project->boards as $board)
+                                                <option value="{{ $board->id }}" @selected($board->is($item->board))>{{ $board->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </form>
+                                @else
+                                    <span class="float-right inline-flex items-center justify-center h-8 px-3 text-sm tracking-tight font-bold text-gray-700 border border-gray-400 rounded-lg bg-white">
+                                        {{ $item->board->title }}
+                                    </span>
+                                @endif
                             </div>
                         @endif
                     </div>
