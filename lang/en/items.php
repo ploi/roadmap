@@ -29,4 +29,5 @@ return [
     'item-pinned' => 'This item is pinned',
     'item-private' => 'This item is private',
     'not-allowed-to-create-items' => 'You are not allowed to create items in this board.',
+    'update-board-success' => 'Successfully moved the item to board :board',
 ];
