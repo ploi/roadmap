@@ -17,6 +17,7 @@ return [
     'log' => 'Log',
     'date' => 'Datum',
     'view-item' => 'Item bekijken',
+    'view-user' => 'Gebruiker bekijken',
     'view-comment' => 'Opmerking bekijken',
     'comment' => 'Opmerking',
     'from' => 'Van',

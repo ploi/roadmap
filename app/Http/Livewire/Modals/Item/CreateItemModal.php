@@ -2,7 +2,13 @@
 
 namespace App\Http\Livewire\Modals\Item;
 
+use App\Enums\UserRole;
+use App\Filament\Resources\ItemResource;
+use App\Filament\Resources\UserResource;
+use App\Models\User;
 use Closure;
+use Filament\Notifications\Actions\Action;
+use Filament\Notifications\Notification;
 use function app;
 use function auth;
 use function view;
@@ -62,8 +68,8 @@ class CreateItemModal extends ModalComponent implements HasForms
         if (app(GeneralSettings::class)->select_board_when_creating_item) {
             $inputs[] = Select::make('board_id')
                 ->label(trans('table.board'))
-                ->visible(fn ($get) => $get('project_id'))
-                ->options(fn ($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
+                ->visible(fn($get) => $get('project_id'))
+                ->options(fn($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
                 ->required(app(GeneralSettings::class)->board_required_when_creating_item);
         }
 
@@ -104,6 +110,19 @@ class CreateItemModal extends ModalComponent implements HasForms
         $this->closeModal();
 
         $this->notify('success', trans('items.item_created'));
+
+        if (config('filament.database_notifications.enabled')) {
+            User::query()->whereIn('role', [UserRole::Admin->value, UserRole::Employee->value])->each(function (User $user) use ($item) {
+                Notification::make()
+                    ->title(trans('items.item_created'))
+                    ->body(trans('items.item_created_notification_body', ['user' => auth()->user()->name, 'title' => $item->title]))
+                    ->actions([
+                        Action::make('view')->label(trans('notifications.view-item'))->url(ItemResource::getUrl('edit', ['record' => $item])),
+                        Action::make('view_user')->label(trans('notifications.view-user'))->url(UserResource::getUrl('edit', ['record' => auth()->user()])),
+                    ])
+                    ->sendToDatabase($user);
+            });
+        }
 
         return route('items.show', $item->id);
     }

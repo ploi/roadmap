@@ -20,6 +20,7 @@ return [
     'log' => 'Log',
     'date' => 'Date',
     'view-item' => 'View item',
+    'view-user' => 'View user',
     'view-comment' => 'View comment',
     'comment' => 'Comment',
     'from' => 'From',
