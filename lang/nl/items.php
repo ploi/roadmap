@@ -19,6 +19,7 @@ return [
     'all-caught-up-can-create' => 'Je kunt rechts een item aanmaken.',
     'login_to_submit_item' => 'Log in om een item aan te maken.',
     'item_created' => 'Item aangemaakt',
+    'item_created_notification_body' => 'Er is een nieuw item aangemaakt door :user met de titel :title',
     'subscribe' => 'Volgen',
     'unsubscribe' => 'Ontvolgen',
     'subscribe-tooltip' => 'Volg om notificaties te ontvangen over updates van dit item',
