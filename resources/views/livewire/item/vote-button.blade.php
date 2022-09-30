@@ -1,6 +1,6 @@
 <div>
     <div class="flex items-center space-x-4 p-1">
-        @if($item->board?->block_votes)
+        @if($model->board?->block_votes)
             <x-filament::button
                 color="secondary"
                 disabled
@@ -16,9 +16,9 @@
             </x-filament::button>
         @endif
 
-        <span>{{ trans_choice('messages.total-votes', $item->total_votes, ['votes' => $item->total_votes]) }}</span>
+        <span>{{ trans_choice('messages.total-votes', $model->total_votes, ['votes' => $model->total_votes]) }}</span>
 
-        @if($vote)
+        @if($vote && $showSubscribeOption)
             @if($vote->subscribed)
                 <button class="border-b border-dotted font-semibold border-gray-500" x-data
                         x-tooltip.raw="{{ trans('items.unsubscribe-tooltip') }}" wire:click="unsubscribe">
@@ -40,9 +40,9 @@
                         <img src="{{ $voter['avatar'] }}"
                              class="inline object-cover w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
                              alt="{{ $voter['name'] }}" x-data x-tooltip.raw="{{ $voter['name'] }}">
-                        @if($loop->last && $this->item->votes->count() > $this->recentVotersToShow)
+                        @if($loop->last && $this->model->votes->count() > $this->recentVotersToShow)
                             <a class="shrink-0 flex items-center justify-center w-8 h-8 text-xs font-medium text-white bg-gray-400 border-2 border-white rounded-full cursor-auto"
-                               href="#">+ {{ $this->item->votes->count() - $this->recentVotersToShow }} </a>
+                               href="#">+ {{ $this->model->votes->count() - $this->recentVotersToShow }} </a>
                         @endif
                     @endforeach
                 </div>

@@ -2,43 +2,50 @@
 
 namespace App\Http\Livewire\Item;
 
-use App\Models\Item;
 use App\Models\Vote;
 use Livewire\Component;
 use Illuminate\Support\Collection;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 
 class VoteButton extends Component
 {
-    public Item $item;
+    public Model $model;
     public Vote|null $vote;
     public Collection $recentVoters;
     public int $recentVotersToShow = 5;
+    public bool $showSubscribeOption;
+
+    public function mount(bool $hideSubscribeOption = false)
+    {
+        $this->showSubscribeOption = ! $hideSubscribeOption;
+    }
 
     public function toggleUpvote()
     {
-        $this->item->toggleUpvote();
-        $this->item = $this->item->refresh();
+        $this->model->toggleUpvote();
+        $this->model = $this->model->refresh();
     }
 
     public function unsubscribe()
     {
         $this->vote->update(['subscribed' => false]);
 
-        $this->item = $this->item->refresh();
+        $this->model = $this->model->refresh();
     }
 
     public function subscribe()
     {
         $this->vote->update(['subscribed' => true]);
 
-        $this->item = $this->item->refresh();
+        $this->model = $this->model->refresh();
     }
 
-    public function render()
+    public function render(): View
     {
-        $this->vote = $this->item->getUserVote();
+        $this->vote = $this->model->getUserVote();
 
-        $this->recentVoters = $this->item->getRecentVoterDetails($this->recentVotersToShow);
+        $this->recentVoters = $this->model->getRecentVoterDetails($this->recentVotersToShow);
 
         return view('livewire.item.vote-button');
     }

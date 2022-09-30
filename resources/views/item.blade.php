@@ -91,7 +91,7 @@
 
                 <div class="border-t"></div>
 
-                <livewire:item.vote-button :item="$item"/>
+                <livewire:item.vote-button :model="$item" />
 
                 @if(auth()->check() && $user && $user->is(auth()->user()))
                     <div class="border-t mb-2"></div>

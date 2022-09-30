@@ -6,7 +6,7 @@ use App\Enums\UserRole;
 use App\Models\Project;
 use function Pest\Laravel\get;
 use App\Http\Livewire\Item\Comments;
-use App\Http\Livewire\Item\VoteButton;
+use App\Http\Livewire\Item\VoteButton2;
 use function Pest\Laravel\post;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertSame;
@@ -60,7 +60,7 @@ test('view contains item.comments component', function () {
 test('view contains item.vote-button component', function () {
     $item = Item::factory()->create();
 
-    get(route('items.show', $item))->assertSeeLivewire(VoteButton::class);
+    get(route('items.show', $item))->assertSeeLivewire(VoteButton2::class);
 });
 
 test('user can not view private item', function (?UserRole $userRole, int $expectedStatusCode) {
