@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use App\Traits\Sluggable;
+use App\Traits\HasUpvote;
 use App\Traits\HasOgImage;
 use Illuminate\Support\Str;
 use App\Enums\InboxWorkflow;
 use App\Settings\GeneralSettings;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Spatie\Activitylog\ActivitylogServiceProvider;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Item extends Model
 {
-    use HasFactory, Sluggable, HasOgImage;
+    use HasFactory, Sluggable, HasOgImage, HasUpvote;
 
     public $fillable = [
         'slug',
@@ -62,11 +62,6 @@ class Item extends Model
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
-    }
-
-    public function votes(): MorphMany
-    {
-        return $this->morphMany(Vote::class, 'model');
     }
 
     public function subscribedVotes(): MorphMany
@@ -120,50 +115,6 @@ class Item extends Model
         };
     }
 
-    public function hasVoted(User $user = null): bool
-    {
-        $user = $user ?? auth()->user();
-
-        if (!$user) {
-            return false;
-        }
-
-        return (bool)$this->votes()->where('user_id', $user->id)->exists();
-    }
-
-    public function getUserVote(User $user = null): Vote|null
-    {
-        $user = $user ?? auth()->user();
-
-        if (!$user) {
-            return null;
-        }
-
-        return $this->votes()->where('user_id', $user->id)->first();
-    }
-
-    public function toggleUpvote(User $user = null)
-    {
-        $user = $user ?? auth()->user();
-
-        if (!$user) {
-            return redirect()->route('login');
-        }
-
-        $vote = $this->votes()->where('user_id', $user->id)->first();
-
-        if ($vote) {
-            $vote->delete();
-
-            return true;
-        }
-
-        $vote = $this->votes()->create();
-        $vote->user()->associate($user)->save();
-
-        return $vote;
-    }
-
     public function isPinned(): bool
     {
         return $this->pinned;
@@ -172,26 +123,5 @@ class Item extends Model
     public function isPrivate(): bool
     {
         return $this->private;
-    }
-
-    /**
-     *  Returns a collection of the most recent users who have voted for this item.
-     *
-     * @param int $count Displays five users by default.
-     * @return Collection|\Illuminate\Support\Collection
-     */
-    public function getRecentVoterDetails(int $count = 5): Collection|\Illuminate\Support\Collection
-    {
-        return $this->votes()
-            ->with('user')
-            ->orderBy('created_at', 'desc')
-            ->take($count)
-            ->get()
-            ->map(function ($vote) {
-                return [
-                    'name' => $vote->user->name,
-                    'avatar' => $vote->user->getGravatar('50'),
-                ];
-            });
     }
 }

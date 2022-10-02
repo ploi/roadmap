@@ -96,6 +96,10 @@
         </form>
     @endif
 
+    <div class="px-2">
+        <livewire:item.vote-button :model="$comment" hideSubscribeOption />
+    </div>
+
     @foreach($comments[$comment->id] ?? [] as $replyComment)
         <x-comment :comments="$comments" :comment="$replyComment" :item="$item" :reply="$reply"></x-comment>
     @endforeach
