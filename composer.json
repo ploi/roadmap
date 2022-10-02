@@ -9,6 +9,7 @@
         "doctrine/dbal": "^3.3",
         "filament/filament": "^2.0",
         "filament/spatie-laravel-settings-plugin": "^2.0",
+        "filament/spatie-laravel-tags-plugin": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "laravel/framework": "^9.2",

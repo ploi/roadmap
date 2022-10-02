@@ -111,6 +111,14 @@
                            href="{{ route('filament.resources.items.edit', $item) }}">Administer item</a>
                     </div>
                 @endif
+
+                @if($item->tags)
+                    <div class="border-t mb-2"></div>
+
+                    @foreach($item->tags as $tag)
+                        <x-tag :tag="$tag" />
+                    @endforeach
+                @endif
             </x-card>
 
             <div class="relative">
