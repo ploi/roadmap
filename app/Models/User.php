@@ -127,8 +127,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
 
     public function needsToVerifyEmail() : bool
     {
-       return app(GeneralSettings::class)->users_must_verify_email &&
-            !auth()->user()->hasVerifiedEmail();
+        return app(GeneralSettings::class)->users_must_verify_email &&
+             !auth()->user()->hasVerifiedEmail();
     }
 
     public static function booted()

@@ -2,26 +2,26 @@
 
 namespace App\Http\Livewire\Modals\Item;
 
-use App\Enums\UserRole;
-use App\Filament\Resources\ItemResource;
-use App\Filament\Resources\UserResource;
-use App\Models\User;
 use Closure;
-use Filament\Notifications\Actions\Action;
-use Filament\Notifications\Notification;
 use function app;
 use function auth;
 use function view;
 use function route;
 use App\Models\Item;
+use App\Models\User;
 use function redirect;
+use App\Enums\UserRole;
 use App\Models\Project;
 use App\Settings\GeneralSettings;
 use Filament\Forms\Components\Group;
 use LivewireUI\Modal\ModalComponent;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
+use App\Filament\Resources\ItemResource;
+use App\Filament\Resources\UserResource;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Filament\Notifications\Actions\Action;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Http\Livewire\Concerns\CanNotify;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -68,8 +68,8 @@ class CreateItemModal extends ModalComponent implements HasForms
         if (app(GeneralSettings::class)->select_board_when_creating_item) {
             $inputs[] = Select::make('board_id')
                 ->label(trans('table.board'))
-                ->visible(fn($get) => $get('project_id'))
-                ->options(fn($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
+                ->visible(fn ($get) => $get('project_id'))
+                ->options(fn ($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
                 ->required(app(GeneralSettings::class)->board_required_when_creating_item);
         }
 

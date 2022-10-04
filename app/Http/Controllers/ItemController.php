@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\Project;
 use App\Enums\ItemActivity;
-use Filament\Notifications\Notification;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Spatie\Activitylog\Models\Activity;
+use Filament\Notifications\Notification;
 
 class ItemController extends Controller
 {

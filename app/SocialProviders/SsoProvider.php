@@ -80,15 +80,15 @@ class SsoProvider extends AbstractProvider implements ProviderInterface
         $providerUserEndpointKeys = config('services.sso.provider_user_endpoint_keys') ?? 'id,email,name';
         $providerId = config('services.sso.provider_id') ?? 'id';
 
-        if($providerUserEndpointDataWrapKey) {
+        if ($providerUserEndpointDataWrapKey) {
             $user = Arr::get($user, $providerUserEndpointDataWrapKey);
         }
         
         if ($user === null || !Arr::has($user, explode(',', $providerUserEndpointKeys))) {
-            if($providerUserEndpointDataWrapKey) {
-              throw new RuntimeException("The SSO user endpoint should return an {$providerUserEndpointKeys} in the `{$providerUserEndpointDataWrapKey}` field of the JSON response.");
+            if ($providerUserEndpointDataWrapKey) {
+                throw new RuntimeException("The SSO user endpoint should return an {$providerUserEndpointKeys} in the `{$providerUserEndpointDataWrapKey}` field of the JSON response.");
             } else {
-              throw new RuntimeException("The SSO user endpoint should return an {$providerUserEndpointKeys} in the JSON response.");
+                throw new RuntimeException("The SSO user endpoint should return an {$providerUserEndpointKeys} in the JSON response.");
             }
         }
 

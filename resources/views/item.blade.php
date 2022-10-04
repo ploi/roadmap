@@ -97,7 +97,7 @@
                     <div class="border-t mb-2"></div>
 
                     <div>
-                        <a class="text-primary-500 hover:text-primary-700 border-b ml-1"
+                        <a class="text-primary-500 hover:text-primary-700 ml-1"
                            href="{{ route('items.edit', $item) }}">Edit item</a>
                     </div>
 
@@ -107,7 +107,7 @@
                     <div class="border-t mb-2"></div>
 
                     <div>
-                        <a class="text-red-500 hover:text-red-700 border-b ml-1"
+                        <a class="text-red-500 hover:text-red-700 ml-1"
                            href="{{ route('filament.resources.items.edit', $item) }}">Administer item</a>
                     </div>
                 @endif
