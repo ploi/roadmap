@@ -3,21 +3,22 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
-use Spatie\Tags\Tag;
 use Filament\Tables;
+use Spatie\Tags\Tag;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use App\Filament\Resources\TagResource\Pages;
-use App\Filament\Resources\TagResource\RelationManagers;
 
 class TagResource extends Resource
 {
     protected static ?string $model = Tag::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
 
     protected static ?string $navigationGroup = 'Manage';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {

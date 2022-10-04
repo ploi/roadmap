@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Spatie\Tags\HasTags;
-use App\Traits\Sluggable;
 use App\Traits\HasUpvote;
+use App\Traits\Sluggable;
 use App\Traits\HasOgImage;
 use Illuminate\Support\Str;
 use App\Enums\InboxWorkflow;

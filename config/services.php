@@ -45,7 +45,7 @@ return [
          * for example: { "data": "id": "name": "John Doe", "email": "john@example.com" }
          * If you would like to use a custom key instead of data, you may define it here.
          * you can also set something like 'data.user' if its nested.
-         * or you can set it to nothing (do not set it to value 'null'. just leave it empty value) 
+         * or you can set it to nothing (do not set it to value 'null'. just leave it empty value)
          * if sso provider user endpoint response is not wrapped in a key.
          */
         'provider_user_endpoint_data_wrap_key' => env('SSO_PROVIDER_USER_ENDPOINT_DATA_WRAP_KEY'),

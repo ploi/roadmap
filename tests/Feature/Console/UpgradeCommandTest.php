@@ -1,10 +1,6 @@
 <?php
 
-use App\Models\User;
-use App\Enums\UserRole;
 use function Pest\Laravel\artisan;
-use function PHPUnit\Framework\assertSame;
-use function Pest\Laravel\assertDatabaseCount;
 
 test('upgrade command works', function () {
     artisan('roadmap:upgrade')
