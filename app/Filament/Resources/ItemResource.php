@@ -53,6 +53,8 @@ class ItemResource extends Resource
                                     ->required()
                                     ->minLength(5)
                                     ->maxLength(65535),
+                                Forms\Components\SpatieTagsInput::make('tags')
+                                    ->columnSpan(2),
                             ])->columns(2),
 
                         Tabs\Tab::make('Management')

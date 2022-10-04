@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Spatie\Tags\HasTags;
 use App\Traits\Sluggable;
 use App\Traits\HasUpvote;
 use App\Traits\HasOgImage;
@@ -20,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Item extends Model
 {
-    use HasFactory, Sluggable, HasOgImage, HasUpvote;
+    use HasFactory, Sluggable, HasOgImage, HasUpvote, HasTags;
 
     public $fillable = [
         'slug',
