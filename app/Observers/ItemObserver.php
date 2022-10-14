@@ -19,7 +19,30 @@ class ItemObserver
 
         if ($receivers = app(GeneralSettings::class)->send_notifications_to) {
             foreach ($receivers as $receiver) {
-                Mail::to($receiver['email'])->send(new ItemHasBeenCreatedEmail($receiver, $item));
+                if (!isset($receiver['type'])) {
+                    continue;
+                }
+
+                match ($receiver['type']) {
+                    'email' => Mail::to($receiver['webhook'])->send(new ItemHasBeenCreatedEmail($receiver, $item)),
+                    'discord' => (new \App\Services\Discord($receiver['webhook']))->send('POST', [
+                        'username' => config('app.name'),
+                        'avatar_url' => asset('storage/favicon.png'),
+                        'embeds' => [
+                            [
+                                'title' => 'New roadmap item notification',
+                                'description' => 'A new item with the title **' . $item->title . '** has been created',
+                                'fields' => [
+                                    [
+                                        'name' => 'URL',
+                                        'value' => route('items.show', $item),
+                                    ],
+                                ],
+                                'color' => '2278750',
+                            ],
+                        ],
+                    ])
+                };
             }
         }
     }

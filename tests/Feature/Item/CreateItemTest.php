@@ -18,7 +18,7 @@ beforeEach(function () {
     $this->project = Project::factory()->create();
     $this->board = Board::factory()->create(['project_id' => $this->project->getAttributeValue('id')]);
 
-    app(GeneralSettings::class)->send_notifications_to = [['email' => 'info@ploi.io']];
+    app(GeneralSettings::class)->send_notifications_to = [['webhook' => 'info@ploi.io', 'type' => 'email']];
 });
 
 test('A user can submit a new item via the board page', function () {
