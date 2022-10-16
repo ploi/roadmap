@@ -6,9 +6,9 @@ use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Resources\RelationManagers\MorphManyRelationManager;
+use Filament\Resources\RelationManagers\RelationManager;
 
-class ActivitiesRelationManager extends MorphManyRelationManager
+class ActivitiesRelationManager extends RelationManager
 {
     protected static string $relationship = 'activities';
 

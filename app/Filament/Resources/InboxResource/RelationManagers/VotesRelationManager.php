@@ -5,9 +5,9 @@ namespace App\Filament\Resources\InboxResource\RelationManagers;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use Filament\Resources\RelationManagers\HasManyRelationManager;
+use Filament\Resources\RelationManagers\RelationManager;
 
-class VotesRelationManager extends HasManyRelationManager
+class VotesRelationManager extends RelationManager
 {
     protected static string $relationship = 'votes';
 
