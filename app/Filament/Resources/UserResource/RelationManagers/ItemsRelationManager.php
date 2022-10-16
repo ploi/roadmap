@@ -7,9 +7,9 @@ use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Resources\RelationManagers\HasManyRelationManager;
+use Filament\Resources\RelationManagers\RelationManager;
 
-class ItemsRelationManager extends HasManyRelationManager
+class ItemsRelationManager extends RelationManager
 {
     protected static string $relationship = 'items';
 

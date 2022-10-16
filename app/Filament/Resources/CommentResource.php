@@ -23,11 +23,11 @@ class CommentResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Card::make([
-                    Forms\Components\BelongsToSelect::make('user_id')
+                    Forms\Components\Select::make('user_id')
                         ->columnSpan(1)
                         ->relationship('user', 'name')
                         ->searchable(),
-                    Forms\Components\BelongsToSelect::make('item_id')
+                    Forms\Components\Select::make('item_id')
                         ->columnSpan(1)
                         ->relationship('item', 'title')
                         ->searchable(),
