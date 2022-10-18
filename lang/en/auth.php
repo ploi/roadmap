@@ -5,7 +5,7 @@ return [
     'verify-email' => 'Verify email',
     'register' => 'Register',
     'profile' => 'Profile',
-    'register_for_free' => 'Or <a class="text-brand-600 transition hover:text-brand-500 focus:outline-none focus:underline" href=":route">register</a> for free.',
+    'register_for_free' => 'Or <a class="transition text-brand-600 hover:text-brand-500 focus:outline-none focus:underline" href=":route">register</a> for free.',
     'not_new' => 'Not new here?',
     'password_protected' => 'Password protected',
 
@@ -24,5 +24,7 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+
+    'date_locale' => 'Date locale',
 
 ];

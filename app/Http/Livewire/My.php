@@ -8,6 +8,7 @@ use Livewire\Component;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Illuminate\Support\Carbon;
 
 class My extends Component implements HasTable
 {
@@ -49,7 +50,7 @@ class My extends Component implements HasTable
 
                     return trans('table.created_at');
                 })
-                ->dateTime(),
+                ->formatStateUsing(fn (Carbon $state) => $state->isoFormat('L LTS')),
         ];
     }
 

@@ -26,7 +26,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         'username',
         'password',
         'notification_settings',
-        'per_page_setting'
+        'per_page_setting',
+        'date_locale',
     ];
 
     protected $hidden = [
