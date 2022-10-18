@@ -50,7 +50,7 @@ class My extends Component implements HasTable
 
                     return trans('table.created_at');
                 })
-                ->formatStateUsing(fn (Carbon $state) => $state->isoFormat('L LTS')),
+                ->formatStateUsing(fn (Carbon|string $state) => (is_string($state) ? Carbon::parse($state) : $state)->isoFormat('L LTS')),
         ];
     }
 
