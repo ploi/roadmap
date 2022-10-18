@@ -2,13 +2,12 @@
 
 namespace App\Observers;
 
-use App\Services\WebhookClient;
-use App\Services\Slack;
-use App\Settings\ColorSettings;
 use Mail;
 use App\Models\Item;
 use App\Models\User;
 use App\Enums\ItemActivity;
+use App\Services\WebhookClient;
+use App\Settings\ColorSettings;
 use App\Settings\GeneralSettings;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\Admin\ItemHasBeenCreatedEmail;
