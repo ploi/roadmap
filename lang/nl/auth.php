@@ -38,4 +38,7 @@ return [
 
     'date_locale' => 'Datum & tijd vertaling',
     'date_locale_null_value' => 'Gebruik app voorkeurstaal',
+
+    'locale' => 'Taal',
+    'locale_null_value' => 'Gebruik standaard taal',
 ];

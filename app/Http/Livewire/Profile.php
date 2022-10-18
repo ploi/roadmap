@@ -35,6 +35,7 @@ class Profile extends Component implements HasForms, HasTable
             'email' => $this->user->email,
             'notification_settings' => $this->user->notification_settings,
             'per_page_setting' => $this->user->per_page_setting ?? [5],
+            'locale' => $this->user->locale,
             'date_locale' => $this->user->date_locale,
         ]);
     }
@@ -53,6 +54,7 @@ class Profile extends Component implements HasForms, HasTable
                     ])
                     ->unique(table: User::class, column: 'username', ignorable: auth()->user()),
                 Forms\Components\TextInput::make('email')->label(trans('auth.email'))->required()->email(),
+                Forms\Components\Select::make('locale')->label(trans('auth.locale'))->options($this->locales)->placeholder(trans('auth.locale_null_value')),
                 Forms\Components\Select::make('date_locale')->label(trans('auth.date_locale'))->options($this->locales)->placeholder(trans('auth.date_locale_null_value')),
             ])->collapsible(),
 
@@ -92,8 +94,13 @@ class Profile extends Component implements HasForms, HasTable
             'username' => $data['username'],
             'notification_settings' => $data['notification_settings'],
             'per_page_setting' => $data['per_page_setting'],
+            'locale' => $data['locale'],
             'date_locale' => $data['date_locale'],
         ]);
+
+        if ($this->user->wasChanged('locale', 'date_locale')) {
+            $this->notify('success', 'Refresh the page to show locale changes.');
+        }
 
         $this->notify('success', 'Profile has been saved.');
     }
