@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 
 class ConvertNotifications extends Command
 {
-    protected $signature = 'app:convert-notifications';
+    protected $signature = 'roadmap:convert-notifications';
 
     protected $description = 'Convert notifications to new format';
 
