@@ -2,6 +2,9 @@
 
 namespace App\Observers;
 
+use App\Services\WebhookClient;
+use App\Services\Slack;
+use App\Settings\ColorSettings;
 use Mail;
 use App\Models\Item;
 use App\Models\User;
@@ -25,7 +28,7 @@ class ItemObserver
 
                 match ($receiver['type']) {
                     'email' => Mail::to($receiver['webhook'])->send(new ItemHasBeenCreatedEmail($receiver, $item)),
-                    'discord' => (new \App\Services\Discord($receiver['webhook']))->send('POST', [
+                    'discord' => (new WebhookClient($receiver['webhook']))->send('POST', [
                         'username' => config('app.name'),
                         'avatar_url' => asset('storage/favicon.png'),
                         'embeds' => [
@@ -39,6 +42,24 @@ class ItemObserver
                                     ],
                                 ],
                                 'color' => '2278750',
+                            ],
+                        ],
+                    ]),
+                    'slack' => (new WebhookClient($receiver['webhook']))->send('POST', [
+                        'username' => config('app.name'),
+                        'icon_url' => asset('storage/favicon.png'),
+                        'attachments' => [
+                            [
+                                'fallback' => 'A new roadmap item has been created: <' . route('items.show', $item) . '|' . $item->title . '>',
+                                'pretext' => 'A new roadmap item has been created: <' . route('items.show', $item) . '|' . $item->title . '>',
+                                'color' => app(ColorSettings::class)->primary ?? '#2278750',
+                                'fields' => [
+                                    [
+                                        'title' => $item->title,
+                                        'value' => str($item->content)->limit(50),
+                                        'shorts' => false,
+                                    ]
+                                ],
                             ],
                         ],
                     ])
