@@ -96,6 +96,7 @@ class Comments extends Component implements HasForms
             MarkdownEditor::make('content')
                           ->label(trans('comments.comment'))
                           ->helperText(trans('comments.mention-helper-text'))
+                          ->disableToolbarButtons(app(GeneralSettings::class)->getDisabledToolbarButtons())
                           ->minLength(3)
                           ->required(),
         ];

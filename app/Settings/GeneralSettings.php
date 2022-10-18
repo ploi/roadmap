@@ -29,10 +29,22 @@ class GeneralSettings extends Settings
     public bool $enable_changelog;
     public bool $show_changelog_author;
     public bool $show_changelog_related_items;
+    public bool $disable_file_uploads;
 
     public function getInboxWorkflow(): InboxWorkflow
     {
         return InboxWorkflow::from($this->inbox_workflow);
+    }
+
+    public function getDisabledToolbarButtons(): array
+    {
+        $toolbarButtons = [];
+
+        if ($this->disable_file_uploads) {
+            $toolbarButtons[] = 'attachFiles';
+        }
+
+        return $toolbarButtons;
     }
 
     public static function group(): string
