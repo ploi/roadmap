@@ -16,7 +16,7 @@ return [
     'verify-email' => 'Verifieer email',
     'register' => 'Registreren',
     'profile' => 'Profiel',
-    'register_for_free' => 'Of <a class="text-brand-600 transition hover:text-brand-500 focus:outline-none focus:underline" href=":route">maak een gratis account aan</a>.',
+    'register_for_free' => 'Of <a class="transition text-brand-600 hover:text-brand-500 focus:outline-none focus:underline" href=":route">maak een gratis account aan</a>.',
     'not_new' => 'Niet nieuw hier?',
     'password_protected' => 'Beschermd met een wachtwoord',
 
@@ -35,4 +35,7 @@ return [
 
     'failed'   => 'Deze combinatie van e-mailadres en wachtwoord is niet geldig.',
     'throttle' => 'Te veel mislukte aanmeldpogingen. Probeer het over nog eens over :seconds seconden.',
+
+    'date_locale' => 'Datum & tijd vertaling',
+    'date_locale_null_value' => 'Gebruik app voorkeurstaal',
 ];
