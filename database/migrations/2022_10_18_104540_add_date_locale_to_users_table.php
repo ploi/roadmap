@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('date_locale')->default('en')->after('remember_token');
+            $table->string('date_locale')->nullable()->after('remember_token');
         });
     }
 

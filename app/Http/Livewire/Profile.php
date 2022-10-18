@@ -53,7 +53,7 @@ class Profile extends Component implements HasForms, HasTable
                     ])
                     ->unique(table: User::class, column: 'username', ignorable: auth()->user()),
                 Forms\Components\TextInput::make('email')->label(trans('auth.email'))->required()->email(),
-                Forms\Components\Select::make('date_locale')->label(trans('auth.date_locale'))->required()->options($this->locales),
+                Forms\Components\Select::make('date_locale')->label(trans('auth.date_locale'))->options($this->locales)->placeholder(trans('auth.date_locale_null_value')),
             ])->collapsible(),
 
             Forms\Components\Section::make(trans('profile.notifications'))

@@ -36,5 +36,6 @@ return [
     'failed'   => 'Deze combinatie van e-mailadres en wachtwoord is niet geldig.',
     'throttle' => 'Te veel mislukte aanmeldpogingen. Probeer het over nog eens over :seconds seconden.',
 
-    'date_locale' => 'Datum & tijd vertaling'
+    'date_locale' => 'Datum & tijd vertaling',
+    'date_locale_null_value' => 'Gebruik app voorkeurstaal',
 ];

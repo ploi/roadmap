@@ -18,7 +18,7 @@ class LocalizeDates
     public function handle(Request $request, Closure $next)
     {
         if (auth()->check()) {
-            Carbon::setLocale(auth()->user()->date_locale);
+            Carbon::setLocale(auth()->user()->date_locale ?? config('app.locale'));
         }
 
         return $next($request);

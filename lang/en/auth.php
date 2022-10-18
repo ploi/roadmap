@@ -26,5 +26,6 @@ return [
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
     'date_locale' => 'Date locale',
+    'date_locale_null_value' => 'Use app locale',
 
 ];
