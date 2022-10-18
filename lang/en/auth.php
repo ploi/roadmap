@@ -28,4 +28,7 @@ return [
     'date_locale' => 'Date locale',
     'date_locale_null_value' => 'Use app locale',
 
+    'locale' => 'Locale',
+    'locale_null_value' => 'Use default locale',
+
 ];

@@ -27,6 +27,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         'password',
         'notification_settings',
         'per_page_setting',
+        'locale',
         'date_locale',
     ];
 
