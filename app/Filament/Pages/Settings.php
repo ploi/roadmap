@@ -113,6 +113,10 @@ class Settings extends SettingsPage
                                 ->label('Users must verify their email before they can submit items, or reply to items.')
                                 ->columnSpan(2),
 
+                            Toggle::make('disable_file_uploads')
+                                ->label('Disallow users to upload files or images via the markdown editors.')
+                                ->columnSpan(2),
+
                             Grid::make()->schema([
                                 Select::make('inbox_workflow')
                                     ->options(InboxWorkflow::getSelectOptions())

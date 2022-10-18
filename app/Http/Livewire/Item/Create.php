@@ -7,6 +7,7 @@ use function view;
 use App\Models\Item;
 use App\Models\Board;
 use App\Models\Project;
+use App\Settings\GeneralSettings;
 use Livewire\Component;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\TextInput;
@@ -35,6 +36,7 @@ class Create extends Component implements HasForms
                 ->required(),
             MarkdownEditor::make('content')
                 ->label(trans('table.content'))
+                ->disableToolbarButtons(app(GeneralSettings::class)->getDisabledToolbarButtons())
                 ->minLength(10)
                 ->required(),
         ];

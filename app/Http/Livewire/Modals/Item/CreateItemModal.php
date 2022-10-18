@@ -76,6 +76,7 @@ class CreateItemModal extends ModalComponent implements HasForms
         $inputs[] = Group::make([
             MarkdownEditor::make('content')
                 ->label(trans('table.content'))
+                ->disableToolbarButtons(app(GeneralSettings::class)->getDisabledToolbarButtons())
                 ->minLength(10)
                 ->required()
         ]);

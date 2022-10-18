@@ -6,6 +6,7 @@ use function auth;
 use function view;
 use function redirect;
 use App\Models\Comment;
+use App\Settings\GeneralSettings;
 use Filament\Forms\Components\Group;
 use LivewireUI\Modal\ModalComponent;
 use Filament\Forms\Contracts\HasForms;
@@ -31,9 +32,10 @@ class EditCommentModal extends ModalComponent implements HasForms
         return [
             Group::make([
                 MarkdownEditor::make('content')
-                              ->label(trans('comments.comment'))
-                              ->id('edit-comment' . $this->comment->id)
-                              ->required(),
+                    ->label(trans('comments.comment'))
+                    ->id('edit-comment' . $this->comment->id)
+                    ->disableToolbarButtons(app(GeneralSettings::class)->getDisabledToolbarButtons())
+                    ->required(),
             ])
         ];
     }

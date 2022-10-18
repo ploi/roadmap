@@ -1,12 +1,17 @@
 <?php
 
-use App\Settings\GeneralSettings;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Console\Commands;
 
-return new class extends Migration {
-    public function up()
+use App\Settings\GeneralSettings;
+use Illuminate\Console\Command;
+
+class ConvertNotifications extends Command
+{
+    protected $signature = 'roadmap:convert-notifications';
+
+    protected $description = 'Convert notifications to new format';
+
+    public function handle()
     {
         $array = [];
 
@@ -20,10 +25,7 @@ return new class extends Migration {
 
         app(GeneralSettings::class)->send_notifications_to = $array;
         app(GeneralSettings::class)->save();
-    }
 
-    public function down()
-    {
-        //
+        return Command::SUCCESS;
     }
-};
+}
