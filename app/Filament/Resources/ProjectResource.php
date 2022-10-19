@@ -49,8 +49,14 @@ class ProjectResource extends Resource
                         ->options(Icons::all())
                         ->searchable(),
                     Forms\Components\Toggle::make('private')
+                        ->reactive()
                         ->default(false)
                         ->helperText('Private projects are only visible for employees and admins'),
+                    Forms\Components\Select::make('members')
+                        ->multiple()
+                        ->relationship('members', 'name')
+                        ->visible(fn ($get) => (bool) $get('private'))
+                        ->helperText('Allow certain users to view this project'),
                     Forms\Components\MarkdownEditor::make('description')
                         ->columnSpan(2)
                         ->maxLength(65535),

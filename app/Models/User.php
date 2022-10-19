@@ -13,6 +13,7 @@ use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerifyEmail
@@ -76,6 +77,11 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
     public function items()
     {
         return $this->hasMany(Item::class);
+    }
+
+    public function projects(): BelongsToMany
+    {
+        return $this->belongsToMany(Project::class, 'project_member')->using(ProjectMember::class);
     }
 
     public function votes(): HasMany
