@@ -57,7 +57,7 @@ class EditItem extends EditRecord
                 ->form([
                     Select::make('item_id')
                         ->label('Item')
-                        ->options(Item::query()->pluck('title', 'id'))
+                        ->options(Item::query()->whereNot('id', $this->record->id)->pluck('title', 'id'))
                         ->required()
                         ->searchable(),
                     Toggle::make('private')
