@@ -5,7 +5,7 @@ namespace App\Services;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 
-class Discord
+class WebhookClient
 {
     protected PendingRequest $client;
 
