@@ -6,9 +6,8 @@ use Mail;
 use App\Models\Item;
 use App\Models\User;
 use App\Enums\ItemActivity;
-use App\Services\WebhookClient;
-use App\Settings\ColorSettings;
 use App\Settings\GeneralSettings;
+use App\Jobs\SendWebhookForNewItemJob;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\Admin\ItemHasBeenCreatedEmail;
 use App\Notifications\Item\ItemUpdatedNotification;
@@ -27,41 +26,7 @@ class ItemObserver
 
                 match ($receiver['type']) {
                     'email' => Mail::to($receiver['webhook'])->send(new ItemHasBeenCreatedEmail($receiver, $item)),
-                    'discord' => (new WebhookClient($receiver['webhook']))->send('POST', [
-                        'username' => config('app.name'),
-                        'avatar_url' => asset('storage/favicon.png'),
-                        'embeds' => [
-                            [
-                                'title' => 'New roadmap item notification',
-                                'description' => 'A new item with the title **' . $item->title . '** has been created',
-                                'fields' => [
-                                    [
-                                        'name' => 'URL',
-                                        'value' => route('items.show', $item),
-                                    ],
-                                ],
-                                'color' => '2278750',
-                            ],
-                        ],
-                    ]),
-                    'slack' => (new WebhookClient($receiver['webhook']))->send('POST', [
-                        'username' => config('app.name'),
-                        'icon_url' => asset('storage/favicon.png'),
-                        'attachments' => [
-                            [
-                                'fallback' => 'A new roadmap item has been created: <' . route('items.show', $item) . '|' . $item->title . '>',
-                                'pretext' => 'A new roadmap item has been created: <' . route('items.show', $item) . '|' . $item->title . '>',
-                                'color' => app(ColorSettings::class)->primary ?? '#2278750',
-                                'fields' => [
-                                    [
-                                        'title' => $item->title,
-                                        'value' => str($item->content)->limit(50),
-                                        'shorts' => false,
-                                    ]
-                                ],
-                            ],
-                        ],
-                    ])
+                    'discord', 'slack' => dispatch(new SendWebhookForNewItemJob($item, $receiver)),
                 };
             }
         }
