@@ -54,6 +54,7 @@ class ProjectResource extends Resource
                         ->helperText('Private projects are only visible for employees and admins'),
                     Forms\Components\Select::make('members')
                         ->multiple()
+                        ->preload()
                         ->relationship('members', 'name')
                         ->visible(fn ($get) => (bool) $get('private'))
                         ->helperText('Allow certain users to view this project'),
