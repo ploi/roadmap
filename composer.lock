@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ded5e6ad3ec574d8db907fc834b3a7b0",
+    "content-hash": "68bbab3887e3e6ce095e25699684d6af",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -1429,6 +1429,52 @@
                 "source": "https://github.com/filamentphp/filament"
             },
             "time": "2022-09-25T20:35:14+00:00"
+        },
+        {
+            "name": "filament/spatie-laravel-translatable-plugin",
+            "version": "v2.16.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/filamentphp/spatie-laravel-translatable-plugin.git",
+                "reference": "dc8b472d3ef6b86f7d5faed0475605da725c3b11"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/filamentphp/spatie-laravel-translatable-plugin/zipball/dc8b472d3ef6b86f7d5faed0475605da725c3b11",
+                "reference": "dc8b472d3ef6b86f7d5faed0475605da725c3b11",
+                "shasum": ""
+            },
+            "require": {
+                "ext-intl": "*",
+                "filament/filament": "self.version",
+                "illuminate/support": "^8.6|^9.0",
+                "php": "^8.0",
+                "spatie/laravel-translatable": "^5.0|^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Filament\\SpatieLaravelTranslatablePluginServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Filament\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Filament support for `spatie/laravel-translatable`.",
+            "homepage": "https://github.com/filamentphp/filament",
+            "support": {
+                "issues": "https://github.com/filamentphp/filament/issues",
+                "source": "https://github.com/filamentphp/filament"
+            },
+            "time": "2022-09-30T09:40:22+00:00"
         },
         {
             "name": "filament/support",
@@ -13233,5 +13279,5 @@
         "php": "^8.1.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.1.0"
 }

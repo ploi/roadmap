@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
+use Filament\Resources\Concerns\Translatable;
 use Filament\Tables;
 use Spatie\Tags\Tag;
 use Filament\Resources\Form;
@@ -12,6 +13,8 @@ use App\Filament\Resources\TagResource\Pages;
 
 class TagResource extends Resource
 {
+    use Translatable;
+
     protected static ?string $model = Tag::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
