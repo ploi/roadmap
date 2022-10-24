@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\TagType;
 use Filament\Forms;
 use Filament\Resources\Concerns\Translatable;
 use Filament\Tables;
@@ -29,6 +30,7 @@ class TagResource extends Resource
             ->schema([
                 Forms\Components\Card::make([
                     Forms\Components\TextInput::make('name')->required(),
+                    Forms\Components\Checkbox::make('changelog'),
                 ]),
             ]);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Spatie\Tags\HasTags;
 use App\Traits\HasUpvote;
 use App\Traits\Sluggable;
@@ -40,6 +41,11 @@ class Item extends Model
         'private' => 'boolean',
         'notify_subscribers' => 'boolean',
     ];
+
+    public static function getTagClassName(): string
+    {
+        return Tag::class;
+    }
 
     protected function excerpt(): Attribute
     {
@@ -124,5 +130,12 @@ class Item extends Model
     public function isPrivate(): bool
     {
         return $this->private;
+    }
+
+    public function tags(): MorphToMany
+    {
+        return $this
+            ->morphToMany(self::getTagClassName(), 'taggable', 'taggables', null, 'tag_id')
+            ->orderBy('order_column');
     }
 }
