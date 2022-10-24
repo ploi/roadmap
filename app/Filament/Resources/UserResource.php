@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\Project;
 use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
@@ -53,11 +54,17 @@ class UserResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
+        $relationManagers = [
             RelationManagers\ItemsRelationManager::class,
             RelationManagers\CommentsRelationManager::class,
             RelationManagers\VotesRelationManager::class,
         ];
+
+        if (Project::query()->where('private', '=', true)->count() > 0) {
+            $relationManagers[] = RelationManagers\ProjectsRelationManager::class;
+        }
+
+        return $relationManagers;
     }
 
     public static function getPages(): array
