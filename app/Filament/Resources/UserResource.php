@@ -54,17 +54,12 @@ class UserResource extends Resource
 
     public static function getRelations(): array
     {
-        $relationManagers = [
+        return [
             RelationManagers\ItemsRelationManager::class,
             RelationManagers\CommentsRelationManager::class,
             RelationManagers\VotesRelationManager::class,
+            RelationManagers\ProjectsRelationManager::class,
         ];
-
-        if (Project::query()->where('private', '=', true)->count() > 0) {
-            $relationManagers[] = RelationManagers\ProjectsRelationManager::class;
-        }
-
-        return $relationManagers;
     }
 
     public static function getPages(): array
