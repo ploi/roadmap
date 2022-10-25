@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\Project;
 use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
@@ -57,6 +58,7 @@ class UserResource extends Resource
             RelationManagers\ItemsRelationManager::class,
             RelationManagers\CommentsRelationManager::class,
             RelationManagers\VotesRelationManager::class,
+            RelationManagers\ProjectsRelationManager::class,
         ];
     }
 
