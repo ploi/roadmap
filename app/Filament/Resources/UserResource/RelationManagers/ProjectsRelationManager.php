@@ -19,7 +19,7 @@ class ProjectsRelationManager extends RelationManager
 
     public static function canViewForRecord(Model $ownerRecord): bool
     {
-        return Project::query()->where('private', '=', true)->count() > 0;
+        return Project::query()->where('private', true)->exists();
     }
 
     public static function form(Form $form): Form
@@ -43,8 +43,8 @@ class ProjectsRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
-                    ->recordSelectOptionsQuery(fn (Builder $query): Builder => $query->where('private', '=', true))
-                    ->recordSelect(fn (Forms\Components\Select $select) => $select->helperText(__('projects.select-hidden-projects')))
+                    ->recordSelectOptionsQuery(fn(Builder $query): Builder => $query->where('private', true))
+                    ->recordSelect(fn(Forms\Components\Select $select) => $select->helperText(__('projects.select-hidden-projects')))
                     ->inverseRelationshipName('members')
                     ->preloadRecordSelect(),
             ])
