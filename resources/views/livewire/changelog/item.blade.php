@@ -38,14 +38,30 @@
                 @endforeach--}}
                 @php
                     $tags = \App\Models\Tag::query()
-                        ->where('changelog', '=', true)
-                        ->whereHas('items', function (\Illuminate\Database\Eloquent\Builder $query) use ($changelog) {
-                            return $query->whereHas('changelogs', function (\Illuminate\Database\Eloquent\Builder $query) use ($changelog) {
-                                return $query->where('changelogs.id', $changelog->id);
-                            });
-                        })
+                        ->forChangelog($changelog)
+                        ->get();
+
+                    $items = $changelog->items()
+                        ->noChangelogTag()
                         ->get();
                 @endphp
+
+                <div>
+                    <ul class="list-disc ml-5">
+                        @foreach($items as $item)
+                            <li>
+                                <div>
+                                    <a
+                                        href="{{ route('items.show', $item) }}"
+                                        class="cursor-pointer hover:underline"
+                                    >
+                                        {{ $item->title }}
+                                    </a>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
 
                 @foreach($tags as $tag)
                     <div>
@@ -53,7 +69,7 @@
                             <h3 class="uppercase font-bold">{{ $tag->name }}</h3>
                         </div>
 
-                        <ul class="list-disc ml-5 space-y-2">
+                        <ul class="list-disc ml-5">
                             @foreach($tag->items as $item)
                                 <li>
                                     <div>
@@ -63,13 +79,6 @@
                                         >
                                             {{ $item->title }}
                                         </a>
-                                    </div>
-
-                                    <div class="text-sm">
-                                        <div class="inline-flex items-center">
-                                            <x-heroicon-o-thumb-up class="w-4 h-4 pr-1"/>
-                                            <span class="">{{ $item->total_votes }}</span>
-                                        </div>
                                     </div>
                                 </li>
                             @endforeach

@@ -96,6 +96,13 @@ class Item extends Model
         return $this->morphMany(ActivitylogServiceProvider::determineActivityModel(), 'subject');
     }
 
+    public function tags(): MorphToMany
+    {
+        return $this
+            ->morphToMany(self::getTagClassName(), 'taggable', 'taggables', null, 'tag_id')
+            ->orderBy('order_column');
+    }
+
     public function scopePopular($query)
     {
         return $query->orderBy('total_votes', 'desc');
@@ -122,6 +129,14 @@ class Item extends Model
         };
     }
 
+    public function scopeNoChangelogTag($query)
+    {
+        return $query
+            ->whereDoesntHave('tags', function (Builder $query) {
+                return $query->where('changelog', '=', true);
+            });
+    }
+
     public function isPinned(): bool
     {
         return $this->pinned;
@@ -130,12 +145,5 @@ class Item extends Model
     public function isPrivate(): bool
     {
         return $this->private;
-    }
-
-    public function tags(): MorphToMany
-    {
-        return $this
-            ->morphToMany(self::getTagClassName(), 'taggable', 'taggables', null, 'tag_id')
-            ->orderBy('order_column');
     }
 }

@@ -26,7 +26,7 @@ class Changelog extends Model
         'published_at',
     ];
 
-    public function scopePublished(Builder $query)
+    public function scopePublished(Builder $query): Builder
     {
         return $query->where('published_at', '<=', now())->latest('published_at');
     }
