@@ -5,10 +5,10 @@ namespace App\Http\Livewire;
 use Closure;
 use Filament\Tables;
 use Livewire\Component;
+use Illuminate\Support\Carbon;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
-use Illuminate\Support\Carbon;
 
 class My extends Component implements HasTable
 {

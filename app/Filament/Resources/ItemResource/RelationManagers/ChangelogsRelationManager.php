@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources\ItemResource\RelationManagers;
 
-use App\Settings\GeneralSettings;
 use Filament\Resources\Table;
+use App\Settings\GeneralSettings;
+use Illuminate\Database\Eloquent\Model;
 use App\Filament\Resources\ChangelogResource;
 use Filament\Resources\RelationManagers\RelationManager;
-use Illuminate\Database\Eloquent\Model;
 
 class ChangelogsRelationManager extends RelationManager
 {

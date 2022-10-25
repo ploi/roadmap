@@ -2,15 +2,14 @@
 
 namespace App\Filament\Resources;
 
-use App\Enums\TagType;
 use Filament\Forms;
-use Filament\Resources\Concerns\Translatable;
 use Filament\Tables;
 use Spatie\Tags\Tag;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use App\Filament\Resources\TagResource\Pages;
+use Filament\Resources\Concerns\Translatable;
 
 class TagResource extends Resource
 {

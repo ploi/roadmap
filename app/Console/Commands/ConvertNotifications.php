@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Settings\GeneralSettings;
 use Illuminate\Console\Command;
+use App\Settings\GeneralSettings;
 
 class ConvertNotifications extends Command
 {
