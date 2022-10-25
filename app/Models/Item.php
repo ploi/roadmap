@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Item extends Model
@@ -40,6 +41,11 @@ class Item extends Model
         'private' => 'boolean',
         'notify_subscribers' => 'boolean',
     ];
+
+    public static function getTagClassName(): string
+    {
+        return Tag::class;
+    }
 
     protected function excerpt(): Attribute
     {
@@ -90,6 +96,13 @@ class Item extends Model
         return $this->morphMany(ActivitylogServiceProvider::determineActivityModel(), 'subject');
     }
 
+    public function tags(): MorphToMany
+    {
+        return $this
+            ->morphToMany(self::getTagClassName(), 'taggable', 'taggables', null, 'tag_id')
+            ->orderBy('order_column');
+    }
+
     public function scopePopular($query)
     {
         return $query->orderBy('total_votes', 'desc');
@@ -114,6 +127,14 @@ class Item extends Model
             InboxWorkflow::WithoutBoard => $query->whereNotNull('project_id')->whereNull('board_id'),
             InboxWorkflow::Disabled => null,
         };
+    }
+
+    public function scopeNoChangelogTag($query)
+    {
+        return $query
+            ->whereDoesntHave('tags', function (Builder $query) {
+                return $query->where('changelog', '=', true);
+            });
     }
 
     public function isPinned(): bool

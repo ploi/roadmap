@@ -9,9 +9,12 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use App\Filament\Resources\TagResource\Pages;
+use Filament\Resources\Concerns\Translatable;
 
 class TagResource extends Resource
 {
+    use Translatable;
+
     protected static ?string $model = Tag::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
@@ -26,6 +29,7 @@ class TagResource extends Resource
             ->schema([
                 Forms\Components\Card::make([
                     Forms\Components\TextInput::make('name')->required(),
+                    Forms\Components\Checkbox::make('changelog'),
                 ]),
             ]);
     }

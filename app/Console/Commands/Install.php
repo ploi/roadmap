@@ -6,8 +6,8 @@ use App\Models\User;
 use App\Enums\UserRole;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
-use Filament\Support\Commands\Concerns\CanValidateInput;
 use App\Console\Commands\Concerns\CanShowAnIntro;
+use Filament\Support\Commands\Concerns\CanValidateInput;
 
 class Install extends Command
 {

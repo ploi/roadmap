@@ -3,9 +3,9 @@
 namespace App\Jobs;
 
 use App\Models\Item;
-use App\Settings\ColorSettings;
 use Illuminate\Bus\Queueable;
 use App\Services\WebhookClient;
+use App\Settings\ColorSettings;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -15,7 +15,9 @@ class SendWebhookForNewItemJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(private readonly Item $item, private readonly array $receiver) {}
+    public function __construct(private readonly Item $item, private readonly array $receiver)
+    {
+    }
 
     public function handle()
     {

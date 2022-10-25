@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\PendingRequest;
 
 class WebhookClient
 {
