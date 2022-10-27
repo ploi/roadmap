@@ -224,6 +224,10 @@ class Settings extends SettingsPage
                                 ->label('Custom header script')
                                 ->helperText('This allows you to add your own custom widget, or tracking tool. Code inside here will always be placed inside the head section.')
                                 ->columnSpan(2),
+                        ]),
+                    Tabs\Tab::make('Excluded words')
+                        ->schema([
+                            TagsInput::make('excluded_matching_search_words')->placeholder('New excluded word')
                         ])
                 ])
                 ->columns()
