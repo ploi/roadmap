@@ -49,7 +49,7 @@ class System extends Page
     protected function getActions(): array
     {
         return [
-            Action::make('refresh_versions')
+            Action::make('check_for_updates')
                 ->color('secondary')
                 ->action(function () {
                     (new SystemChecker())->flushVersionData();
