@@ -3,6 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Models\Item;
+use App\Models\Project;
+use Closure;
+use Filament\Forms;
 use Filament\Tables;
 use App\Enums\InboxWorkflow;
 use Filament\Resources\Form;
@@ -12,6 +15,8 @@ use App\Settings\GeneralSettings;
 use App\Filament\Resources\InboxResource\Pages;
 use App\Filament\Resources\InboxResource\RelationManagers\VotesRelationManager;
 use App\Filament\Resources\InboxResource\RelationManagers\CommentsRelationManager;
+use Filament\Tables\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 
 class InboxResource extends Resource
 {
@@ -49,7 +54,8 @@ class InboxResource extends Resource
                 Tables\Columns\TextColumn::make('title')->wrap()->searchable(),
                 Tables\Columns\TextColumn::make('project.title')
                     ->visible(app(GeneralSettings::class)->getInboxWorkflow() === InboxWorkflow::WithoutBoard),
-                Tables\Columns\TextColumn::make('comments_count')->label(ucfirst(trans_choice('messages.comments', 2)))->counts('comments'),
+                Tables\Columns\TextColumn::make('comments_count')->label(ucfirst(trans_choice('messages.comments', 2)))->counts('comments')->toggleable(),
+                Tables\Columns\TextColumn::make('votes_count')->label(ucfirst(trans_choice('messages.votes', 2)))->counts('votes')->toggleable(),
                 Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -57,7 +63,20 @@ class InboxResource extends Resource
                     ->label('Date'),
             ])
             ->filters([
-                //
+                Filter::make('item_filters')
+                    ->form([
+                        Forms\Components\Select::make('project_id')
+                            ->label(trans('table.project'))
+                            ->reactive()
+                            ->options(Project::pluck('title', 'id')),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['project_id'],
+                                fn(Builder $query, $projectId): Builder => $query->where('project_id', $projectId),
+                            );
+                    })
             ])
             ->defaultSort('created_at', 'desc');
     }
