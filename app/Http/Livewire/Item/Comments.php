@@ -87,7 +87,7 @@ class Comments extends Component implements HasForms
                                       ->minLength(3)
                                       ->visible(auth()->check() && auth()->user()->hasAdminAccess())
                                       ->rules(['required_if:content,null,""', 'prohibited_unless:content,null,""']),
-                    ])->withAttributes(['class' => 'bg-yellow-50 rounded-xl'])->id("private-{$this->reply}"),
+                    ])->extraAttributes(['class' => 'bg-yellow-50 rounded-xl'])->id("private-{$this->reply}"),
                 ]),
             ];
         }
