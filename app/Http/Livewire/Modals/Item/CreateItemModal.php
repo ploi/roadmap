@@ -137,7 +137,11 @@ class CreateItemModal extends ModalComponent implements HasForms
         //
         // Common words example: the, it, that, when, how, this, true, false, is, not, well, with, use, enable, of, for
         // ^ These are words you don't want to search on in your database and exclude from the array.
-        $words = collect(explode(' ', $state))->filter();
+        $words = collect(explode(' ', $state))->filter(function ($item) {
+            $excludedWords = app(GeneralSettings::class)->excluded_matching_search_words;
+
+            return !in_array($item, $excludedWords);
+        });
 
         $this->similarItems = $state ? Item::query()
             ->visibleForCurrentUser()

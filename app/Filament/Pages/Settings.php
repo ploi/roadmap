@@ -225,9 +225,11 @@ class Settings extends SettingsPage
                                 ->helperText('This allows you to add your own custom widget, or tracking tool. Code inside here will always be placed inside the head section.')
                                 ->columnSpan(2),
                         ]),
-                    Tabs\Tab::make('Excluded words')
+                    Tabs\Tab::make('Excluded search words')
                         ->schema([
-                            TagsInput::make('excluded_matching_search_words')->placeholder('New excluded word')
+                            TagsInput::make('excluded_matching_search_words')
+                                ->placeholder('New excluded word')
+                                ->helperText('Define any words here that should be excluded when users create a new item, you can also add words in your own language here to be excluded. Defining words here will increase the search results when a user starts creating an item, to prevent duplicates.')
                         ])
                 ])
                 ->columns()
