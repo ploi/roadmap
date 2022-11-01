@@ -19,7 +19,7 @@
     @auth
         <x-slot name="content">
             @if(! auth()->user()->needsToVerifyEmail())
-                <div @class(['hidden' => ! $similarItems && empty($similarItems)])>
+                <div @class(['hidden' => !$similarItems->count()])>
                     <h3 class="mb-2">{{ trans('items.similar-results') }}</h3>
                     <ul class="max-h-20 overflow-y-auto list-disc list-inside">
                         @foreach($similarItems as $similarItem)

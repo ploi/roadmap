@@ -30,12 +30,12 @@ class CreateItemModal extends ModalComponent implements HasForms
 {
     use InteractsWithForms, CanNotify;
 
-    public $similarItems = [];
+    public $similarItems;
 
     public function mount()
     {
         $this->form->fill([]);
-        $this->similarItems = [];
+        $this->similarItems = collect([]);
     }
 
     public function hydrate()
@@ -68,8 +68,8 @@ class CreateItemModal extends ModalComponent implements HasForms
         if (app(GeneralSettings::class)->select_board_when_creating_item) {
             $inputs[] = Select::make('board_id')
                 ->label(trans('table.board'))
-                ->visible(fn ($get) => $get('project_id'))
-                ->options(fn ($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
+                ->visible(fn($get) => $get('project_id'))
+                ->options(fn($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
                 ->required(app(GeneralSettings::class)->board_required_when_creating_item);
         }
 
@@ -137,15 +137,22 @@ class CreateItemModal extends ModalComponent implements HasForms
         //
         // Common words example: the, it, that, when, how, this, true, false, is, not, well, with, use, enable, of, for
         // ^ These are words you don't want to search on in your database and exclude from the array.
-        $words = array_filter(explode(' ', $state));
+        $words = collect(explode(' ', $state))->filter(function ($item) {
+            $excludedWords = app(GeneralSettings::class)->excluded_matching_search_words;
 
-        $this->similarItems = $state ? Item::query()->visibleForCurrentUser()->where(function ($query) use ($words) {
-            foreach ($words as $word) {
-                $query->orWhere('title', 'like', '%' . $word . '%');
-            }
+            return !in_array($item, $excludedWords);
+        });
 
-            return $query;
-        })->get(['title', 'slug']) : [];
+        $this->similarItems = $state ? Item::query()
+            ->visibleForCurrentUser()
+            ->where(function ($query) use ($words) {
+                foreach ($words as $word) {
+                    $query->orWhere('title', 'like', '%' . $word . '%');
+                }
+
+                return $query;
+            })->get(['title', 'slug']) : collect([]);
+
     }
 
     public function render()
