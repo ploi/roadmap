@@ -48,13 +48,7 @@ class Edit extends Component implements HasForms
             'content' => $formState['content'],
         ]);
 
-        if (!$this->item->project) {
-            $this->redirectRoute('items.show', $this->item);
-
-            return;
-        }
-
-        $this->redirectRoute('projects.items.show', [$this->item->project, $this->item]);
+        $this->redirectRoute('items.show', $this->item);
     }
 
     public function render()
