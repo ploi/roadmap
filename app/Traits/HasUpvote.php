@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Livewire\Redirector;
 
 trait HasUpvote
 {
@@ -27,7 +28,7 @@ trait HasUpvote
         return (bool)$this->votes()->where('user_id', $user->id)->exists();
     }
 
-    public function toggleUpvote(User $user = null): Vote|Model|RedirectResponse|bool
+    public function toggleUpvote(User $user = null): Vote|Model|RedirectResponse|bool|Redirector
     {
         $user = $user ?? auth()->user();
 
