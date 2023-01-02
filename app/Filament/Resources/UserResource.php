@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Project;
 use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;

@@ -230,6 +230,12 @@ class Settings extends SettingsPage
                             TagsInput::make('excluded_matching_search_words')
                                 ->placeholder('New excluded word')
                                 ->helperText('Define any words here that should be excluded when users create a new item, you can also add words in your own language here to be excluded. Defining words here will increase the search results when a user starts creating an item, to prevent duplicates.')
+                        ]),
+                    Tabs\Tab::make('Profanity')
+                        ->schema([
+                            TagsInput::make('profanity_words')
+                                ->placeholder('Words')
+                                ->helperText('Add words here that should be filtered out when users create items or comment on items.')
                         ])
                 ])
                 ->columns()

@@ -2,21 +2,20 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Item;
-use App\Models\Project;
-use Closure;
 use Filament\Forms;
+use App\Models\Item;
 use Filament\Tables;
+use App\Models\Project;
 use App\Enums\InboxWorkflow;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use App\Settings\GeneralSettings;
+use Filament\Tables\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\InboxResource\Pages;
 use App\Filament\Resources\InboxResource\RelationManagers\VotesRelationManager;
 use App\Filament\Resources\InboxResource\RelationManagers\CommentsRelationManager;
-use Filament\Tables\Filters\Filter;
-use Illuminate\Database\Eloquent\Builder;
 
 class InboxResource extends Resource
 {
@@ -74,7 +73,7 @@ class InboxResource extends Resource
                         return $query
                             ->when(
                                 $data['project_id'],
-                                fn(Builder $query, $projectId): Builder => $query->where('project_id', $projectId),
+                                fn (Builder $query, $projectId): Builder => $query->where('project_id', $projectId),
                             );
                     })
             ])
