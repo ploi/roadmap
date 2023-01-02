@@ -12,6 +12,7 @@ use App\Models\User;
 use function redirect;
 use App\Enums\UserRole;
 use App\Models\Project;
+use App\Rules\ProfanityCheck;
 use App\Settings\GeneralSettings;
 use Filament\Forms\Components\Group;
 use LivewireUI\Modal\ModalComponent;
@@ -49,6 +50,9 @@ class CreateItemModal extends ModalComponent implements HasForms
 
         $inputs[] = TextInput::make('title')
             ->autofocus()
+            ->rules([
+                new ProfanityCheck()
+            ])
             ->label(trans('table.title'))
             ->lazy()
             ->afterStateUpdated(function (Closure $set, $state) {
@@ -68,14 +72,17 @@ class CreateItemModal extends ModalComponent implements HasForms
         if (app(GeneralSettings::class)->select_board_when_creating_item) {
             $inputs[] = Select::make('board_id')
                 ->label(trans('table.board'))
-                ->visible(fn($get) => $get('project_id'))
-                ->options(fn($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
+                ->visible(fn ($get) => $get('project_id'))
+                ->options(fn ($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
                 ->required(app(GeneralSettings::class)->board_required_when_creating_item);
         }
 
         $inputs[] = Group::make([
             MarkdownEditor::make('content')
                 ->label(trans('table.content'))
+                ->rules([
+                    new ProfanityCheck()
+                ])
                 ->disableToolbarButtons(app(GeneralSettings::class)->getDisabledToolbarButtons())
                 ->minLength(10)
                 ->required()
@@ -152,7 +159,6 @@ class CreateItemModal extends ModalComponent implements HasForms
 
                 return $query;
             })->get(['title', 'slug']) : collect([]);
-
     }
 
     public function render()

@@ -2,14 +2,14 @@
 
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
-use App\Models\Project;
 use Filament\Forms;
-use Filament\Resources\Form;
-use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Project;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\RelationManagers\RelationManager;
 
 class ProjectsRelationManager extends RelationManager
 {
@@ -43,8 +43,8 @@ class ProjectsRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
-                    ->recordSelectOptionsQuery(fn(Builder $query): Builder => $query->where('private', true))
-                    ->recordSelect(fn(Forms\Components\Select $select) => $select->helperText(__('projects.select-hidden-projects')))
+                    ->recordSelectOptionsQuery(fn (Builder $query): Builder => $query->where('private', true))
+                    ->recordSelect(fn (Forms\Components\Select $select) => $select->helperText(__('projects.select-hidden-projects')))
                     ->inverseRelationshipName('members')
                     ->preloadRecordSelect(),
             ])

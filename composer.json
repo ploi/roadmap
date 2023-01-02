@@ -35,7 +35,7 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
         "fakerphp/faker": "^1.9.1",
-        "friendsofphp/php-cs-fixer": "^3.8",
+        "friendsofphp/php-cs-fixer": "^3.13.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "pestphp/pest": "^1.21",

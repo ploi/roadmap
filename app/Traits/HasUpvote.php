@@ -4,11 +4,11 @@ namespace App\Traits;
 
 use App\Models\User;
 use App\Models\Vote;
+use Livewire\Redirector;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Livewire\Redirector;
 
 trait HasUpvote
 {
