@@ -40,6 +40,7 @@ class LoginController extends Controller
         $userSocial = UserSocial::query()
             ->where('provider_id', $social->getId())
             ->where('provider', 'sso')
+            ->whereNotNull('provider_id')
             ->first();
 
         // If we already have a social user, login using that.
