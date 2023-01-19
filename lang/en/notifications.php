@@ -26,5 +26,6 @@ return [
     'from' => 'From',
     'on' => 'on',
 
-    'unsubscribe-info' => 'If you do not want to receive notifications like this anymore, you can unsubscribe from your profile.',
+    'unsubscribe-info' => 'If you do not want to receive notifications like this anymore, you can unsubscribe from your profile or by clicking the link below.',
+    'unsubscribe-link' => 'Unsubscribe from future emails about this item.',
 ];

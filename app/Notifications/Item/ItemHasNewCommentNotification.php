@@ -8,6 +8,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\URL;
 
 class ItemHasNewCommentNotification extends Notification implements ShouldQueue
 {
@@ -36,6 +37,10 @@ class ItemHasNewCommentNotification extends Notification implements ShouldQueue
                 'comment' => $this->comment,
                 'user'    => $this->user,
                 'url'     => route('items.show', $this->comment->item) . '#comment-' . $this->comment->id,
+                'unsubscribeUrl' => URL::signedRoute('items.email-unsubscribe', [
+                    'item' => $this->comment->item,
+                    'user' => $this->user,
+                ]),
             ]);
     }
 }

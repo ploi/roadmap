@@ -5,6 +5,7 @@ use App\Models\Vote;
 use App\Enums\UserRole;
 use App\Models\Comment;
 use App\Settings\GeneralSettings;
+use Illuminate\Support\Facades\DB;
 
 it('can generate an username upon user creation', function () {
     $user = createUser();
@@ -110,4 +111,61 @@ it('can delete a user with social users', function () {
     $user->delete();
 
     expect($user->fresh())->toBeNull();
+});
+
+it('can return true if a user is a subscribed to an item', function () {
+
+    $user = createUser();
+    $item = Item::factory()->create();
+
+    DB::table('votes')->insert([
+        'user_id' => $user->id,
+        'model_id' => $item->id,
+        'model_type' => Item::class,
+        'subscribed' => true,
+    ]);
+
+    $this->assertTrue($user->isSubscribedToItem($item));
+});
+
+it('can return false if a user is not subscribed to an item', function () {
+
+    $user = createUser();
+    $item = Item::factory()->create();
+
+    DB::table('votes')->insert([
+        'user_id' => $user->id,
+        'model_id' => $item->id,
+        'model_type' => Item::class,
+        'subscribed' => false,
+    ]);
+
+    $this->assertFalse($user->isSubscribedToItem($item));
+});
+
+it('toggles the subscription state of a vote the user belongs to', function () {
+
+    $user = createUser();
+    $item = Item::factory()->create();
+
+    DB::table('votes')->insert([
+        'user_id' => $user->id,
+        'model_id' => $item->id,
+        'model_type' => Item::class,
+        'subscribed' => false,
+    ]);
+
+    $user->toggleVoteSubscription($item->id, Item::class);
+
+    $this->assertTrue($user->isSubscribedToItem($item));
+});
+
+it('does not toggle the subscription if the user does not have a vote for that item', function () {
+
+    $user = createUser();
+    $item = Item::factory()->create();
+
+    $user->toggleVoteSubscription($item->id, Item::class);
+
+    $this->assertFalse($user->isSubscribedToItem($item));
 });

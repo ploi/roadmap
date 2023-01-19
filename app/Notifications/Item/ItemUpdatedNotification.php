@@ -8,6 +8,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\URL;
 
 class ItemUpdatedNotification extends Notification implements ShouldQueue
 {
@@ -31,6 +32,10 @@ class ItemUpdatedNotification extends Notification implements ShouldQueue
                 'user'       => $notifiable,
                 'item'       => $this->item,
                 'activities' => $this->item->activities()->latest()->limit(2)->get(),
+                'unsubscribeUrl' => URL::signedRoute('items.email-unsubscribe', [
+                    'item' => $this->item,
+                    'user' => $notifiable,
+                ]),
             ]);
     }
 }

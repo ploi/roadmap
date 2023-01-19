@@ -139,6 +139,25 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
              !auth()->user()->hasVerifiedEmail();
     }
 
+    public function isSubscribedToItem(Item $item): bool
+    {
+        return $item->subscribedVotes()->where('user_id', $this->id)->exists();
+    }
+
+    public function toggleVoteSubscription(int $id, string $type)
+    {
+        $vote = Vote::where('model_id', $id)
+            ->where('model_type', $type)
+            ->where('user_id', $this->id)
+            ->first();
+
+        if (!$vote) {
+            return;
+        }
+
+        $vote->update(['subscribed' => !$vote->subscribed]);
+    }
+
     public static function booted()
     {
         static::creating(function (self $user) {

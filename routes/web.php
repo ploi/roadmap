@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ItemEmailUnsubscribeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
 use App\Http\Controllers\ItemController;
@@ -43,3 +44,7 @@ Route::group(['middleware' => 'authed'], function () {
     Route::get('mention-search', \App\Http\Controllers\MentionSearchController::class)->name('mention-search');
     Route::get('user/{username}', \App\Http\Controllers\PublicUserController::class)->name('public-user');
 });
+
+Route::get('/unsubscribe/{item}/{user}', [ItemEmailUnsubscribeController::class, '__invoke'])
+    ->name('items.email-unsubscribe')
+    ->middleware('signed');
