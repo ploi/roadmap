@@ -18,4 +18,8 @@
 
 {{ trans('notifications.salutation') }}<br>
 {{ config('app.name') }}
+
+<a href="{{ $unsubscribeUrl }}">
+    {{ trans('notifications.unsubscribe-link') }}
+</a>
 @endcomponent
