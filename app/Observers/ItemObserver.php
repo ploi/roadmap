@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\Project;
 use Mail;
 use App\Models\Item;
 use App\Models\User;
@@ -21,6 +22,14 @@ class ItemObserver
         if ($receivers = app(GeneralSettings::class)->send_notifications_to) {
             foreach ($receivers as $receiver) {
                 if (!isset($receiver['type'])) {
+                    continue;
+                }
+
+                if (
+                    isset($receiver['projects']) &&
+                    Project::whereIn('id', $receiver['projects'])->count() &&
+                    !in_array($item->project_id, $receiver['projects'])
+                ) {
                     continue;
                 }
 

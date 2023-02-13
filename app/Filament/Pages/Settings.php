@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Models\Board;
+use App\Models\Project;
 use Closure;
 use Filament\Forms\Components\Textarea;
 use Storage;
@@ -200,7 +201,7 @@ class Settings extends SettingsPage
                     Tabs\Tab::make('Notifications')
                         ->schema([
                             Repeater::make('send_notifications_to')
-                                ->columns(3)
+                                ->columns(4)
                                 ->schema([
                                     Select::make('type')
                                         ->default('email')
@@ -210,6 +211,10 @@ class Settings extends SettingsPage
                                             'discord' => 'Discord',
                                             'slack' => 'Slack'
                                         ]),
+                                    Select::make('projects')
+                                        ->multiple()
+                                        ->helperText('Optionally select projects to trigger for, if you do not select a project it will always notify on new events')
+                                        ->options(Project::pluck('title', 'id')),
                                     TextInput::make('name')->label(function ($get) {
                                         return match ($get('type')) {
                                             'email' => 'Name receiver',
