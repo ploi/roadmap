@@ -1,0 +1,41 @@
+name: Unit Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  PHPUnit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php:
+          - 8.1
+          - 8.0
+          - 7.4
+          - 7.3
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@develop
+        with:
+          php-version: ${{ matrix.php }}
+
+      - run: php -v
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Create Database
+        run: |
+          touch tests/vendor/temp/database.sqlite
+          chmod 775 tests/vendor/temp/database.sqlite
+
+      - name: Run tests
+        run: vendor/bin/phpunit --coverage-clover tests/vendor/temp/coverage.xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          files: tests/vendor/temp/coverage.xml
