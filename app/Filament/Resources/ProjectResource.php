@@ -30,7 +30,12 @@ class ProjectResource extends Resource
                         ->columnSpan(1)
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('url')
+// For now, we're not using this..
+//                    Forms\Components\TextInput::make('url')
+//                        ->columnSpan(1)
+//                        ->maxLength(255),
+                    Forms\Components\TextInput::make('group')
+                        ->helperText('Type a group here to categorise them in your roadmap')
                         ->columnSpan(1)
                         ->maxLength(255),
                     Forms\Components\TextInput::make('slug')

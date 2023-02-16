@@ -16,6 +16,7 @@ class Project extends Model
     public $fillable = [
         'title',
         'slug',
+        'group',
         'icon',
         'url',
         'description',
