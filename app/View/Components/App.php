@@ -23,6 +23,7 @@ class App extends Component
                 return $query->has('boards');
             })
             ->orderBy('sort_order')
+            ->orderBy('group')
             ->orderBy('title')
             ->get();
 
