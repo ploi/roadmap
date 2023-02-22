@@ -29,7 +29,7 @@
         "symfony/postmark-mailer": "^6.0",
         "wire-elements/modal": "^1.0.7",
         "wire-elements/spotlight": "^1.0.7",
-        "xetaio/xetaravel-mentions": "dev-laravel-10"
+        "xetaio/xetaravel-mentions": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
