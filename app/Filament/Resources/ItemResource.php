@@ -111,14 +111,16 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('comments_count')->label('Comments')->counts('comments')->sortable()->toggleable()->toggledHiddenByDefault(),
                 Tables\Columns\TextColumn::make('project.title'),
                 Tables\Columns\TextColumn::make('board.title')->sortable(),
-                Tables\Columns\TextColumn::make('user.name'),
+                Tables\Columns\TextColumn::make('user.name')->toggleable(),
+                Tables\Columns\TagsColumn::make('tags.name')->toggleable()->toggledHiddenByDefault(),
                 Tables\Columns\TagsColumn::make('assignedUsers.name')->visible(auth()->user()->hasRole(UserRole::Admin))->toggleable()->toggledHiddenByDefault(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
+                    ->toggleable()
                     ->label('Date'),
-                Tables\Columns\BooleanColumn::make('pinned')->label('Pinned'),
-                Tables\Columns\BooleanColumn::make('private')->label('Private')->toggleable()->toggledHiddenByDefault(),
+                Tables\Columns\BooleanColumn::make('pinned')->label('Pinned')->sortable()->toggleable()->toggledHiddenByDefault(),
+                Tables\Columns\BooleanColumn::make('private')->label('Private')->sortable()->toggleable()->toggledHiddenByDefault(),
             ])
             ->filters([
                 Filter::make('assigned')
