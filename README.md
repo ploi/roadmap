@@ -29,7 +29,7 @@ Welcome to Roadmap, the open-source software for your roadmapping needs 🛣
 First set up a database, and remember the credentials.
 
 ```
-git clone https://github.com/ploi-deploy/roadmap.git
+git clone https://github.com/ploi/roadmap.git
 composer install
 php -r "file_exists('.env') || copy('.env.example', '.env');"
 php artisan key:generate
