@@ -13,8 +13,6 @@ use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\assertDatabaseCount;
 
 beforeEach(function () {
-    Mail::fake();
-
     $this->project = Project::factory()->create();
     $this->board = Board::factory()->create(['project_id' => $this->project->getAttributeValue('id')]);
 

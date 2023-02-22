@@ -23,7 +23,6 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
-use SebastiaanKloos\FilamentCodeEditor\Components\CodeEditor;
 
 class Settings extends SettingsPage
 {
@@ -249,7 +248,7 @@ class Settings extends SettingsPage
 
                     Tabs\Tab::make('Scripts')
                         ->schema([
-                            CodeEditor::make('custom_scripts')
+                            Textarea::make('custom_scripts')
                                 ->label('Custom header script')
                                 ->helperText('This allows you to add your own custom widget, or tracking tool. Code inside here will always be placed inside the head section.')
                                 ->columnSpan(2),

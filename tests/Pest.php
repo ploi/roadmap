@@ -11,12 +11,11 @@ uses(
     CreatesApplication::class,
     RefreshDatabase::class
 )
+    ->beforeEach(fn () => Mail::fake())
     ->in('Feature', 'Unit');
 
 function createUser($attributes = [], $has = [])
 {
-    Mail::fake();
-
     $user = User::factory();
 
     if ($has) {

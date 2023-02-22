@@ -7,41 +7,40 @@
     "require": {
         "php": "^8.1.0",
         "doctrine/dbal": "^3.3",
-        "filament/filament": "^2.0",
-        "filament/spatie-laravel-settings-plugin": "^2.0",
-        "filament/spatie-laravel-tags-plugin": "^2.0",
-        "filament/spatie-laravel-translatable-plugin": "^2.16",
+        "filament/filament": "^2.17.0",
+        "filament/spatie-laravel-settings-plugin": "^2.17.0",
+        "filament/spatie-laravel-tags-plugin": "^2.17",
+        "filament/spatie-laravel-translatable-plugin": "^2.17",
         "guzzlehttp/guzzle": "^7.2",
-        "intervention/image": "^2.7",
-        "laravel/framework": "^9.2",
+        "intervention/image": "^2.7.2",
+        "laravel/framework": "^10.0",
         "laravel/octane": "^1.2",
-        "laravel/sanctum": "^2.14.1",
-        "laravel/socialite": "^5.5",
-        "laravel/tinker": "^2.7",
-        "laravel/ui": "^3.4",
-        "sebastiaankloos/filament-code-editor": "^1.0",
+        "laravel/sanctum": "^3.2.1",
+        "laravel/socialite": "^5.6.1",
+        "laravel/tinker": "^2.8.0",
+        "laravel/ui": "^4.2.0",
         "spatie/color": "^1.5",
-        "spatie/laravel-activitylog": "^4.5",
-        "spatie/laravel-honeypot": "^4.2",
-        "spatie/laravel-ray": "^1.29",
-        "spiral/roadrunner": "^2.8.2",
+        "spatie/laravel-activitylog": "^4.7.3",
+        "spatie/laravel-honeypot": "^4.3.2",
+        "spatie/laravel-ray": "^1.32.2",
+        "spiral/roadrunner": "^2.12.2",
         "symfony/http-client": "^6.0",
         "symfony/mailgun-mailer": "^6.0",
         "symfony/postmark-mailer": "^6.0",
-        "wire-elements/modal": "^1.0",
-        "wire-elements/spotlight": "^1.0",
-        "xetaio/xetaravel-mentions": "^9.0"
+        "wire-elements/modal": "^1.0.7",
+        "wire-elements/spotlight": "^1.0.7",
+        "xetaio/xetaravel-mentions": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
         "fakerphp/faker": "^1.9.1",
         "friendsofphp/php-cs-fixer": "^3.13.1",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^6.1",
-        "pestphp/pest": "^1.21",
+        "nunomaduro/collision": "^6.4",
+        "pestphp/pest": "^1.22.4",
         "pestphp/pest-plugin-laravel": "^1.2",
-        "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "phpunit/phpunit": "^9.6.3",
+        "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -92,5 +91,14 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./packages/xetaravel-mentions",
+            "options": {
+                "symlink": true
+            }
+        }
+    ]
 }

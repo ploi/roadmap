@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\Admin\RoadmapVersionOutOfDate;
 
 beforeEach(function () {
-    Mail::fake();
     GeneralSettings::fake(['send_notifications_to' => [['name' => 'Ploi.io', 'email' => 'info@ploi.io']]]);
 });
 
