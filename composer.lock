@@ -10452,7 +10452,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/xetaravel-mentions",
-                "reference": "f2de358cb33122f9fde78d7ebcabc14107d5a656"
+                "reference": "ea26650a5fc0c6b33999c43ade5adf30bc1c1211"
             },
             "require": {
                 "illuminate/database": "^8.0 || ^9.0 || ^10",
