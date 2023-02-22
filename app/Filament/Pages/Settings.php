@@ -217,7 +217,8 @@ class Settings extends SettingsPage
                                     TextInput::make('name')->label(function ($get) {
                                         return match ($get('type')) {
                                             'email' => 'Name receiver',
-                                            'discord', 'slack' => 'Label'
+                                            'discord', 'slack' => 'Label',
+                                            null => 'Name receiver' // Fallback for previous roadmap users
                                         };
                                     })->required(),
                                     TextInput::make('webhook')
@@ -225,7 +226,8 @@ class Settings extends SettingsPage
                                             return match ($get('type')) {
                                                 'email' => 'E-mail',
                                                 'discord' => 'Discord webhook URL',
-                                                'slack' => 'Slack webhook URL'
+                                                'slack' => 'Slack webhook URL',
+                                                null => 'E-mail' // Fallback for previous roadmap users
                                             };
                                         })
                                         ->required()
