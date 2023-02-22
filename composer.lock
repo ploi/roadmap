@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9725e8828a40ae0c694a05739d5cc25",
+    "content-hash": "71c50a2a6200c07cb76f13be22495f83",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -10452,7 +10452,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/xetaravel-mentions",
-                "reference": "ea26650a5fc0c6b33999c43ade5adf30bc1c1211"
+                "reference": "f2de358cb33122f9fde78d7ebcabc14107d5a656"
             },
             "require": {
                 "illuminate/database": "^8.0 || ^9.0 || ^10",
@@ -13938,7 +13938,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "xetaio/xetaravel-mentions": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
