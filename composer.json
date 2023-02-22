@@ -36,10 +36,10 @@
         "fakerphp/faker": "^1.9.1",
         "friendsofphp/php-cs-fixer": "^3.13.1",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^6.0",
-        "pestphp/pest": "^1.21",
+        "nunomaduro/collision": "^6.4",
+        "pestphp/pest": "^1.22.4",
         "pestphp/pest-plugin-laravel": "^1.2",
-        "phpunit/phpunit": "^9.5.27",
+        "phpunit/phpunit": "^9.6.3",
         "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
@@ -90,7 +90,7 @@
             "pestphp/pest-plugin": true
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "repositories": [
         {

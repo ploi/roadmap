@@ -22,8 +22,8 @@ class Changelog extends Model
         'user_id',
     ];
 
-    protected $dates = [
-        'published_at',
+    protected $casts = [
+        'published_at' => 'datetime',
     ];
 
     public function scopePublished(Builder $query): Builder
