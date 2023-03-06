@@ -16,6 +16,12 @@ class PasswordProtected
             $request->route()->getName() !== 'password.protection' &&
             $request->route()->getName() !== 'password.protection.login'
         ) {
+            if ($request->input('secret') === app(GeneralSettings::class)->password) {
+                session()->put('password-login-authorized', true);
+
+                return $next($request);
+            }
+
             return redirect()->route('password.protection');
         }
 
