@@ -50,6 +50,7 @@ class ItemResource extends Resource
                                     ->searchable(),
                                 Forms\Components\TextInput::make('slug')
                                     ->required()
+                                    ->hiddenOn('create')
                                     ->maxLength(255)
                                     ->columnSpan(2),
                                 Forms\Components\MarkdownEditor::make('content')
