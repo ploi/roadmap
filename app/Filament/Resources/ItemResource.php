@@ -48,6 +48,10 @@ class ItemResource extends Resource
                                     ->preload()
                                     ->required()
                                     ->searchable(),
+                                Forms\Components\TextInput::make('slug')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->columnSpan(2),
                                 Forms\Components\MarkdownEditor::make('content')
                                     ->columnSpan(2)
                                     ->required()
