@@ -27,7 +27,13 @@ class RecentComments extends Component implements HasTable
     {
         return [
             Tables\Columns\TextColumn::make('content')->label(trans('table.content')),
-            Tables\Columns\TextColumn::make('item.title')->label(trans('table.item')),
+            Tables\Columns\TextColumn::make('item.title')->label(trans('table.item'))->url(function ($record) {
+                if ($item = $record->item) {
+                    return route('items.show', $item);
+                }
+
+                return null;
+            }),
         ];
     }
 
