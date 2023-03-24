@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Welcome;
 
+use Closure;
 use Filament\Tables;
 use App\Models\Comment;
 use Livewire\Component;
@@ -23,17 +24,22 @@ class RecentComments extends Component implements HasTable
         return false;
     }
 
+    protected function getTableRecordUrlUsing(): ?Closure
+    {
+        return function($record) {
+            if ($item = $record->item) {
+                return route('items.show', $item). "#comment-$record->id";
+            }
+    
+            return null;
+        };
+    }
+
     protected function getTableColumns(): array
     {
         return [
             Tables\Columns\TextColumn::make('content')->label(trans('table.content')),
-            Tables\Columns\TextColumn::make('item.title')->label(trans('table.item'))->url(function ($record) {
-                if ($item = $record->item) {
-                    return route('items.show', $item);
-                }
-
-                return null;
-            }),
+            Tables\Columns\TextColumn::make('item.title')->label(trans('table.item')),
         ];
     }
 
