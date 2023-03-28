@@ -6,6 +6,15 @@
 
     <title>@yield('title', 'Welcome') - {{ config('app.name') }}</title>
 
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family={{ $fontFamily['urlValue'] }}" rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: '{{ $fontFamily['cssValue'] }}', sans-serif;
+        }
+    </style>
+
     {!! $brandColors !!}
 
     @vite('resources/css/app.css')

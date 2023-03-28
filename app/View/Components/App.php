@@ -4,6 +4,7 @@ namespace App\View\Components;
 
 use App\Models\Project;
 use App\Services\Tailwind;
+use Illuminate\Support\Str;
 use Illuminate\View\Component;
 use App\Settings\GeneralSettings;
 use Illuminate\Database\Eloquent\Collection;
@@ -12,6 +13,7 @@ class App extends Component
 {
     public Collection $projects;
     public string $brandColors;
+    public array $fontFamily;
     public bool $blockRobots = false;
     public bool $userNeedsToVerify = false;
 
@@ -40,6 +42,12 @@ class App extends Component
         $tw = new Tailwind('brand', app(\App\Settings\ColorSettings::class)->primary);
 
         $this->brandColors = $tw->getCssFormat();
+
+        $fontFamily = app(\App\Settings\ColorSettings::class)->fontFamily ?? "Nunito";
+        $this->fontFamily = [
+            'cssValue' => $fontFamily,
+            'urlValue' => Str::snake($fontFamily, '-')
+        ];
 
         $this->userNeedsToVerify = app(GeneralSettings::class)->users_must_verify_email &&
             auth()->check() &&
