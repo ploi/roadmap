@@ -4,8 +4,10 @@ namespace App\Filament\Pages;
 
 use App\Enums\UserRole;
 use App\Settings\ColorSettings;
+use Filament\Forms\Components\TextInput;
 use Filament\Pages\SettingsPage;
 use Filament\Forms\Components\Card;
+use Illuminate\Support\HtmlString;
 use Livewire\TemporaryUploadedFile;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\ColorPicker;
@@ -48,6 +50,10 @@ class Colors extends SettingsPage
                     ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
                         return (string)'favicon.png';
                     }),
+                TextInput::make('fontFamily')
+                    ->placeholder('e.g. Roboto')
+                    ->required()
+                    ->helperText(new HtmlString('Choose a font family from <a href="https://fonts.bunny.net" target="_blank" rel="noreferrer">Bunny Fonts</a> (e.g. \'Roboto\')'))
             ])->columns(),
         ];
     }
