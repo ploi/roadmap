@@ -49,7 +49,7 @@
     </div>
 @endif
 
-@include('partials.header')
+@include('partials.header', ['logo' => $logo])
 
 <div class="w-full mx-auto py-5 md:space-x-10 h-full grid grid-cols-6 w-full px-2 sm:px-6 md:px-8 max-w-[1500px]">
     @include('partials.navbar')

@@ -36,10 +36,20 @@ class Colors extends SettingsPage
     {
         return [
             Card::make([
-                ColorPicker::make('primary'),
-                FileUpload::make('favicon')
+                FileUpload::make('logo')
                     ->image()
                     ->helperText('Make sure your storage is linked (by running php artisan storage:link).')
+                    ->disk('public')
+                    ->imageResizeTargetHeight('64')
+                    ->maxSize(1024)
+                    ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                        return (string) str($file->getClientOriginalName())->prepend('logo-');
+                    })
+                    ->getUploadedFileUrlUsing(function ($record) {
+                        return storage_path('app/public/'.app(ColorSettings::class)->logo);
+                    }),
+                FileUpload::make('favicon')
+                    ->image()
                     ->disk('public')
                     ->imageResizeTargetHeight('64')
                     ->imageResizeTargetWidth('64')
@@ -53,7 +63,8 @@ class Colors extends SettingsPage
                 TextInput::make('fontFamily')
                     ->placeholder('e.g. Roboto')
                     ->required()
-                    ->helperText(new HtmlString('Choose a font family from <a href="https://fonts.bunny.net" target="_blank" rel="noreferrer">Bunny Fonts</a> (e.g. \'Roboto\')'))
+                    ->helperText(new HtmlString('Choose a font family from <a href="https://fonts.bunny.net" target="_blank" rel="noreferrer">Bunny Fonts</a> (e.g. \'Roboto\')')),
+                ColorPicker::make('primary')
             ])->columns(),
         ];
     }
