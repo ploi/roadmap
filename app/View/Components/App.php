@@ -13,6 +13,7 @@ class App extends Component
 {
     public Collection $projects;
     public string $brandColors;
+    public ?string $logo;
     public array $fontFamily;
     public bool $blockRobots = false;
     public bool $userNeedsToVerify = false;
@@ -48,6 +49,8 @@ class App extends Component
             'cssValue' => $fontFamily,
             'urlValue' => Str::snake($fontFamily, '-')
         ];
+
+        $this->logo = app(\App\Settings\ColorSettings::class)->logo;
 
         $this->userNeedsToVerify = app(GeneralSettings::class)->users_must_verify_email &&
             auth()->check() &&
