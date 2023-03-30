@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Models\Board;
 use App\Models\Project;
+use App\Services\GitHubService;
 use Closure;
 use Filament\Forms\Components\Textarea;
 use Storage;
@@ -105,6 +106,11 @@ class Settings extends SettingsPage
                             Toggle::make('disable_file_uploads')
                                 ->label('Disallow users to upload files or images via the markdown editors.')
                                 ->columnSpan(2),
+
+                            Toggle::make('show_github_link')
+                                ->label('Show a link to the linked GitHub issue on the item page')
+                                ->columnSpan(2)
+                                ->visible((new GitHubService)->isEnabled()),
 
                             Grid::make()->schema([
                                 Select::make('inbox_workflow')

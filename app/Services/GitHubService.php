@@ -4,6 +4,7 @@ namespace App\Services;
 
 use GrahamCampbell\GitHub\Facades\GitHub;
 use Illuminate\Support\Collection;
+use Throwable;
 
 class GitHubService
 {
@@ -18,7 +19,13 @@ class GitHubService
             return collect();
         }
 
-        return collect(GitHub::me()->repositories('all'))->mapWithKeys(fn($repo) => [$repo['full_name'] => $repo['full_name']]);
+        try {
+            return collect(GitHub::me()->repositories('all'))->mapWithKeys(fn($repo) => [$repo['full_name'] => $repo['full_name']]);
+        } catch (Throwable $e) {
+            logger()->error("Failed to retrieve GitHub repo's: {$e->getMessage()}");
+
+            return collect();
+        }
     }
 
     public function getIssuesForRepository(string $repository): Collection
@@ -29,8 +36,14 @@ class GitHubService
 
         $repo = str($repository)->explode('/');
 
-        return collect(GitHub::issues()->all($repo[0], $repo[1]))
-            ->filter(fn($issue) => !isset($issue['pull_request']))
-            ->mapWithKeys(fn($issue) => [$issue['id'] => '#' . $issue['number'] . ' - ' . $issue['title']]);
+        try {
+            return collect(GitHub::issues()->all($repo[0], $repo[1]))
+                ->filter(fn($issue) => !isset($issue['pull_request']))
+                ->mapWithKeys(fn($issue) => [$issue['number'] => '#' . $issue['number'] . ' - ' . $issue['title']]);
+        } catch (Throwable $e) {
+            logger()->error("Failed to retrieve GitHub repo's: {$e->getMessage()}");
+
+            return collect();
+        }
     }
 }

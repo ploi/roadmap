@@ -34,7 +34,7 @@ class Item extends Model
         'project_id',
         'board_id',
         'user_id',
-        'issue_id'
+        'issue_number'
     ];
 
     protected $casts = [

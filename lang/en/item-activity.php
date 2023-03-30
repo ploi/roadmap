@@ -2,6 +2,7 @@
 
 return [
     'created' => 'created the item',
+    'linked-to-issue' => 'linked item to issue #:issue_number on GitHub',
     'moved-to-project' => 'moved item to project :project',
     'moved-to-board' => 'moved item to board :board',
     'made-private' => 'made item private',

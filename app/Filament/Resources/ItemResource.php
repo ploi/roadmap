@@ -55,11 +55,22 @@ class ItemResource extends Resource
                                     ->required()
                                     ->hiddenOn('create')
                                     ->maxLength(255),
-                                Forms\Components\Select::make('issue_id')
+                                Forms\Components\Select::make('issue_number')
                                     ->label('GitHub issue')
                                     ->visible(fn($record) => $record->project->repo && $gitHubService->isEnabled())
                                     ->options(fn($record) => $gitHubService->getIssuesForRepository($record->project->repo))
-                                    ->searchable(),
+                                    ->searchable()->reactive()
+                                    ->hintAction(function($get, $record) {
+                                        if (blank($record->project->repo) || blank($get('issue_number'))) {
+                                            return null;
+                                        }
+
+                                        return Forms\Components\Actions\Action::make('github')
+                                                                              ->icon('heroicon-s-external-link')
+                                                                              ->extraAttributes(['class' => 'w-5 h-5'])
+                                                                              ->url("https://github.com/{$record->project->repo}/issues/{$get('issue_number')}")
+                                                                              ->openUrlInNewTab();
+                                    }),
                                 Forms\Components\MarkdownEditor::make('content')
                                     ->columnSpan(2)
                                     ->required()
