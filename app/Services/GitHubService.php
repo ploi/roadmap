@@ -8,11 +8,6 @@ use Throwable;
 
 class GitHubService
 {
-    public function isEnabled(): bool
-    {
-        return filled(config('github.connections.main.token'));
-    }
-
     public function getRepositories(): Collection
     {
         if (!$this->isEnabled()) {
@@ -20,12 +15,18 @@ class GitHubService
         }
 
         try {
-            return collect(GitHub::me()->repositories('all'))->mapWithKeys(fn($repo) => [$repo['full_name'] => $repo['full_name']]);
+            return collect(GitHub::me()->repositories('all'))->mapWithKeys(fn($repo
+            ) => [$repo['full_name'] => $repo['full_name']]);
         } catch (Throwable $e) {
             logger()->error("Failed to retrieve GitHub repo's: {$e->getMessage()}");
 
             return collect();
         }
+    }
+
+    public function isEnabled(): bool
+    {
+        return filled(config('github.connections.main.token'));
     }
 
     public function getIssuesForRepository(string $repository): Collection
@@ -45,5 +46,15 @@ class GitHubService
 
             return collect();
         }
+    }
+
+    public function createIssueInRepository(string $repository, $title, $body): int
+    {
+        $repo = str($repository)->explode('/');
+
+        return GitHub::issues()->create($repo[0], $repo[1], [
+            'title' => $title,
+            'body'  => $body,
+        ])['number'];
     }
 }

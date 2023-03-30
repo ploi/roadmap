@@ -7,6 +7,8 @@ use Closure;
 use Filament\Forms;
 use App\Models\Item;
 use App\Models\User;
+use Filament\Forms\Components\Toggle;
+use Filament\Notifications\Notification;
 use Filament\Tables;
 use App\Enums\UserRole;
 use App\Models\Project;
@@ -60,12 +62,52 @@ class ItemResource extends Resource
                                     ->visible(fn($record) => $record->project->repo && $gitHubService->isEnabled())
                                     ->options(fn($record) => $gitHubService->getIssuesForRepository($record->project->repo))
                                     ->searchable()->reactive()
+                                    ->suffixAction(function(Closure $get, Closure $set, $record) {
+                                        if (blank($record->project->repo) || filled($get('issue_number'))) {
+                                            return null;
+                                        }
+
+                                        return Forms\Components\Actions\Action::make('github-create-issue')
+                                                                              ->icon('heroicon-s-plus')
+                                                                              ->tooltip('Create GitHub issue')
+                                                                              ->modalHeading('Create new GitHub issue')
+                                                                              ->modalButton('Create issue')
+                                                                              ->form([
+                                                                                  Forms\Components\Grid::make(2)->schema([
+                                                                                      Forms\Components\Select::make('repo')
+                                                                                                                ->default($record->project->repo)
+                                                                                                                ->options((new GitHubService)->getRepositories()),
+                                                                                      Forms\Components\TextInput::make('title')
+                                                                                                                ->default($record->title),
+                                                                                  ]),
+
+                                                                                  Forms\Components\MarkdownEditor::make('body')
+                                                                                                                 ->columnSpan(2)
+                                                                                                                 ->default($record->content)
+                                                                                                                 ->minLength(5)
+                                                                                                                 ->maxLength(65535),
+                                                                              ])
+                                                                              ->action(function($data) use ($set, $record) {
+                                                                                  $issueNumber = (new GitHubService)->createIssueInRepository(
+                                                                                      $data['repo'],
+                                                                                      $data['title'],
+                                                                                      $data['body']
+                                                                                  );
+
+                                                                                  $set('issue_number', $issueNumber);
+
+                                                                                  $record->issue_number = $issueNumber;
+                                                                                  $record->save();
+
+                                                                                  Notification::make()->title("Creates issue #{$issueNumber} in {$data['repo']}")->success()->send();
+                                                                              });
+                                    })
                                     ->hintAction(function($get, $record) {
                                         if (blank($record->project->repo) || blank($get('issue_number'))) {
                                             return null;
                                         }
 
-                                        return Forms\Components\Actions\Action::make('github')
+                                        return Forms\Components\Actions\Action::make('github-link')
                                                                               ->icon('heroicon-s-external-link')
                                                                               ->extraAttributes(['class' => 'w-5 h-5'])
                                                                               ->url("https://github.com/{$record->project->repo}/issues/{$get('issue_number')}")
