@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Services\GitHubService;
 use Closure;
 use Filament\Forms;
 use App\Models\Item;
@@ -33,6 +34,8 @@ class ItemResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $gitHubService = (new GitHubService);
+
         return $form
             ->schema([
                 Tabs::make('Heading')
@@ -51,8 +54,12 @@ class ItemResource extends Resource
                                 Forms\Components\TextInput::make('slug')
                                     ->required()
                                     ->hiddenOn('create')
-                                    ->maxLength(255)
-                                    ->columnSpan(2),
+                                    ->maxLength(255),
+                                Forms\Components\Select::make('issue_id')
+                                    ->label('GitHub issue')
+                                    ->visible(fn($record) => $record->project->repo && $gitHubService->isEnabled())
+                                    ->options(fn($record) => $gitHubService->getIssuesForRepository($record->project->repo))
+                                    ->searchable(),
                                 Forms\Components\MarkdownEditor::make('content')
                                     ->columnSpan(2)
                                     ->required()
