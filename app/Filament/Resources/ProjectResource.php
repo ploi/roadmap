@@ -55,8 +55,8 @@ class ProjectResource extends Resource
                     Forms\Components\Select::make('repo')
                         ->label('GitHub repository')
                         ->visible($gitHubService->isEnabled())
-                        ->options($gitHubService->getRepositories())
-                        ->searchable(),
+                        ->searchable()
+                        ->getSearchResultsUsing(fn (string $search) => $gitHubService->getRepositories($search)),
                     Forms\Components\Select::make('members')
                         ->multiple()
                         ->preload()

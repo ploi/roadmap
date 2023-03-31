@@ -24,6 +24,8 @@ return [
     |
     */
 
+    'enabled' => env('GITHUB_ENABLED', false),
+
     'default' => 'main',
 
     /*

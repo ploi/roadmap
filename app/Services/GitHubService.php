@@ -2,21 +2,27 @@
 
 namespace App\Services;
 
+use Github\Client;
+use Github\ResultPager;
 use GrahamCampbell\GitHub\Facades\GitHub;
 use Illuminate\Support\Collection;
 use Throwable;
 
 class GitHubService
 {
-    public function getRepositories(): Collection
+    public function getRepositories(?string $searchQuery = null): Collection
     {
         if (!$this->isEnabled()) {
             return collect();
         }
 
         try {
-            return collect(GitHub::me()->repositories('all'))->mapWithKeys(fn($repo
-            ) => [$repo['full_name'] => $repo['full_name']]);
+            $gitHubClient = resolve('github.connection');
+            $paginator = new ResultPager($gitHubClient);
+
+            return collect($paginator->fetchAll($gitHubClient->api('me'), 'repositories', ['all']))
+                ->filter(fn($repo) => str_contains($repo['full_name'], $searchQuery))
+                ->mapWithKeys(fn($repo) => [$repo['full_name'] => $repo['full_name']]);
         } catch (Throwable $e) {
             logger()->error("Failed to retrieve GitHub repo's: {$e->getMessage()}");
 
@@ -26,12 +32,12 @@ class GitHubService
 
     public function isEnabled(): bool
     {
-        return filled(config('github.connections.main.token'));
+        return config('github.enabled');
     }
 
-    public function getIssuesForRepository(string $repository): Collection
+    public function getIssuesForRepository(?string $repository): Collection
     {
-        if (!$this->isEnabled()) {
+        if (!$this->isEnabled() || $repository === null) {
             return collect();
         }
 

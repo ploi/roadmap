@@ -59,11 +59,11 @@ class ItemResource extends Resource
                                     ->maxLength(255),
                                 Forms\Components\Select::make('issue_number')
                                     ->label('GitHub issue')
-                                    ->visible(fn($record) => $record->project->repo && $gitHubService->isEnabled())
-                                    ->options(fn($record) => $gitHubService->getIssuesForRepository($record->project->repo))
+                                    ->visible(fn($record) => $record?->project->repo && $gitHubService->isEnabled())
+                                    ->options(fn($record) => $gitHubService->getIssuesForRepository($record?->project->repo))
                                     ->searchable()->reactive()
                                     ->suffixAction(function(Closure $get, Closure $set, $record) {
-                                        if (blank($record->project->repo) || filled($get('issue_number'))) {
+                                        if (blank($record?->project->repo) || filled($get('issue_number'))) {
                                             return null;
                                         }
 
@@ -103,7 +103,7 @@ class ItemResource extends Resource
                                                                               });
                                     })
                                     ->hintAction(function($get, $record) {
-                                        if (blank($record->project->repo) || blank($get('issue_number'))) {
+                                        if (blank($record?->project->repo) || blank($get('issue_number'))) {
                                             return null;
                                         }
 
