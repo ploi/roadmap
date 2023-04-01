@@ -60,8 +60,9 @@ class ItemResource extends Resource
                                 Forms\Components\Select::make('issue_number')
                                     ->label('GitHub issue')
                                     ->visible(fn($record) => $record?->project->repo && $gitHubService->isEnabled())
-                                    ->options(fn($record) => $gitHubService->getIssuesForRepository($record?->project->repo))
-                                    ->searchable()->reactive()
+                                    ->searchable()
+                                    ->getSearchResultsUsing(fn (string $search, $record) => $gitHubService->getIssuesForRepository($record?->project->repo))
+                                    ->reactive()
                                     ->suffixAction(function(Closure $get, Closure $set, $record) {
                                         if (blank($record?->project->repo) || filled($get('issue_number'))) {
                                             return null;
@@ -76,7 +77,8 @@ class ItemResource extends Resource
                                                                                   Forms\Components\Grid::make(2)->schema([
                                                                                       Forms\Components\Select::make('repo')
                                                                                                                 ->default($record->project->repo)
-                                                                                                                ->options((new GitHubService)->getRepositories()),
+                                                                                                                ->searchable()
+                                                                                                                ->getSearchResultsUsing(fn (string $search) => (new GitHubService)->getRepositories($search)),
                                                                                       Forms\Components\TextInput::make('title')
                                                                                                                 ->default($record->title),
                                                                                   ]),

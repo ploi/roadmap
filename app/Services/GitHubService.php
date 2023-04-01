@@ -35,7 +35,7 @@ class GitHubService
         return config('github.enabled');
     }
 
-    public function getIssuesForRepository(?string $repository): Collection
+    public function getIssuesForRepository(?string $repository, ?string $searchQuery = null): Collection
     {
         if (!$this->isEnabled() || $repository === null) {
             return collect();
@@ -44,7 +44,11 @@ class GitHubService
         $repo = str($repository)->explode('/');
 
         try {
-            return collect(GitHub::issues()->all($repo[0], $repo[1]))
+            $gitHubClient = resolve('github.connection');
+            $paginator = new ResultPager($gitHubClient);
+
+            return collect($paginator->fetchAll($gitHubClient->api('issues'), 'all', [$repo[0], $repo[1]]))
+                ->filter(fn($issue) => str_contains('#' . $issue['number'] . ' - ' . $issue['title'], $searchQuery))
                 ->filter(fn($issue) => !isset($issue['pull_request']))
                 ->mapWithKeys(fn($issue) => [$issue['number'] => '#' . $issue['number'] . ' - ' . $issue['title']]);
         } catch (Throwable $e) {
