@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Services\GitHubService;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Board;
@@ -23,6 +24,8 @@ class ProjectResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $gitHubService = (new GitHubService);
+
         return $form
             ->schema([
                 Forms\Components\Card::make([
@@ -49,6 +52,11 @@ class ProjectResource extends Resource
                         ->reactive()
                         ->default(false)
                         ->helperText('Private projects are only visible for employees and admins'),
+                    Forms\Components\Select::make('repo')
+                        ->label('GitHub repository')
+                        ->visible($gitHubService->isEnabled())
+                        ->searchable()
+                        ->getSearchResultsUsing(fn (string $search) => $gitHubService->getRepositories($search)),
                     Forms\Components\Select::make('members')
                         ->multiple()
                         ->preload()

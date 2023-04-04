@@ -2,10 +2,13 @@
 
 namespace App\Filament\Resources;
 
+use App\Services\GitHubService;
 use Closure;
 use Filament\Forms;
 use App\Models\Item;
 use App\Models\User;
+use Filament\Forms\Components\Toggle;
+use Filament\Notifications\Notification;
 use Filament\Tables;
 use App\Enums\UserRole;
 use App\Models\Project;
@@ -33,6 +36,8 @@ class ItemResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $gitHubService = (new GitHubService);
+
         return $form
             ->schema([
                 Tabs::make('Heading')
@@ -51,8 +56,65 @@ class ItemResource extends Resource
                                 Forms\Components\TextInput::make('slug')
                                     ->required()
                                     ->hiddenOn('create')
-                                    ->maxLength(255)
-                                    ->columnSpan(2),
+                                    ->maxLength(255),
+                                Forms\Components\Select::make('issue_number')
+                                    ->label('GitHub issue')
+                                    ->visible(fn($record) => $record?->project->repo && $gitHubService->isEnabled())
+                                    ->searchable()
+                                    ->getSearchResultsUsing(fn (string $search, $record) => $gitHubService->getIssuesForRepository($record?->project->repo))
+                                    ->reactive()
+                                    ->suffixAction(function(Closure $get, Closure $set, $record) {
+                                        if (blank($record?->project->repo) || filled($get('issue_number'))) {
+                                            return null;
+                                        }
+
+                                        return Forms\Components\Actions\Action::make('github-create-issue')
+                                                                              ->icon('heroicon-s-plus')
+                                                                              ->tooltip('Create GitHub issue')
+                                                                              ->modalHeading('Create new GitHub issue')
+                                                                              ->modalButton('Create issue')
+                                                                              ->form([
+                                                                                  Forms\Components\Grid::make(2)->schema([
+                                                                                      Forms\Components\Select::make('repo')
+                                                                                                                ->default($record->project->repo)
+                                                                                                                ->searchable()
+                                                                                                                ->getSearchResultsUsing(fn (string $search) => (new GitHubService)->getRepositories($search)),
+                                                                                      Forms\Components\TextInput::make('title')
+                                                                                                                ->default($record->title),
+                                                                                  ]),
+
+                                                                                  Forms\Components\MarkdownEditor::make('body')
+                                                                                                                 ->columnSpan(2)
+                                                                                                                 ->default($record->content)
+                                                                                                                 ->minLength(5)
+                                                                                                                 ->maxLength(65535),
+                                                                              ])
+                                                                              ->action(function($data) use ($set, $record) {
+                                                                                  $issueNumber = (new GitHubService)->createIssueInRepository(
+                                                                                      $data['repo'],
+                                                                                      $data['title'],
+                                                                                      $data['body']
+                                                                                  );
+
+                                                                                  $set('issue_number', $issueNumber);
+
+                                                                                  $record->issue_number = $issueNumber;
+                                                                                  $record->save();
+
+                                                                                  Notification::make()->title("Creates issue #{$issueNumber} in {$data['repo']}")->success()->send();
+                                                                              });
+                                    })
+                                    ->hintAction(function($get, $record) {
+                                        if (blank($record?->project->repo) || blank($get('issue_number'))) {
+                                            return null;
+                                        }
+
+                                        return Forms\Components\Actions\Action::make('github-link')
+                                                                              ->icon('heroicon-s-external-link')
+                                                                              ->extraAttributes(['class' => 'w-5 h-5'])
+                                                                              ->url("https://github.com/{$record->project->repo}/issues/{$get('issue_number')}")
+                                                                              ->openUrlInNewTab();
+                                    }),
                                 Forms\Components\MarkdownEditor::make('content')
                                     ->columnSpan(2)
                                     ->required()

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\Project;
 use App\Enums\ItemActivity;
+use App\Settings\GeneralSettings;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Spatie\Activitylog\Models\Activity;
@@ -24,7 +25,14 @@ class ItemController extends Controller
             $item = $project->items()->visibleForCurrentUser()->where('items.slug', $itemId)->firstOrFail();
         }
 
-        $activities = $item->activities()->with('causer')->latest()->limit(10)->get()->map(function (Activity $activity) {
+        $showGitHubLink = app(GeneralSettings::class)->show_github_link;
+        $activities = $item->activities()->with('causer')->latest()->limit(10)->get()->filter(function(Activity $activity) use ($showGitHubLink) {
+            if (!$showGitHubLink && ItemActivity::getForActivity($activity) === ItemActivity::LinkedToIssue) {
+                return false;
+            }
+
+            return true;
+        })->map(function (Activity $activity) {
             $itemActivity = ItemActivity::getForActivity($activity);
 
             if ($itemActivity !== null) {

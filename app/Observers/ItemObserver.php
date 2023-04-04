@@ -85,6 +85,13 @@ class ItemObserver
             $isDirty = true;
         }
 
+        if ($item->isDirty('issue_number') && !$item->issue_number) {
+            ItemActivity::createForItem($item, ItemActivity::LinkedToIssue, [
+                'issue_number' => $item->issue_number,
+                'repo' => $item->project->repo,
+            ]);
+        }
+
         if ($isDirty && $item->notify_subscribers) {
             $users = $item->subscribedVotes()->with('user')->get()->pluck('user');
 

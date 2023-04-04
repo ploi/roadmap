@@ -20,6 +20,7 @@ class Project extends Model
         'icon',
         'url',
         'description',
+        'repo',
         'private',
         'sort_order',
     ];

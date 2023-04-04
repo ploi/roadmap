@@ -33,7 +33,8 @@ class Item extends Model
         'notify_subscribers',
         'project_id',
         'board_id',
-        'user_id'
+        'user_id',
+        'issue_number'
     ];
 
     protected $casts = [

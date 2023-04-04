@@ -8,6 +8,7 @@ use Spatie\Activitylog\Models\Activity;
 enum ItemActivity: string
 {
     case Created = 'created';
+    case LinkedToIssue = 'linked-to-issue';
     case MovedToProject = 'moved-to-project';
     case MovedToBoard = 'moved-to-board';
     case MadePrivate = 'made-private';
@@ -34,6 +35,7 @@ enum ItemActivity: string
     {
         return match ($this) {
             self::Created => trans('item-activity.created', [], $locale),
+            self::LinkedToIssue => trans('item-activity.linked-to-issue', ['issue_number' => $attributes['issue_number'] ?? ''], $locale),
             self::MovedToProject => trans('item-activity.moved-to-project', ['project' => $attributes['project'] ?? ''], $locale),
             self::MovedToBoard => trans('item-activity.moved-to-board', ['board' => $attributes['board'] ?? ''], $locale),
             self::MadePrivate => trans('item-activity.made-private', [], $locale),

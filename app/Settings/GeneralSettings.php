@@ -32,6 +32,7 @@ class GeneralSettings extends Settings
     public bool $disable_file_uploads;
     public array $excluded_matching_search_words;
     public array $profanity_words;
+    public bool $show_github_link;
 
     public function getInboxWorkflow(): InboxWorkflow
     {
