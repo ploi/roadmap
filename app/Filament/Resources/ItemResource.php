@@ -8,6 +8,7 @@ use Filament\Forms;
 use App\Models\Item;
 use App\Models\User;
 use Filament\Forms\Components\Toggle;
+use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Tables;
 use App\Enums\UserRole;
@@ -61,59 +62,80 @@ class ItemResource extends Resource
                                     ->label('GitHub issue')
                                     ->visible(fn($record) => $record?->project->repo && $gitHubService->isEnabled())
                                     ->searchable()
-                                    ->getSearchResultsUsing(fn (string $search, $record) => $gitHubService->getIssuesForRepository($record?->project->repo))
+                                    ->getSearchResultsUsing(fn(string $search, $record) => $gitHubService->getIssuesForRepository($record?->project->repo))
                                     ->reactive()
-                                    ->suffixAction(function(Closure $get, Closure $set, $record) {
+                                    ->suffixAction(function (Closure $get, Closure $set, $record) {
                                         if (blank($record?->project->repo) || filled($get('issue_number'))) {
                                             return null;
                                         }
 
                                         return Forms\Components\Actions\Action::make('github-create-issue')
-                                                                              ->icon('heroicon-s-plus')
-                                                                              ->tooltip('Create GitHub issue')
-                                                                              ->modalHeading('Create new GitHub issue')
-                                                                              ->modalButton('Create issue')
-                                                                              ->form([
-                                                                                  Forms\Components\Grid::make(2)->schema([
-                                                                                      Forms\Components\Select::make('repo')
-                                                                                                                ->default($record->project->repo)
-                                                                                                                ->searchable()
-                                                                                                                ->getSearchResultsUsing(fn (string $search) => (new GitHubService)->getRepositories($search)),
-                                                                                      Forms\Components\TextInput::make('title')
-                                                                                                                ->default($record->title),
-                                                                                  ]),
+                                            ->icon('heroicon-s-plus')
+                                            ->tooltip('Create GitHub issue')
+                                            ->modalHeading('Create new GitHub issue')
+                                            ->modalButton('Create issue')
+                                            ->form([
+                                                Forms\Components\Grid::make(2)->schema([
+                                                    Forms\Components\Select::make('repo')
+                                                        ->default($record->project->repo)
+                                                        ->searchable()
+                                                        ->getSearchResultsUsing(fn(string $search) => (new GitHubService)->getRepositories($search)),
+                                                    Forms\Components\TextInput::make('title')
+                                                        ->default($record->title),
+                                                ]),
 
-                                                                                  Forms\Components\MarkdownEditor::make('body')
-                                                                                                                 ->columnSpan(2)
-                                                                                                                 ->default($record->content)
-                                                                                                                 ->minLength(5)
-                                                                                                                 ->maxLength(65535),
-                                                                              ])
-                                                                              ->action(function($data) use ($set, $record) {
-                                                                                  $issueNumber = (new GitHubService)->createIssueInRepository(
-                                                                                      $data['repo'],
-                                                                                      $data['title'],
-                                                                                      $data['body']
-                                                                                  );
+                                                Forms\Components\MarkdownEditor::make('body')
+                                                    ->columnSpan(2)
+                                                    ->default($record->content)
+                                                    ->minLength(5)
+                                                    ->maxLength(65535),
+                                            ])
+                                            ->action(function ($data) use ($set, $record) {
+                                                try {
+                                                    $issueNumber = (new GitHubService)->createIssueInRepository(
+                                                        $data['repo'],
+                                                        $data['title'],
+                                                        $data['body'] . PHP_EOL . PHP_EOL . route('items.show', $record->slug)
+                                                    );
+                                                } catch (\Throwable $exception) {
+                                                    Notification::make()
+                                                        ->title("GitHub")
+                                                        ->body($exception->getMessage())
+                                                        ->danger()
+                                                        ->send();
 
-                                                                                  $set('issue_number', $issueNumber);
+                                                    return;
+                                                }
 
-                                                                                  $record->issue_number = $issueNumber;
-                                                                                  $record->save();
+                                                $set('issue_number', $issueNumber);
 
-                                                                                  Notification::make()->title("Creates issue #{$issueNumber} in {$data['repo']}")->success()->send();
-                                                                              });
+                                                $record->issue_number = $issueNumber;
+                                                $record->save();
+
+                                                Notification::make()
+                                                    ->title('GitHub')
+                                                    ->body("Creates issue #{$issueNumber} in {$data['repo']}")
+                                                    ->actions([
+                                                        Action::make('kots')
+                                                            ->button()
+                                                            ->url("https://github.com/{$data['repo']}/issues/{$issueNumber}")
+                                                            ->label('View issue')
+                                                            ->openUrlInNewTab()
+                                                    ])
+                                                    ->success()
+                                                    ->send();
+                                            });
                                     })
-                                    ->hintAction(function($get, $record) {
+                                    ->hintAction(function ($get, $record) {
                                         if (blank($record?->project->repo) || blank($get('issue_number'))) {
                                             return null;
                                         }
 
                                         return Forms\Components\Actions\Action::make('github-link')
-                                                                              ->icon('heroicon-s-external-link')
-                                                                              ->extraAttributes(['class' => 'w-5 h-5'])
-                                                                              ->url("https://github.com/{$record->project->repo}/issues/{$get('issue_number')}")
-                                                                              ->openUrlInNewTab();
+                                            ->icon('heroicon-s-external-link')
+                                            ->extraAttributes(['class' => 'w-5 h-5'])
+                                            ->url("https://github.com/{$record->project->repo}/issues/{$get('issue_number')}")
+                                            ->openUrlInNewTab();
                                     }),
                                 Forms\Components\MarkdownEditor::make('content')
                                     ->columnSpan(2)
@@ -137,7 +159,7 @@ class ItemResource extends Resource
                                 Forms\Components\MultiSelect::make('assigned_users')
                                     ->helperText('Assign admins/employees to items here.')
                                     ->preload()
-                                    ->relationship('assignedUsers', 'name', fn (Builder $query) => $query->whereIn('role', [UserRole::Admin, UserRole::Employee]))
+                                    ->relationship('assignedUsers', 'name', fn(Builder $query) => $query->whereIn('role', [UserRole::Admin, UserRole::Employee]))
                                     ->columnSpan(2),
                             ])->columns(),
                     ])->columnSpan(3),
@@ -150,7 +172,7 @@ class ItemResource extends Resource
                         ->required(),
                     Forms\Components\Select::make('board_id')
                         ->label('Board')
-                        ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? [])
+                        ->options(fn($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? [])
                         ->required(),
                     Forms\Components\Toggle::make('notify_subscribers')
                         ->helperText('Send a notification with updates about the item')
@@ -158,12 +180,12 @@ class ItemResource extends Resource
                         ->default(true),
                     Forms\Components\Placeholder::make('created_at')
                         ->label('Created at')
-                        ->visible(fn ($record) => filled($record))
-                        ->content(fn ($record) => $record->created_at->format('d-m-Y H:i:s')),
+                        ->visible(fn($record) => filled($record))
+                        ->content(fn($record) => $record->created_at->format('d-m-Y H:i:s')),
                     Forms\Components\Placeholder::make('updated_at')
                         ->label('Updated at')
-                        ->visible(fn ($record) => filled($record))
-                        ->content(fn ($record) => $record->updated_at->format('d-m-Y H:i:s')),
+                        ->visible(fn($record) => filled($record))
+                        ->content(fn($record) => $record->updated_at->format('d-m-Y H:i:s')),
                 ])->columnSpan(1),
             ])
             ->columns(4);
@@ -195,7 +217,7 @@ class ItemResource extends Resource
                 Filter::make('assigned')
                     ->label('Assigned to me')
                     ->default(auth()->user()->hasRole(UserRole::Employee))
-                    ->query(fn (Builder $query): Builder => $query->whereHas('assignedUsers', function ($query) {
+                    ->query(fn(Builder $query): Builder => $query->whereHas('assignedUsers', function ($query) {
                         return $query->where('user_id', auth()->id());
                     })),
 
@@ -213,7 +235,7 @@ class ItemResource extends Resource
                         return $query
                             ->when(
                                 $data['users'],
-                                fn (Builder $query, $users): Builder => $query->whereHas('assignedUsers', function ($query) use ($users) {
+                                fn(Builder $query, $users): Builder => $query->whereHas('assignedUsers', function ($query) use ($users) {
                                     return $query->whereIn('users.id', $users);
                                 }),
                             );
@@ -233,7 +255,7 @@ class ItemResource extends Resource
                         Forms\Components\MultiSelect::make('board_id')
                             ->label(trans('table.board'))
                             ->preload()
-                            ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
+                            ->options(fn($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
                         Forms\Components\Toggle::make('pinned')
                             ->label('Pinned'),
                         Forms\Components\Toggle::make('private')
@@ -243,21 +265,21 @@ class ItemResource extends Resource
                         return $query
                             ->when(
                                 $data['project_id'],
-                                fn (Builder $query, $projectId): Builder => $query->where('project_id', $projectId),
+                                fn(Builder $query, $projectId): Builder => $query->where('project_id', $projectId),
                             )
                             ->when(
                                 $data['board_id'],
-                                fn (Builder $query, $boardIds): Builder => $query->whereHas('board', function ($query) use ($boardIds) {
+                                fn(Builder $query, $boardIds): Builder => $query->whereHas('board', function ($query) use ($boardIds) {
                                     return $query->whereIn('id', $boardIds);
                                 }),
                             )
                             ->when(
                                 $data['pinned'],
-                                fn (Builder $query): Builder => $query->where('pinned', $data['pinned']),
+                                fn(Builder $query): Builder => $query->where('pinned', $data['pinned']),
                             )
                             ->when(
                                 $data['private'],
-                                fn (Builder $query): Builder => $query->where('private', $data['private']),
+                                fn(Builder $query): Builder => $query->where('private', $data['private']),
                             );
                     })
 
