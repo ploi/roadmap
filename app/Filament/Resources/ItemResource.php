@@ -78,6 +78,7 @@ class ItemResource extends Resource
                                             ->form([
                                                 Forms\Components\Grid::make(2)->schema([
                                                     Forms\Components\Select::make('repo')
+                                                        ->label('Repository')
                                                         ->default($record->project->repo)
                                                         ->searchable()
                                                         ->getSearchResultsUsing(fn(string $search) => (new GitHubService)->getRepositories($search)),
