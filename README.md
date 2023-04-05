@@ -101,6 +101,19 @@ What are these roles allowed to do?
 - User
   - This is your default user when someone registers, they don't have access to the administration and can only access the frontend.
 
+## GitHub integration
+
+To enable the GitHub integration, add these values to your .env:
+
+```
+GITHUB_ENABLED=true
+GITHUB_TOKEN=your_github_token
+```
+
+When enabled, you can assign a repository to each project via the admin panel.
+For items in projects with a repo assigned, you'll be able to assign an issue or
+easily create one via the roadmap admin.
+
 ## Installing SSO (OAuth 2 login with 3rd party app)
 
 It is possible to configure OAuth 2 login with this roadmap software to make it easier to log in.
