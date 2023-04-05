@@ -63,6 +63,7 @@ class ItemResource extends Resource
                                     ->visible(fn($record) => $record?->project->repo && $gitHubService->isEnabled())
                                     ->searchable()
                                     ->getSearchResultsUsing(fn(string $search, $record) => $gitHubService->getIssuesForRepository($record?->project->repo))
+                                    ->getOptionLabelUsing(fn($record, Closure $get) => $gitHubService->getIssueTitle($record?->project->repo, $get('issue_number')))
                                     ->reactive()
                                     ->suffixAction(function (Closure $get, Closure $set, $record) {
                                         if (blank($record?->project->repo) || filled($get('issue_number'))) {

@@ -29,4 +29,5 @@ return [
     'item-pinned' => 'Dit item is vastgezet',
     'item-private' => 'Dit item is privé',
     'update-board-success' => 'Het item is succesvol verplaats naar het bord :board',
+    'view-on-github' => 'Bekijk issue op GitHub',
 ];

@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Github\Client;
 use Github\ResultPager;
 use GrahamCampbell\GitHub\Facades\GitHub;
 use Illuminate\Support\Collection;
@@ -55,6 +54,25 @@ class GitHubService
             logger()->error("Failed to retrieve GitHub repo's: {$e->getMessage()}");
 
             return collect();
+        }
+    }
+
+    public function getIssueTitle(?string $repository, ?int $issueNumber): ?string
+    {
+        if (!$this->isEnabled() || $repository === null || $issueNumber === null) {
+            return null;
+        }
+
+        $repo = str($repository)->explode('/');
+
+        try {
+            $issue = GitHub::issues()->show($repo[0], $repo[1], $issueNumber);
+
+            return "#{$issue['number']} - {$issue['title']}";
+        } catch (Throwable $e) {
+            logger()->error("Failed to retrieve GitHub issue #{$issueNumber}: {$e->getMessage()}");
+
+            return null;
         }
     }
 
