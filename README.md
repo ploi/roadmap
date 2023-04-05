@@ -110,6 +110,8 @@ GITHUB_ENABLED=true
 GITHUB_TOKEN=your_github_token
 ```
 
+To get a GitHub token, visit this URL: https://github.com/settings/tokens
+
 When enabled, you can assign a repository to each project via the admin panel.
 For items in projects with a repo assigned, you'll be able to assign an issue or
 easily create one via the roadmap admin.
