@@ -60,7 +60,7 @@ class ItemResource extends Resource
                                     ->maxLength(255),
                                 Forms\Components\Select::make('issue_number')
                                     ->label('GitHub issue')
-                                    ->visible(fn($record) => $record?->project->repo && $gitHubService->isEnabled())
+                                    ->visible(fn($record) => $record?->project?->repo && $gitHubService->isEnabled())
                                     ->searchable()
                                     ->getSearchResultsUsing(fn(string $search, $record) => $gitHubService->getIssuesForRepository($record?->project->repo))
                                     ->getOptionLabelUsing(fn($record, Closure $get) => $gitHubService->getIssueTitle($record?->project->repo, $get('issue_number')))
