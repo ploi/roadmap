@@ -31,6 +31,10 @@ class CommentResource extends Resource
                         ->columnSpan(1)
                         ->relationship('item', 'title')
                         ->searchable(),
+                    Forms\Components\Toggle::make('private')
+                        ->helperText('Private items will only be visible to admins and employees')
+                        ->label('Private')
+                        ->default(false),
                     Forms\Components\MarkdownEditor::make('content')->columnSpan(2),
                 ])->columns(2)
             ]);
