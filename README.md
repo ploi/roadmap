@@ -30,7 +30,7 @@ First set up a database, and remember the credentials.
 
 ```
 git clone https://github.com/ploi/roadmap.git
-composer install
+composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 php -r "file_exists('.env') || copy('.env.example', '.env');"
 php artisan key:generate
 ```
@@ -250,7 +250,7 @@ DB_PASSWORD=secret
 
 Composer Install:
 
-`docker exec -it roadmap composer install`
+`docker exec -it roadmap composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev`
 
 NPM Install:
 
