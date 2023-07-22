@@ -30,7 +30,7 @@
         "symfony/postmark-mailer": "^6.0",
         "wire-elements/modal": "^1.0.7",
         "wire-elements/spotlight": "^1.0.7",
-        "xetaio/xetaravel-mentions": "*"
+        "xetaio/xetaravel-mentions": "^10.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
@@ -93,14 +93,5 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "path",
-            "url": "./packages/xetaravel-mentions",
-            "options": {
-                "symlink": true
-            }
-        }
-    ]
+    "prefer-stable": true
 }
