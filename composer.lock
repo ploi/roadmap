@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e3911108d62eee7df6e5e2a5a4a2a6a3",
+    "content-hash": "ea6ffb12481f7922beab658c60c6b67e",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -11156,20 +11156,26 @@
         },
         {
             "name": "xetaio/xetaravel-mentions",
-            "version": "dev-github",
+            "version": "10.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/XetaIO/Xetaravel-Mentions.git",
+                "reference": "d5b7d231ed40888b99a593caaad721a5d8a5f370"
+            },
             "dist": {
-                "type": "path",
-                "url": "./packages/xetaravel-mentions",
-                "reference": "f2de358cb33122f9fde78d7ebcabc14107d5a656"
+                "type": "zip",
+                "url": "https://api.github.com/repos/XetaIO/Xetaravel-Mentions/zipball/d5b7d231ed40888b99a593caaad721a5d8a5f370",
+                "reference": "d5b7d231ed40888b99a593caaad721a5d8a5f370",
+                "shasum": ""
             },
             "require": {
-                "illuminate/database": "^8.0 || ^9.0 || ^10",
-                "illuminate/support": "^8.0 || ^9.0 || ^10",
-                "php": ">=7.3",
+                "illuminate/database": "^10.0",
+                "illuminate/support": "^10.0",
+                "php": ">=8.1",
                 "xety/configurator": "^1.0"
             },
             "require-dev": {
-                "orchestra/testbench": "^6.0 || ^7.0",
+                "orchestra/testbench": "^8.0",
                 "phpunit/phpunit": "^9.5",
                 "squizlabs/php_codesniffer": "^3.2"
             },
@@ -11186,11 +11192,7 @@
                     "Xetaio\\Mentions\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -11204,20 +11206,17 @@
             "description": "A package to parse a @mention from a text and mention the user with a notification.",
             "homepage": "https://github.com/XetaIO/Xetaravel-Mentions",
             "keywords": [
+                "Users",
                 "laravel",
                 "laravel-5-package",
                 "mentions",
-                "notifications",
-                "users"
+                "notifications"
             ],
             "support": {
-                "source": "https://github.com/XetaIO/Xetaravel-Mentions",
-                "issues": "https://github.com/XetaIO/Xetaravel-Mentions/issues"
+                "issues": "https://github.com/XetaIO/Xetaravel-Mentions/issues",
+                "source": "https://github.com/XetaIO/Xetaravel-Mentions"
             },
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "time": "2023-03-17T00:44:56+00:00"
         },
         {
             "name": "xety/configurator",
