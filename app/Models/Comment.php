@@ -54,7 +54,10 @@ class Comment extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()->logOnly(['content'])->logOnlyDirty();
+        return LogOptions::defaults()
+            ->logOnly(['content'])
+            ->dontLogIfAttributesChangedOnly(['total_votes', 'updated_at'])
+            ->logOnlyDirty();
     }
 
     public function scopePublic($query)
