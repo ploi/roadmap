@@ -10,7 +10,7 @@ class EditChangelog extends EditRecord
 {
     protected static string $resource = ChangelogResource::class;
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Actions\DeleteAction::make(),

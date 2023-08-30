@@ -10,7 +10,7 @@ use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-class RecentComments extends Component implements HasTable
+abstract class RecentComments extends Component implements HasTable
 {
     use InteractsWithTable;
 
@@ -30,7 +30,7 @@ class RecentComments extends Component implements HasTable
             if ($item = $record->item) {
                 return route('items.show', $item). "#comment-$record->id";
             }
-    
+
             return null;
         };
     }

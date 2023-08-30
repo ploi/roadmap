@@ -5,8 +5,8 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Board;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use App\Filament\Resources\BoardResource\Pages;
 
@@ -14,7 +14,7 @@ class BoardResource extends Resource
 {
     protected static ?string $model = Board::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-view-boards';
+    protected static ?string $navigationIcon = 'heroicon-o-view-columns';
 
     protected static ?string $navigationGroup = 'Manage';
 

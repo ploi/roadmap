@@ -12,7 +12,7 @@ use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-class RecentItems extends Component implements HasTable
+abstract class RecentItems extends Component implements HasTable
 {
     use InteractsWithTable;
 

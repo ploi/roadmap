@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserRole;
+use Filament\Panel;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Settings\GeneralSettings;
@@ -44,7 +45,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         'role' => UserRole::class,
     ];
 
-    public function canAccessFilament(): bool
+    public function canAccessPanel(Panel $panel): bool
     {
         return $this->hasAdminAccess();
     }

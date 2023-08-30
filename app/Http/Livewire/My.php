@@ -10,7 +10,7 @@ use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-class My extends Component implements HasTable
+abstract class My extends Component implements HasTable
 {
     use InteractsWithTable;
 

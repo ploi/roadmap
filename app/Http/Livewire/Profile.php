@@ -19,7 +19,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 
 class Profile extends Component implements HasForms, HasTable
 {
-    use InteractsWithForms, InteractsWithTable, CanNotify;
+    use InteractsWithForms, InteractsWithTable;
 
     public $name;
     public $email;

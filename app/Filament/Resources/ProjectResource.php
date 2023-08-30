@@ -8,8 +8,8 @@ use Filament\Tables;
 use App\Models\Board;
 use App\Models\Project;
 use App\Services\Icons;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use App\Settings\GeneralSettings;
 use App\Filament\Resources\ProjectResource\Pages;
@@ -18,7 +18,7 @@ class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard-list';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     protected static ?string $navigationGroup = 'Manage';
 

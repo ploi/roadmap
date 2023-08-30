@@ -13,8 +13,8 @@ use Filament\Notifications\Notification;
 use Filament\Tables;
 use App\Enums\UserRole;
 use App\Models\Project;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Tabs;
 use Filament\Tables\Filters\Filter;
@@ -29,7 +29,7 @@ class ItemResource extends Resource
 {
     protected static ?string $model = Item::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-archive';
+    protected static ?string $navigationIcon = 'heroicon-o-archive-box';
 
     protected static ?string $navigationGroup = 'Manage';
 
@@ -63,9 +63,9 @@ class ItemResource extends Resource
                                     ->visible(fn($record) => $record?->project?->repo && $gitHubService->isEnabled())
                                     ->searchable()
                                     ->getSearchResultsUsing(fn(string $search, $record) => $gitHubService->getIssuesForRepository($record?->project->repo))
-                                    ->getOptionLabelUsing(fn($record, Closure $get) => $gitHubService->getIssueTitle($record?->project->repo, $get('issue_number')))
+                                    ->getOptionLabelUsing(fn($record, \Filament\Forms\Get $get) => $gitHubService->getIssueTitle($record?->project->repo, $get('issue_number')))
                                     ->reactive()
-                                    ->suffixAction(function (Closure $get, Closure $set, $record) {
+                                    ->suffixAction(function (\Filament\Forms\Get $get, \Filament\Forms\Set $set, $record) {
                                         if (blank($record?->project->repo) || filled($get('issue_number'))) {
                                             return null;
                                         }
@@ -134,7 +134,7 @@ class ItemResource extends Resource
                                         }
 
                                         return Forms\Components\Actions\Action::make('github-link')
-                                            ->icon('heroicon-s-external-link')
+                                            ->icon('heroicon-m-arrow-top-right-on-square')
                                             ->extraAttributes(['class' => 'w-5 h-5'])
                                             ->url("https://github.com/{$record->project->repo}/issues/{$get('issue_number')}")
                                             ->openUrlInNewTab();
@@ -247,7 +247,7 @@ class ItemResource extends Resource
                     ->form([
                         Forms\Components\Select::make('project_id')
                             ->label(trans('table.project'))
-                            ->afterStateUpdated(function (Closure $set, Closure $get) {
+                            ->afterStateUpdated(function (\Filament\Forms\Set $set, \Filament\Forms\Get $get) {
                                 if ($get('board_id')) {
                                     $set('board_id', null);
                                 }

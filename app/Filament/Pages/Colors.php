@@ -14,13 +14,13 @@ use Filament\Forms\Components\ColorPicker;
 
 class Colors extends SettingsPage
 {
-    protected static ?string $navigationIcon = 'heroicon-o-color-swatch';
+    protected static ?string $navigationIcon = 'heroicon-o-swatch';
 
     protected static string $settings = ColorSettings::class;
 
     protected static ?string $navigationLabel = 'Theme';
 
-    protected static function shouldRegisterNavigation(): bool
+    public static function shouldRegisterNavigation(): bool
     {
         return auth()->user()->hasRole(UserRole::Admin);
     }

@@ -10,13 +10,13 @@ use App\Filament\Pages\Widgets\System\SystemInfo;
 
 class System extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-chip';
+    protected static ?string $navigationIcon = 'heroicon-o-cpu-chip';
 
     protected static string $view = 'filament.pages.system';
 
     protected static ?int $navigationSort = 0;
 
-    protected static function shouldRegisterNavigation(): bool
+    public static function shouldRegisterNavigation(): bool
     {
         return auth()->user()->hasRole(UserRole::Admin);
     }
@@ -35,7 +35,7 @@ class System extends Page
         ];
     }
 
-    protected static function getNavigationBadge(): ?string
+    public static function getNavigationBadge(): ?string
     {
         $systemChecker = new SystemChecker();
 
@@ -46,11 +46,11 @@ class System extends Page
         return null;
     }
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Action::make('check_for_updates')
-                ->color('secondary')
+                ->color('gray')
                 ->action(function () {
                     (new SystemChecker())->flushVersionData();
 

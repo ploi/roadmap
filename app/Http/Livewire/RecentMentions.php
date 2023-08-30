@@ -9,7 +9,7 @@ use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-class RecentMentions extends Component implements HasTable
+abstract class RecentMentions extends Component implements HasTable
 {
     use InteractsWithTable;
 

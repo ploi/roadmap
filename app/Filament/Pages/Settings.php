@@ -33,7 +33,7 @@ class Settings extends SettingsPage
 
     public Collection $ogImages;
 
-    protected static function shouldRegisterNavigation(): bool
+    public static function shouldRegisterNavigation(): bool
     {
         return auth()->user()->hasRole(UserRole::Admin);
     }
@@ -86,7 +86,7 @@ class Settings extends SettingsPage
 
                             Toggle::make('project_required_when_creating_item')
                                 ->label('Project is required when creating an item')
-                                ->hidden(fn (Closure $get) => $get('select_project_when_creating_item') === false)
+                                ->hidden(fn (\Filament\Forms\Get $get) => $get('select_project_when_creating_item') === false)
                                 ->columnSpan(2),
 
                             Toggle::make('select_board_when_creating_item')
@@ -96,7 +96,7 @@ class Settings extends SettingsPage
 
                             Toggle::make('board_required_when_creating_item')
                                 ->label('Board is required when creating an item')
-                                ->hidden(fn (Closure $get) => $get('select_board_when_creating_item') === false)
+                                ->hidden(fn (\Filament\Forms\Get $get) => $get('select_board_when_creating_item') === false)
                                 ->columnSpan(2),
 
                             Toggle::make('users_must_verify_email')
@@ -279,7 +279,7 @@ class Settings extends SettingsPage
         ];
     }
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Action::make('flush_og_images')
@@ -300,7 +300,7 @@ class Settings extends SettingsPage
                 })
                 ->disabled(!$this->ogImages->count())
                 ->label('Flush OG images (' . $this->ogImages->count() . ')')
-                ->color('secondary')
+                ->color('gray')
                 ->modalHeading('Delete OG images')
                 ->modalSubheading('Are you sure you\'d like to delete all the OG images? There\'s currently ' . $this->ogImages->count() . ' image(s) in the storage. This could be especially handy if you have changed branding color, if you feel some images are not correct.')
                 ->requiresConfirmation(),

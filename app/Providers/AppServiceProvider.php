@@ -36,13 +36,13 @@ class AppServiceProvider extends ServiceProvider
                 static fn () => (new Vite)(['resources/css/admin.css'])
             );
         });
-        
+
         Filament::registerNavigationItems([
             NavigationItem::make()
                 ->group('External')
                 ->sort(101)
                 ->label('Public view')
-                ->icon('heroicon-o-rewind')
+                ->icon('heroicon-o-backward')
                 ->isActiveWhen(fn (): bool => false)
                 ->url('/'),
         ]);

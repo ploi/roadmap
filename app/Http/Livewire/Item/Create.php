@@ -17,7 +17,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 
 class Create extends Component implements HasForms
 {
-    use InteractsWithForms, CanNotify;
+    use InteractsWithForms;
 
     public Project|null $project = null;
     public Board|null $board = null;

@@ -29,7 +29,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 
 class CreateItemModal extends ModalComponent implements HasForms
 {
-    use InteractsWithForms, CanNotify;
+    use InteractsWithForms;
 
     public $similarItems;
 
@@ -55,7 +55,7 @@ class CreateItemModal extends ModalComponent implements HasForms
             ])
             ->label(trans('table.title'))
             ->lazy()
-            ->afterStateUpdated(function (Closure $set, $state) {
+            ->afterStateUpdated(function (\Filament\Forms\Set $set, $state) {
                 $this->setSimilarItems($state);
             })
             ->minLength(3)

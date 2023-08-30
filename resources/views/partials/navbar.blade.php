@@ -26,7 +26,7 @@
                             'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => !request()->is('my')
                         ])
                         href="{{ route('my') }}">
-                        <x-heroicon-o-view-boards class="w-5 h-5 {{ !request()->is('my') ? 'text-gray-500' : ''  }}"/>
+{{--                        <x-heroicon-o-view-boards class="w-5 h-5 {{ !request()->is('my') ? 'text-gray-500' : ''  }}"/>--}}
 
                         <span class="font-medium">{{ trans('items.my-items') }}</span>
                     </a>

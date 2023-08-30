@@ -16,7 +16,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 
 class EditCommentModal extends ModalComponent implements HasForms
 {
-    use InteractsWithForms, CanNotify;
+    use InteractsWithForms;
 
     public $comment;
 
