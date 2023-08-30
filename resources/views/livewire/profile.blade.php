@@ -8,9 +8,7 @@
                     {{ trans('profile.save') }}
                 </x-filament::button>
 
-                <x-filament::button type="button" color="gray" wire:click="logoutConfirm">
-                    {{ trans('profile.logout') }}
-                </x-filament::button>
+                {{ $this->logoutAction }}
             </div>
 
             <div>

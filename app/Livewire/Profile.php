@@ -8,6 +8,7 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Forms;
 use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Alignment;
 use ResourceBundle;
 use App\Models\User;
 use Filament\Tables;
@@ -126,14 +127,15 @@ class Profile extends Component implements HasForms, HasTable, HasActions
         return redirect()->route('home');
     }
 
-    public function logoutConfirm()
+    public function logoutAction(): Action
     {
-        $this->dispatch('open-modal', ['id' => 'logoutConfirm']);
-    }
-
-    public function closeLogoutConfirm()
-    {
-        $this->dispatch('close-modal', ['id' => 'logoutConfirm']);
+        return Action::make('logout')
+            ->label(trans('profile.logout'))
+            ->requiresConfirmation()
+            ->modalAlignment(Alignment::Left)
+            ->modalDescription('Are you sure you want to do this?')
+            ->color(Color::Slate)
+            ->action(fn () => $this->logout());
     }
 
     public function deleteAction(): Action
@@ -142,6 +144,15 @@ class Profile extends Component implements HasForms, HasTable, HasActions
             ->label(trans('profile.delete-account'))
             ->color(Color::Red)
             ->requiresConfirmation()
+            ->modalAlignment(Alignment::Left)
+            ->modalDescription('Are you sure you want to do this?')
+            ->form([
+                Forms\Components\TextInput::make('email')
+                    ->email()
+                    ->required()
+                    ->helperText('Enter your account\'s email address to delete your account')
+                    ->in([auth()->user()->email])
+            ])
             ->action(fn () => $this->delete());
     }
 
