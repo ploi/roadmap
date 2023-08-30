@@ -2,7 +2,12 @@
 
 namespace App\Livewire;
 
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms;
+use Filament\Notifications\Notification;
+use Filament\Support\Colors\Color;
 use ResourceBundle;
 use App\Models\User;
 use Filament\Tables;
@@ -17,12 +22,17 @@ use Filament\Http\Livewire\Concerns\CanNotify;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-class Profile extends Component implements HasForms, HasTable
+class Profile extends Component implements HasForms, HasTable, HasActions
 {
-    use InteractsWithForms, InteractsWithTable;
+    use InteractsWithForms, InteractsWithTable, InteractsWithActions;
 
     public $name;
     public $email;
+    public $username;
+    public $locale;
+    public $per_page_setting;
+    public $notification_settings;
+    public $date_locale;
     public User $user;
 
     public function mount(): void
@@ -102,7 +112,11 @@ class Profile extends Component implements HasForms, HasTable
             $this->notify('success', 'Refresh the page to show locale changes.');
         }
 
-        $this->notify('success', 'Profile has been saved.');
+        Notification::make('profile-saved')
+            ->title('Profile')
+            ->body('Profile has been saved')
+            ->success()
+            ->send();
     }
 
     public function logout()
@@ -122,14 +136,13 @@ class Profile extends Component implements HasForms, HasTable
         $this->dispatch('close-modal', ['id' => 'logoutConfirm']);
     }
 
-    public function deleteConfirm()
+    public function deleteAction(): Action
     {
-        $this->dispatch('open-modal', ['id' => 'deleteAccount']);
-    }
-
-    public function closeDeleteConfirm()
-    {
-        $this->dispatch('close-modal', ['id' => 'deleteAccount']);
+        return Action::make('delete')
+            ->label(trans('profile.delete-account'))
+            ->color(Color::Red)
+            ->requiresConfirmation()
+            ->action(fn () => $this->delete());
     }
 
     public function delete()

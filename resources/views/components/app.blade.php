@@ -83,12 +83,8 @@
     </main>
 </div>
 
-{{--<x-filament::notification-manager/>--}}
-
-{{--@livewire('livewire-ui-spotlight')--}}
-{{--@livewire('wire-elements-modal')--}}
-
 @filamentScripts
+@livewire('notifications')
 {{--@vite('resources/js/app.js')--}}
 @stack('javascript')
 {{--@livewire('notifications')--}}

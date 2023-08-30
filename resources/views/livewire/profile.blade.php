@@ -8,15 +8,13 @@
                     {{ trans('profile.save') }}
                 </x-filament::button>
 
-                <x-filament::button type="button" color="secondary" wire:click="logoutConfirm">
+                <x-filament::button type="button" color="gray" wire:click="logoutConfirm">
                     {{ trans('profile.logout') }}
                 </x-filament::button>
             </div>
 
             <div>
-                <x-filament::button type="button" color="danger" wire:click="deleteConfirm">
-                    {{ trans('profile.delete-account') }}
-                </x-filament::button>
+                {{ $this->deleteAction }}
             </div>
         </div>
     </form>
@@ -29,6 +27,8 @@
 
         {{ $this->table }}
     @endif
+
+    <x-filament-actions::modals />
 
     <x-filament::modal id="logoutConfirm" width="md">
         <x-slot name="heading">
