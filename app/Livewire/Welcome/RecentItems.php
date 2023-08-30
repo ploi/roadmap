@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Welcome;
+namespace App\Livewire\Welcome;
 
 use Closure;
 use App\Models\Item;

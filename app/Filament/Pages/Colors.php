@@ -5,12 +5,13 @@ namespace App\Filament\Pages;
 use App\Enums\UserRole;
 use App\Settings\ColorSettings;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Pages\SettingsPage;
 use Filament\Forms\Components\Card;
 use Illuminate\Support\HtmlString;
-use Livewire\TemporaryUploadedFile;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\ColorPicker;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class Colors extends SettingsPage
 {
@@ -32,29 +33,29 @@ class Colors extends SettingsPage
         abort_unless(auth()->user()->hasRole(UserRole::Admin), 403);
     }
 
-    protected function getFormSchema(): array
+    public function form(Form $form): Form
     {
-        return [
+        return $form->schema([
             Card::make([
                 FileUpload::make('logo')
                     ->image()
                     ->helperText('Make sure your storage is linked (by running php artisan storage:link).')
                     ->disk('public')
-                    ->imageResizeTargetHeight('64')
+//                    ->imageResizeTargetHeight('64')
                     ->maxSize(1024)
                     ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
                         return (string) str($file->getClientOriginalName())->prepend('logo-');
                     })
-                    ->getUploadedFileUrlUsing(function ($record) {
+                    ->getUploadedFileNameForStorageUsing(function ($record) {
                         return storage_path('app/public/'.app(ColorSettings::class)->logo);
                     }),
                 FileUpload::make('favicon')
                     ->image()
                     ->disk('public')
-                    ->imageResizeTargetHeight('64')
-                    ->imageResizeTargetWidth('64')
+//                    ->imageResizeTargetHeight('64')
+//                    ->imageResizeTargetWidth('64')
                     ->maxSize(1024)
-                    ->getUploadedFileUrlUsing(function ($record) {
+                    ->getUploadedFileNameForStorageUsing(function ($record) {
                         return storage_path('app/public/favicon.png');
                     })
                     ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
@@ -66,6 +67,6 @@ class Colors extends SettingsPage
                     ->helperText(new HtmlString('Choose a font family from <a href="https://fonts.bunny.net" target="_blank" rel="noreferrer">Bunny Fonts</a> (e.g. \'Roboto\')')),
                 ColorPicker::make('primary')
             ])->columns(),
-        ];
+        ]);
     }
 }

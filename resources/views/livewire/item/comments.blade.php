@@ -4,7 +4,7 @@
     @endforeach
 
     @if($reply === null && !$item->board?->block_comments)
-        <form wire:submit.prevent="submit" class="space-y-4 mt-4">
+        <form wire:submit="submit" class="space-y-4 mt-4">
             {{ $this->form }}
 
             <x-filament::button wire:click="submit">

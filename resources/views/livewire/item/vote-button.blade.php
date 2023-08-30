@@ -5,14 +5,14 @@
                 color="secondary"
                 disabled
             >
-                <x-heroicon-o-thumb-up class="w-5 h-5"/>
+                <x-heroicon-o-hand-thumb-up class="w-5 h-5"/>
             </x-filament::button>
         @else
             <x-filament::button
                 :color="$vote ? 'primary' : 'secondary'"
                 wire:click="toggleUpvote"
             >
-                <x-heroicon-o-thumb-up class="w-5 h-5"/>
+                <x-heroicon-o-hand-thumb-up class="w-5 h-5"/>
             </x-filament::button>
         @endif
 

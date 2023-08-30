@@ -2,7 +2,7 @@
 
 use Livewire\Livewire;
 use App\Settings\GeneralSettings;
-use App\Http\Livewire\Modals\Item\CreateItemModal;
+use App\Livewire\Modals\Item\CreateItemModal;
 
 test('A user can not submit item if they need to verify email address', function () {
     createAndLoginUser(['email_verified_at' => null]);

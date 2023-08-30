@@ -83,7 +83,7 @@
     </div>
 
     @if($reply == $comment->id)
-        <form wire:submit.prevent="submit" class="space-y-4 mt-4 px-2">
+        <form wire:submit="submit" class="space-y-4 mt-4 px-2">
             {{ $this->form }}
 
             <x-filament::button wire:click="submit">

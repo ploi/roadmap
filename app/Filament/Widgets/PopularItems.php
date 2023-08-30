@@ -29,7 +29,7 @@ class PopularItems extends BaseWidget
 
     protected function getTableRecordUrlUsing(): ?Closure
     {
-        return fn ($record) => ItemResource::getUrl('edit', $record);
+        return fn ($record) => ItemResource::getUrl('edit', ['record' => $record]);
     }
 
     protected function isTablePaginationEnabled(): bool

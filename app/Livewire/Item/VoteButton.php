@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Item;
+namespace App\Livewire\Item;
 
 use App\Models\Vote;
 use Livewire\Component;

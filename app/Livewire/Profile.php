@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use Filament\Forms;
 use ResourceBundle;
@@ -114,22 +114,22 @@ class Profile extends Component implements HasForms, HasTable
 
     public function logoutConfirm()
     {
-        $this->dispatchBrowserEvent('open-modal', ['id' => 'logoutConfirm']);
+        $this->dispatch('open-modal', ['id' => 'logoutConfirm']);
     }
 
     public function closeLogoutConfirm()
     {
-        $this->dispatchBrowserEvent('close-modal', ['id' => 'logoutConfirm']);
+        $this->dispatch('close-modal', ['id' => 'logoutConfirm']);
     }
 
     public function deleteConfirm()
     {
-        $this->dispatchBrowserEvent('open-modal', ['id' => 'deleteAccount']);
+        $this->dispatch('open-modal', ['id' => 'deleteAccount']);
     }
 
     public function closeDeleteConfirm()
     {
-        $this->dispatchBrowserEvent('close-modal', ['id' => 'deleteAccount']);
+        $this->dispatch('close-modal', ['id' => 'deleteAccount']);
     }
 
     public function delete()

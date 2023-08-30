@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Modals\Item\Comment;
+namespace App\Livewire\Modals\Item\Comment;
 
 use App\Models\Comment;
 use LivewireUI\Modal\ModalComponent;

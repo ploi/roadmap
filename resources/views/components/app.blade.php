@@ -85,12 +85,12 @@
 {{--<x-filament::notification-manager/>--}}
 
 {{--@livewire('livewire-ui-spotlight')--}}
-{{--@livewire('livewire-ui-modal')--}}
+{{--@livewire('wire-elements-modal')--}}
 
 @filamentScripts
-@vite('resources/js/app.js')
+{{--@vite('resources/js/app.js')--}}
 @stack('javascript')
-@livewire('notifications')
+{{--@livewire('notifications')--}}
 {!! app(\App\Settings\GeneralSettings::class)->custom_scripts !!}
 </body>
 </html>

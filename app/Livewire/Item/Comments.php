@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Item;
+namespace App\Livewire\Item;
 
 use App\Models\Item;
 use Livewire\Component;
@@ -114,7 +114,7 @@ class Comments extends Component implements HasForms
             ->comments()
             ->with('user:id,name,email')
             ->orderByRaw('COALESCE(parent_id, id), parent_id IS NOT NULL, id')
-            ->when(!auth()->user()?->hasAdminAccess(), fn ($query) => $query->where('private', false))
+            ->when(!auth()->user()?->hasAdminAccess(), fn($query) => $query->where('private', false))
             ->get()
             ->mapToGroups(function ($comment) {
                 return [(int)$comment->parent_id => $comment];
@@ -130,11 +130,11 @@ class Comments extends Component implements HasForms
 
     public function edit(int $id)
     {
-        $this->emit('openModal', 'modals.item.comment.edit-comment-modal', ['comment' => $id]);
+        $this->dispatch('openModal', component: 'modals.item.comment.edit-comment-modal', arguments: ['comment' => $id]);
     }
 
     public function showActivitylog(int $id)
     {
-        $this->emit('openModal', 'modals.item.comment.show-comment-activities-modal', ['comment' => $id]);
+        $this->dispatch('openModal', component: 'modals.item.comment.show-comment-activities-modal', arguments: ['comment' => $id]);
     }
 }

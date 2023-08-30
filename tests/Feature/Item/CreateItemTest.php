@@ -6,7 +6,7 @@ use App\Models\Board;
 use Livewire\Livewire;
 use App\Models\Project;
 use App\Settings\GeneralSettings;
-use App\Http\Livewire\Item\Create;
+use App\Livewire\Item\Create;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Admin\ItemHasBeenCreatedEmail;
 use function Pest\Laravel\assertDatabaseHas;

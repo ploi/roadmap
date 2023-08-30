@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Modals\Item\Comment;
+namespace App\Livewire\Modals\Item\Comment;
 
 use function auth;
 use function view;
@@ -53,7 +53,7 @@ class EditCommentModal extends ModalComponent implements HasForms
 
         $this->notify('success', trans('comments.comment-updated'));
 
-        $this->emit('updatedComment');
+        $this->dispatch('updatedComment');
     }
 
     public function render()

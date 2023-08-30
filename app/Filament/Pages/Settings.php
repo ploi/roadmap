@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Services\GitHubService;
 use Closure;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Form;
 use Storage;
 use App\Enums\UserRole;
 use Illuminate\Support\Str;
@@ -50,9 +51,9 @@ class Settings extends SettingsPage
             });
     }
 
-    protected function getFormSchema(): array
+    public function form(Form $form): Form
     {
-        return [
+        return $form->schema([
             Tabs::make('main')
                 ->schema([
                     Tabs\Tab::make('General')
@@ -276,7 +277,7 @@ class Settings extends SettingsPage
                 ])
                 ->columns()
                 ->columnSpan(2),
-        ];
+        ]);
     }
 
     protected function getHeaderActions(): array

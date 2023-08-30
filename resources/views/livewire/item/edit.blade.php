@@ -1,7 +1,7 @@
 <div>
     <h3 class="mb-3">{{ trans('items.edit') }}</h3>
 
-    <form wire:submit.prevent="submit" class="space-y-5">
+    <form wire:submit="submit" class="space-y-5">
         {{ $this->form }}
 
         <x-filament::button wire:click="submit">

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Item;
+namespace App\Livewire\Item;
 
 use function auth;
 use function view;

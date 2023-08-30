@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Changelog;
+namespace App\Livewire\Changelog;
 
 use Livewire\Component;
 use App\Models\Changelog;

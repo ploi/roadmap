@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Modals\Item;
+namespace App\Livewire\Modals\Item;
 
 use Closure;
 use function app;
