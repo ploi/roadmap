@@ -9,7 +9,7 @@
             </x-filament::button>
         @else
             <x-filament::button
-                :color="$vote ? 'primary' : 'secondary'"
+                :color="$vote ? 'primary' : 'gray'"
                 wire:click="toggleUpvote"
             >
                 <x-heroicon-o-hand-thumb-up class="w-5 h-5"/>

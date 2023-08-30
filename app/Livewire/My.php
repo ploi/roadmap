@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use Closure;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Tables;
 use Livewire\Component;
 use Illuminate\Support\Carbon;
@@ -10,9 +12,9 @@ use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-abstract class My extends Component implements HasTable
+class My extends Component implements HasTable, HasForms
 {
-    use InteractsWithTable;
+    use InteractsWithTable, InteractsWithForms;
 
     public $type = 'default';
 

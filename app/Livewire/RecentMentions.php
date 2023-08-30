@@ -3,15 +3,17 @@
 namespace App\Livewire;
 
 use Closure;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Tables;
 use Livewire\Component;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-abstract class RecentMentions extends Component implements HasTable
+class RecentMentions extends Component implements HasTable, HasForms
 {
-    use InteractsWithTable;
+    use InteractsWithTable, InteractsWithForms;
 
     protected function getTableQuery(): Builder
     {
