@@ -50,10 +50,11 @@
 
         <div class="p-2 flex justify-between gap-2 items-center">
             @if($comment->user->is(auth()->user()))
-                <a wire:click="edit({{ $comment->id }})"
-                   class="text-xs font-medium text-gray-500 hover:underline cursor-pointer">
-                    {{ trans('comments.edit') }}
-                </a>
+                {{ $this->editAction }}
+{{--                <a wire:click="edit({{ $comment->id }})"--}}
+{{--                   class="text-xs font-medium text-gray-500 hover:underline cursor-pointer">--}}
+{{--                    {{ trans('comments.edit') }}--}}
+{{--                </a>--}}
 
                 &centerdot;
             @endif

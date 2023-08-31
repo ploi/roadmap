@@ -3,6 +3,11 @@
 namespace App\Livewire\Item;
 
 use App\Models\Item;
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Alignment;
 use Livewire\Component;
 use App\Rules\ProfanityCheck;
 use App\Settings\GeneralSettings;
@@ -12,9 +17,9 @@ use App\View\Components\MarkdownEditor;
 use Filament\Notifications\Notification;
 use Filament\Forms\Concerns\InteractsWithForms;
 
-class Comments extends Component implements HasForms
+class Comments extends Component implements HasForms, HasActions
 {
-    use InteractsWithForms;
+    use InteractsWithForms, InteractsWithActions;
 
     public Item $item;
     public $comments;
@@ -131,6 +136,20 @@ class Comments extends Component implements HasForms
     public function edit(int $id)
     {
         $this->dispatch('openModal', component: 'modals.item.comment.edit-comment-modal', arguments: ['comment' => $id]);
+    }
+
+    public function editAction()
+    {
+        return Action::make('edit')
+            ->label(trans('comments.edit'))
+            ->requiresConfirmation()
+            ->form([
+                MarkdownEditor::make('content')
+            ])
+            ->link()
+            ->action(function(){
+
+            });
     }
 
     public function showActivitylog(int $id)

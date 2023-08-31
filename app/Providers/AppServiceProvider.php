@@ -30,20 +30,13 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
-        Filament::serving(function () {
-            Filament::registerRenderHook(
-                'head.end',
-                static fn () => (new Vite)(['resources/css/admin.css'])
-            );
-        });
-
         Filament::registerNavigationItems([
             NavigationItem::make()
                 ->group('External')
                 ->sort(101)
                 ->label('Public view')
                 ->icon('heroicon-o-backward')
-                ->isActiveWhen(fn (): bool => false)
+                ->isActiveWhen(fn(): bool => false)
                 ->url('/'),
         ]);
 
