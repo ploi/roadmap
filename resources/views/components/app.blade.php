@@ -15,7 +15,6 @@
         }
     </style>
 
-
     @vite('resources/css/app.css')
 
     @if(file_exists($favIcon = storage_path('app/public/favicon.png')))

@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\ItemResource\Pages;
 
 use App\Models\Item;
-use Filament\Pages\Actions\Action;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +17,7 @@ class EditItem extends EditRecord
     public function getHeaderActions(): array
     {
         return [
-            Action::make('view_public')->color('gray')->url(fn () => route('items.show', $this->record)),
+            Action::make('view_public')->color('gray')->url(fn () => route('items.show', $this->record))->openUrlInNewTab(),
             Action::make('flush_og_images')
                 ->action(function () {
                     Storage::disk('public')->delete('og-' . $this->record->slug . '-' . $this->record->id . '.jpg');

@@ -16,9 +16,12 @@ class Edit extends Component implements HasForms
 
     public Item $item;
 
+    public $title;
+    public $content;
+
     public function mount()
     {
-        $this->form->fill([
+        $this->fill([
             'title' => $this->item->title,
             'content' => $this->item->content,
         ]);

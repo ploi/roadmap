@@ -1,5 +1,5 @@
 <x-filament::widget class="space-y-4">
-    <p class="text-gray-500 dark:text-gray-400">
+    <p class="text-gray-500 text-sm mb-4 dark:text-gray-400">
         This page describes your system information, as well as your current installed version.
     </p>
 
@@ -34,7 +34,7 @@
                                   d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     @else
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-success-500" fill="none"
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-500" fill="none"
                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>

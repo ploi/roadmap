@@ -54,20 +54,22 @@ class Profile extends Component implements HasForms, HasTable, HasActions
     protected function getFormSchema(): array
     {
         return [
-            Forms\Components\Section::make(trans('auth.profile'))->schema([
-                Forms\Components\TextInput::make('name')->label(trans('auth.name'))->required(),
-                Forms\Components\TextInput::make('username')
-                    ->label(trans('profile.username'))
-                    ->helperText(trans('profile.username_description'))
-                    ->required()
-                    ->rules([
-                        'alpha_dash'
-                    ])
-                    ->unique(table: User::class, column: 'username', ignorable: auth()->user()),
-                Forms\Components\TextInput::make('email')->label(trans('auth.email'))->required()->email(),
-                Forms\Components\Select::make('locale')->label(trans('auth.locale'))->options($this->locales)->placeholder(trans('auth.locale_null_value')),
-                Forms\Components\Select::make('date_locale')->label(trans('auth.date_locale'))->options($this->locales)->placeholder(trans('auth.date_locale_null_value')),
-            ])->collapsible(),
+            Forms\Components\Section::make(trans('auth.profile'))
+                ->columns()
+                ->schema([
+                    Forms\Components\TextInput::make('name')->label(trans('auth.name'))->required(),
+                    Forms\Components\TextInput::make('username')
+                        ->label(trans('profile.username'))
+                        ->helperText(trans('profile.username_description'))
+                        ->required()
+                        ->rules([
+                            'alpha_dash'
+                        ])
+                        ->unique(table: User::class, column: 'username', ignorable: auth()->user()),
+                    Forms\Components\TextInput::make('email')->label(trans('auth.email'))->required()->email(),
+                    Forms\Components\Select::make('locale')->label(trans('auth.locale'))->options($this->locales)->placeholder(trans('auth.locale_null_value')),
+                    Forms\Components\Select::make('date_locale')->label(trans('auth.date_locale'))->options($this->locales)->placeholder(trans('auth.date_locale_null_value')),
+                ])->collapsible(),
 
             Forms\Components\Section::make(trans('profile.notifications'))
                 ->schema([
@@ -79,19 +81,19 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                 ])->collapsible(),
 
             Forms\Components\Section::make(trans('profile.settings'))
-            ->schema([
-                Forms\Components\MultiSelect::make('per_page_setting')->label(trans('profile.per_page_setting'))
-                    ->options([
-                        5 => '5',
-                        10 => '10',
-                        15 => '15',
-                        25 => '25',
-                        50 => '50',
-                    ])
-                    ->required()
-                    ->helperText('Determine how many pages should be available for the items in the "My" page for example.')
-                    ->rules(['array', 'in:5,10,15,25,50'])
-            ])->collapsible(),
+                ->schema([
+                    Forms\Components\MultiSelect::make('per_page_setting')->label(trans('profile.per_page_setting'))
+                        ->options([
+                            5 => '5',
+                            10 => '10',
+                            15 => '15',
+                            25 => '25',
+                            50 => '50',
+                        ])
+                        ->required()
+                        ->helperText('Determine how many pages should be available for the items in the "My" page for example.')
+                        ->rules(['array', 'in:5,10,15,25,50'])
+                ])->collapsible(),
         ];
     }
 
@@ -135,7 +137,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
             ->modalAlignment(Alignment::Left)
             ->modalDescription('Are you sure you want to do this?')
             ->color(Color::Slate)
-            ->action(fn () => $this->logout());
+            ->action(fn() => $this->logout());
     }
 
     public function deleteAction(): Action
@@ -153,7 +155,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                     ->helperText('Enter your account\'s email address to delete your account')
                     ->in([auth()->user()->email])
             ])
-            ->action(fn () => $this->delete());
+            ->action(fn() => $this->delete());
     }
 
     public function delete()
@@ -170,7 +172,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
         $locales = ResourceBundle::getLocales('');
 
         return collect($locales)
-            ->mapWithKeys(fn ($locale) => [$locale => $locale])
+            ->mapWithKeys(fn($locale) => [$locale => $locale])
             ->toArray();
     }
 

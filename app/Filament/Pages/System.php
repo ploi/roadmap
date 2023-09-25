@@ -3,10 +3,12 @@
 namespace App\Filament\Pages;
 
 use App\Enums\UserRole;
+use Filament\Actions\Action;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use App\Services\SystemChecker;
-use Filament\Pages\Actions\Action;
 use App\Filament\Pages\Widgets\System\SystemInfo;
+use Filament\Support\Enums\Alignment;
 
 class System extends Page
 {
@@ -23,8 +25,6 @@ class System extends Page
 
     public function mount(): void
     {
-        parent::mount();
-
         abort_unless(auth()->user()->hasRole(UserRole::Admin), 403);
     }
 
@@ -54,11 +54,16 @@ class System extends Page
                 ->action(function () {
                     (new SystemChecker())->flushVersionData();
 
-                    $this->notify('success', 'Version data has been cleared', true);
+                    Notification::make('check_for_updates')
+                        ->title('Updates')
+                        ->body('Version data has been updated')
+                        ->success()
+                        ->send();
 
                     return redirect(System::getUrl());
                 })
-                ->requiresConfirmation(),
+                ->requiresConfirmation()
+                ->modalAlignment(Alignment::Left),
         ];
     }
 }
