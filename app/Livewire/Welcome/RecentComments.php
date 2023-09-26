@@ -3,6 +3,8 @@
 namespace App\Livewire\Welcome;
 
 use Closure;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Tables;
 use App\Models\Comment;
 use Livewire\Component;
@@ -10,9 +12,9 @@ use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-abstract class RecentComments extends Component implements HasTable
+class RecentComments extends Component implements HasTable, HasForms
 {
-    use InteractsWithTable;
+    use InteractsWithTable, InteractsWithForms;
 
     protected function getTableQuery(): Builder
     {
