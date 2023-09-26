@@ -19,7 +19,7 @@
                     <p class="truncate">{{ $comment->user->name }}</p>
                     @if($comment->user_id === $item->user_id)
                         <span
-                            class="hidden md:block inline-flex items-center justify-center py-0.5 px-2 text-xs font-semibold tracking-tight text-brand-900 rounded-full bg-brand-200">
+                            class="md:block inline-flex items-center justify-center py-0.5 px-2 text-xs font-semibold tracking-tight text-brand-900 rounded-full bg-brand-200">
                             {{ trans('comments.item-author') }}
                         </span>
                     @endif
@@ -39,10 +39,9 @@
                 <span>&centerdot;</span>
 
                 <span
-                    wire:click="showActivitylog({{ $comment->id }})"
                     x-data="{ tooltip: '{{ $comment->updated_at->isoFormat('L LTS') }}' }"
                     x-tooltip="tooltip"
-                    class="hidden md:block cursor-pointer inline-flex items-center justify-center py-0.5 px-2 text-xs font-medium tracking-tight text-gray-700 rounded-full bg-gray-500/10">
+                    class="md:block inline-flex items-center justify-center py-0.5 px-2 text-xs font-medium tracking-tight text-gray-700 rounded-full bg-gray-500/10">
                     {{ trans('comments.edited') }}
                 </span>
             @endif
@@ -59,18 +58,18 @@
                     {{ trans('comments.reply') }}
                 </a>
 
-                &centerdot;
+{{--                &centerdot;--}}
             @endif
-            <button x-data
-                    x-tooltip.raw="{{ trans('comments.click-to-copy') }}"
-                    x-clipboard.raw="{{ route('items.show', $item) . '#comment-' . $comment->id }}"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-500" fill="none"
-                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
-                </svg>
-            </button>
+{{--            <button x-data--}}
+{{--                    x-tooltip.raw="{{ trans('comments.click-to-copy') }}"--}}
+{{--                    x-clipboard.raw="{{ route('items.show', $item) . '#comment-' . $comment->id }}"--}}
+{{--            >--}}
+{{--                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand-500" fill="none"--}}
+{{--                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">--}}
+{{--                    <path stroke-linecap="round" stroke-linejoin="round"--}}
+{{--                          d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>--}}
+{{--                </svg>--}}
+{{--            </button>--}}
         </div>
     </header>
 

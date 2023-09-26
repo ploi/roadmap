@@ -84,7 +84,7 @@
 
 @filamentScripts
 @livewire('notifications')
-{{--@vite('resources/js/app.js')--}}
+@vite('resources/js/app.js')
 @stack('javascript')
 {{--@livewire('notifications')--}}
 {!! app(\App\Settings\GeneralSettings::class)->custom_scripts !!}

@@ -28,8 +28,6 @@
         "symfony/http-client": "^6.0",
         "symfony/mailgun-mailer": "^6.0",
         "symfony/postmark-mailer": "^6.0",
-        "wire-elements/modal": "^2.0.5-beta",
-        "wire-elements/spotlight": "^2.0.0",
         "xetaio/xetaravel-mentions": "*"
     },
     "require-dev": {

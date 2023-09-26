@@ -162,9 +162,4 @@ class Comments extends Component implements HasForms, HasActions
                 $this->redirectRoute('items.show', $comment->item->slug);
             });
     }
-
-    public function showActivitylog(int $id)
-    {
-        $this->dispatch('openModal', component: 'modals.item.comment.show-comment-activities-modal', arguments: ['comment' => $id]);
-    }
 }
