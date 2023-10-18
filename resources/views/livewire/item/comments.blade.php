@@ -12,6 +12,8 @@
             </x-filament::button>
         </form>
     @endif
+
+    <x-filament-actions::modals />
 </div>
 
 @push('javascript')
