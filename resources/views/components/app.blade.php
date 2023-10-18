@@ -15,13 +15,12 @@
         }
     </style>
 
-    @vite('resources/css/app.css')
-
     @if(file_exists($favIcon = storage_path('app/public/favicon.png')))
         <link href="{{ asset('storage/favicon.png') }}?v={{ md5_file($favIcon) }}" rel="icon" type="image/x-icon"/>
     @endif
 
     @filamentStyles
+    @vite('resources/css/app.css')
 
     @include('partials.meta')
 
