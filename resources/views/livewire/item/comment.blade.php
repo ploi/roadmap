@@ -98,6 +98,8 @@
     @endif
 
     @foreach($comments[$comment->id] ?? [] as $replyComment)
-        <x-comment :comments="$comments" :comment="$replyComment" :item="$item" :reply="$reply"></x-comment>
+        <filament:item.comments :comments="$comments" :comment="$replyComment" :item="$item" :reply="$reply"></filament:item.comments>
     @endforeach
+
+    <x-filament-actions::modals />
 </div>

@@ -1,6 +1,6 @@
 <div>
     @foreach($comments[0] ?? [] as $comment)
-        <x-comment :comments="$comments" :comment="$comment" :item="$item" :reply="$reply"></x-comment>
+        <livewire:item.comment :comments="$comments" :comment="$comment" :item="$item" :reply="$reply"></livewire:item.comment>
     @endforeach
 
     @if($reply === null && !$item->board?->block_comments)
@@ -12,8 +12,6 @@
             </x-filament::button>
         </form>
     @endif
-
-    <x-filament-actions::modals />
 </div>
 
 @push('javascript')

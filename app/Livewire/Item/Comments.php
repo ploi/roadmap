@@ -128,38 +128,4 @@ class Comments extends Component implements HasForms, HasActions
 
         return view('livewire.item.comments');
     }
-
-    public function reply(?int $id = null)
-    {
-        $this->reply = $id;
-    }
-
-    public function edit(int $id)
-    {
-        dd('awd');
-        $this->dispatch('openModal', component: 'modals.item.comment.edit-comment-modal', arguments: ['comment' => $id]);
-    }
-
-    public function editAction()
-    {
-        return Action::make('edit')
-            ->label(trans('comments.edit'))
-            ->requiresConfirmation()
-            ->modalAlignment(Alignment::Left)
-            ->modalDescription('Edit your comment here')
-            ->modalIcon('heroicon-o-chat-bubble-left-right')
-            ->form(function(array $arguments){
-                return [
-                    MarkdownEditor::make('content')->default(Arr::get($arguments, 'comment.content'))
-                ];
-            })
-            ->link()
-            ->action(function(array $data, array $arguments){
-                $comment = auth()->user()->comments()->findOrFail(Arr::get($arguments, 'comment.id'));
-
-                $comment->update(['content' => Arr::get($data, 'content')]);
-
-                $this->redirectRoute('items.show', $comment->item->slug);
-            });
-    }
 }

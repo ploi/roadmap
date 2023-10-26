@@ -6,6 +6,7 @@ use App\Models\Board;
 use App\Models\Project;
 use App\Services\GitHubService;
 use Closure;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Storage;
@@ -58,60 +59,65 @@ class Settings extends SettingsPage
                 ->schema([
                     Tabs\Tab::make('General')
                         ->schema([
-                            Toggle::make('board_centered')->label('Center boards in project views')
-                                ->helperText('When centering, this will always show the boards in the center of the content area.')
-                                ->columnSpan(2),
+                            Section::make('')
+                                ->columns(2)
+                                ->schema([
+                                    Toggle::make('board_centered')->label('Center boards in project views')
+                                        ->helperText('When centering, this will always show the boards in the center of the content area.')
+                                        ->columnSpan(1),
 
-                            Toggle::make('show_projects_sidebar_without_boards')->label('Show projects in sidebar without boards')
-                                ->helperText('If you don\'t want to show projects without boards in the sidebar, toggle this off.')
-                                ->columnSpan(2),
+                                    Toggle::make('show_projects_sidebar_without_boards')->label('Show projects in sidebar without boards')
+                                        ->helperText('If you don\'t want to show projects without boards in the sidebar, toggle this off.')
+                                        ->columnSpan(1),
 
-                            Toggle::make('allow_general_creation_of_item')->label('Allow general creation of an item')
-                                ->helperText('This allows your users to create an item without a board.')
-                                ->columnSpan(2),
+                                    Toggle::make('allow_general_creation_of_item')->label('Allow general creation of an item')
+                                        ->helperText('This allows your users to create an item without a board.')
+                                        ->columnSpan(1),
 
-                            Toggle::make('enable_item_age')
-                                ->label('Enable item age')
-                                ->helperText('Enable this to show the age of an item on the details page.')
-                                ->columnSpan(2),
+                                    Toggle::make('enable_item_age')
+                                        ->label('Enable item age')
+                                        ->helperText('Enable this to show the age of an item on the details page.')
+                                        ->columnSpan(1),
 
-                            Toggle::make('show_voter_avatars')
-                                ->label('Enable voter avatars when viewing an item')
-                                ->helperText('Enabling this will show the avatars of the most recent voters when viewing an item.')
-                                ->columnSpan(2),
+                                    Toggle::make('show_voter_avatars')
+                                        ->label('Enable voter avatars when viewing an item')
+                                        ->helperText('Enabling this will show the avatars of the most recent voters when viewing an item.')
+                                        ->columnSpan(1),
 
-                            Toggle::make('select_project_when_creating_item')
-                                ->label('Users can select a project when creating an item')
-                                ->columnSpan(2)
-                                ->reactive(),
+                                    Toggle::make('select_project_when_creating_item')
+                                        ->label('Users can select a project when creating an item')
+                                        ->columnSpan(1)
+                                        ->reactive(),
 
-                            Toggle::make('project_required_when_creating_item')
-                                ->label('Project is required when creating an item')
-                                ->hidden(fn (\Filament\Forms\Get $get) => $get('select_project_when_creating_item') === false)
-                                ->columnSpan(2),
+                                    Toggle::make('project_required_when_creating_item')
+                                        ->label('Project is required when creating an item')
+                                        ->hidden(fn(\Filament\Forms\Get $get) => $get('select_project_when_creating_item') === false)
+                                        ->columnSpan(1),
 
-                            Toggle::make('select_board_when_creating_item')
-                                ->label('Users can select a board when creating an item')
-                                ->columnSpan(2)
-                                ->reactive(),
+                                    Toggle::make('select_board_when_creating_item')
+                                        ->label('Users can select a board when creating an item')
+                                        ->columnSpan(1)
+                                        ->reactive(),
 
-                            Toggle::make('board_required_when_creating_item')
-                                ->label('Board is required when creating an item')
-                                ->hidden(fn (\Filament\Forms\Get $get) => $get('select_board_when_creating_item') === false)
-                                ->columnSpan(2),
+                                    Toggle::make('board_required_when_creating_item')
+                                        ->label('Board is required when creating an item')
+                                        ->hidden(fn(\Filament\Forms\Get $get) => $get('select_board_when_creating_item') === false)
+                                        ->columnSpan(1),
 
-                            Toggle::make('users_must_verify_email')
-                                ->label('Users must verify their email before they can submit items, or reply to items.')
-                                ->columnSpan(2),
+                                    Toggle::make('users_must_verify_email')
+                                        ->label('Users must verify their email before they can submit items, or reply to items.')
+                                        ->columnSpan(1),
 
-                            Toggle::make('disable_file_uploads')
-                                ->label('Disallow users to upload files or images via the markdown editors.')
-                                ->columnSpan(2),
+                                    Toggle::make('disable_file_uploads')
+                                        ->label('Disallow users to upload files or images via the markdown editors.')
+                                        ->columnSpan(1),
 
-                            Toggle::make('show_github_link')
-                                ->label('Show a link to the linked GitHub issue on the item page')
-                                ->columnSpan(2)
-                                ->visible((new GitHubService)->isEnabled()),
+                                    Toggle::make('show_github_link')
+                                        ->label('Show a link to the linked GitHub issue on the item page')
+                                        ->columnSpan(1)
+                                        ->visible((new GitHubService)->isEnabled()),
+                                ]),
+
 
                             Grid::make()->schema([
                                 Select::make('inbox_workflow')
@@ -128,39 +134,39 @@ class Settings extends SettingsPage
                         ]),
 
                     Tabs\Tab::make('Default boards')
-                            ->schema([
-                                Toggle::make('create_default_boards')->label('Create default boards for new projects')
-                                      ->helperText('When creating a new project, some default boards can be created.')
-                                      ->reactive()
-                                      ->columnSpan(2),
+                        ->schema([
+                            Toggle::make('create_default_boards')->label('Create default boards for new projects')
+                                ->helperText('When creating a new project, some default boards can be created.')
+                                ->reactive()
+                                ->columnSpan(2),
 
-                                Group::make([
-                                    Repeater::make('default_boards')
-                                            ->columns(2)
-                                            ->columnSpan(2)
-                                            ->schema([
-                                                Grid::make(2)->schema([
-                                                    TextInput::make('title')->required(),
-                                                    Select::make('sort_items_by')
-                                                          ->options([
-                                                              Board::SORT_ITEMS_BY_POPULAR => 'Popular',
-                                                              Board::SORT_ITEMS_BY_LATEST => 'Latest',
-                                                          ])
-                                                          ->default(Board::SORT_ITEMS_BY_POPULAR)
-                                                          ->required(),
-                                                ]),
-                                                Grid::make(2)->schema([
-                                                    Toggle::make('visible')->default(true)->helperText('Hides the board from the public view, but will still be accessible if you use the direct URL.'),
-                                                    Toggle::make('can_users_create')->helperText('Allow users to create items in this board.'),
-                                                    Toggle::make('block_comments')->helperText('Block users from commenting to items in this board.'),
-                                                    Toggle::make('block_votes')->helperText('Block users from voting to items in this board.'),
-                                                ]),
+                            Group::make([
+                                Repeater::make('default_boards')
+                                    ->columns(2)
+                                    ->columnSpan(2)
+                                    ->schema([
+                                        Grid::make(2)->schema([
+                                            TextInput::make('title')->required(),
+                                            Select::make('sort_items_by')
+                                                ->options([
+                                                    Board::SORT_ITEMS_BY_POPULAR => 'Popular',
+                                                    Board::SORT_ITEMS_BY_LATEST => 'Latest',
+                                                ])
+                                                ->default(Board::SORT_ITEMS_BY_POPULAR)
+                                                ->required(),
+                                        ]),
+                                        Grid::make(2)->schema([
+                                            Toggle::make('visible')->default(true)->helperText('Hides the board from the public view, but will still be accessible if you use the direct URL.'),
+                                            Toggle::make('can_users_create')->helperText('Allow users to create items in this board.'),
+                                            Toggle::make('block_comments')->helperText('Block users from commenting to items in this board.'),
+                                            Toggle::make('block_votes')->helperText('Block users from voting to items in this board.'),
+                                        ]),
 
-                                                Textarea::make('description')->helperText('Used as META description for SEO purposes.')->columnSpan(2),
+                                        Textarea::make('description')->helperText('Used as META description for SEO purposes.')->columnSpan(2),
 
-                                            ]),
-                                ])->columnSpan(2)->visible(fn ($get) => $get('create_default_boards')),
-                            ]),
+                                    ]),
+                            ])->columnSpan(2)->visible(fn($get) => $get('create_default_boards')),
+                        ]),
 
                     Tabs\Tab::make('Dashboard items')
                         ->schema([
@@ -180,10 +186,10 @@ class Settings extends SettingsPage
                                     ])->default(1),
                                     Toggle::make('must_have_project')
                                         ->reactive()
-                                        ->visible(fn ($get) => $get('type') === 'recent-items')
+                                        ->visible(fn($get) => $get('type') === 'recent-items')
                                         ->helperText('Enable this to show items that have a project'),
                                     Toggle::make('must_have_board')
-                                        ->visible(fn ($get) => $get('must_have_project') && $get('type') === 'recent-items')
+                                        ->visible(fn($get) => $get('must_have_project') && $get('type') === 'recent-items')
                                         ->helperText('Enable this to show items that have a board'),
                                 ])->helperText('Determine which items you want to show on the dashboard (for all users).'),
                         ]),
@@ -196,11 +202,11 @@ class Settings extends SettingsPage
                                 ->columnSpan(2),
                             Toggle::make('show_changelog_author')
                                 ->label('Show the author of the changelog.')
-                                ->visible(fn ($get) => $get('enable_changelog'))
+                                ->visible(fn($get) => $get('enable_changelog'))
                                 ->columnSpan(2),
                             Toggle::make('show_changelog_related_items')
                                 ->label('Show the related items on the changelog.')
-                                ->visible(fn ($get) => $get('enable_changelog'))
+                                ->visible(fn($get) => $get('enable_changelog'))
                                 ->columnSpan(2),
                         ]),
 
