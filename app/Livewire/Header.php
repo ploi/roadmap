@@ -51,16 +51,24 @@ class Header extends Component implements HasForms, HasActions
         return view('livewire.header');
     }
 
-//    public function searchItemAction(): Action
-//    {
-//        return Action::make('searchItem')
-//            ->color('gray')
-//            ->size('xs')
-//            ->label('CMD + / to search')
-//            ->icon('heroicon-o-magnifying-glass')
-//            ->requiresConfirmation()
-//            ->modalContent('');
-//    }
+    public function searchItemAction(): Action
+    {
+        return Action::make('searchItem')
+            ->color('gray')
+            ->size('xs')
+            ->label('CMD + / to search')
+            ->icon('heroicon-o-magnifying-glass')
+            ->requiresConfirmation()
+            ->modalWidth('3xl')
+            ->modalFooterActions([
+                Action::make('👀')->hidden()
+            ])
+            ->modalHeading('Search')
+            ->modalDescription('')
+            ->modalIcon('heroicon-o-magnifying-glass')
+            ->modalAlignment(Alignment::Left)
+            ->modalContent(view('modals.search'));
+    }
 
     public function submitItemAction(): Action
     {

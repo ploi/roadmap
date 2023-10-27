@@ -12,9 +12,9 @@
             </a>
 
             <ul class="items-center hidden space-x-3 text-sm font-medium text-gray-600 lg:flex">
-{{--                <li>--}}
-{{--                    {{ $this->searchItemAction }}--}}
-{{--                </li>--}}
+                <li>
+                    {{ $this->searchItemAction }}
+                </li>
                 @guest
                     <li>
                         <a class="flex items-center justify-center text-white hover:text-gray-50 focus:outline-none"
