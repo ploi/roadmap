@@ -12,9 +12,9 @@
             </a>
 
             <ul class="items-center hidden space-x-3 text-sm font-medium text-gray-600 lg:flex">
-                <li>
-                    <kbd @click="$dispatch('toggle-spotlight')" class="cursor-pointer p-1 items-center shadow justify-center rounded border border-gray-400 hover:bg-gray-200 bg-white font-semibold text-gray-900">{{ trans('general.navbar-search') }}</kbd>
-                </li>
+{{--                <li>--}}
+{{--                    {{ $this->searchItemAction }}--}}
+{{--                </li>--}}
                 @guest
                     <li>
                         <a class="flex items-center justify-center text-white hover:text-gray-50 focus:outline-none"

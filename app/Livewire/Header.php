@@ -21,6 +21,8 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Alignment;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
 use Livewire\Component;
 use Filament\Actions\Action;
 
@@ -49,13 +51,25 @@ class Header extends Component implements HasForms, HasActions
         return view('livewire.header');
     }
 
+//    public function searchItemAction(): Action
+//    {
+//        return Action::make('searchItem')
+//            ->color('gray')
+//            ->size('xs')
+//            ->label('CMD + / to search')
+//            ->icon('heroicon-o-magnifying-glass')
+//            ->requiresConfirmation()
+//            ->modalContent('');
+//    }
+
     public function submitItemAction(): Action
     {
         return Action::make('submitItem')
             ->requiresConfirmation()
-//            ->color(Color::hex('#ffffff'))
+            ->color('gray')
             ->icon('heroicon-o-plus-circle')
             ->modalAlignment(Alignment::Left)
+            ->modalDescription('')
             ->modalIcon('heroicon-o-plus-circle')
             ->modalWidth('3xl')
             ->form(function () {
