@@ -5,9 +5,9 @@ use App\Models\Board;
 use App\Enums\UserRole;
 use App\Models\Project;
 use function Pest\Laravel\get;
+use App\Livewire\Item\Comments;
 use function Pest\Laravel\post;
-use App\Http\Livewire\Item\Comments;
-use App\Http\Livewire\Item\VoteButton;
+use App\Livewire\Item\VoteButton;
 use function PHPUnit\Framework\assertEquals;
 
 it('renders the items page without a project', function () {

@@ -6,9 +6,9 @@ use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;
 use App\Models\Project;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
 use App\Enums\InboxWorkflow;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use App\Settings\GeneralSettings;
 use Filament\Tables\Filters\Filter;
@@ -31,12 +31,12 @@ class InboxResource extends Resource
 
     protected static ?string $slug = 'inbox';
 
-    protected static function shouldRegisterNavigation(): bool
+    public static function shouldRegisterNavigation(): bool
     {
         return app(GeneralSettings::class)->getInboxWorkflow() != InboxWorkflow::Disabled;
     }
 
-    protected static function getNavigationBadge(): ?string
+    public static function getNavigationBadge(): ?string
     {
         return Item::query()->forInbox()->count();
     }

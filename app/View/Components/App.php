@@ -13,6 +13,7 @@ class App extends Component
 {
     public Collection $projects;
     public string $brandColors;
+    public string $primaryColors;
     public ?string $logo;
     public array $fontFamily;
     public bool $blockRobots = false;
@@ -43,6 +44,10 @@ class App extends Component
         $tw = new Tailwind('brand', app(\App\Settings\ColorSettings::class)->primary);
 
         $this->brandColors = $tw->getCssFormat();
+
+        $tw = new Tailwind('primary', app(\App\Settings\ColorSettings::class)->primary);
+
+        $this->primaryColors = str($tw->getCssFormat())->replace('color-', '');
 
         $fontFamily = app(\App\Settings\ColorSettings::class)->fontFamily ?? "Nunito";
         $this->fontFamily = [

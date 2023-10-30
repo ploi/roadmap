@@ -1,5 +1,4 @@
-@import '../../vendor/filament/filament/resources/css/app.css';
-@import 'tippy.js/dist/tippy.css';
+@import '../../vendor/filament/filament/resources/css/index.css';
 @import 'tribute.css';
 @import 'fonts.css';
 
@@ -30,4 +29,23 @@
 /* Notification toast fix coming from Filament */
 .bg-success-50\/50 {
     background-color: rgb(240 253 244 / 1);
+}
+
+.big-search {
+    .fi-ta-header-toolbar {
+        @apply justify-start;
+
+        &> div:first-child {
+            display: none;
+        }
+
+        .ms-auto {
+            margin-inline-start: inherit;
+            @apply w-full;
+
+            .fi-ta-search-field {
+                @apply w-full;
+            }
+        }
+    }
 }

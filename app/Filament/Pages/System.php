@@ -4,27 +4,27 @@ namespace App\Filament\Pages;
 
 use App\Enums\UserRole;
 use Filament\Pages\Page;
+use Filament\Actions\Action;
 use App\Services\SystemChecker;
-use Filament\Pages\Actions\Action;
+use Filament\Support\Enums\Alignment;
+use Filament\Notifications\Notification;
 use App\Filament\Pages\Widgets\System\SystemInfo;
 
 class System extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-chip';
+    protected static ?string $navigationIcon = 'heroicon-o-cpu-chip';
 
     protected static string $view = 'filament.pages.system';
 
     protected static ?int $navigationSort = 0;
 
-    protected static function shouldRegisterNavigation(): bool
+    public static function shouldRegisterNavigation(): bool
     {
         return auth()->user()->hasRole(UserRole::Admin);
     }
 
     public function mount(): void
     {
-        parent::mount();
-
         abort_unless(auth()->user()->hasRole(UserRole::Admin), 403);
     }
 
@@ -35,7 +35,7 @@ class System extends Page
         ];
     }
 
-    protected static function getNavigationBadge(): ?string
+    public static function getNavigationBadge(): ?string
     {
         $systemChecker = new SystemChecker();
 
@@ -46,19 +46,24 @@ class System extends Page
         return null;
     }
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Action::make('check_for_updates')
-                ->color('secondary')
+                ->color('gray')
                 ->action(function () {
                     (new SystemChecker())->flushVersionData();
 
-                    $this->notify('success', 'Version data has been cleared', true);
+                    Notification::make('check_for_updates')
+                        ->title('Updates')
+                        ->body('Version data has been updated')
+                        ->success()
+                        ->send();
 
                     return redirect(System::getUrl());
                 })
-                ->requiresConfirmation(),
+                ->requiresConfirmation()
+                ->modalAlignment(Alignment::Left),
         ];
     }
 }

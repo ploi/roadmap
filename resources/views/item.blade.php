@@ -29,7 +29,7 @@
 
                         @if($item->board)
                             <div class="flex-1">
-                                @if(auth()->check() && auth()->user()->canAccessFilament() && $item->project)
+                                @if(auth()->check() && auth()->user()->hasAdminAccess() && $item->project)
                                     <form method="post"
                                           action="{{ route('projects.items.update-board', [$item->project, $item]) }}">
                                         @csrf
@@ -118,12 +118,12 @@
 
                 @endif
 
-                @if(auth()->check() && auth()->user()->canAccessFilament())
+                @if(auth()->check() && auth()->user()->hasAdminAccess())
                     <div class="border-t mb-2"></div>
 
                     <div>
                         <a class="text-red-500 hover:text-red-700 ml-1"
-                           href="{{ route('filament.resources.items.edit', $item) }}">Administer item</a>
+                           href="{{ \App\Filament\Resources\ItemResource::getUrl('edit', ['record' => $item]) }}">Administer item</a>
                     </div>
                 @endif
 

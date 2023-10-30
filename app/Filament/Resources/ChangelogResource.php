@@ -5,9 +5,9 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use App\Models\Item;
 use Filament\Tables;
+use Filament\Forms\Form;
 use App\Models\Changelog;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use App\Settings\GeneralSettings;
 use Illuminate\Database\Eloquent\Builder;
@@ -25,7 +25,7 @@ class ChangelogResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static function shouldRegisterNavigation(): bool
+    public static function shouldRegisterNavigation(): bool
     {
         return app(GeneralSettings::class)->enable_changelog;
     }

@@ -1,11 +1,11 @@
 <?php
 
+use App\Livewire\My;
 use App\Models\User;
-use App\Http\Livewire\My;
 use function Pest\Laravel\get;
 
+use App\Livewire\RecentMentions;
 use function Pest\Laravel\actingAs;
-use App\Http\Livewire\RecentMentions;
 
 test('it renders view', function () {
     $user = User::factory()->create();

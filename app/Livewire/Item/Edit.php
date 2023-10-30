@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Livewire\Item;
+
+use App\Models\Item;
+use Livewire\Component;
+use App\Settings\GeneralSettings;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Concerns\InteractsWithForms;
+
+class Edit extends Component implements HasForms
+{
+    use InteractsWithForms;
+
+    public Item $item;
+
+    public $title;
+    public $content;
+
+    public function mount()
+    {
+        $this->fill([
+            'title' => $this->item->title,
+            'content' => $this->item->content,
+        ]);
+    }
+
+    protected function getFormSchema(): array
+    {
+        return [
+            TextInput::make('title')
+                ->label(trans('table.title'))
+                ->minLength(3)
+                ->required(),
+            MarkdownEditor::make('content')
+                ->label(trans('table.content'))
+                ->disableToolbarButtons(app(GeneralSettings::class)->getDisabledToolbarButtons())
+                ->minLength(10)
+                ->required(),
+        ];
+    }
+
+    public function submit()
+    {
+        $formState = $this->form->getState();
+
+        $this->item->update([
+            'title' => $formState['title'],
+            'content' => $formState['content'],
+        ]);
+
+        $this->redirectRoute('items.show', $this->item);
+    }
+
+    public function render()
+    {
+        return view('livewire.item.edit');
+    }
+}

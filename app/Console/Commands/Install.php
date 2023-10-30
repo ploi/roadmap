@@ -30,7 +30,7 @@ class Install extends Command
         $this->writeSeparationLine();
         $this->line(' ');
 
-        $this->info('All done! You can now login at ' . route('filament.auth.login'));
+        $this->info('All done! You can now login at ' . url('/admin'));
     }
 
     protected function refreshDatabase()

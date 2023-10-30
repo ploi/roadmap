@@ -10,10 +10,10 @@ class EditProject extends EditRecord
 {
     protected static string $resource = ProjectResource::class;
 
-    public function getActions(): array
+    public function getHeaderActions(): array
     {
         return [
-            Action::make('view_public')->color('secondary')->url(fn () => route('projects.show', $this->record)),
+            Action::make('view_public')->color('gray')->url(fn () => route('projects.show', $this->record)),
             ...parent::getActions()
         ];
     }

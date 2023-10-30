@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Spatie\Color\Hex;
 use Spatie\Color\Rgb;
+use Illuminate\Support\Str;
 
 class Tailwind
 {
@@ -29,14 +30,18 @@ class Tailwind
     public function getCssFormat(): string
     {
         $output = '<style>' . PHP_EOL;
-        $output.= ':root {' . PHP_EOL;
+        $output .= ':root {' . PHP_EOL;
 
         foreach ($this->shades as $shade => $color) {
-            $output.= "\t--color-{$shade}: {$color};" . PHP_EOL;
+            if ($this->name === 'primary') {
+                $color = Str::between($color, '(', ')');
+            }
+            
+            $output .= "\t--color-{$shade}: {$color};" . PHP_EOL;
         }
 
-        $output.= '}' . PHP_EOL;
-        $output.= '</style>';
+        $output .= '}' . PHP_EOL;
+        $output .= '</style>';
 
         return $output;
     }
@@ -53,15 +58,15 @@ class Tailwind
         // LightShades
         foreach ($lightShades as $shade) {
             $color = $this->lighten($baseColor, $this->intensityMap[$shade]);
-            $colors[$name . '-' . $shade] = (string) $color;
+            $colors[$name . '-' . $shade] = (string)$color;
         }
 
-        $colors[$name . '-500'] = (string) Hex::fromString($baseColor)->toRgb();
+        $colors[$name . '-500'] = (string)Hex::fromString($baseColor)->toRgb();
 
         // DarkShades
         foreach ($darkShades as $shade) {
             $color = $this->darken($baseColor, $this->intensityMap[$shade]);
-            $colors[$name . '-' . $shade] = (string) $color;
+            $colors[$name . '-' . $shade] = (string)$color;
         }
 
         return $colors;

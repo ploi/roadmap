@@ -4,8 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Models\Vote;
 use Filament\Tables;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Model;
 use App\Filament\Resources\VoteResource\Pages;
@@ -14,7 +14,7 @@ class VoteResource extends Resource
 {
     protected static ?string $model = Vote::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-thumb-up';
+    protected static ?string $navigationIcon = 'heroicon-o-hand-thumb-up';
 
     protected static ?string $navigationGroup = 'Manage';
 

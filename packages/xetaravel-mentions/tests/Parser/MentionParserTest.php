@@ -2,8 +2,8 @@
 namespace Test\Parser;
 
 use Tests\TestCase;
-use Tests\vendor\Models\Article;
 use Tests\vendor\Models\User;
+use Tests\vendor\Models\Article;
 use Tests\vendor\Parser\CustomParser;
 use Xetaio\Mentions\Parser\MentionParser;
 

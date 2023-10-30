@@ -10,11 +10,11 @@ class EditComment extends EditRecord
 {
     protected static string $resource = CommentResource::class;
 
-    public function getActions(): array
+    public function getHeaderActions(): array
     {
         return [
             Action::make('view_public')
-                ->color('secondary')
+                ->color('gray')
                 ->openUrlInNewTab()
                 ->url(fn () => route('items.show', $this->record->item) . '#comment-' . $this->record->id),
             ...parent::getActions()

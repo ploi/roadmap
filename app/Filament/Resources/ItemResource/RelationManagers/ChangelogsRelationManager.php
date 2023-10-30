@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\ItemResource\RelationManagers;
 
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use App\Settings\GeneralSettings;
 use Illuminate\Database\Eloquent\Model;
 use App\Filament\Resources\ChangelogResource;
@@ -14,12 +14,12 @@ class ChangelogsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    public static function canViewForRecord(Model $ownerRecord): bool
+    public static function canViewForRecord(Model $ownerRecord, string $pageClass): bool
     {
         return app(GeneralSettings::class)->enable_changelog;
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return ChangelogResource::table($table);
     }

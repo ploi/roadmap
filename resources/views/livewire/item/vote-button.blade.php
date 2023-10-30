@@ -2,21 +2,23 @@
     <div class="flex items-center space-x-4 p-1">
         @if($model->board?->block_votes)
             <x-filament::button
+                size="xs"
                 color="secondary"
                 disabled
             >
-                <x-heroicon-o-thumb-up class="w-5 h-5"/>
+                <x-heroicon-o-hand-thumb-up class="w-5 h-5"/>
             </x-filament::button>
         @else
             <x-filament::button
-                :color="$vote ? 'primary' : 'secondary'"
+                size="xs"
+                :color="$vote ? 'primary' : 'gray'"
                 wire:click="toggleUpvote"
             >
-                <x-heroicon-o-thumb-up class="w-5 h-5"/>
+                <x-heroicon-o-hand-thumb-up class="w-5 h-5"/>
             </x-filament::button>
         @endif
 
-        <span>{{ trans_choice('messages.total-votes', $model->total_votes, ['votes' => $model->total_votes]) }}</span>
+        <span class="text-sm">{{ trans_choice('messages.total-votes', $model->total_votes, ['votes' => $model->total_votes]) }}</span>
 
         @if($vote && $showSubscribeOption)
             @if($vote->subscribed)
