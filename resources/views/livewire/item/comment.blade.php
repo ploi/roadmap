@@ -53,10 +53,7 @@
                 &centerdot;
             @endif
             @if(!$item->board?->block_comments)
-                <a wire:click="reply({{ $comment->id }})"
-                   class="text-xs font-medium text-gray-500 hover:underline cursor-pointer">
-                    {{ trans('comments.reply') }}
-                </a>
+                {{ ($this->replyAction)(['comment' => $comment]) }}
 
 {{--                &centerdot;--}}
             @endif
