@@ -56,11 +56,11 @@ class Header extends Component implements HasForms, HasActions
             ->label('CMD + / to search')
             ->icon('heroicon-o-magnifying-glass')
             ->requiresConfirmation()
-            ->modalWidth('3xl')
+            ->modalWidth('4xl')
             ->modalFooterActions([
                 Action::make('👀')->hidden()
             ])
-            ->modalHeading('Search')
+            ->modalHeading($this->getRandomFunnyPlaceholder())
             ->modalDescription('')
             ->modalIcon('heroicon-o-magnifying-glass')
             ->modalAlignment(Alignment::Left)
@@ -104,8 +104,8 @@ class Header extends Component implements HasForms, HasActions
                 if (app(GeneralSettings::class)->select_board_when_creating_item) {
                     $inputs[] = Select::make('board_id')
                         ->label(trans('table.board'))
-                        ->visible(fn ($get) => $get('project_id'))
-                        ->options(fn ($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
+                        ->visible(fn($get) => $get('project_id'))
+                        ->options(fn($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
                         ->required(app(GeneralSettings::class)->board_required_when_creating_item);
                 }
 
@@ -194,5 +194,29 @@ class Header extends Component implements HasForms, HasActions
 
                 return $query;
             })->get(['title', 'slug']) : collect([]);
+    }
+
+    protected function getRandomFunnyPlaceholder(): string
+    {
+        $placeholders = [
+            "Type here to find your lost keys... or your sanity",
+            "Searching for Wi-Fi signals and lost socks",
+            "Type something brilliant or your cat will judge you",
+            "Looking for answers, memes, and cat videos",
+            "Search for unicorns, we might find one",
+            "Finding a needle in a digital haystack",
+            "Type your thoughts, we'll pretend to understand",
+            "Searching for dinosaurs in the digital age",
+            "Lost in the web? We've got a virtual map",
+            "Hunting for pixels and easter eggs",
+            "Type something epic or order pizza, your choice",
+            "Lost in the code? We'll be your debugger",
+            "Looking for a shortcut to success",
+            "Searching for the meaning of life... or cute cat videos"
+        ];
+
+        shuffle($placeholders);
+
+        return $placeholders[0];
     }
 }

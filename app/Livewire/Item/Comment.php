@@ -25,16 +25,6 @@ class Comment extends Component implements HasForms, HasActions
 
     public function render()
     {
-        $this->comments = $this->item
-            ->comments()
-            ->with('user:id,name,email')
-            ->orderByRaw('COALESCE(parent_id, id), parent_id IS NOT NULL, id')
-            ->when(!auth()->user()?->hasAdminAccess(), fn ($query) => $query->where('private', false))
-            ->get()
-            ->mapToGroups(function ($comment) {
-                return [(int)$comment->parent_id => $comment];
-            });
-
         return view('livewire.item.comment');
     }
 

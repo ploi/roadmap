@@ -118,7 +118,11 @@ class Profile extends Component implements HasForms, HasTable, HasActions
         ]);
 
         if ($this->user->wasChanged('locale', 'date_locale')) {
-            $this->notify('success', 'Refresh the page to show locale changes.');
+            Notification::make('profile')
+                ->title('Profile')
+                ->body('Refresh the page to show locale changes.')
+                ->info()
+                ->send();
         }
 
         Notification::make('profile-saved')

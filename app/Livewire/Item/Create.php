@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Item;
 
+use Filament\Notifications\Notification;
 use function auth;
 use function view;
 use App\Models\Item;
@@ -44,7 +45,12 @@ class Create extends Component implements HasForms
     public function submit()
     {
         if (!$this->board->canUsersCreateItem()) {
-            $this->notify('error', trans('items.not-allowed-to-create-items'));
+            Notification::make('items')
+                ->title('Items')
+                ->body(trans('items.not-allowed-to-create-items'))
+                ->danger()
+                ->send();
+
             $this->redirectRoute('projects.boards.show', [$this->project, $this->board]);
             return;
         }
@@ -61,7 +67,11 @@ class Create extends Component implements HasForms
 
         $item->toggleUpvote();
 
-        $this->notify('success', trans('items.item_created'));
+        Notification::make('items')
+            ->title('Items')
+            ->body(trans('items.item_created'))
+            ->success()
+            ->send();
 
         $this->redirectRoute('projects.items.show', [$this->project, $item]);
     }

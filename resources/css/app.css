@@ -30,3 +30,22 @@
 .bg-success-50\/50 {
     background-color: rgb(240 253 244 / 1);
 }
+
+.big-search {
+    .fi-ta-header-toolbar {
+        @apply justify-start;
+
+        &> div:first-child {
+            display: none;
+        }
+
+        .ms-auto {
+            margin-inline-start: inherit;
+            @apply w-full;
+
+            .fi-ta-search-field {
+                @apply w-full;
+            }
+        }
+    }
+}
