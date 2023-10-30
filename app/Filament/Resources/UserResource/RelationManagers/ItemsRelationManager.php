@@ -2,9 +2,7 @@
 
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
-use Closure;
 use Filament\Tables;
-use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Resources\RelationManagers\RelationManager;

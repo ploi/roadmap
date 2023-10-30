@@ -3,14 +3,10 @@
 namespace App\Providers;
 
 use App\Http\Kernel;
-use Filament\Facades\Filament;
-use Illuminate\Foundation\Vite;
-use App\Settings\GeneralSettings;
 use App\Services\OgImageGenerator;
 use Illuminate\Support\Collection;
 use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\View;
-use Filament\Navigation\NavigationItem;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\Contracts\Factory as SocialiteFactory;
 

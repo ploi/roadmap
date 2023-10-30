@@ -2,17 +2,14 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\Board;
-use App\Models\Project;
-use App\Services\GitHubService;
-use Closure;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Form;
 use Storage;
+use App\Models\Board;
 use App\Enums\UserRole;
+use App\Models\Project;
+use Filament\Forms\Form;
 use Illuminate\Support\Str;
 use App\Enums\InboxWorkflow;
+use App\Services\GitHubService;
 use Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
 use Filament\Pages\Actions\Action;
@@ -22,7 +19,9 @@ use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
@@ -91,7 +90,7 @@ class Settings extends SettingsPage
 
                                     Toggle::make('project_required_when_creating_item')
                                         ->label('Project is required when creating an item')
-                                        ->hidden(fn(\Filament\Forms\Get $get) => $get('select_project_when_creating_item') === false)
+                                        ->hidden(fn (\Filament\Forms\Get $get) => $get('select_project_when_creating_item') === false)
                                         ->columnSpan(1),
 
                                     Toggle::make('select_board_when_creating_item')
@@ -101,7 +100,7 @@ class Settings extends SettingsPage
 
                                     Toggle::make('board_required_when_creating_item')
                                         ->label('Board is required when creating an item')
-                                        ->hidden(fn(\Filament\Forms\Get $get) => $get('select_board_when_creating_item') === false)
+                                        ->hidden(fn (\Filament\Forms\Get $get) => $get('select_board_when_creating_item') === false)
                                         ->columnSpan(1),
 
                                     Toggle::make('users_must_verify_email')
@@ -165,7 +164,7 @@ class Settings extends SettingsPage
                                         Textarea::make('description')->helperText('Used as META description for SEO purposes.')->columnSpan(2),
 
                                     ]),
-                            ])->columnSpan(2)->visible(fn($get) => $get('create_default_boards')),
+                            ])->columnSpan(2)->visible(fn ($get) => $get('create_default_boards')),
                         ]),
 
                     Tabs\Tab::make('Dashboard items')
@@ -186,10 +185,10 @@ class Settings extends SettingsPage
                                     ])->default(1),
                                     Toggle::make('must_have_project')
                                         ->reactive()
-                                        ->visible(fn($get) => $get('type') === 'recent-items')
+                                        ->visible(fn ($get) => $get('type') === 'recent-items')
                                         ->helperText('Enable this to show items that have a project'),
                                     Toggle::make('must_have_board')
-                                        ->visible(fn($get) => $get('must_have_project') && $get('type') === 'recent-items')
+                                        ->visible(fn ($get) => $get('must_have_project') && $get('type') === 'recent-items')
                                         ->helperText('Enable this to show items that have a board'),
                                 ])->helperText('Determine which items you want to show on the dashboard (for all users).'),
                         ]),
@@ -202,11 +201,11 @@ class Settings extends SettingsPage
                                 ->columnSpan(2),
                             Toggle::make('show_changelog_author')
                                 ->label('Show the author of the changelog.')
-                                ->visible(fn($get) => $get('enable_changelog'))
+                                ->visible(fn ($get) => $get('enable_changelog'))
                                 ->columnSpan(2),
                             Toggle::make('show_changelog_related_items')
                                 ->label('Show the related items on the changelog.')
-                                ->visible(fn($get) => $get('enable_changelog'))
+                                ->visible(fn ($get) => $get('enable_changelog'))
                                 ->columnSpan(2),
                         ]),
 

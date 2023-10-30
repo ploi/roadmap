@@ -2,26 +2,25 @@
 
 namespace App\Livewire;
 
-use Filament\Actions\Action;
-use Filament\Actions\Concerns\InteractsWithActions;
-use Filament\Actions\Contracts\HasActions;
 use Filament\Forms;
-use Filament\Notifications\Notification;
-use Filament\Support\Colors\Color;
-use Filament\Support\Enums\Alignment;
 use ResourceBundle;
 use App\Models\User;
 use Filament\Tables;
 use Livewire\Component;
+use Filament\Actions\Action;
+use Filament\Support\Colors\Color;
 use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\Http;
+use Filament\Support\Enums\Alignment;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Actions\Contracts\HasActions;
 use Illuminate\Database\Eloquent\Collection;
-use Filament\Http\Livewire\Concerns\CanNotify;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Actions\Concerns\InteractsWithActions;
 
 class Profile extends Component implements HasForms, HasTable, HasActions
 {
@@ -137,7 +136,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
             ->modalAlignment(Alignment::Left)
             ->modalDescription('Are you sure you want to do this?')
             ->color(Color::Slate)
-            ->action(fn() => $this->logout());
+            ->action(fn () => $this->logout());
     }
 
     public function deleteAction(): Action
@@ -155,7 +154,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                     ->helperText('Enter your account\'s email address to delete your account')
                     ->in([auth()->user()->email])
             ])
-            ->action(fn() => $this->delete());
+            ->action(fn () => $this->delete());
     }
 
     public function delete()
@@ -172,7 +171,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
         $locales = ResourceBundle::getLocales('');
 
         return collect($locales)
-            ->mapWithKeys(fn($locale) => [$locale => $locale])
+            ->mapWithKeys(fn ($locale) => [$locale => $locale])
             ->toArray();
     }
 

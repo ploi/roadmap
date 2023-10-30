@@ -2,12 +2,10 @@
 
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
-use App\Filament\Resources\CommentResource;
-use Closure;
 use Filament\Tables;
-use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use App\Filament\Resources\CommentResource;
 use Filament\Resources\RelationManagers\RelationManager;
 
 class CommentsRelationManager extends RelationManager

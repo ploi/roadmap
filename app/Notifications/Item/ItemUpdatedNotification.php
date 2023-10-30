@@ -5,10 +5,10 @@ namespace App\Notifications\Item;
 use App\Models\Item;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Facades\URL;
 
 class ItemUpdatedNotification extends Notification implements ShouldQueue
 {

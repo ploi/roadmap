@@ -3,16 +3,16 @@
 namespace App\Livewire\Item;
 
 use App\Models\Item;
-use App\View\Components\MarkdownEditor;
+use Livewire\Component;
+use Illuminate\Support\Arr;
 use Filament\Actions\Action;
-use Filament\Actions\Concerns\InteractsWithActions;
-use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Alignment;
-use Illuminate\Support\Arr;
-use Livewire\Component;
+use Filament\Forms\Contracts\HasForms;
+use App\View\Components\MarkdownEditor;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Actions\Concerns\InteractsWithActions;
 
 class Comment extends Component implements HasForms, HasActions
 {
@@ -29,7 +29,7 @@ class Comment extends Component implements HasForms, HasActions
             ->comments()
             ->with('user:id,name,email')
             ->orderByRaw('COALESCE(parent_id, id), parent_id IS NOT NULL, id')
-            ->when(!auth()->user()?->hasAdminAccess(), fn($query) => $query->where('private', false))
+            ->when(!auth()->user()?->hasAdminAccess(), fn ($query) => $query->where('private', false))
             ->get()
             ->mapToGroups(function ($comment) {
                 return [(int)$comment->parent_id => $comment];

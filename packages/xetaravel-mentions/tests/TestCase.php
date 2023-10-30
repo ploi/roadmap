@@ -1,8 +1,8 @@
 <?php
 namespace Tests;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Xetaio\Mentions\Providers\MentionServiceProvider;
 
 abstract class TestCase extends Orchestra

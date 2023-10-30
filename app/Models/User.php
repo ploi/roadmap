@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Enums\UserRole;
 use Filament\Panel;
+use App\Enums\UserRole;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Settings\GeneralSettings;

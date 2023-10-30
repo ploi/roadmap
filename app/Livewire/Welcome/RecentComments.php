@@ -3,13 +3,13 @@
 namespace App\Livewire\Welcome;
 
 use Closure;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Tables;
 use App\Models\Comment;
 use Livewire\Component;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 
 class RecentComments extends Component implements HasTable, HasForms
@@ -28,7 +28,7 @@ class RecentComments extends Component implements HasTable, HasForms
 
     protected function getTableRecordUrlUsing(): ?Closure
     {
-        return function($record) {
+        return function ($record) {
             if ($item = $record->item) {
                 return route('items.show', $item). "#comment-$record->id";
             }

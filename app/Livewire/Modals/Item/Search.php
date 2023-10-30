@@ -3,13 +3,13 @@
 namespace App\Livewire\Modals\Item;
 
 use App\Models\Item;
-use Filament\Forms\Concerns\InteractsWithForms;
+use Livewire\Component;
+use Filament\Tables\Table;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
-use Filament\Tables\Table;
-use Livewire\Component;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Tables\Concerns\InteractsWithTable;
 
 class Search extends Component implements HasTable, HasForms
 {

@@ -3,12 +3,12 @@
 namespace App\Filament\Pages;
 
 use App\Enums\UserRole;
-use App\Settings\ColorSettings;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use App\Settings\ColorSettings;
 use Filament\Pages\SettingsPage;
-use Filament\Forms\Components\Card;
 use Illuminate\Support\HtmlString;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\ColorPicker;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
