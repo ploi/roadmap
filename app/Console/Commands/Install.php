@@ -24,6 +24,7 @@ class Install extends Command
         $this->createUser();
         $this->linkStorage();
         $this->runNpm();
+        $this->publishAssets();
 
         $this->askForStar();
 
@@ -71,6 +72,13 @@ class Install extends Command
 
             $this->info('NPM installation & mixing production done!');
         }
+    }
+
+    protected function publishAssets(): void
+    {
+        $this->info('Publishing assets..');
+
+        $this->call('filament:assets');
     }
 
     protected function askForStar()
