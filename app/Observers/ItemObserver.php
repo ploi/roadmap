@@ -111,6 +111,7 @@ class ItemObserver
         }
 
         $item->votes()->delete();
+        $item->parentComments()->delete();
         $item->comments()->delete();
         $item->changelogs()->detach();
     }

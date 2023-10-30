@@ -82,6 +82,11 @@ class Item extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function parentComments(): HasMany
+    {
+        return $this->hasMany(Comment::class)->whereNotNull('parent_id')->latest();
+    }
+
     public function assignedUsers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'item_user');
