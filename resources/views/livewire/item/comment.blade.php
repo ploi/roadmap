@@ -95,7 +95,13 @@
     @endif
 
     @foreach($comments[$comment->id] ?? [] as $replyComment)
-        <filament:item.comments :comments="$comments" :comment="$replyComment" :item="$item" :reply="$reply"></filament:item.comments>
+        <livewire:item.comment
+            :comments="$comments"
+            :comment="$replyComment"
+            :item="$item"
+            :reply="$reply"
+            key="comment-{{ $comment->id }}-{{ $replyComment->id }}"
+        />
     @endforeach
 
     <x-filament-actions::modals />
