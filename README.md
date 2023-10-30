@@ -61,24 +61,6 @@ git pull origin main
 composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 echo "" | sudo -S service php8.1-fpm reload
 
-php artisan route:cache
-php artisan view:clear
-php artisan migrate --force
-
-npm ci
-npm run production
-
-echo "🚀 Application deployed!"
-```
-
-Alternatively you can also use the upgrade command to clean up your deployment script:
-
-```sh
-cd /home/ploi/example.com
-git pull origin main
-composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
-echo "" | sudo -S service php8.1-fpm reload
-
 php artisan roadmap:upgrade
 
 npm ci
