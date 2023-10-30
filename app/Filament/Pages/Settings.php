@@ -2,6 +2,9 @@
 
 namespace App\Filament\Pages;
 
+use Filament\Actions\Action;
+use Filament\Notifications\Notification;
+use Filament\Support\Enums\Alignment;
 use Storage;
 use App\Models\Board;
 use App\Enums\UserRole;
@@ -12,7 +15,6 @@ use App\Enums\InboxWorkflow;
 use App\Services\GitHubService;
 use Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
-use Filament\Pages\Actions\Action;
 use Illuminate\Support\Collection;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Tabs;
@@ -296,20 +298,29 @@ class Settings extends SettingsPage
                         });
 
                     if ($items->count() === 0) {
-                        $this->notify('primary', 'There are no OG images to flush ✅');
+                        Notification::make('cleared')
+                            ->title('OG images')
+                            ->body('There are no OG images to flush ✅')
+                            ->success()
+                            ->send();
                         return;
                     }
 
-                    $this->notify('success', 'Flushed ' . $items->count() . ' OG image(s) 🎉');
+                    Notification::make('cleared')
+                        ->title('OG images')
+                        ->body('Flushed ' . $items->count() . ' OG image(s) 🎉')
+                        ->success()
+                        ->send();
 
                     $this->ogImages = collect();
                 })
+                ->requiresConfirmation()
                 ->disabled(!$this->ogImages->count())
                 ->label('Flush OG images (' . $this->ogImages->count() . ')')
                 ->color('gray')
                 ->modalHeading('Delete OG images')
-                ->modalSubheading('Are you sure you\'d like to delete all the OG images? There\'s currently ' . $this->ogImages->count() . ' image(s) in the storage. This could be especially handy if you have changed branding color, if you feel some images are not correct.')
-                ->requiresConfirmation(),
+                ->modalAlignment(Alignment::Left)
+                ->modalDescription('Are you sure you\'d like to delete all the OG images? There\'s currently ' . $this->ogImages->count() . ' image(s) in the storage. This could be especially handy if you have changed branding color, if you feel some images are not correct.')
         ];
     }
 }

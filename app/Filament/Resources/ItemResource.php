@@ -142,8 +142,9 @@ class ItemResource extends Resource
                                     ->required()
                                     ->minLength(5)
                                     ->maxLength(65535),
-                                Forms\Components\SpatieTagsInput::make('tags')
-                                    ->columnSpan(2),
+//                                Forms\Components\SpatieTagsInput::make('tags')
+//                                    ->translateLabel()
+//                                    ->columnSpan(2),
                             ])->columns(2),
 
                         Tabs\Tab::make('Management')
@@ -156,7 +157,8 @@ class ItemResource extends Resource
                                     ->helperText('Private items will only be visible to admins and employees')
                                     ->label('Private')
                                     ->default(false),
-                                Forms\Components\MultiSelect::make('assigned_users')
+                                Forms\Components\Select::make('assigned_users')
+                                    ->multiple()
                                     ->helperText('Assign admins/employees to items here.')
                                     ->preload()
                                     ->relationship('assignedUsers', 'name', fn (Builder $query) => $query->whereIn('role', [UserRole::Admin, UserRole::Employee]))
