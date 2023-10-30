@@ -70,29 +70,36 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                     Forms\Components\Select::make('date_locale')->label(trans('auth.date_locale'))->options($this->locales)->placeholder(trans('auth.date_locale_null_value')),
                 ])->collapsible(),
 
-            Forms\Components\Section::make(trans('profile.notifications'))
+            Forms\Components\Grid::make(2)
                 ->schema([
-                    Forms\Components\CheckboxList::make('notification_settings')->label(trans('profile.notification_settings'))
-                        ->options([
-                            'receive_mention_notifications' => trans('profile.receive_mention_notifications'),
-                            'receive_comment_reply_notifications' => trans('profile.receive_comment_reply_notifications'),
-                        ]),
-                ])->collapsible(),
+                    Forms\Components\Section::make(trans('profile.notifications'))
+                        ->columnSpan(1)
+                        ->schema([
+                            Forms\Components\CheckboxList::make('notification_settings')
+                                ->label(trans('profile.notification_settings'))
+                                ->options([
+                                    'receive_mention_notifications' => trans('profile.receive_mention_notifications'),
+                                    'receive_comment_reply_notifications' => trans('profile.receive_comment_reply_notifications'),
+                                ]),
+                        ])->collapsible(),
 
-            Forms\Components\Section::make(trans('profile.settings'))
-                ->schema([
-                    Forms\Components\MultiSelect::make('per_page_setting')->label(trans('profile.per_page_setting'))
-                        ->options([
-                            5 => '5',
-                            10 => '10',
-                            15 => '15',
-                            25 => '25',
-                            50 => '50',
-                        ])
-                        ->required()
-                        ->helperText('Determine how many pages should be available for the items in the "My" page for example.')
-                        ->rules(['array', 'in:5,10,15,25,50'])
-                ])->collapsible(),
+                    Forms\Components\Section::make(trans('profile.settings'))
+                        ->columnSpan(1)
+                        ->schema([
+                            Forms\Components\MultiSelect::make('per_page_setting')->label(trans('profile.per_page_setting'))
+                                ->options([
+                                    5 => '5',
+                                    10 => '10',
+                                    15 => '15',
+                                    25 => '25',
+                                    50 => '50',
+                                ])
+                                ->required()
+                                ->helperText('Determine how many pages should be available for the items in the "My" page for example.')
+                                ->rules(['array', 'in:5,10,15,25,50'])
+                        ])->collapsible(),
+                ])
+
         ];
     }
 
@@ -136,7 +143,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
             ->modalAlignment(Alignment::Left)
             ->modalDescription('Are you sure you want to do this?')
             ->color(Color::Slate)
-            ->action(fn () => $this->logout());
+            ->action(fn() => $this->logout());
     }
 
     public function deleteAction(): Action
@@ -154,7 +161,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                     ->helperText('Enter your account\'s email address to delete your account')
                     ->in([auth()->user()->email])
             ])
-            ->action(fn () => $this->delete());
+            ->action(fn() => $this->delete());
     }
 
     public function delete()
@@ -171,7 +178,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
         $locales = ResourceBundle::getLocales('');
 
         return collect($locales)
-            ->mapWithKeys(fn ($locale) => [$locale => $locale])
+            ->mapWithKeys(fn($locale) => [$locale => $locale])
             ->toArray();
     }
 
