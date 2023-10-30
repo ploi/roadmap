@@ -23,7 +23,7 @@ class Search extends Component implements HasTable, HasForms
             ->defaultSort('created_at', 'desc')
             ->recordUrl(fn(Item $record): string => route('items.show', $record->slug))
             ->columns([
-                TextColumn::make('title')->searchable(),
+                TextColumn::make('title')->wrap()->searchable(),
                 TextColumn::make('votes_count')->counts('votes')->label(trans('table.total-votes')),
                 TextColumn::make('created_at')->dateTime('Y-m-d H:i:s')->label('Date'),
             ]);
