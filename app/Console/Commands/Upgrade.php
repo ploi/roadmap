@@ -14,7 +14,7 @@ class Upgrade extends Command
 
     protected $description = 'Used inside your deployment process to update all variables.';
 
-    public function handle()
+    public function handle(): void
     {
         $this->intro(type: 'upgrade');
 
@@ -25,12 +25,13 @@ class Upgrade extends Command
         $this->cacheViews();
         $this->line(' ');
         $this->migrateMigrations();
+        $this->publishAssets();
         $this->line(' ');
 
         $this->info('Upgrading done!');
     }
 
-    protected function flushVersionData()
+    protected function flushVersionData(): void
     {
         $this->info('Clearing version data cache..');
 
@@ -39,24 +40,31 @@ class Upgrade extends Command
         $this->info('Version data cache has been cleared.');
     }
 
-    protected function migrateMigrations()
+    protected function migrateMigrations(): void
     {
         $this->info('Running migrations..');
 
         $this->call('migrate', ['--force' => true]);
     }
 
-    protected function cacheRoutes()
+    protected function cacheRoutes(): void
     {
         $this->info('Caching routes..');
 
         $this->call('route:cache');
     }
 
-    protected function cacheViews()
+    protected function cacheViews(): void
     {
         $this->info('Caching views..');
 
         $this->call('view:cache');
+    }
+
+    protected function publishAssets(): void
+    {
+        $this->info('Publishing assets..');
+
+        $this->call('filament:assets');
     }
 }
