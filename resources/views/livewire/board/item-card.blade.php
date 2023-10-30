@@ -1,9 +1,9 @@
 <li class="pb-5 pt-5 first:pt-0 group">
     <div class="flex space-x-3">
         <div class="flex flex-col text-center space-y-1">
-            <button wire:click="toggleUpvote" class="hover:text-primary-500">
+            <div>
                 <x-heroicon-o-chevron-up class="w-5 h-5"/>
-            </button>
+            </div>
 
             <span class="">{{ $item->total_votes }}</span>
         </div>
