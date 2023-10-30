@@ -30,26 +30,8 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
-        Filament::registerNavigationItems([
-            NavigationItem::make()
-                ->group('External')
-                ->sort(101)
-                ->label('Public view')
-                ->icon('heroicon-o-backward')
-                ->isActiveWhen(fn(): bool => false)
-                ->url('/'),
-        ]);
-
-        if (file_exists($favIcon = storage_path('app/public/favicon.png'))) {
-            config(['filament.favicon' => asset('storage/favicon.png') . '?v=' . md5_file($favIcon)]);
-        }
-
         $this->bootSsoSocialite();
         $this->bootCollectionMacros();
-
-//        if (app(GeneralSettings::class)->users_must_verify_email) {
-//            $this->addVerificationMiddleware($kernel);
-//        }
     }
 
     private function bootSsoSocialite(): void
@@ -72,10 +54,5 @@ class AppServiceProvider extends ServiceProvider
                 ->filter($callback)
                 ->merge($nonPrioritized);
         });
-    }
-
-    protected function addVerificationMiddleware(Kernel $kernel)
-    {
-        $kernel->appendMiddlewareToGroup('authed', 'verified');
     }
 }

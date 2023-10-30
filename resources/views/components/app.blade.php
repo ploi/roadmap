@@ -19,6 +19,7 @@
         <link href="{{ asset('storage/favicon.png') }}?v={{ md5_file($favIcon) }}" rel="icon" type="image/x-icon"/>
     @endif
 
+    @livewireStyles
     @filamentStyles
     @vite('resources/css/app.css')
 
@@ -81,9 +82,11 @@
     </main>
 </div>
 
+@vite('resources/js/app.js')
+@livewireScriptConfig
 @filamentScripts
 @livewire('notifications')
-@vite('resources/js/app.js')
+
 @stack('javascript')
 {{--@livewire('notifications')--}}
 {!! app(\App\Settings\GeneralSettings::class)->custom_scripts !!}
