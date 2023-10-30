@@ -2,7 +2,8 @@
 
 namespace App\Filament\Resources\CommentResource\Pages;
 
-use Filament\Pages\Actions\Action;
+use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 use App\Filament\Resources\CommentResource;
 
@@ -17,7 +18,7 @@ class EditComment extends EditRecord
                 ->color('gray')
                 ->openUrlInNewTab()
                 ->url(fn () => route('items.show', $this->record->item) . '#comment-' . $this->record->id),
-            ...parent::getActions()
+            DeleteAction::make(),
         ];
     }
 }

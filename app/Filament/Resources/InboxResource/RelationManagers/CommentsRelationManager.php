@@ -15,32 +15,10 @@ class CommentsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'content';
 
-    public function canCreate(): bool
-    {
-        return false;
-    }
-
-    protected function canEdit(Model $record): bool
-    {
-        return false;
-    }
-
-    protected function getTableRecordUrlUsing(): Closure
-    {
-        return fn (Model $record): string => route('filament.resources.comments.edit', ['record' => $record]);
-    }
-
-    public function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                //
-            ]);
-    }
-
     public function table(Table $table): Table
     {
         return $table
+            ->recordUrl(fn (Model $record): string => route('filament.resources.comments.edit', ['record' => $record]))
             ->columns([
                 Tables\Columns\TextColumn::make('content')->searchable(),
                 Tables\Columns\TextColumn::make('user.name'),

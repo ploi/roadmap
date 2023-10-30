@@ -4,6 +4,7 @@ namespace App\Filament\Resources\ItemResource\Pages;
 
 use App\Models\Item;
 use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
@@ -79,7 +80,7 @@ class EditItem extends EditRecord
                 ])
                 ->modalDescription('Select the item you want to merge it with. This action cannot be undone')
                 ->modalSubmitActionLabel('Merge with selected and delete current item'),
-            ...parent::getActions()
+            DeleteAction::make(),
         ];
     }
 

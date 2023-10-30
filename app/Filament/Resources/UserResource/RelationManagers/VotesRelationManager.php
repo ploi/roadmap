@@ -37,9 +37,4 @@ class VotesRelationManager extends RelationManager
             ])
             ->defaultSort('created_at', 'desc');
     }
-
-    protected function canCreate(): bool
-    {
-        return false;
-    }
 }
