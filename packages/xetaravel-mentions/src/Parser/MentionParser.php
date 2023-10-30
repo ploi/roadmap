@@ -1,10 +1,10 @@
 <?php
 namespace Xetaio\Mentions\Parser;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Xety\Configurator\Configurator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 
 class MentionParser extends Configurator
 {

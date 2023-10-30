@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Modals\Item;
 
-use Closure;
 use function app;
 use function auth;
 use function view;
@@ -24,7 +23,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Notifications\Actions\Action;
 use Filament\Forms\Components\MarkdownEditor;
-use Filament\Http\Livewire\Concerns\CanNotify;
 use Filament\Forms\Concerns\InteractsWithForms;
 
 class CreateItemModal extends ModalComponent implements HasForms

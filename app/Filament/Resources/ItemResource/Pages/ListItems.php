@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\ItemResource\Pages;
 
 use App\Models\Item;
-use App\Filament\Resources\ItemResource;
 use Filament\Actions\CreateAction;
+use App\Filament\Resources\ItemResource;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 

@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Str;
 use Spatie\Color\Hex;
 use Spatie\Color\Rgb;
+use Illuminate\Support\Str;
 
 class Tailwind
 {

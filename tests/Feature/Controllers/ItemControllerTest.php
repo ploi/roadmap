@@ -5,8 +5,8 @@ use App\Models\Board;
 use App\Enums\UserRole;
 use App\Models\Project;
 use function Pest\Laravel\get;
-use function Pest\Laravel\post;
 use App\Livewire\Item\Comments;
+use function Pest\Laravel\post;
 use App\Livewire\Item\VoteButton;
 use function PHPUnit\Framework\assertEquals;
 

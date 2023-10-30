@@ -2,8 +2,8 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Routing\Exceptions\InvalidSignatureException;
 use Throwable;
+use Illuminate\Routing\Exceptions\InvalidSignatureException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler

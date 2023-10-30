@@ -6,6 +6,8 @@ use App\Models\Item;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
+use Filament\Notifications\Notification;
+use Filament\Support\Enums\Alignment;
 use Illuminate\Support\Facades\Storage;
 use App\Filament\Resources\ItemResource;
 use Filament\Resources\Pages\EditRecord;
@@ -22,13 +24,18 @@ class EditItem extends EditRecord
                 ->action(function () {
                     Storage::disk('public')->delete('og-' . $this->record->slug . '-' . $this->record->id . '.jpg');
 
-                    $this->notify('success', 'OG image removed 🎉');
+                    Notification::make('cleared')
+                        ->title('OG images')
+                        ->body('OG image removed 🎉')
+                        ->success()
+                        ->send();
                 })
                 ->label('Flush OG image')
                 ->color('gray')
+                ->requiresConfirmation()
                 ->modalHeading('Delete OG image')
-                ->modalSubheading('Are you sure you\'d like to delete the OG image for this item? This could be especially handy if you have changed branding color, if you feel this image is not correct.')
-                ->requiresConfirmation(),
+                ->modalAlignment(Alignment::Left)
+                ->modalDescription('Are you sure you\'d like to delete the OG image for this item? This could be especially handy if you have changed branding color, if you feel this image is not correct.'),
             Action::make('merge item')
                 ->color('warning')
                 ->action(function (array $data): void {
@@ -49,9 +56,15 @@ class EditItem extends EditRecord
                         'item_id' => $selectedItem->id,
                     ]);
 
+                    $this->record->assignedUsers()->detach();
                     $this->record->delete();
 
-                    $this->notify('success', "Merged {$this->record->title} into {$selectedItem->title}", true);
+                    Notification::make('merging')
+                        ->title('Merging')
+                        ->body("Merged {$this->record->title} into {$selectedItem->title}")
+                        ->success()
+                        ->send();
+
                     $this->redirect(ItemResource::getUrl());
                 })
                 ->form([
@@ -64,8 +77,8 @@ class EditItem extends EditRecord
                         ->label('As private comment?')
                         ->default(true),
                 ])
-                ->modalSubheading('Select the item you want to merge it with. This action cannot be undone')
-                ->modalButton('Merge with selected and delete current item'),
+                ->modalDescription('Select the item you want to merge it with. This action cannot be undone')
+                ->modalSubmitActionLabel('Merge with selected and delete current item'),
             ...parent::getActions()
         ];
     }

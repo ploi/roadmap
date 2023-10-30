@@ -2,23 +2,21 @@
 
 namespace App\Filament\Resources;
 
-use App\Services\GitHubService;
-use Closure;
 use Filament\Forms;
 use App\Models\Item;
 use App\Models\User;
-use Filament\Forms\Components\Toggle;
-use Filament\Notifications\Actions\Action;
-use Filament\Notifications\Notification;
 use Filament\Tables;
 use App\Enums\UserRole;
 use App\Models\Project;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Services\GitHubService;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Tabs;
 use Filament\Tables\Filters\Filter;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Notifications\Actions\Action;
 use App\Filament\Resources\ItemResource\Pages;
 use App\Filament\Resources\ItemResource\RelationManagers\VotesRelationManager;
 use App\Filament\Resources\ItemResource\RelationManagers\CommentsRelationManager;
@@ -60,10 +58,10 @@ class ItemResource extends Resource
                                     ->maxLength(255),
                                 Forms\Components\Select::make('issue_number')
                                     ->label('GitHub issue')
-                                    ->visible(fn($record) => $record?->project?->repo && $gitHubService->isEnabled())
+                                    ->visible(fn ($record) => $record?->project?->repo && $gitHubService->isEnabled())
                                     ->searchable()
-                                    ->getSearchResultsUsing(fn(string $search, $record) => $gitHubService->getIssuesForRepository($record?->project->repo))
-                                    ->getOptionLabelUsing(fn($record, \Filament\Forms\Get $get) => $gitHubService->getIssueTitle($record?->project->repo, $get('issue_number')))
+                                    ->getSearchResultsUsing(fn (string $search, $record) => $gitHubService->getIssuesForRepository($record?->project->repo))
+                                    ->getOptionLabelUsing(fn ($record, \Filament\Forms\Get $get) => $gitHubService->getIssueTitle($record?->project->repo, $get('issue_number')))
                                     ->reactive()
                                     ->suffixAction(function (\Filament\Forms\Get $get, \Filament\Forms\Set $set, $record) {
                                         if (blank($record?->project->repo) || filled($get('issue_number'))) {
@@ -81,7 +79,7 @@ class ItemResource extends Resource
                                                         ->label('Repository')
                                                         ->default($record->project->repo)
                                                         ->searchable()
-                                                        ->getSearchResultsUsing(fn(string $search) => (new GitHubService)->getRepositories($search)),
+                                                        ->getSearchResultsUsing(fn (string $search) => (new GitHubService)->getRepositories($search)),
                                                     Forms\Components\TextInput::make('title')
                                                         ->default($record->title),
                                                 ]),
@@ -144,8 +142,9 @@ class ItemResource extends Resource
                                     ->required()
                                     ->minLength(5)
                                     ->maxLength(65535),
-                                Forms\Components\SpatieTagsInput::make('tags')
-                                    ->columnSpan(2),
+//                                Forms\Components\SpatieTagsInput::make('tags')
+//                                    ->translateLabel()
+//                                    ->columnSpan(2),
                             ])->columns(2),
 
                         Tabs\Tab::make('Management')
@@ -158,10 +157,11 @@ class ItemResource extends Resource
                                     ->helperText('Private items will only be visible to admins and employees')
                                     ->label('Private')
                                     ->default(false),
-                                Forms\Components\MultiSelect::make('assigned_users')
+                                Forms\Components\Select::make('assigned_users')
+                                    ->multiple()
                                     ->helperText('Assign admins/employees to items here.')
                                     ->preload()
-                                    ->relationship('assignedUsers', 'name', fn(Builder $query) => $query->whereIn('role', [UserRole::Admin, UserRole::Employee]))
+                                    ->relationship('assignedUsers', 'name', fn (Builder $query) => $query->whereIn('role', [UserRole::Admin, UserRole::Employee]))
                                     ->columnSpan(2),
                             ])->columns(),
                     ])->columnSpan(3),
@@ -174,7 +174,7 @@ class ItemResource extends Resource
                         ->required(),
                     Forms\Components\Select::make('board_id')
                         ->label('Board')
-                        ->options(fn($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? [])
+                        ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? [])
                         ->required(),
                     Forms\Components\Toggle::make('notify_subscribers')
                         ->helperText('Send a notification with updates about the item')
@@ -182,12 +182,12 @@ class ItemResource extends Resource
                         ->default(true),
                     Forms\Components\Placeholder::make('created_at')
                         ->label('Created at')
-                        ->visible(fn($record) => filled($record))
-                        ->content(fn($record) => $record->created_at->format('d-m-Y H:i:s')),
+                        ->visible(fn ($record) => filled($record))
+                        ->content(fn ($record) => $record->created_at->format('d-m-Y H:i:s')),
                     Forms\Components\Placeholder::make('updated_at')
                         ->label('Updated at')
-                        ->visible(fn($record) => filled($record))
-                        ->content(fn($record) => $record->updated_at->format('d-m-Y H:i:s')),
+                        ->visible(fn ($record) => filled($record))
+                        ->content(fn ($record) => $record->updated_at->format('d-m-Y H:i:s')),
                 ])->columnSpan(1),
             ])
             ->columns(4);
@@ -219,7 +219,7 @@ class ItemResource extends Resource
                 Filter::make('assigned')
                     ->label('Assigned to me')
                     ->default(auth()->user()->hasRole(UserRole::Employee))
-                    ->query(fn(Builder $query): Builder => $query->whereHas('assignedUsers', function ($query) {
+                    ->query(fn (Builder $query): Builder => $query->whereHas('assignedUsers', function ($query) {
                         return $query->where('user_id', auth()->id());
                     })),
 
@@ -237,7 +237,7 @@ class ItemResource extends Resource
                         return $query
                             ->when(
                                 $data['users'],
-                                fn(Builder $query, $users): Builder => $query->whereHas('assignedUsers', function ($query) use ($users) {
+                                fn (Builder $query, $users): Builder => $query->whereHas('assignedUsers', function ($query) use ($users) {
                                     return $query->whereIn('users.id', $users);
                                 }),
                             );
@@ -257,7 +257,7 @@ class ItemResource extends Resource
                         Forms\Components\MultiSelect::make('board_id')
                             ->label(trans('table.board'))
                             ->preload()
-                            ->options(fn($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
+                            ->options(fn ($get) => Project::find($get('project_id'))?->boards()->pluck('title', 'id') ?? []),
                         Forms\Components\Toggle::make('pinned')
                             ->label('Pinned'),
                         Forms\Components\Toggle::make('private')
@@ -267,21 +267,21 @@ class ItemResource extends Resource
                         return $query
                             ->when(
                                 $data['project_id'],
-                                fn(Builder $query, $projectId): Builder => $query->where('project_id', $projectId),
+                                fn (Builder $query, $projectId): Builder => $query->where('project_id', $projectId),
                             )
                             ->when(
                                 $data['board_id'],
-                                fn(Builder $query, $boardIds): Builder => $query->whereHas('board', function ($query) use ($boardIds) {
+                                fn (Builder $query, $boardIds): Builder => $query->whereHas('board', function ($query) use ($boardIds) {
                                     return $query->whereIn('id', $boardIds);
                                 }),
                             )
                             ->when(
                                 $data['pinned'],
-                                fn(Builder $query): Builder => $query->where('pinned', $data['pinned']),
+                                fn (Builder $query): Builder => $query->where('pinned', $data['pinned']),
                             )
                             ->when(
                                 $data['private'],
-                                fn(Builder $query): Builder => $query->where('private', $data['private']),
+                                fn (Builder $query): Builder => $query->where('private', $data['private']),
                             );
                     })
 

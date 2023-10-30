@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Services\GitHubService;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Board;
@@ -10,6 +9,7 @@ use App\Models\Project;
 use App\Services\Icons;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Services\GitHubService;
 use Filament\Resources\Resource;
 use App\Settings\GeneralSettings;
 use App\Filament\Resources\ProjectResource\Pages;

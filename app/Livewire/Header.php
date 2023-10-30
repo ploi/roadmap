@@ -2,29 +2,26 @@
 
 namespace App\Livewire;
 
-use App\Enums\UserRole;
-use App\Filament\Resources\ItemResource;
-use App\Filament\Resources\UserResource;
 use App\Models\Item;
-use App\Models\Project;
 use App\Models\User;
-use App\Rules\ProfanityCheck;
-use App\Settings\GeneralSettings;
-use Filament\Actions\Concerns\InteractsWithActions;
-use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\MarkdownEditor;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Notifications\Notification;
-use Filament\Support\Colors\Color;
-use Filament\Support\Enums\Alignment;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\HtmlString;
+use App\Enums\UserRole;
+use App\Models\Project;
 use Livewire\Component;
 use Filament\Actions\Action;
+use App\Rules\ProfanityCheck;
+use App\Settings\GeneralSettings;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Select;
+use Filament\Support\Enums\Alignment;
+use Filament\Forms\Contracts\HasForms;
+use App\Filament\Resources\ItemResource;
+use App\Filament\Resources\UserResource;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Actions\Concerns\InteractsWithActions;
 
 class Header extends Component implements HasForms, HasActions
 {
@@ -107,8 +104,8 @@ class Header extends Component implements HasForms, HasActions
                 if (app(GeneralSettings::class)->select_board_when_creating_item) {
                     $inputs[] = Select::make('board_id')
                         ->label(trans('table.board'))
-                        ->visible(fn($get) => $get('project_id'))
-                        ->options(fn($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
+                        ->visible(fn ($get) => $get('project_id'))
+                        ->options(fn ($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
                         ->required(app(GeneralSettings::class)->board_required_when_creating_item);
                 }
 

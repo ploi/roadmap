@@ -2,10 +2,10 @@
 
 namespace App\Observers;
 
-use App\Models\Project;
 use Mail;
 use App\Models\Item;
 use App\Models\User;
+use App\Models\Project;
 use App\Enums\ItemActivity;
 use App\Settings\GeneralSettings;
 use App\Jobs\SendWebhookForNewItemJob;

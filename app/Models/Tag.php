@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Builder;
 
-class Tag extends \Spatie\Tags\Tag
+class Tag extends Model
 {
+    use HasTranslations;
+
     public function items()
     {
         return $this->morphedByMany(Item::class, 'taggable');

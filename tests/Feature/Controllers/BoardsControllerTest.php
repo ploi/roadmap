@@ -4,8 +4,8 @@ use App\Models\Item;
 use App\Models\Board;
 use App\Enums\UserRole;
 use App\Models\Project;
-use function Pest\Laravel\get;
 use App\Livewire\Item\Create;
+use function Pest\Laravel\get;
 use App\Livewire\Project\Items;
 
 use Illuminate\Database\Eloquent\Factories\Sequence;
