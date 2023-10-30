@@ -1,6 +1,11 @@
 <div>
     @foreach($comments[0] ?? [] as $comment)
-        <livewire:item.comment :comments="$comments" :comment="$comment" :item="$item" :reply="$reply"></livewire:item.comment>
+        <livewire:item.comment
+            :comments="$comments"
+            :comment="$comment"
+            :item="$item"
+            :reply="$reply"
+            key="comment-{{ $comment->id }}" />
     @endforeach
 
     @if($reply === null && !$item->board?->block_comments)
