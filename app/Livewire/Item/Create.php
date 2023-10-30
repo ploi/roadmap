@@ -22,6 +22,9 @@ class Create extends Component implements HasForms
     public Project|null $project = null;
     public Board|null $board = null;
 
+    public $title;
+    public $content;
+
     public function mount()
     {
         $this->form->fill([]);
