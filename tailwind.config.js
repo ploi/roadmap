@@ -30,7 +30,10 @@ export default {
         "lg:max-w-4xl",
         "lg:max-w-5xl",
         "lg:max-w-6xl",
-        "lg:max-w-7xl"
+        "lg:max-w-7xl",
+
+        "col-span-1",
+        "col-span-2",
     ],
     darkMode: 'class',
     theme: {
