@@ -9,7 +9,7 @@ class BoardsController extends Controller
 {
     public function show(Project $project, Board $board)
     {
-        abort_if($project->private && !auth()->user()?->canAccessFilament(), 404);
+        abort_if($project->private && !$project->isVisibleForCurrentUser() && !auth()->user()?->canAccessFilament(), 404);
 
         return view('board', [
             'project' => $project,
