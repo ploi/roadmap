@@ -47,7 +47,6 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
             ])
-            ->databaseNotifications(env('APP_ADMIN_NOTIFICATIONS'))
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
