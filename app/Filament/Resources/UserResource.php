@@ -11,6 +11,7 @@ use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UserResource extends Resource
 {
@@ -47,6 +48,9 @@ class UserResource extends Resource
             ])
             ->filters([
                 //
+            ])
+            ->actions([
+                Impersonate::make()
             ])
             ->defaultSort('created_at', 'desc');
     }

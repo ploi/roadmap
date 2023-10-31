@@ -55,6 +55,11 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         return in_array($this->role, [UserRole::Admin, UserRole::Employee]);
     }
 
+    public function canImpersonate(): bool
+    {
+        return $this->role === UserRole::Admin;
+    }
+
     public function hasRole(UserRole ...$roles): bool
     {
         return in_array($this->role, $roles);
