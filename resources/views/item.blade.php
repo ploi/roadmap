@@ -127,13 +127,13 @@
                     </div>
                 @endif
 
-                @if($item->tags->count() > 0)
-                    <div class="border-t mb-2"></div>
+{{--                @if($item->tags->count() > 0)--}}
+{{--                    <div class="border-t mb-2"></div>--}}
 
-                    @foreach($item->tags as $tag)
-                        <x-tag :tag="$tag"/>
-                    @endforeach
-                @endif
+{{--                    @foreach($item->tags as $tag)--}}
+{{--                        <x-tag :tag="$tag"/>--}}
+{{--                    @endforeach--}}
+{{--                @endif--}}
             </x-card>
 
             <div class="relative">
