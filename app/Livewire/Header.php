@@ -140,7 +140,8 @@ class Header extends Component implements HasForms, HasActions
                 $item = Item::create([
                     'title' => $data['title'],
                     'content' => $data['content'],
-                    'project_id' => $data['project_id'] ?? null
+                    'project_id' => $data['project_id'] ?? null,
+                    'board_id' => $data['board_id'] ?? null
                 ]);
 
                 $item->user()->associate(auth()->user())->save();
