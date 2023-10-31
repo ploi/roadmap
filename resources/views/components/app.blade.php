@@ -88,7 +88,7 @@
 @livewire('notifications')
 
 @stack('javascript')
-{{--@livewire('notifications')--}}
+<x-impersonate::banner/>
 {!! app(\App\Settings\GeneralSettings::class)->custom_scripts !!}
 </body>
 </html>
