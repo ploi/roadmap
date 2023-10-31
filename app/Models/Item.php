@@ -122,7 +122,7 @@ class Item extends Model
 
         return $query->where('private', 0)->where(function (Builder $query) {
             return $query->whereRelation('project', 'private', 0)->orWhereNull('items.project_id');
-        })->orWhere('user_id', auth()->user()?->id);
+        });
     }
 
     public function scopeForInbox($query)

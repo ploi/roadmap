@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Project extends Model
 {
-    use HasFactory, Sluggable, HasOgImage, HasScopeChecks;
+    use HasFactory, Sluggable, HasOgImage;
 
     public $fillable = [
         'title',
