@@ -105,7 +105,7 @@ class Header extends Component implements HasForms, HasActions
                     $inputs[] = Select::make('board_id')
                         ->label(trans('table.board'))
                         ->visible(fn($get) => $get('project_id'))
-                        ->options(fn($get) => Project::find($get('project_id'))->boards()->pluck('title', 'id'))
+                        ->options(fn($get) => Project::find($get('project_id'))->boards()->where('can_users_create', true)->pluck('title', 'id'))
                         ->required(app(GeneralSettings::class)->board_required_when_creating_item);
                 }
 
