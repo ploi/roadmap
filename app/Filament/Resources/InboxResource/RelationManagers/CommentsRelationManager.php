@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\InboxResource\RelationManagers;
 
+use App\Filament\Resources\CommentResource;
 use Closure;
 use Filament\Tables;
 use Filament\Forms\Form;
@@ -18,7 +19,7 @@ class CommentsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordUrl(fn (Model $record): string => route('filament.resources.comments.edit', ['record' => $record]))
+            ->recordUrl(fn (Model $record): string => CommentResource::getUrl('edit', ['record' => $record]))
             ->columns([
                 Tables\Columns\TextColumn::make('content')->searchable(),
                 Tables\Columns\TextColumn::make('user.name'),

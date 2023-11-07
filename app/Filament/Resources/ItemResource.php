@@ -205,8 +205,8 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make('project.title'),
                 Tables\Columns\TextColumn::make('board.title')->sortable(),
                 Tables\Columns\TextColumn::make('user.name')->toggleable(),
-                Tables\Columns\TagsColumn::make('tags.name')->toggleable()->toggledHiddenByDefault(),
-                Tables\Columns\TagsColumn::make('assignedUsers.name')->visible(auth()->user()->hasRole(UserRole::Admin))->toggleable()->toggledHiddenByDefault(),
+//                Tables\Columns\TagsColumn::make('tags.name')->toggleable()->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('assignedUsers.name')->badge()->visible(auth()->user()->hasRole(UserRole::Admin))->toggleable()->toggledHiddenByDefault(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
