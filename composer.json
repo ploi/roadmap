@@ -20,6 +20,7 @@
         "laravel/socialite": "^5.6.1",
         "laravel/tinker": "^2.8.0",
         "laravel/ui": "^4.2.0",
+        "sentry/sentry-laravel": "^4.0",
         "spatie/color": "^1.5",
         "spatie/laravel-activitylog": "^4.7.3",
         "spatie/laravel-honeypot": "^4.3.2",
