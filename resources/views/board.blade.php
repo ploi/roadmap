@@ -1,6 +1,7 @@
 @section('title', $project->title . ' - ' . $board->title)@show
 @section('image', $board->getOgImage($board->description, 'Roadmap - Board'))@show
 @section('description', $board->description)@show
+@section('canonical', route('projects.boards.show', [$project, $board]))@show
 
 <x-app :breadcrumbs="[
     ['title' => $project->title, 'url' => route('projects.show', $project)],

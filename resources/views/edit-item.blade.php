@@ -1,6 +1,7 @@
 @section('title', 'Edit ' . $item->title)
 @section('image', $item->getOgImage('"' . $item->excerpt .'"', 'Roadmap - Item'))
 @section('description', $item->excerpt)
+@section('canonical', route('items.edit', $item))
 
 <x-app :breadcrumbs="[
 ['title' => 'Dashboard', 'url' => route('home')],

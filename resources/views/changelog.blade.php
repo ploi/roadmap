@@ -1,6 +1,7 @@
 @section('title', 'Changelog')@show
 @section('image', App\Services\OgImageGenerator::make('View changelog')->withSubject('Changelog')->withFilename('changelog.jpg')->generate()->getPublicUrl())
 @section('description', 'View changelog for ' . config('app.name'))
+@section('canonical', request()->routeIs('changelog.show') ? route('changelog.show', $changelogs->first()) : route('changelog'))@show
 
 <x-app :breadcrumbs="collect([
     ['title' => 'Changelog', 'url' => route('changelog')],
