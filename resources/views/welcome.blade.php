@@ -1,3 +1,5 @@
+@section('canonical', route('home'))@show
+
 <x-app>
     @if($text = app(\App\Settings\GeneralSettings::class)->welcome_text)
         <div class="prose mb-4">{!! $text !!}</div>

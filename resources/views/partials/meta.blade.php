@@ -19,4 +19,8 @@
 
 <link rel="sitemap" type="application/xml" href="{{ asset('sitemap.xml') }}">
 
+@hasSection('canonical')
+    <link rel="canonical" href="@yield('canonical')">
+@endif
+
 @yield('additional_meta')

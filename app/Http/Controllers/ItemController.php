@@ -19,6 +19,11 @@ class ItemController extends Controller
 
         if (!$itemId) {
             $item = Item::query()->visibleForCurrentUser()->where('slug', $projectId)->firstOrFail();
+
+            if ($item->project) {
+                // Looks like this item is added to the project, let's redirect to the correct view for the item.
+                return redirect()->to($item->view_url);
+            }
         } else {
             $project = Project::query()->visibleForCurrentUser()->where('slug', $projectId)->firstOrFail();
 
