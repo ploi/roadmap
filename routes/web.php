@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
 use App\Http\Controllers\ItemController;
@@ -48,3 +49,7 @@ Route::group(['middleware' => 'authed'], function () {
 Route::get('/unsubscribe/{item}/{user}', [ItemEmailUnsubscribeController::class, '__invoke'])
     ->name('items.email-unsubscribe')
     ->middleware('signed');
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+Route::get('/sitemap-projects.xml', [SitemapController::class, 'projects'])->name('sitemap.projects');
+Route::get('/sitemap-items.xml', [SitemapController::class, 'items'])->name('sitemap.items');
