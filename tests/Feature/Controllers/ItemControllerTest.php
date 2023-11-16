@@ -35,7 +35,7 @@ test('view has breadcrumbs with project', function () {
     $board = Board::factory()->for($project)->create();
     $item = Item::factory()->for($project)->for($board)->create();
 
-    get(route('items.show', $item))->assertSeeInOrder([$project->title, $board->title, $item->title]);
+    get(route('projects.items.show', [$project, $item]))->assertSeeInOrder([$project->title, $board->title, $item->title]);
 });
 
 test('administer link is only available to users that can access filament', function (UserRole $userRole, bool $shouldBeVisible) {

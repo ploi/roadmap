@@ -57,8 +57,7 @@ test('A guest can render a public item page that has no associated project', fun
     $item = Item::first();
 
     $this->get(route('items.show', $item->getAttributeValue('slug')))
-        ->assertStatus(200)
-        ->assertViewIs('item');
+        ->assertStatus(302);
 
     $this->assertGuest();
 });
