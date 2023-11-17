@@ -114,7 +114,7 @@ class Comments extends Component implements HasForms, HasActions
     {
         $this->comments = $this->item
             ->comments()
-            ->with('user:id,name,email')
+            ->withWhereHas('user:id,name,email')
             ->orderByRaw('COALESCE(parent_id, id), parent_id IS NOT NULL, id')
             ->when(!auth()->user()?->hasAdminAccess(), fn ($query) => $query->where('private', false))
             ->get()
