@@ -57,7 +57,7 @@
     <main class="flex-1 h-full col-span-6 lg:col-span-5 lg:border-l lg:pl-5">
         <div class="pb-4">
             <ul class="flex items-center space-x-0.5 text-sm font-medium text-gray-600">
-                @foreach($breadcrumbs as $breadcrumb)
+                @foreach(array_filter($breadcrumbs) as $breadcrumb)
                     @if(!$loop->first)
                         <li>
                             <svg class="text-gray-400 w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"

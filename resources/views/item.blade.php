@@ -5,7 +5,7 @@
 
 <x-app :breadcrumbs="$project ? [
     ['title' => $project->title, 'url' => route('projects.show', $project)],
-    ['title' => $board->title, 'url' => route('projects.boards.show', [$project, $board])],
+    $board ? ['title' => $board->title, 'url' => route('projects.boards.show', [$project, $board])] : [],
     ['title' => $item->title, 'url' => route('projects.items.show', [$project, $item])]
 ]: [
 ['title' => 'Dashboard', 'url' => route('home')],

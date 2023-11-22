@@ -27,7 +27,7 @@ class ItemController extends Controller
         } else {
             $project = Project::query()->visibleForCurrentUser()->where('slug', $projectId)->firstOrFail();
 
-            $item = $project->items()->visibleForCurrentUser()->where('items.slug', $itemId)->firstOrFail();
+            $item = $project->items()->visibleForCurrentUser()->where('slug', $itemId)->firstOrFail();
         }
 
         $showGitHubLink = app(GeneralSettings::class)->show_github_link;
