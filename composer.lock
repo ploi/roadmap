@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "212bbefe2c6b99f7b46014987f8dc6a9",
+    "content-hash": "2217b76a23c8d5753098a176ede0cd1e",
     "packages": [
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -12662,7 +12662,7 @@
         },
         {
             "name": "xetaio/xetaravel-mentions",
-            "version": "dev-filament31",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./packages/xetaravel-mentions",
