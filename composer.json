@@ -26,6 +26,7 @@
         "spatie/laravel-honeypot": "^4.3.2",
         "spatie/laravel-ray": "^1.32.2",
         "spatie/laravel-sitemap": "^7.0",
+        "spatie/laravel-settings": "3.2.1",
         "spiral/roadrunner": "^2.12.2",
         "stechstudio/filament-impersonate": "^3.5",
         "symfony/http-client": "^6.0",
