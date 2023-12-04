@@ -5,7 +5,7 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.1.0",
+        "php": "^8.2",
         "doctrine/dbal": "^3.3",
         "filament/filament": "^3.0.37",
         "filament/spatie-laravel-settings-plugin": "^3.0-stable",
