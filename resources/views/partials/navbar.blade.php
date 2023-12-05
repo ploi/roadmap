@@ -119,6 +119,10 @@
                     roadmapping software by
                     <a href="https://ploi.io/?ref=roadmap" target="_blank" class="font-semibold border-b border-dotted">ploi.io</a>
                 </p>
+
+                <p class="text-[0.6rem] text-gray-400">
+                    Running version {{ (new \App\Services\SystemChecker())->getApplicationVersion() }}
+                </p>
             </div>
         </div>
     </aside>

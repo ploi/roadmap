@@ -19,7 +19,7 @@ Welcome to Roadmap, the open-source software for your roadmapping needs 🛣
 
 ## Requirements
 
-- PHP >= 8.1
+- PHP >= 8.2
 - Database (MySQL, PostgreSQL)
 - GD Library (>=2.0) or
 - Imagick PHP extension (>=6.5.7)
@@ -59,7 +59,7 @@ That being said, here's an deployment script example:
 cd /home/ploi/example.com
 git pull origin main
 composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
-echo "" | sudo -S service php8.1-fpm reload
+echo "" | sudo -S service php8.2-fpm reload
 
 php artisan roadmap:upgrade
 

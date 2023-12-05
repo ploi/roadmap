@@ -11,14 +11,19 @@
         @else
             <x-filament::button
                 size="xs"
-                :color="$vote ? 'primary' : 'gray'"
+                :color="$vote ? 'gray' : 'primary'"
                 wire:click="toggleUpvote"
             >
-                <x-heroicon-o-hand-thumb-up class="w-5 h-5"/>
+                @if($vote)
+                    <x-heroicon-o-hand-thumb-down class="w-5 h-5"/>
+                @else
+                    <x-heroicon-o-hand-thumb-up class="w-5 h-5"/>
+                @endif
             </x-filament::button>
         @endif
 
-        <span class="text-sm">{{ trans_choice('messages.total-votes', $model->total_votes, ['votes' => $model->total_votes]) }}</span>
+        <span
+            class="text-sm">{{ trans_choice('messages.total-votes', $model->total_votes, ['votes' => $model->total_votes]) }}</span>
 
         @if($vote && $showSubscribeOption)
             @if($vote->subscribed)
