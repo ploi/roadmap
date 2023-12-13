@@ -14,6 +14,10 @@ class ItemHasNewCommentNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    public $tries = 5;
+
+    public $backoff = 10;
+
     public function __construct(
         public readonly Comment $comment,
         public readonly User $user
