@@ -22,3 +22,5 @@ yarn-error.log
 rr
 .rr.yaml
 /docker/dbdata
+frankenphp
+/public/frankenphp-worker.php
