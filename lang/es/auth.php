@@ -12,7 +12,33 @@
 */
 
 return [
-    'failed'   => 'Estas credenciales no coinciden con nuestros registros.',
-    'password' => 'La contraseña ingresada no es correcta.',
-    'throttle' => 'Demasiados intentos de acceso. Por favor intente nuevamente en :seconds segundos.',
+    'login' => 'Acceso',
+    'verify-email' => 'Verificar correo electrónico',
+    'register' => 'Registro',
+    'profile' => 'Perfil',
+    'register_for_free' => 'O <a class="transition text-brand-600 hover:text-brand-500 focus:outline-none focus:underline" href=":route">regístrese</a> gratis.',
+    'not_new' => '¿No es nuevo aquí?',
+    'password_protected' => 'Contraseña protegida',
+
+    'name' => 'Nombre',
+    'email' => 'Dirección de email',
+    'email_placeholder' => 'name@opperweb.com',
+    'password' => 'Contraseña',
+    'confirm_password' => 'Confirmar contraseña',
+    'remember_me' => 'Recordarme',
+    'forgot_password' => '¿Has olvidado tu contraseña?',
+    'continue' => 'Continuar',
+
+    'reset_password' => 'Restablecer contraseña',
+    'send_reset_link' => 'Enviar enlace de restablecimiento',
+    'back_to_login' => 'Volver al inicio de sesión',
+
+    'failed' => 'Estas credenciales no coinciden con nuestros registros.',
+    'throttle' => 'Demasiados intentos de inicio de sesión. Por favor, inténtalo de nuevo en :seconds segundos.',
+
+    'date_locale' => 'Configuración regional de fecha',
+    'date_locale_null_value' => 'Usar la configuración regional de la aplicación',
+
+    'locale' => 'Configuración regional',
+    'locale_null_value' => 'Usar la configuración regional predeterminada',
 ];
