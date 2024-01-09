@@ -53,5 +53,6 @@ test('guests cannot register an account when this feature is disabled', function
 
     $response = $this->get(route('register'));
 
-    $response->assertStatus(404);
+	$response->assertRedirect(route('home'));
+	$response->assertStatus(302);
 });
