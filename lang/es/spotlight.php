@@ -1,9 +1,13 @@
 <?php
 
 return [
+    'create-item' => [
+        'name' => 'Crear elemento',
+        'description' => 'Crea un elemento',
+    ],
     'view-item' => [
-        'name' => 'Ver ítem',
-        'description' => 'Ver un ítem',
+        'name' => 'Ver elemento',
+        'description' => 'Ver un elemento',
     ],
     'profile' => [
         'name' => 'Perfil',
