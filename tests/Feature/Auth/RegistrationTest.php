@@ -2,6 +2,8 @@
 
 namespace App\Tests\Feature\Auth;
 
+use App\Settings\GeneralSettings;
+
 test('registration screen can be rendered', function () {
     $response = $this->get(route('register'));
 
@@ -42,4 +44,14 @@ test('authenticated users get redirected away from register view', function () {
     $response->assertStatus(302);
 
     $this->assertAuthenticatedAs($user);
+});
+
+test('guests cannot register an account when this feature is disabled', function () {
+    GeneralSettings::fake([
+        'disable_user_registration' => true
+    ]);
+
+    $response = $this->get(route('register'));
+
+    $response->assertStatus(404);
 });

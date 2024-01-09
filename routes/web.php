@@ -1,17 +1,21 @@
 <?php
 
-use App\Http\Controllers\SitemapController;
+use App\Settings\GeneralSettings;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\BoardsController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\ChangelogController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\ItemEmailUnsubscribeController;
 use App\Http\Controllers\Auth\PasswordProtectionController;
 
-Auth::routes();
+Auth::routes([
+    'register' => !app(GeneralSettings::class)->disable_user_registration
+]);
 
 Route::get('oauth/login', [\App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider'])
     ->middleware('guest')
