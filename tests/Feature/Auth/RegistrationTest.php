@@ -46,7 +46,7 @@ test('authenticated users get redirected away from register view', function () {
     $this->assertAuthenticatedAs($user);
 });
 
-test('guests cannot register an account when this feature is disabled', function () {
+test('guests cannot access /register when this feature is disabled', function () {
     GeneralSettings::fake([
         'disable_user_registration' => true
     ]);
@@ -56,3 +56,4 @@ test('guests cannot register an account when this feature is disabled', function
 	$response->assertRedirect(route('home'));
 	$response->assertStatus(302);
 });
+
