@@ -16,7 +16,7 @@ test('it renders view', function () {
 test('it shows breadcrumbs', function () {
     $user = User::factory()->create();
 
-    actingAs($user)->get(route('my'))->assertSee('My items');
+    actingAs($user)->get(route('my'))->assertSee(trans('items.my-items'));
 });
 
 test('view has live components', function ($component) {
