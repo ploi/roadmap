@@ -13,9 +13,7 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\ItemEmailUnsubscribeController;
 use App\Http\Controllers\Auth\PasswordProtectionController;
 
-Auth::routes([
-    'register' => !app(GeneralSettings::class)->disable_user_registration
-]);
+Auth::routes();
 
 Route::get('oauth/login', [\App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider'])
     ->middleware('guest')
