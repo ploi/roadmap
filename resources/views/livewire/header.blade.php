@@ -104,6 +104,14 @@
                         {{ trans('auth.profile') }}
                     </a>
                 </li>
+
+                <li>
+                    <a class="block p-2 transition rounded-lg focus:outline-none hover:bg-brand-500-400"
+                       href="{{ route('changelog') }}">
+                        {{ trans('changelog.changelog') }}
+                    </a>
+                </li>
+
                 <li>
                     <x-filament::button color="secondary" onclick="Livewire.dispatch('openModal', { component: 'modals.item.create-item-modal' })"
                                         icon="heroicon-o-plus-circle">

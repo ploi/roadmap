@@ -4,6 +4,7 @@ return [
     'create' => 'Item aanmaken',
     'update' => 'Item bijwerken',
     'edit' => 'Item bewerken',
+    'edit-as-admin' => 'Item bewerken als admin',
     'my-items' => 'Mijn items',
     'created-items' => 'Aangemaakte items',
     'created-items-description' => 'Deze items zijn door jou aangemaakt.',
@@ -30,4 +31,5 @@ return [
     'item-private' => 'Dit item is privé',
     'update-board-success' => 'Het item is succesvol verplaats naar het bord :board',
     'view-on-github' => 'Bekijk issue op GitHub',
+    'search-shortcut' => 'CMD + / om te zoeken'
 ];

@@ -18,4 +18,7 @@ return [
     'receive_comment_reply_notifications' => 'Ontvang notificaties van reacties op opmerkingen',
     'social-login' => 'Social logins',
     'social-login-description' => 'Hier vind je alle socials die je hebt gebruikt om in te loggen in je account.',
+    'per-page-setting' => 'Per pagina instelling',
+    'per-page-setting-helper' => 'Bepaalt welke mogelijkheden er aanwezig zijn om het aantal pagina\'s te tonen.',
+	'settings' => 'Instellingen'
 ];

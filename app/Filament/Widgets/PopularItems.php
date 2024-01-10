@@ -2,38 +2,35 @@
 
 namespace App\Filament\Widgets;
 
-use Closure;
 use App\Models\Item;
 use Filament\Tables;
+use Filament\Tables\Table;
 use App\Filament\Resources\ItemResource;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Support\Htmlable;
 use Filament\Widgets\TableWidget as BaseWidget;
 
 class PopularItems extends BaseWidget
 {
-    protected function getTableQuery(): Builder
+    protected function getTableHeading(): string | Htmlable | null
     {
-        return Item::query()->visibleForCurrentUser()->popular()->limit(5);
+        return trans('widgets.popular-items');
     }
 
-    protected function getTableColumns(): array
+    public function table(Table $table): Table
     {
-        return [
-            Tables\Columns\TextColumn::make('title'),
-            Tables\Columns\TextColumn::make('total_votes'),
-            Tables\Columns\TextColumn::make('project.title')
-                ->label('Project'),
-            Tables\Columns\TextColumn::make('board.title'),
-        ];
-    }
-
-    protected function getTableRecordUrlUsing(): ?Closure
-    {
-        return fn ($record) => ItemResource::getUrl('edit', ['record' => $record]);
-    }
-
-    protected function isTablePaginationEnabled(): bool
-    {
-        return false;
+        return $table
+            ->query(Item::popular()->visibleForCurrentUser()->limit(5))
+            ->paginated(false)
+            ->columns([
+                Tables\Columns\TextColumn::make('title')
+                    ->label(trans('widgets.title')),
+                Tables\Columns\TextColumn::make('total_votes')
+                    ->label(trans('widgets.total-votes')),
+                Tables\Columns\TextColumn::make('project.title')
+                    ->label(trans('widgets.project')),
+                Tables\Columns\TextColumn::make('board.title')
+                    ->label(trans('widgets.board')),
+            ])
+            ->recordUrl(fn ($record) => ItemResource::getUrl('edit', ['record' => $record]));
     }
 }
