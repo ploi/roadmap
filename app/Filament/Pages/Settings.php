@@ -57,6 +57,7 @@ class Settings extends SettingsPage
     {
         return $form->schema([
             Tabs::make('main')
+                ->persistTabInQueryString()
                 ->schema([
                     Tabs\Tab::make('General')
                         ->schema([
@@ -129,9 +130,8 @@ class Settings extends SettingsPage
                                     ->options(InboxWorkflow::getSelectOptions())
                                     ->default(InboxWorkflow::WithoutBoardAndProject)
                                     ->helperText('This allows you to change which items show up in the inbox in the sidebar.'),
+                                TextInput::make('password')->helperText('Entering a password here will ask your users to enter a password before entering the roadmap.'),
                             ]),
-
-                            TextInput::make('password')->helperText('Entering a password here will ask your users to enter a password before entering the roadmap.'),
 
                             RichEditor::make('welcome_text')
                                 ->columnSpan(2)
@@ -270,6 +270,8 @@ class Settings extends SettingsPage
                         ->schema([
                             Textarea::make('custom_scripts')
                                 ->label('Custom header script')
+                                ->rows(10)
+                                ->autosize()
                                 ->helperText('This allows you to add your own custom widget, or tracking tool. Code inside here will always be placed inside the head section.')
                                 ->columnSpan(2),
                         ]),

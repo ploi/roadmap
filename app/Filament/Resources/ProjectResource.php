@@ -22,6 +22,8 @@ class ProjectResource extends Resource
 
     protected static ?string $navigationGroup = 'Manage';
 
+    protected static ?int $navigationSort = 103;
+
     public static function form(Form $form): Form
     {
         $gitHubService = (new GitHubService);

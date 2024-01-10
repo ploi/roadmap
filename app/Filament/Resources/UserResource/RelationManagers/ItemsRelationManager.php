@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
-use App\Filament\Resources\ItemResource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use App\Filament\Resources\ItemResource;
 use Filament\Resources\RelationManagers\RelationManager;
 
 class ItemsRelationManager extends RelationManager

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Board;
 use App\Models\Item;
+use App\Models\Board;
 use App\Models\Project;
 use Spatie\Sitemap\Sitemap;
-use Spatie\Sitemap\SitemapIndex;
 use Spatie\Sitemap\Tags\Url;
+use Spatie\Sitemap\SitemapIndex;
 use Spatie\Sitemap\Tags\Sitemap as TagSitemap;
 
 class SitemapController extends Controller

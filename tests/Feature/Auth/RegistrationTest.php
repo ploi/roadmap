@@ -53,7 +53,6 @@ test('guests cannot access /register when this feature is disabled', function ()
 
     $response = $this->get(route('register'));
 
-	$response->assertRedirect(route('home'));
-	$response->assertStatus(302);
+    $response->assertRedirect(route('home'));
+    $response->assertStatus(302);
 });
-
