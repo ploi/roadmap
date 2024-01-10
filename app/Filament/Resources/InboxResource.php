@@ -24,6 +24,7 @@ class InboxResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-inbox';
 
     protected static ?string $navigationGroup = 'Manage';
+    protected static ?int $navigationSort = 100;
 
     protected static ?string $label = 'Inbox';
 

@@ -33,6 +33,8 @@ class ItemResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    protected static ?int $navigationSort = 101;
+
     public static function form(Form $form): Form
     {
         $gitHubService = (new GitHubService);

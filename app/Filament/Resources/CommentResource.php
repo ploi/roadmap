@@ -18,6 +18,8 @@ class CommentResource extends Resource
 
     protected static ?string $navigationGroup = 'Manage';
 
+    protected static ?int $navigationSort = 104;
+
     public static function form(Form $form): Form
     {
         return $form

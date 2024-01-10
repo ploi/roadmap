@@ -21,7 +21,7 @@ class TagResource extends Resource
 
     protected static ?string $navigationGroup = 'Manage';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 106;
 
     public static function form(Form $form): Form
     {

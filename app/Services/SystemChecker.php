@@ -4,8 +4,8 @@ namespace App\Services;
 
 class SystemChecker
 {
-    public $remoteVersion;
-    public $currentVersion;
+    public string|null $remoteVersion;
+    public string|null $currentVersion;
 
     public string $cacheKeyCurrent = 'roadmap-current-version';
     public string $cacheKeyRemote = 'roadmap-remote-version';
@@ -18,14 +18,14 @@ class SystemChecker
         return $this;
     }
 
-    public function getApplicationVersion()
+    public function getApplicationVersion(): string|null
     {
         return cache()->remember($this->cacheKeyCurrent, now()->addDay(), function () {
             return shell_exec('git describe --tag --abbrev=0');
         });
     }
 
-    public function getRemoteVersion()
+    public function getRemoteVersion(): string|null
     {
         return cache()->remember($this->cacheKeyRemote, now()->addDay(), function () {
             shell_exec('git fetch --tags');
@@ -33,14 +33,14 @@ class SystemChecker
         });
     }
 
-    public function isOutOfDate()
+    public function isOutOfDate(): bool
     {
         $this->getVersions();
 
         return $this->currentVersion < $this->remoteVersion || $this->currentVersion != $this->remoteVersion;
     }
 
-    public function flushVersionData()
+    public function flushVersionData(): void
     {
         try {
             cache()->forget($this->cacheKeyCurrent);
