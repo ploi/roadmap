@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Settings\GeneralSettings;
 use App\Http\Controllers\Controller;
 use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\Hash;
@@ -36,6 +37,10 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
+        if (app(GeneralSettings::class)->disable_user_registration) {
+            abort(301, 'User registration is disabled.');
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -45,6 +50,10 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
+        if (app(GeneralSettings::class)->disable_user_registration) {
+            return redirect()->route('home');
+        }
+
         if (SsoProvider::isForced()) {
             return to_route('oauth.login');
         }

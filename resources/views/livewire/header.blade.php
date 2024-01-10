@@ -22,12 +22,14 @@
                             {{ trans('auth.login') }}
                         </a>
                     </li>
-                    <li>
-                        <a class="flex items-center justify-center text-white hover:text-gray-50 focus:outline-none"
-                           href="{{ route('register') }}">
-                            {{ trans('auth.register') }}
-                        </a>
-                    </li>
+                    @if(! app(App\Settings\GeneralSettings::class)->disable_user_registration)
+                        <li>
+                            <a class="flex items-center justify-center text-white hover:text-gray-50 focus:outline-none"
+                               href="{{ route('register') }}">
+                                {{ trans('auth.register') }}
+                            </a>
+                        </li>
+                    @endif
                 @endguest
 
                 @auth

@@ -2,9 +2,6 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Actions\Action;
-use Filament\Notifications\Notification;
-use Filament\Support\Enums\Alignment;
 use Storage;
 use App\Models\Board;
 use App\Enums\UserRole;
@@ -12,6 +9,7 @@ use App\Models\Project;
 use Filament\Forms\Form;
 use Illuminate\Support\Str;
 use App\Enums\InboxWorkflow;
+use Filament\Actions\Action;
 use App\Services\GitHubService;
 use Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
@@ -21,11 +19,13 @@ use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
+use Filament\Support\Enums\Alignment;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Forms\Components\RichEditor;
 
 class Settings extends SettingsPage
@@ -111,6 +111,10 @@ class Settings extends SettingsPage
 
                                     Toggle::make('disable_file_uploads')
                                         ->label('Disallow users to upload files or images via the markdown editors.')
+                                        ->columnSpan(1),
+
+                                    Toggle::make('disable_user_registration')
+                                        ->label('Disable user registration')
                                         ->columnSpan(1),
 
                                     Toggle::make('show_github_link')
