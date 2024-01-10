@@ -57,6 +57,7 @@ class Settings extends SettingsPage
     {
         return $form->schema([
             Tabs::make('main')
+                ->persistTabInQueryString()
                 ->schema([
                     Tabs\Tab::make('General')
                         ->schema([
@@ -269,6 +270,8 @@ class Settings extends SettingsPage
                         ->schema([
                             Textarea::make('custom_scripts')
                                 ->label('Custom header script')
+                                ->rows(10)
+                                ->autosize()
                                 ->helperText('This allows you to add your own custom widget, or tracking tool. Code inside here will always be placed inside the head section.')
                                 ->columnSpan(2),
                         ]),
