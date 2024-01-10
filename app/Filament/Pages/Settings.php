@@ -132,8 +132,6 @@ class Settings extends SettingsPage
                                 TextInput::make('password')->helperText('Entering a password here will ask your users to enter a password before entering the roadmap.'),
                             ]),
 
-
-
                             RichEditor::make('welcome_text')
                                 ->columnSpan(2)
                                 ->helperText('This content will show at the top of the dashboard for (for all users).'),

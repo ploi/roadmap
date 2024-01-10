@@ -2,8 +2,8 @@
 
 namespace App\Exceptions;
 
-use Sentry\Laravel\Integration;
 use Throwable;
+use Sentry\Laravel\Integration;
 use Illuminate\Routing\Exceptions\InvalidSignatureException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 

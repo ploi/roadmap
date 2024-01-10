@@ -10,8 +10,8 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use STS\FilamentImpersonate\Tables\Actions\Impersonate;
+use App\Filament\Resources\UserResource\RelationManagers;
 
 class UserResource extends Resource
 {
