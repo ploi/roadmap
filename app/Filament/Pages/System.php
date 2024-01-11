@@ -8,6 +8,7 @@ use Filament\Actions\Action;
 use App\Services\SystemChecker;
 use Filament\Support\Enums\Alignment;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\Support\Htmlable;
 use App\Filament\Pages\Widgets\System\SystemInfo;
 
 class System extends Page
@@ -17,6 +18,16 @@ class System extends Page
     protected static string $view = 'filament.pages.system';
 
     protected static ?int $navigationSort = 0;
+
+    public static function getNavigationLabel(): string
+    {
+        return trans('nav.system');
+    }
+
+    public function getHeading(): string|Htmlable
+    {
+        return trans('system.title');
+    }
 
     public static function shouldRegisterNavigation(): bool
     {
@@ -40,7 +51,7 @@ class System extends Page
         $systemChecker = new SystemChecker();
 
         if ($systemChecker->isOutOfDate()) {
-            return 'Update available';
+            return trans('system.update-available');
         }
 
         return null;
@@ -50,13 +61,14 @@ class System extends Page
     {
         return [
             Action::make('check_for_updates')
+                ->label(trans('system.check-for-updates'))
                 ->color('gray')
                 ->action(function () {
                     (new SystemChecker())->flushVersionData();
 
                     Notification::make('check_for_updates')
-                        ->title('Updates')
-                        ->body('Version data has been updated')
+                        ->title(trans('system.updates'))
+                        ->body(trans('system.version-updated'))
                         ->success()
                         ->send();
 

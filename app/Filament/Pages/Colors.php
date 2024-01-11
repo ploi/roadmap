@@ -7,10 +7,11 @@ use Filament\Forms\Form;
 use App\Settings\ColorSettings;
 use Filament\Pages\SettingsPage;
 use Illuminate\Support\HtmlString;
-use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\ColorPicker;
+use Illuminate\Contracts\Support\Htmlable;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class Colors extends SettingsPage
@@ -19,7 +20,15 @@ class Colors extends SettingsPage
 
     protected static string $settings = ColorSettings::class;
 
-    protected static ?string $navigationLabel = 'Theme';
+    public static function getNavigationLabel(): string
+    {
+        return trans('nav.theme');
+    }
+
+    public function getHeading(): string|Htmlable
+    {
+        return trans('theme.title');
+    }
 
     public static function shouldRegisterNavigation(): bool
     {
@@ -36,10 +45,12 @@ class Colors extends SettingsPage
     public function form(Form $form): Form
     {
         return $form->schema([
-            Card::make([
+            Section::make()
+            ->schema([
                 FileUpload::make('logo')
+                    ->label(trans('theme.logo'))
                     ->image()
-                    ->helperText('Make sure your storage is linked (by running php artisan storage:link).')
+                    ->helperText(trans('theme.logo-helper-text'))
                     ->disk('public')
 //                    ->imageResizeTargetHeight('64')
                     ->maxSize(1024)
@@ -50,6 +61,7 @@ class Colors extends SettingsPage
                         return storage_path('app/public/'.app(ColorSettings::class)->logo);
                     }),
                 FileUpload::make('favicon')
+                    ->label(trans('theme.favicon'))
                     ->image()
                     ->disk('public')
 //                    ->imageResizeTargetHeight('64')
@@ -62,10 +74,14 @@ class Colors extends SettingsPage
                         return (string)'favicon.png';
                     }),
                 TextInput::make('fontFamily')
+                    ->label(trans('theme.font-family'))
                     ->placeholder('e.g. Roboto')
                     ->required()
                     ->helperText(new HtmlString('Choose a font family from <a href="https://fonts.bunny.net" target="_blank" rel="noreferrer">Bunny Fonts</a> (e.g. \'Roboto\')')),
                 ColorPicker::make('primary')
+                ->label('theme.primary-color')
+                ->default('#2563EB'),
+
             ])->columns(),
         ]);
     }
