@@ -43,7 +43,7 @@ test('administer link is only available to users that can access filament', func
 
     createAndLoginUser(['role' => $userRole]);
 
-    get(route('items.show', $item))->{$shouldBeVisible ? 'assertSeeText' : 'assertDontSeeText'}('Administer item');
+    get(route('items.show', $item))->{$shouldBeVisible ? 'assertSeeText' : 'assertDontSeeText'}(trans('items.edit-as-admin'));
 })->with([
     [UserRole::User, false],
     [UserRole::Employee, true],

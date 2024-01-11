@@ -47,7 +47,7 @@ it('includes votes for items', function () {
 it('shows note if project has no boards', function () {
     $project = Project::factory()->create();
 
-    get(route('projects.show', $project))->assertSee('There are no boards in this project');
+    get(route('projects.show', $project))->assertSee(trans('messages.no-boards'));
 });
 
 test('view has breadcrumbs', function () {
