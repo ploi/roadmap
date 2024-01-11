@@ -32,36 +32,48 @@ class ProjectsRelationManager extends RelationManager
     public function form(Form $form): Form
     {
         return $form
-            ->schema([
+            ->schema(
+                [
                 TextInput::make('name')
                     ->label(trans('resources.project.name'))
                     ->required()
                     ->maxLength(255),
-            ]);
+                ]
+            );
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns(
+                [
                 TextColumn::make('title')
                     ->label(trans('resources.project.title')),
-            ])
-            ->filters([
+                ]
+            )
+            ->filters(
+                [
                 //
-            ])
-            ->headerActions([
+                ]
+            )
+            ->headerActions(
+                [
                 Tables\Actions\AttachAction::make()
                     ->recordSelectOptionsQuery(fn (Builder $query): Builder => $query->where('private', true))
                     ->recordSelect(fn (Forms\Components\Select $select) => $select->helperText(__('projects.select-hidden-projects')))
                     ->inverseRelationshipName('members')
                     ->preloadRecordSelect(),
-            ])
-            ->actions([
+                ]
+            )
+            ->actions(
+                [
                 Tables\Actions\DetachAction::make(),
-            ])
-            ->bulkActions([
+                ]
+            )
+            ->bulkActions(
+                [
                 Tables\Actions\DetachBulkAction::make(),
-            ]);
+                ]
+            );
     }
 }

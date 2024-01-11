@@ -19,9 +19,10 @@ class BoardResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-view-columns';
 
-	public static function getNavigationGroup(): ?string {
-		return trans('nav.content');
-	}
+    public static function getNavigationGroup(): ?string
+    {
+        return trans('nav.content');
+    }
 
     protected static bool $shouldRegisterNavigation = false;
 
@@ -38,9 +39,11 @@ class BoardResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
+            ->schema(
+                [
                 Section::make()
-                       ->schema([
+                    ->schema(
+                        [
 
                             TextInput::make('title')
                                 ->label(trans('resources.board.title'))
@@ -49,22 +52,25 @@ class BoardResource extends Resource
 
                             Select::make('project_id')
                                 ->label(trans('resources.board.project'))
-                                  ->relationship('project', 'title')
-                                  ->required(),
+                                ->relationship('project', 'title')
+                                ->required(),
 
                             Textarea::make('description')
                                 ->label(trans('resources.board.description'))
                                 ->columnSpan(2)
                                 ->maxLength(65535),
 
-                           ])->columns()
-            ]);
+                           ]
+                    )->columns()
+                ]
+            );
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns(
+                [
                 TextColumn::make('id'),
 
                 TextColumn::make('title')
@@ -74,13 +80,16 @@ class BoardResource extends Resource
                           ->label(trans('resources.board.project')),
 
                 TextColumn::make('created_at')
-                          ->label(trans('resources.user.created-at'))
-                          ->dateTime()
-                          ->sortable(),
-            ])
-            ->filters([
+                    ->label(trans('resources.user.created-at'))
+                    ->dateTime()
+                    ->sortable(),
+                ]
+            )
+            ->filters(
+                [
                 //
-            ])
+                ]
+            )
             ->defaultSort('created_at', 'desc');
     }
 

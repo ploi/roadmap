@@ -22,15 +22,18 @@ class ActivitiesRelationManager extends RelationManager
     public function form(Form $form): Form
     {
         return $form
-            ->schema([
+            ->schema(
+                [
                 //
-            ]);
+                ]
+            );
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns(
+                [
                 TextColumn::make('causer.name')
                           ->label(trans('resources.user.label')),
 
@@ -38,13 +41,16 @@ class ActivitiesRelationManager extends RelationManager
                           ->label(trans('resources.item.description')),
 
                 TextColumn::make('created_at')
-                          ->label(trans('resources.date'))
-                          ->dateTime()
-                          ->sortable(),
-            ])
-            ->filters([
+                    ->label(trans('resources.date'))
+                    ->dateTime()
+                    ->sortable(),
+                ]
+            )
+            ->filters(
+                [
                 //
-            ])
+                ]
+            )
             ->defaultSort('created_at', 'desc');
     }
 

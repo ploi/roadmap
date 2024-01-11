@@ -24,17 +24,20 @@ class VotesRelationManager extends RelationManager
     public function form(Form $form): Form
     {
         return $form
-            ->schema([
+            ->schema(
+                [
                 Toggle::make('subscribed')
                     ->label(trans('resources.vote.subscribed'))
                     ->default(true),
-            ]);
+                ]
+            );
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns(
+                [
                 TextColumn::make('model.title')
                           ->label(trans('resources.vote.item')),
 
@@ -42,12 +45,15 @@ class VotesRelationManager extends RelationManager
                           ->label(trans('resources.vote.project')),
 
                 IconColumn::make('subscribed')
-                          ->label(trans('resources.vote.subscribed'))
-                          ->boolean(),
-            ])
-            ->filters([
+                    ->label(trans('resources.vote.subscribed'))
+                    ->boolean(),
+                ]
+            )
+            ->filters(
+                [
                 //
-            ])
+                ]
+            )
             ->defaultSort('created_at', 'desc');
     }
 }

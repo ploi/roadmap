@@ -19,11 +19,12 @@ class VoteResource extends Resource
 
     protected static ?int $navigationSort = 300;
 
-	public static function getNavigationGroup(): ?string {
-		return trans('nav.content');
-	}
+    public static function getNavigationGroup(): ?string
+    {
+        return trans('nav.content');
+    }
 
-	public static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return trans('nav.votes');
     }
@@ -41,15 +42,18 @@ class VoteResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
+            ->schema(
+                [
                 //
-            ]);
+                ]
+            );
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns(
+                [
                 TextColumn::make('user.name')
                           ->label(trans('resources.user.label')),
 
@@ -57,17 +61,20 @@ class VoteResource extends Resource
                           ->label(trans('resources.vote.item')),
 
                 IconColumn::make('subscribed')
-                          ->label(trans('resources.vote.subscribed'))
-                          ->boolean(),
+                    ->label(trans('resources.vote.subscribed'))
+                    ->boolean(),
 
                 TextColumn::make('created_at')
-                          ->label(trans('resources.created-at'))
-                          ->dateTime()
-                          ->sortable(),
-            ])
-            ->filters([
+                    ->label(trans('resources.created-at'))
+                    ->dateTime()
+                    ->sortable(),
+                ]
+            )
+            ->filters(
+                [
                 //
-            ])
+                ]
+            )
             ->defaultSort('created_at', 'desc');
     }
 

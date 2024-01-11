@@ -21,13 +21,14 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-	protected static ?int $navigationSort = 1000;
+    protected static ?int $navigationSort = 1000;
 
-	public static function getNavigationGroup(): ?string {
-		return trans('nav.manage');
-	}
+    public static function getNavigationGroup(): ?string
+    {
+        return trans('nav.manage');
+    }
 
-	public static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return trans('nav.users');
     }
@@ -45,8 +46,10 @@ class UserResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Section::make([
+            ->schema(
+                [
+                Section::make(
+                    [
 
                     TextInput::make('name')
                         ->label(trans('resources.user.name'))
@@ -60,20 +63,25 @@ class UserResource extends Resource
                     Select::make('role')
                         ->label(trans('resources.user.role'))
                         ->required()
-                        ->options([
+                        ->options(
+                            [
                             UserRole::User->value => trans('resources.user.roles.user'),
                             UserRole::Employee->value => trans('resources.user.roles.employee'),
                             UserRole::Admin->value => trans('resources.user.roles.admin'),
-                        ])
+                            ]
+                        )
 
-                ])->columns()
-            ]);
+                    ]
+                )->columns()
+                ]
+            );
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns(
+                [
                 TextColumn::make('name')
                     ->label(trans('resources.user.name'))
                     ->searchable(),
@@ -90,13 +98,18 @@ class UserResource extends Resource
                     ->label(trans('resources.created-at'))
                     ->sortable()
                     ->dateTime(),
-            ])
-            ->filters([
+                ]
+            )
+            ->filters(
+                [
                 //
-            ])
-            ->actions([
+                ]
+            )
+            ->actions(
+                [
                 Impersonate::make()
-            ])
+                ]
+            )
             ->defaultSort('created_at', 'desc');
     }
 

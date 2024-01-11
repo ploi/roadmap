@@ -26,18 +26,19 @@ class ChangelogResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rss';
 
-	protected static ?int $navigationSort = 400;
+    protected static ?int $navigationSort = 400;
 
     protected static ?string $navigationLabel = 'Changelog';
 
     protected static ?string $recordTitleAttribute = 'title';
 
 
-	public static function getNavigationGroup(): ?string {
-		return trans('nav.content');
-	}
+    public static function getNavigationGroup(): ?string
+    {
+        return trans('nav.content');
+    }
 
-	public static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return trans('nav.changelog');
     }
@@ -60,23 +61,25 @@ class ChangelogResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Section::make([
+            ->schema(
+                [
+                Section::make(
+                    [
                     TextInput::make('title')
-                             ->label(trans('resources.changelog.title'))
-                             ->required()
-                             ->maxLength(255),
+                        ->label(trans('resources.changelog.title'))
+                        ->required()
+                        ->maxLength(255),
 
                     Select::make('user_id')
-                          ->label(trans('resources.changelog.author'))
-                          ->relationship('user', 'name')
-                          ->default(auth()->user()->id)
-                          ->preload()
-                          ->required()
-                          ->searchable(),
+                        ->label(trans('resources.changelog.author'))
+                        ->relationship('user', 'name')
+                        ->default(auth()->user()->id)
+                        ->preload()
+                        ->required()
+                        ->searchable(),
 
                     DateTimePicker::make('published_at')
-                                  ->label(trans('resources.published-at')),
+                        ->label(trans('resources.published-at')),
 
                     Select::make('related_items')
                         ->label(trans('resources.changelog.related-items'))
@@ -92,8 +95,10 @@ class ChangelogResource extends Resource
                         ->minLength(5)
                         ->maxLength(65535),
 
-                ])->columns(),
-            ]);
+                    ]
+                )->columns(),
+                ]
+            );
     }
 
     /**
@@ -102,7 +107,8 @@ class ChangelogResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns(
+                [
                 TextColumn::make('title')
                     ->label(trans('resources.changelog.title'))
                     ->searchable()
@@ -123,18 +129,25 @@ class ChangelogResource extends Resource
                     ->label(trans('resources.created-at'))
                     ->dateTime()
                     ->sortable(),
-            ])
-            ->filters([
+                ]
+            )
+            ->filters(
+                [
                 Filter::make('is_published')
                     ->label(trans('resources.changelog.is-published'))
                     ->query(fn (Builder $query): Builder => $query->where('published_at', '<=', now()))
-            ])
-            ->actions([
+                ]
+            )
+            ->actions(
+                [
                 Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
+                ]
+            )
+            ->bulkActions(
+                [
                 Tables\Actions\DeleteBulkAction::make(),
-            ]);
+                ]
+            );
     }
 
     public static function getRelations(): array

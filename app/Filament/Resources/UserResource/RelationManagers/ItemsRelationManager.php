@@ -22,35 +22,39 @@ class ItemsRelationManager extends RelationManager
     {
         return $table
             ->recordUrl(fn (Model $record): string => ItemResource::getUrl('edit', ['record' => $record]))
-            ->columns([
+            ->columns(
+                [
                 TextColumn::make('id'),
 
                 TextColumn::make('title')
-                          ->label(trans('resources.item.title'))
-                          ->searchable(),
+                    ->label(trans('resources.item.title'))
+                    ->searchable(),
 
                 TextColumn::make('total_votes')
-                          ->label(trans('resources.item.votes'))
-                          ->sortable(),
+                    ->label(trans('resources.item.votes'))
+                    ->sortable(),
 
                 TextColumn::make('board.project.title')
-                          ->label(trans('resources.item.project'))
-                          ->sortable()
-                          ->searchable(),
+                    ->label(trans('resources.item.project'))
+                    ->sortable()
+                    ->searchable(),
 
                 TextColumn::make('board.title')
-                          ->label(trans('resources.item.board'))
-                          ->sortable()
-                          ->searchable(),
+                    ->label(trans('resources.item.board'))
+                    ->sortable()
+                    ->searchable(),
 
                 TextColumn::make('created_at')
                     ->label(trans('resources.created-at'))
                     ->dateTime()
                     ->sortable(),
-            ])
-            ->filters([
+                ]
+            )
+            ->filters(
+                [
                 //
-            ])
+                ]
+            )
             ->defaultSort('created_at', 'desc');
     }
 }

@@ -25,39 +25,45 @@ class VotesRelationManager extends RelationManager
     public function form(Form $form): Form
     {
         return $form
-            ->schema([
+            ->schema(
+                [
                 Select::make('user_id')
-                      ->label(trans('resources.user.label'))
-                      ->relationship('user', 'name')
-                      ->preload()
-                      ->required()
-                      ->searchable(),
+                    ->label(trans('resources.user.label'))
+                    ->relationship('user', 'name')
+                    ->preload()
+                    ->required()
+                    ->searchable(),
 
                 Toggle::make('subscribed')
-                      ->label(trans('resources.vote.subscribed'))
-                      ->default(true),
-            ]);
+                    ->label(trans('resources.vote.subscribed'))
+                    ->default(true),
+                ]
+            );
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns(
+                [
                 TextColumn::make('user.name')
                           ->label(trans('resources.user.label')),
 
                 TextColumn::make('created_at')
-                          ->label(trans('resources.created-at'))
-                          ->dateTime()
-                          ->sortable(),
+                    ->label(trans('resources.created-at'))
+                    ->dateTime()
+                    ->sortable(),
 
                 IconColumn::make('subscribed')
-                          ->label(trans('resources.vote.subscribed'))
-                          ->boolean(),
-            ])
-            ->filters([
+                    ->label(trans('resources.vote.subscribed'))
+                    ->boolean(),
+                ]
+            )
+            ->filters(
+                [
                 //
-            ])
+                ]
+            )
             ->defaultSort('created_at', 'desc');
     }
 }

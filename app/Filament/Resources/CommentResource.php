@@ -21,11 +21,12 @@ class CommentResource extends Resource
 
     protected static ?int $navigationSort = 200;
 
-	public static function getNavigationGroup(): ?string {
-		return trans('nav.content');
-	}
+    public static function getNavigationGroup(): ?string
+    {
+        return trans('nav.content');
+    }
 
-	public static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return trans('nav.comment');
     }
@@ -43,60 +44,68 @@ class CommentResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
+            ->schema(
+                [
                 Section::make()
-                       ->columns()
-                       ->schema([
+                    ->columns()
+                    ->schema(
+                        [
                            Select::make('user_id')
-                                 ->label(trans('resources.comment.user'))
-                                 ->columnSpan(1)
-                                 ->relationship('user', 'name')
-                                 ->searchable(),
+                               ->label(trans('resources.comment.user'))
+                               ->columnSpan(1)
+                               ->relationship('user', 'name')
+                               ->searchable(),
 
                            Select::make('item_id')
-                                 ->label(trans('resources.comment.item'))
-                                 ->columnSpan(1)
-                                 ->relationship('item', 'title')
-                                 ->searchable(),
+                               ->label(trans('resources.comment.item'))
+                               ->columnSpan(1)
+                               ->relationship('item', 'title')
+                               ->searchable(),
 
                            Toggle::make('private')
-                                 ->label(trans('resources.comment.private'))
-                                 ->helperText(trans('resources.comment.private-helper-text'))
-                                 ->label('Private')
-                                 ->default(false),
+                               ->label(trans('resources.comment.private'))
+                               ->helperText(trans('resources.comment.private-helper-text'))
+                               ->label('Private')
+                               ->default(false),
 
                            MarkdownEditor::make('content')
-                                         ->label(trans('resources.comment.content'))
-                                         ->columnSpan(2),
-                       ])
-            ]);
+                               ->label(trans('resources.comment.content'))
+                               ->columnSpan(2),
+                           ]
+                    )
+                ]
+            );
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns(
+                [
                 TextColumn::make('content')
-                          ->label(trans('resources.comment.content'))
-                          ->wrap()
-                          ->searchable(),
+                    ->label(trans('resources.comment.content'))
+                    ->wrap()
+                    ->searchable(),
 
                 TextColumn::make('item.title')
-                          ->label(trans('resources.comment.item'))
-                          ->wrap(),
+                    ->label(trans('resources.comment.item'))
+                    ->wrap(),
 
                 TextColumn::make('user.name')
-                          ->label(trans('resources.comment.user')),
+                    ->label(trans('resources.comment.user')),
 
                 TextColumn::make('created_at')
-                          ->label(trans('resources.created-at'))
-                          ->dateTime()
-                          ->sortable()
-                          ->label('Date'),
-            ])
-            ->filters([
+                    ->label(trans('resources.created-at'))
+                    ->dateTime()
+                    ->sortable()
+                    ->label('Date'),
+                ]
+            )
+            ->filters(
+                [
                 //
-            ])
+                ]
+            )
             ->defaultSort('created_at', 'desc');
     }
 

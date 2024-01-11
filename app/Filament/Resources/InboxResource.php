@@ -63,53 +63,61 @@ class InboxResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns(
+                [
                 TextColumn::make('title')
-                          ->label(trans('resources.item.title'))
-                          ->wrap()
-                          ->searchable(),
+                    ->label(trans('resources.item.title'))
+                    ->wrap()
+                    ->searchable(),
 
                 TextColumn::make('project.title')
-                          ->label(trans('resources.item.project'))
-                          ->visible(app(GeneralSettings::class)->getInboxWorkflow() === InboxWorkflow::WithoutBoard),
+                    ->label(trans('resources.item.project'))
+                    ->visible(app(GeneralSettings::class)->getInboxWorkflow() === InboxWorkflow::WithoutBoard),
 
                 TextColumn::make('comments_count')
-                          ->label(ucfirst(trans_choice('messages.comments', 2)))
-                          ->counts('comments')
-                          ->toggleable(),
+                    ->label(ucfirst(trans_choice('messages.comments', 2)))
+                    ->counts('comments')
+                    ->toggleable(),
 
                 TextColumn::make('votes_count')
-                          ->label(ucfirst(trans_choice('messages.votes', 2)))
-                          ->counts('votes')
-                          ->toggleable(),
+                    ->label(ucfirst(trans_choice('messages.votes', 2)))
+                    ->counts('votes')
+                    ->toggleable(),
 
                 TextColumn::make('user.name')
-                          ->label(trans('resources.item.user')),
+                    ->label(trans('resources.item.user')),
 
                 TextColumn::make('created_at')
-                          ->label(trans('resources.created-at'))
-                          ->dateTime()
-                          ->sortable(),
-            ])
-            ->filters([
+                    ->label(trans('resources.created-at'))
+                    ->dateTime()
+                    ->sortable(),
+                ]
+            )
+            ->filters(
+                [
                 Filter::make('item_filters')
-                      ->form([
+                    ->form(
+                        [
                           Select::make('project_id')
-                                ->label(trans('resources.item.project'))
-                                ->reactive()
-                                ->options(Project::pluck('title', 'id')),
-                      ])
-                      ->query(function (Builder $query, array $data): Builder {
-                          return $query
-                              ->when(
-                                  $data['project_id'],
-                                  fn (Builder $query, $projectId): Builder => $query->where(
-                                      'project_id',
-                                      $projectId
-                                  ),
-                              );
-                      })
-            ])
+                              ->label(trans('resources.item.project'))
+                              ->reactive()
+                              ->options(Project::pluck('title', 'id')),
+                          ]
+                    )
+                    ->query(
+                        function (Builder $query, array $data): Builder {
+                            return $query
+                                ->when(
+                                    $data['project_id'],
+                                    fn (Builder $query, $projectId): Builder => $query->where(
+                                        'project_id',
+                                        $projectId
+                                    ),
+                                );
+                        }
+                    )
+                ]
+            )
             ->defaultSort('created_at', 'desc');
     }
 

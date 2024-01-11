@@ -19,9 +19,10 @@ class System extends Page
 
     protected static ?int $navigationSort = 1500;
 
-	public static function getNavigationGroup(): ?string {
-		return trans('nav.manage');
-	}
+    public static function getNavigationGroup(): ?string
+    {
+        return trans('nav.manage');
+    }
 
     public static function getNavigationLabel(): string
     {
@@ -67,17 +68,19 @@ class System extends Page
             Action::make('check_for_updates')
                 ->label(trans('system.check-for-updates'))
                 ->color('gray')
-                ->action(function () {
-                    (new SystemChecker())->flushVersionData();
+                ->action(
+                    function () {
+                        (new SystemChecker())->flushVersionData();
 
-                    Notification::make('check_for_updates')
-                        ->title(trans('system.updates'))
-                        ->body(trans('system.version-updated'))
-                        ->success()
-                        ->send();
+                        Notification::make('check_for_updates')
+                            ->title(trans('system.updates'))
+                            ->body(trans('system.version-updated'))
+                            ->success()
+                            ->send();
 
-                    return redirect(System::getUrl());
-                })
+                        return redirect(System::getUrl());
+                    }
+                )
                 ->requiresConfirmation()
                 ->modalAlignment(Alignment::Left),
         ];

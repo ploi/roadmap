@@ -22,28 +22,32 @@ class CommentsRelationManager extends RelationManager
     {
         return $table
             ->recordUrl(fn (Model $record): string => CommentResource::getUrl('edit', ['record' => $record]))
-            ->columns([
+            ->columns(
+                [
                 
                 TextColumn::make('content')
-                          ->label(trans('resources.comment.content'))
-                          ->searchable(),
+                    ->label(trans('resources.comment.content'))
+                    ->searchable(),
 
                 TextColumn::make('item.title')
-                          ->label(trans('resources.item.title')),
+                    ->label(trans('resources.item.title')),
 
                 TextColumn::make('votes_count')
-                          ->label(trans('resources.comment.votes'))
-                          ->counts('votes')
-                          ->toggleable(),
+                    ->label(trans('resources.comment.votes'))
+                    ->counts('votes')
+                    ->toggleable(),
 
                 TextColumn::make('created_at')
-                          ->label(trans('resources.created-at'))
-                          ->dateTime()
-                          ->sortable(),
-            ])
-            ->filters([
+                    ->label(trans('resources.created-at'))
+                    ->dateTime()
+                    ->sortable(),
+                ]
+            )
+            ->filters(
+                [
                 //
-            ])
+                ]
+            )
             ->defaultSort('created_at', 'desc');
     }
 }

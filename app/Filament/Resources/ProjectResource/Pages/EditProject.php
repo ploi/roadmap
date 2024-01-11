@@ -15,8 +15,8 @@ class EditProject extends EditRecord
     {
         return [
             Action::make('view_public')
-                  ->label(trans('resources.project.view-public'))
-                  ->color('gray')->url(fn () => route('projects.show', $this->record)),
+                ->label(trans('resources.project.view-public'))
+                ->color('gray')->url(fn () => route('projects.show', $this->record)),
 
             DeleteAction::make(),
         ];

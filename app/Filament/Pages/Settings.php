@@ -36,13 +36,14 @@ class Settings extends SettingsPage
 
     protected static string $settings = GeneralSettings::class;
 
-	protected static ?int $navigationSort = 1300;
+    protected static ?int $navigationSort = 1300;
 
-	public static function getNavigationGroup(): ?string {
-		return trans('nav.manage');
-	}
+    public static function getNavigationGroup(): ?string
+    {
+        return trans('nav.manage');
+    }
 
-	public static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return trans('nav.settings');
     }
@@ -66,33 +67,39 @@ class Settings extends SettingsPage
         abort_unless(auth()->user()->hasRole(UserRole::Admin), 403);
 
         $this->ogImages = collect(Storage::disk('public')->allFiles())
-            ->filter(function ($file) {
-                return Str::startsWith($file, 'og') && Str::endsWith($file, '.jpg');
-            });
+            ->filter(
+                function ($file) {
+                    return Str::startsWith($file, 'og') && Str::endsWith($file, '.jpg');
+                }
+            );
     }
 
     public function form(Form $form): Form
     {
-        return $form->schema([
+        return $form->schema(
+            [
             Tabs::make('main')
                 ->persistTabInQueryString()
-                ->schema([
+                ->schema(
+                    [
                     Tabs\Tab::make(trans('settings.general-title'))
-                        ->schema([
+                        ->schema(
+                            [
                             Section::make('')
                                 ->columns()
-                                ->schema([
+                                ->schema(
+                                    [
                                     Toggle::make('board_centered')
-                                            ->label(trans('settings.general.center-boards'))
-                                            ->helperText(trans('settings.general.center-boards-helper-text')),
+                                        ->label(trans('settings.general.center-boards'))
+                                        ->helperText(trans('settings.general.center-boards-helper-text')),
 
                                     Toggle::make('show_projects_sidebar_without_boards')
-                                            ->label(trans('settings.general.show-projects-sidebar-without-boards'))
-                                            ->helperText(trans('settings.general.show-projects-sidebar-without-boards-helper-text')),
+                                        ->label(trans('settings.general.show-projects-sidebar-without-boards'))
+                                        ->helperText(trans('settings.general.show-projects-sidebar-without-boards-helper-text')),
 
                                     Toggle::make('allow_general_creation_of_item')
-                                            ->label(trans('settings.general.allow-general-creation-of-item'))
-                                            ->helperText(trans('settings.general.allow-general-creation-of-item-helper-text')),
+                                        ->label(trans('settings.general.allow-general-creation-of-item'))
+                                        ->helperText(trans('settings.general.allow-general-creation-of-item-helper-text')),
 
                                     Toggle::make('enable_item_age')
                                         ->label(trans('settings.general.enable-item-age'))
@@ -142,10 +149,12 @@ class Settings extends SettingsPage
                                         ->label(trans('settings.general.show-github-link'))
                                         ->helperText(trans('settings.general.show-github-link-helper-text'))
                                         ->visible((new GitHubService)->isEnabled()),
-                                ]),
+                                    ]
+                                ),
 
 
-                            Grid::make()->schema([
+                            Grid::make()->schema(
+                                [
                                 Select::make('inbox_workflow')
                                     ->label(trans('settings.general.inbox-workflow'))
                                     ->helperText(trans('settings.general.inbox-workflow-helper-text'))
@@ -155,31 +164,37 @@ class Settings extends SettingsPage
                                 TextInput::make('password')
                                     ->label(trans('settings.general.roadmap-password'))
                                     ->helperText(trans('settings.general.roadmap-password-helper-text')),
-                            ]),
+                                ]
+                            ),
 
                             RichEditor::make('welcome_text')
                                 ->label(trans('settings.general.welcome-text'))
                                 ->helperText(trans('settings.general.welcome-text-helper-text'))
                                 ->columnSpan(2),
-                        ]),
+                            ]
+                        ),
 
                     Tabs\Tab::make(trans('settings.default-boards-title'))
-                        ->schema([
+                        ->schema(
+                            [
                             Toggle::make('create_default_boards')
-                                    ->label(trans('settings.default-boards.create-default-boards'))
-                                    ->helperText(trans('settings.default-boards.create-default-boards-helper-text'))
-                                    ->reactive()
-                                    ->columnSpan(2),
+                                ->label(trans('settings.default-boards.create-default-boards'))
+                                ->helperText(trans('settings.default-boards.create-default-boards-helper-text'))
+                                ->reactive()
+                                ->columnSpan(2),
 
-                            Group::make([
+                            Group::make(
+                                [
                                 Repeater::make('default_boards')
                                     ->label(trans('settings.default-boards-title'))
                                     ->columns()
                                     ->columnSpan(2)
-                                    ->schema([
+                                    ->schema(
+                                        [
 
                                         Grid::make()
-                                            ->schema([
+                                            ->schema(
+                                                [
                                                 TextInput::make('title')
                                                     ->label(trans('settings.default-boards.title'))
                                                     ->helperText(trans('settings.default-boards.title-helper-text'))
@@ -187,24 +202,28 @@ class Settings extends SettingsPage
                                                 Select::make('sort_items_by')
                                                     ->label(trans('settings.default-boards.sort-by'))
                                                     ->helperText(trans('settings.default-boards.sort-by-helper-text'))
-                                                    ->options([
+                                                    ->options(
+                                                        [
                                                         Board::SORT_ITEMS_BY_POPULAR => trans('settings.default-boards.popular'),
                                                         Board::SORT_ITEMS_BY_LATEST => trans('settings.default-boards.latest'),
-                                                    ])
+                                                        ]
+                                                    )
                                                     ->default(Board::SORT_ITEMS_BY_POPULAR)
                                                     ->required(),
-                                        ]),
+                                                ]
+                                            ),
 
-                                        Grid::make()->schema([
+                                        Grid::make()->schema(
+                                            [
 
                                             Toggle::make('visible')
-                                                  ->label(trans('settings.default-boards.visible'))
-                                                  ->helperText(trans('settings.default-boards.visible-helper-text'))
-                                                  ->default(true),
+                                                ->label(trans('settings.default-boards.visible'))
+                                                ->helperText(trans('settings.default-boards.visible-helper-text'))
+                                                ->default(true),
 
                                             Toggle::make('can_users_create')
-                                                  ->label(trans('settings.default-boards.can-users-create-items'))
-                                                  ->helperText(trans('settings.default-boards.can-users-create-items-helper-text')),
+                                                ->label(trans('settings.default-boards.can-users-create-items'))
+                                                ->helperText(trans('settings.default-boards.can-users-create-items-helper-text')),
 
                                             Toggle::make('block_comments')
                                                 ->label(trans('settings.default-boards.block-comments'))
@@ -214,44 +233,54 @@ class Settings extends SettingsPage
                                                 ->label(trans('settings.default-boards.block-votes'))
                                                 ->helperText(trans('settings.default-boards.block-votes-helper-text')),
 
-                                        ]),
+                                            ]
+                                        ),
 
                                         Textarea::make('description')
                                             ->label(trans('settings.default-boards.description'))
                                             ->helperText(trans('settings.default-boards.description-helper-text'))
                                             ->columnSpan(2),
 
-                                    ]),
-                            ])
-                            ->columnSpan(2)
-                            ->visible(fn (Get $get) => $get('create_default_boards')),
-                        ]),
+                                        ]
+                                    ),
+                                ]
+                            )
+                                ->columnSpan(2)
+                                ->visible(fn (Get $get) => $get('create_default_boards')),
+                            ]
+                        ),
 
                     Tabs\Tab::make(trans('settings.dashboard-items-title'))
-                        ->schema([
+                        ->schema(
+                            [
                             Repeater::make('dashboard_items')
                                 ->label(trans('settings.dashboard-items-title'))
                                 ->columns()
                                 ->columnSpan(2)
-                                ->schema([
+                                ->schema(
+                                    [
 
                                     Select::make('type')
                                         ->label(trans('settings.dashboard-items.type'))
                                         ->helperText(trans('settings.dashboard-items.type-helper-text'))
                                         ->reactive()
-                                        ->options([
+                                        ->options(
+                                            [
                                             'recent-items' => trans('settings.dashboard-items.recent-items'),
                                             'recent-comments' => trans('settings.dashboard-items.recent-comments')
-                                        ])
+                                            ]
+                                        )
                                         ->default('recent-items'),
 
                                     Select::make('column_span')
                                         ->label(trans('settings.dashboard-items.column-span'))
                                         ->helperText(trans('settings.dashboard-items.column-span-helper-text'))
-                                        ->options([
+                                        ->options(
+                                            [
                                                 1 => 1,
                                                 2 => 2,
-                                       ])
+                                            ]
+                                        )
                                         ->default(1),
 
                                     Toggle::make('must_have_project')
@@ -265,12 +294,15 @@ class Settings extends SettingsPage
                                         ->helperText(trans('settings.dashboard-items.must-have-board-helper-text'))
                                         ->visible(fn ($get) => $get('must_have_project') && $get('type') === 'recent-items'),
 
-                                ])
+                                    ]
+                                )
                                 ->helperText(trans('settings.dashboard-items-helper-text')),
-                        ]),
+                            ]
+                        ),
 
                     Tabs\Tab::make(trans('settings.changelog-title'))
-                        ->schema([
+                        ->schema(
+                            [
 
                             Toggle::make('enable_changelog')
                                 ->label(trans('settings.changelog.enable-changelog'))
@@ -289,25 +321,30 @@ class Settings extends SettingsPage
                                 ->helperText(trans('settings.changelog.show-related-items-helper-text'))
                                 ->visible(fn ($get) => $get('enable_changelog'))
                                 ->columnSpan(2),
-                        ]),
+                            ]
+                        ),
 
                     Tabs\Tab::make(trans('settings.notifications-title'))
-                        ->schema([
+                        ->schema(
+                            [
                             Repeater::make('send_notifications_to')
                                 ->label(trans('settings.notifications.send-notifications-to'))
                                 ->columns()
-                                ->schema([
+                                ->schema(
+                                    [
 
                                     Select::make('type')
-                                          ->label(trans('settings.notifications.type'))
-                                          ->helperText(trans('settings.notifications.type-helper-text'))
-                                          ->reactive()
-                                          ->options([
+                                        ->label(trans('settings.notifications.type'))
+                                        ->helperText(trans('settings.notifications.type-helper-text'))
+                                        ->reactive()
+                                        ->options(
+                                            [
                                             'email' => 'E-mail',
                                             'discord' => 'Discord',
                                             'slack' => 'Slack'
-                                          ])
-                                          ->default('email'),
+                                              ]
+                                        )
+                                        ->default('email'),
 
                                     Select::make('projects')
                                         ->label(trans('settings.notifications.select-projects'))
@@ -316,85 +353,103 @@ class Settings extends SettingsPage
                                         ->options(Project::pluck('title', 'id')),
 
                                     TextInput::make('name')
-                                             ->label(fn (Get $get) => match ($get('type')) {
-                                                 'email', null => trans('settings.notifications.name-receiver'),
-                                                 'discord', 'slack' => trans('settings.notifications.label'),
-                                             })
-                                             ->helperText(trans('settings.notifications.name-helper-text'))
-                                             ->required(),
+                                        ->label(
+                                            fn (Get $get) => match ($get('type')) {
+                                            'email', null => trans('settings.notifications.name-receiver'),
+                                            'discord', 'slack' => trans('settings.notifications.label'),
+                                            }
+                                        )
+                                        ->helperText(trans('settings.notifications.name-helper-text'))
+                                        ->required(),
 
                                     TextInput::make('webhook')
-                                        ->label(fn (Get $get) => match ($get('type')) {
+                                        ->label(
+                                            fn (Get $get) => match ($get('type')) {
                                             'email', null => trans('settings.notifications.email'),
                                             'discord'=> trans('settings.notifications.discord-webhook-url'),
                                             'slack' => trans('settings.notifications.slack-webhook-url'),
-                                        })
+                                            }
+                                        )
                                         ->helperText(trans('settings.notifications.webhook-helper-text'))
                                         ->required()
                                         ->url(fn (Get $get) => in_array($get('type'), ['discord', 'slack']))
                                         ->email(fn (Get $get) => $get('type') === 'email'),
-                                ])
+                                    ]
+                                )
                                 ->helperText(trans('settings.notifications-helper-text'))
                                 ->columnSpan(2),
-                        ]),
+                            ]
+                        ),
 
                     Tabs\Tab::make(trans('settings.scripts-title'))
-                        ->schema([
+                        ->schema(
+                            [
                             Textarea::make('custom_scripts')
                                 ->label(trans('settings.scripts.custom-header-scripts'))
                                 ->helperText(trans('settings.scripts.custom-header-scripts-helper-text'))
                                 ->rows(10)
                                 ->autosize()
                                 ->columnSpan(2),
-                        ]),
+                            ]
+                        ),
 
                     Tabs\Tab::make(trans('settings.search-title'))
-                        ->schema([
+                        ->schema(
+                            [
                             TagsInput::make('excluded_matching_search_words')
                                 ->label(trans('settings.search.exclude-words'))
                                 ->helperText(trans('settings.search.exclude-words-helper-text'))
                                 ->columnSpan(2),
-                        ]),
+                            ]
+                        ),
 
                     Tabs\Tab::make(trans('settings.profanity-title'))
-                        ->schema([
+                        ->schema(
+                            [
                             TagsInput::make('profanity_words')
                                 ->label(trans('settings.profanity.profanity-filter'))
                                 ->helperText(trans('settings.profanity.profanity-filter-helper-text'))
-                        ])
-                ])
+                            ]
+                        )
+                    ]
+                )
                 ->columns()
                 ->columnSpan(2),
-        ]);
+            ]
+        );
     }
 
     protected function getHeaderActions(): array
     {
         return [
             Action::make('flush_og_images')
-                ->action(function () {
-                    $items = $this->ogImages
-                        ->each(function ($file) {
-                            Storage::disk('public')->delete($file);
-                        });
+                ->action(
+                    function () {
+                        $items = $this->ogImages
+                            ->each(
+                                function ($file) {
+                                    Storage::disk('public')->delete($file);
+                                }
+                            );
 
-                    if ($items->count() === 0) {
+                        if ($items->count() === 0) {
+                            Notification::make('cleared')
+                                ->title(trans('settings.og.title'))
+                                ->body(trans('settings.og.no-images-to-flush'))
+                                ->success()
+                                ->send();
+                            return;
+                        }
+
                         Notification::make('cleared')
                             ->title(trans('settings.og.title'))
-                            ->body(trans('settings.og.no-images-to-flush'))
+                            ->body(sprintf(trans('settings.og.images-flushed'), $items->count()))
                             ->success()
                             ->send();
-                        return;
+
+                        $this->ogImages = collect();
                     }
-
-                    Notification::make('cleared')
-                        ->title(trans('settings.og.title'))
-                        ->body(sprintf(trans('settings.og.images-flushed'), $items->count()))
-                        ->success()
-                        ->send();
-
-                    $this->ogImages = collect();
-                })
+                )
                 ->requiresConfirmation()
                 ->disabled(!$this->ogImages->count())
                 ->label(sprintf(trans('settings.og.label'), $this->ogImages->count()))

@@ -28,15 +28,17 @@ class EditItem extends EditRecord
 
             Action::make('flush_og_images')
                 ->label(trans('settings.og.flush-single'))
-                ->action(function () {
-                    Storage::disk('public')->delete('og-' . $this->record->slug . '-' . $this->record->id . '.jpg');
+                ->action(
+                    function () {
+                        Storage::disk('public')->delete('og-' . $this->record->slug . '-' . $this->record->id . '.jpg');
 
-                    Notification::make('cleared')
-                        ->title(trans('settings.og.title'))
-                        ->body(trans('settings.og.image-flushed'))
-                        ->success()
-                        ->send();
-                })
+                        Notification::make('cleared')
+                            ->title(trans('settings.og.title'))
+                            ->body(trans('settings.og.image-flushed'))
+                            ->success()
+                            ->send();
+                    }
+                )
                 ->color('gray')
                 ->requiresConfirmation()
                 ->modalHeading(trans('settings.og.delete-single'))
@@ -46,36 +48,45 @@ class EditItem extends EditRecord
             Action::make('merge item')
                 ->label(trans('resources.item.merge'))
                 ->color('warning')
-                ->action(function (array $data): void {
-                    /** @var Item $selectedItem */
-                    $selectedItem = Item::query()->find($data['item_id']);
+                ->action(
+                    function (array $data): void {
+                        /**
+                    * @var Item $selectedItem 
+                    */
+                        $selectedItem = Item::query()->find($data['item_id']);
 
-                    if (!$selectedItem->hasVoted($this->record->user)) {
-                        $selectedItem->toggleUpvote($this->record->user);
+                        if (!$selectedItem->hasVoted($this->record->user)) {
+                            $selectedItem->toggleUpvote($this->record->user);
+                        }
+
+                        $selectedItem->comments()->create(
+                            [
+                            'user_id' => auth()->id(),
+                            'content' => sprintf(trans('resources.item.merged-content'), $this->record->title, $this->record->user->name, $this->record->content),
+                            'private' => $data['private'],
+                            ]
+                        );
+
+                        $this->record->comments()->update(
+                            [
+                            'item_id' => $selectedItem->id,
+                            ]
+                        );
+
+                        $this->record->assignedUsers()->detach();
+                        $this->record->delete();
+
+                        Notification::make('merging')
+                            ->title(trans('resources.item.merging'))
+                            ->body(sprintf(trans('resources.item.merged-message'), $this->record->title, $selectedItem->title))
+                            ->success()
+                            ->send();
+
+                        $this->redirect(ItemResource::getUrl());
                     }
-
-                    $selectedItem->comments()->create([
-                        'user_id' => auth()->id(),
-                        'content' => sprintf(trans('resources.item.merged-content'), $this->record->title, $this->record->user->name, $this->record->content),
-                        'private' => $data['private'],
-                    ]);
-
-                    $this->record->comments()->update([
-                        'item_id' => $selectedItem->id,
-                    ]);
-
-                    $this->record->assignedUsers()->detach();
-                    $this->record->delete();
-
-                    Notification::make('merging')
-                        ->title(trans('resources.item.merging'))
-                        ->body(sprintf(trans('resources.item.merged-message'), $this->record->title, $selectedItem->title))
-                        ->success()
-                        ->send();
-
-                    $this->redirect(ItemResource::getUrl());
-                })
-                ->form([
+                )
+                ->form(
+                    [
 
                     Select::make('item_id')
                         ->label(trans('resources.item.label'))
@@ -86,7 +97,8 @@ class EditItem extends EditRecord
                     Toggle::make('private')
                         ->label(trans('resources.item.private-comment'))
                         ->default(true),
-                ])
+                    ]
+                )
                 ->modalDescription(trans('resources.item.merge-helper-text'))
                 ->modalSubmitActionLabel(trans('resources.item.merge-submit')),
             DeleteAction::make(),

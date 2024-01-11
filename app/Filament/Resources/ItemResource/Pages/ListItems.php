@@ -22,8 +22,10 @@ class ListItems extends ListRecords
     protected function getTableQuery(): Builder
     {
         return Item::query()
-            ->where(function (Builder $query) {
-                return $query->whereHas('board')->orWhereHas('project');
-            });
+            ->where(
+                function (Builder $query) {
+                    return $query->whereHas('board')->orWhereHas('project');
+                }
+            );
     }
 }

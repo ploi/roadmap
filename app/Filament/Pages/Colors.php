@@ -20,13 +20,14 @@ class Colors extends SettingsPage
 
     protected static string $settings = ColorSettings::class;
 
-	protected static ?int $navigationSort = 1400;
+    protected static ?int $navigationSort = 1400;
 
-	public static function getNavigationGroup(): ?string {
-		return trans('nav.manage');
-	}
+    public static function getNavigationGroup(): ?string
+    {
+        return trans('nav.manage');
+    }
 
-	public static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return trans('nav.theme');
     }
@@ -50,45 +51,57 @@ class Colors extends SettingsPage
 
     public function form(Form $form): Form
     {
-        return $form->schema([
+        return $form->schema(
+            [
             Section::make()
-            ->schema([
-                FileUpload::make('logo')
-                    ->label(trans('theme.logo'))
-                    ->image()
-                    ->helperText(trans('theme.logo-helper-text'))
-                    ->disk('public')
-//                    ->imageResizeTargetHeight('64')
-                    ->maxSize(1024)
-                    ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
-                        return (string) str($file->getClientOriginalName())->prepend('logo-');
-                    })
-                    ->getUploadedFileNameForStorageUsing(function ($record) {
-                        return storage_path('app/public/'.app(ColorSettings::class)->logo);
-                    }),
-                FileUpload::make('favicon')
-                    ->label(trans('theme.favicon'))
-                    ->image()
-                    ->disk('public')
-//                    ->imageResizeTargetHeight('64')
-//                    ->imageResizeTargetWidth('64')
-                    ->maxSize(1024)
-                    ->getUploadedFileNameForStorageUsing(function ($record) {
-                        return storage_path('app/public/favicon.png');
-                    })
-                    ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
-                        return (string)'favicon.png';
-                    }),
-                TextInput::make('fontFamily')
-                    ->label(trans('theme.font-family'))
-                    ->placeholder('e.g. Roboto')
-                    ->required()
-                    ->helperText(new HtmlString('Choose a font family from <a href="https://fonts.bunny.net" target="_blank" rel="noreferrer">Bunny Fonts</a> (e.g. \'Roboto\')')),
-                ColorPicker::make('primary')
-                ->label('theme.primary-color')
-                ->default('#2563EB'),
+                ->schema(
+                    [
+                    FileUpload::make('logo')
+                        ->label(trans('theme.logo'))
+                        ->image()
+                        ->helperText(trans('theme.logo-helper-text'))
+                        ->disk('public')
+                    //                    ->imageResizeTargetHeight('64')
+                        ->maxSize(1024)
+                        ->getUploadedFileNameForStorageUsing(
+                            function (TemporaryUploadedFile $file): string {
+                                return (string) str($file->getClientOriginalName())->prepend('logo-');
+                            }
+                        )
+                    ->getUploadedFileNameForStorageUsing(
+                        function ($record) {
+                            return storage_path('app/public/'.app(ColorSettings::class)->logo);
+                        }
+                    ),
+                    FileUpload::make('favicon')
+                        ->label(trans('theme.favicon'))
+                        ->image()
+                        ->disk('public')
+                    //                    ->imageResizeTargetHeight('64')
+                    //                    ->imageResizeTargetWidth('64')
+                        ->maxSize(1024)
+                        ->getUploadedFileNameForStorageUsing(
+                            function ($record) {
+                                return storage_path('app/public/favicon.png');
+                            }
+                        )
+                    ->getUploadedFileNameForStorageUsing(
+                        function (TemporaryUploadedFile $file): string {
+                            return (string)'favicon.png';
+                        }
+                    ),
+                    TextInput::make('fontFamily')
+                        ->label(trans('theme.font-family'))
+                        ->placeholder('e.g. Roboto')
+                        ->required()
+                        ->helperText(new HtmlString('Choose a font family from <a href="https://fonts.bunny.net" target="_blank" rel="noreferrer">Bunny Fonts</a> (e.g. \'Roboto\')')),
+                    ColorPicker::make('primary')
+                        ->label('theme.primary-color')
+                        ->default('#2563EB'),
 
-            ])->columns(),
-        ]);
+                    ]
+                )->columns(),
+            ]
+        );
     }
 }

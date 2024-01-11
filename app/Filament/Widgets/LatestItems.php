@@ -21,7 +21,8 @@ class LatestItems extends BaseWidget
         return $table
             ->query(Item::latest()->visibleForCurrentUser()->limit(5))
             ->paginated(false)
-            ->columns([
+            ->columns(
+                [
                 Tables\Columns\TextColumn::make('title')
                                          ->label(trans('widgets.title')),
                 Tables\Columns\TextColumn::make('total_votes')
@@ -30,7 +31,8 @@ class LatestItems extends BaseWidget
                                          ->label(trans('widgets.project')),
                 Tables\Columns\TextColumn::make('board.title')
                                          ->label(trans('widgets.board')),
-            ])
+                ]
+            )
             ->recordUrl(fn ($record) => ItemResource::getUrl('edit', ['record' => $record]));
     }
 }

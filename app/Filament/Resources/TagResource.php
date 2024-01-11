@@ -26,11 +26,12 @@ class TagResource extends Resource
 
     protected static ?int $navigationSort = 1200;
 
-	public static function getNavigationGroup(): ?string {
-		return trans('nav.manage');
-	}
+    public static function getNavigationGroup(): ?string
+    {
+        return trans('nav.manage');
+    }
 
-	public static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return trans('nav.tags');
     }
@@ -48,41 +49,53 @@ class TagResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
+            ->schema(
+                [
                 Section::make()
-                       ->schema([
+                    ->schema(
+                        [
                            TextInput::make('name')
-                                    ->label(trans('resources.tag.name'))
-                                    ->required(),
+                               ->label(trans('resources.tag.name'))
+                               ->required(),
 
                            Checkbox::make('changelog')
-                                   ->label(trans('resources.tag.changelog')),
-                       ])
-            ]);
+                               ->label(trans('resources.tag.changelog')),
+                           ]
+                    )
+                ]
+            );
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns(
+                [
                 TextColumn::make('name')
-                          ->label(trans('resources.tag.name'))
-                          ->searchable(),
+                    ->label(trans('resources.tag.name'))
+                    ->searchable(),
                 TextColumn::make('created_at')
-                          ->label(trans('resources.created-at'))
-                          ->sortable()
-                          ->dateTime(),
-            ])
-            ->filters([
+                    ->label(trans('resources.created-at'))
+                    ->sortable()
+                    ->dateTime(),
+                ]
+            )
+            ->filters(
+                [
                 //
-            ])
-            ->actions([
+                ]
+            )
+            ->actions(
+                [
                 EditAction::make(),
                 DeleteAction::make(),
-            ])
-            ->bulkActions([
+                ]
+            )
+            ->bulkActions(
+                [
                 DeleteBulkAction::make(),
-            ]);
+                ]
+            );
     }
 
     public static function getRelations(): array
