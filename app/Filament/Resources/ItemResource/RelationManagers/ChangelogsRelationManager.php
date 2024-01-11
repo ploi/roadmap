@@ -14,6 +14,11 @@ class ChangelogsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    public static function getTitle(Model $ownerRecord, string $pageClass): string
+    {
+        return trans('resources.changelog.label-plural');
+    }
+
     public static function canViewForRecord(Model $ownerRecord, string $pageClass): bool
     {
         return app(GeneralSettings::class)->enable_changelog;

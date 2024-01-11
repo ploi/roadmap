@@ -20,24 +20,31 @@ class EditItem extends EditRecord
     public function getHeaderActions(): array
     {
         return [
-            Action::make('view_public')->color('gray')->url(fn () => route('items.show', $this->record))->openUrlInNewTab(),
+            Action::make('view_public')
+                ->label(trans('resources.item.view-public'))
+                ->color('gray')
+                ->url(fn () => route('items.show', $this->record))
+                ->openUrlInNewTab(),
+
             Action::make('flush_og_images')
+                ->label(trans('settings.og.flush-single'))
                 ->action(function () {
                     Storage::disk('public')->delete('og-' . $this->record->slug . '-' . $this->record->id . '.jpg');
 
                     Notification::make('cleared')
-                        ->title('OG images')
-                        ->body('OG image removed 🎉')
+                        ->title(trans('settings.og.title'))
+                        ->body(trans('settings.og.image-flushed'))
                         ->success()
                         ->send();
                 })
-                ->label('Flush OG image')
                 ->color('gray')
                 ->requiresConfirmation()
-                ->modalHeading('Delete OG image')
+                ->modalHeading(trans('settings.og.delete-single'))
                 ->modalAlignment(Alignment::Left)
-                ->modalDescription('Are you sure you\'d like to delete the OG image for this item? This could be especially handy if you have changed branding color, if you feel this image is not correct.'),
+                ->modalDescription(trans('settings.og.confirm-single')) ,
+
             Action::make('merge item')
+                ->label(trans('resources.item.merge'))
                 ->color('warning')
                 ->action(function (array $data): void {
                     /** @var Item $selectedItem */
@@ -49,7 +56,7 @@ class EditItem extends EditRecord
 
                     $selectedItem->comments()->create([
                         'user_id' => auth()->id(),
-                        'content' => "**Merged {$this->record->title} into this item** \n\n Created by: {$this->record->user->name} \n\n {$this->record->content}",
+                        'content' => sprintf(trans('resources.item.merged-content'), $this->record->title, $this->record->user->name, $this->record->content),
                         'private' => $data['private'],
                     ]);
 
@@ -61,25 +68,27 @@ class EditItem extends EditRecord
                     $this->record->delete();
 
                     Notification::make('merging')
-                        ->title('Merging')
-                        ->body("Merged {$this->record->title} into {$selectedItem->title}")
+                        ->title(trans('resources.item.merging'))
+                        ->body(sprintf(trans('resources.item.merged-message'), $this->record->title, $selectedItem->title))
                         ->success()
                         ->send();
 
                     $this->redirect(ItemResource::getUrl());
                 })
                 ->form([
+
                     Select::make('item_id')
-                        ->label('Item')
+                        ->label(trans('resources.item.label'))
                         ->options(Item::query()->whereNot('id', $this->record->id)->pluck('title', 'id'))
                         ->required()
                         ->searchable(),
+
                     Toggle::make('private')
-                        ->label('As private comment?')
+                        ->label(trans('resources.item.private-comment'))
                         ->default(true),
                 ])
-                ->modalDescription('Select the item you want to merge it with. This action cannot be undone')
-                ->modalSubmitActionLabel('Merge with selected and delete current item'),
+                ->modalDescription(trans('resources.item.merge-helper-text'))
+                ->modalSubmitActionLabel(trans('resources.item.merge-submit')),
             DeleteAction::make(),
         ];
     }

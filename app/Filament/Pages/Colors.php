@@ -20,7 +20,13 @@ class Colors extends SettingsPage
 
     protected static string $settings = ColorSettings::class;
 
-    public static function getNavigationLabel(): string
+	protected static ?int $navigationSort = 1400;
+
+	public static function getNavigationGroup(): ?string {
+		return trans('nav.manage');
+	}
+
+	public static function getNavigationLabel(): string
     {
         return trans('nav.theme');
     }

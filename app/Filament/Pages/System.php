@@ -17,7 +17,11 @@ class System extends Page
 
     protected static string $view = 'filament.pages.system';
 
-    protected static ?int $navigationSort = 0;
+    protected static ?int $navigationSort = 1500;
+
+	public static function getNavigationGroup(): ?string {
+		return trans('nav.manage');
+	}
 
     public static function getNavigationLabel(): string
     {

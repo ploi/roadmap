@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
+use Exception;
 use App\Models\Item;
-use Filament\Tables;
 use App\Models\Project;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
@@ -12,25 +11,36 @@ use App\Enums\InboxWorkflow;
 use Filament\Resources\Resource;
 use App\Settings\GeneralSettings;
 use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\InboxResource\Pages;
-use App\Filament\Resources\InboxResource\RelationManagers\VotesRelationManager;
-use App\Filament\Resources\InboxResource\RelationManagers\CommentsRelationManager;
+use App\Filament\Resources\ItemResource\RelationManagers\VotesRelationManager;
+use App\Filament\Resources\ItemResource\RelationManagers\CommentsRelationManager;
 
 class InboxResource extends Resource
 {
     protected static ?string $model = Item::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-inbox';
-
-    protected static ?string $navigationGroup = 'Manage';
     protected static ?int $navigationSort = 100;
 
-    protected static ?string $label = 'Inbox';
-
-    protected static ?string $pluralLabel = 'Inbox';
-
     protected static ?string $slug = 'inbox';
+
+    public static function getNavigationLabel(): string
+    {
+        return trans('nav.inbox');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return trans('resources.inbox.label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return trans('resources.inbox.label');
+    }
 
     public static function shouldRegisterNavigation(): bool
     {
@@ -47,42 +57,65 @@ class InboxResource extends Resource
         return ItemResource::form($form);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')->wrap()->searchable(),
-                Tables\Columns\TextColumn::make('project.title')
-                    ->visible(app(GeneralSettings::class)->getInboxWorkflow() === InboxWorkflow::WithoutBoard),
-                Tables\Columns\TextColumn::make('comments_count')->label(ucfirst(trans_choice('messages.comments', 2)))->counts('comments')->toggleable(),
-                Tables\Columns\TextColumn::make('votes_count')->label(ucfirst(trans_choice('messages.votes', 2)))->counts('votes')->toggleable(),
-                Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->label('Date'),
+                TextColumn::make('title')
+                          ->label(trans('resources.item.title'))
+                          ->wrap()
+                          ->searchable(),
+
+                TextColumn::make('project.title')
+                          ->label(trans('resources.item.project'))
+                          ->visible(app(GeneralSettings::class)->getInboxWorkflow() === InboxWorkflow::WithoutBoard),
+
+                TextColumn::make('comments_count')
+                          ->label(ucfirst(trans_choice('messages.comments', 2)))
+                          ->counts('comments')
+                          ->toggleable(),
+
+                TextColumn::make('votes_count')
+                          ->label(ucfirst(trans_choice('messages.votes', 2)))
+                          ->counts('votes')
+                          ->toggleable(),
+
+                TextColumn::make('user.name')
+                          ->label(trans('resources.item.user')),
+
+                TextColumn::make('created_at')
+                          ->label(trans('resources.created-at'))
+                          ->dateTime()
+                          ->sortable(),
             ])
             ->filters([
                 Filter::make('item_filters')
-                    ->form([
-                        Forms\Components\Select::make('project_id')
-                            ->label(trans('table.project'))
-                            ->reactive()
-                            ->options(Project::pluck('title', 'id')),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['project_id'],
-                                fn (Builder $query, $projectId): Builder => $query->where('project_id', $projectId),
-                            );
-                    })
+                      ->form([
+                          Select::make('project_id')
+                                ->label(trans('resources.item.project'))
+                                ->reactive()
+                                ->options(Project::pluck('title', 'id')),
+                      ])
+                      ->query(function (Builder $query, array $data): Builder {
+                          return $query
+                              ->when(
+                                  $data['project_id'],
+                                  fn (Builder $query, $projectId): Builder => $query->where(
+                                      'project_id',
+                                      $projectId
+                                  ),
+                              );
+                      })
             ])
             ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array
     {
+        // Use the same relationmanagers as the ItemResource since they are the same
         return [
             CommentsRelationManager::class,
             VotesRelationManager::class,
@@ -92,9 +125,9 @@ class InboxResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListInboxes::route('/'),
+            'index'  => Pages\ListInboxes::route('/'),
             'create' => Pages\CreateInbox::route('/create'),
-            'edit' => Pages\EditInbox::route('/{record}/edit'),
+            'edit'   => Pages\EditInbox::route('/{record}/edit'),
         ];
     }
 

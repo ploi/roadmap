@@ -14,7 +14,10 @@ class EditProject extends EditRecord
     public function getHeaderActions(): array
     {
         return [
-            Action::make('view_public')->color('gray')->url(fn () => route('projects.show', $this->record)),
+            Action::make('view_public')
+                  ->label(trans('resources.project.view-public'))
+                  ->color('gray')->url(fn () => route('projects.show', $this->record)),
+
             DeleteAction::make(),
         ];
     }

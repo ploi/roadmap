@@ -36,7 +36,13 @@ class Settings extends SettingsPage
 
     protected static string $settings = GeneralSettings::class;
 
-    public static function getNavigationLabel(): string
+	protected static ?int $navigationSort = 1300;
+
+	public static function getNavigationGroup(): ?string {
+		return trans('nav.manage');
+	}
+
+	public static function getNavigationLabel(): string
     {
         return trans('nav.settings');
     }

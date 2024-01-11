@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
-use Filament\Forms;
-use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Resources\RelationManagers\RelationManager;
 
 class VotesRelationManager extends RelationManager
@@ -14,12 +16,17 @@ class VotesRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getTitle(Model $ownerRecord, string $pageClass): string
+    {
+        return trans('resources.vote.label-plural');
+    }
+
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Toggle::make('subscribed')
-                    ->label('Subscribed')
+                Toggle::make('subscribed')
+                    ->label(trans('resources.vote.subscribed'))
                     ->default(true),
             ]);
     }
@@ -28,9 +35,15 @@ class VotesRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('model.title')->label('Item'),
-                Tables\Columns\TextColumn::make('model.project.title')->label('Project'),
-                Tables\Columns\BooleanColumn::make('subscribed')->label('Subscribed'),
+                TextColumn::make('model.title')
+                          ->label(trans('resources.vote.item')),
+
+                TextColumn::make('model.project.title')
+                          ->label(trans('resources.vote.project')),
+
+                IconColumn::make('subscribed')
+                          ->label(trans('resources.vote.subscribed'))
+                          ->boolean(),
             ])
             ->filters([
                 //

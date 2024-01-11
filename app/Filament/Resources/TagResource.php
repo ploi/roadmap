@@ -2,14 +2,19 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
 use Spatie\Tags\Tag;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Checkbox;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Actions\DeleteAction;
 use App\Filament\Resources\TagResource\Pages;
 use Filament\Resources\Concerns\Translatable;
+use Filament\Tables\Actions\DeleteBulkAction;
 
 class TagResource extends Resource
 {
@@ -19,18 +24,40 @@ class TagResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $navigationGroup = 'Manage';
+    protected static ?int $navigationSort = 1200;
 
-    protected static ?int $navigationSort = 106;
+	public static function getNavigationGroup(): ?string {
+		return trans('nav.manage');
+	}
+
+	public static function getNavigationLabel(): string
+    {
+        return trans('nav.tags');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return trans('resources.tag.label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return trans('resources.tag.label-plural');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Card::make([
-                    Forms\Components\TextInput::make('name')->required(),
-                    Forms\Components\Checkbox::make('changelog'),
-                ]),
+                Section::make()
+                       ->schema([
+                           TextInput::make('name')
+                                    ->label(trans('resources.tag.name'))
+                                    ->required(),
+
+                           Checkbox::make('changelog')
+                                   ->label(trans('resources.tag.changelog')),
+                       ])
             ]);
     }
 
@@ -38,21 +65,23 @@ class TagResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->sortable()
-                    ->dateTime(),
+                TextColumn::make('name')
+                          ->label(trans('resources.tag.name'))
+                          ->searchable(),
+                TextColumn::make('created_at')
+                          ->label(trans('resources.created-at'))
+                          ->sortable()
+                          ->dateTime(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                DeleteBulkAction::make(),
             ]);
     }
 
