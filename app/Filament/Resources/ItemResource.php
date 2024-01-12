@@ -102,20 +102,20 @@ class ItemResource extends Resource
                                         ->label(trans('resources.item.github.issue'))
                                         ->visible(
                                             fn (
-                                            $record
+                                                $record
                                             ) => $record?->project?->repo && $gitHubService->isEnabled()
                                         )
                                         ->searchable()
                                         ->getSearchResultsUsing(
                                             fn (
-                                            string $search,
-                                            $record
+                                                string $search,
+                                                $record
                                             ) => $gitHubService->getIssuesForRepository($record?->project->repo)
                                         )
                                         ->getOptionLabelUsing(
                                             fn (
-                                            $record,
-                                            Get $get
+                                                $record,
+                                                Get $get
                                             ) => $gitHubService->getIssueTitle(
                                                 $record?->project->repo,
                                                 $get('issue_number')
@@ -125,7 +125,7 @@ class ItemResource extends Resource
                                         ->suffixAction(
                                             function (Get $get, Set $set, $record) {
                                                 if (blank($record?->project->repo) || filled($get('issue_number'))) {
-                                                        return null;
+                                                    return null;
                                                 }
 
                                                 return Forms\Components\Actions\Action::make('github-create-issue')
@@ -144,7 +144,7 @@ class ItemResource extends Resource
                                                                                                 ->searchable()
                                                                                                 ->getSearchResultsUsing(
                                                                                                     fn (
-                                                                                                    string $search
+                                                                                                        string $search
                                                                                                     ) => (new GitHubService)->getRepositories($search)
                                                                                                 ),
 
@@ -222,7 +222,7 @@ class ItemResource extends Resource
                                         ->hintAction(
                                             function ($get, $record) {
                                                 if (blank($record?->project->repo) || blank($get('issue_number'))) {
-                                                        return null;
+                                                    return null;
                                                 }
 
                                                 return Forms\Components\Actions\Action::make('github-link')
@@ -292,7 +292,7 @@ class ItemResource extends Resource
                                                 ->required()
                                                 ->options(
                                                     fn (
-                                                    Get $get
+                                                        Get $get
                                                     ) => Project::find($get('project_id'))?->boards()->pluck(
                                                         'title',
                                                         'id'
@@ -309,7 +309,7 @@ class ItemResource extends Resource
                                                 ->visible(fn ($record) => filled($record))
                                                 ->content(
                                                     fn (
-                                                    $record
+                                                        $record
                                                     ) => $record->created_at->format('d-m-Y H:i:s')
                                                 ),
 
@@ -318,7 +318,7 @@ class ItemResource extends Resource
                                                 ->visible(fn ($record) => filled($record))
                                                 ->content(
                                                     fn (
-                                                    $record
+                                                        $record
                                                     ) => $record->updated_at->format('d-m-Y H:i:s')
                                                 ),
 
@@ -415,8 +415,9 @@ class ItemResource extends Resource
                     ->default(auth()->user()->hasRole(UserRole::Employee))
                     ->query(
                         fn (Builder $query): Builder => $query->whereHas(
-                            'assignedUsers', function ($query) {
-                            return $query->where('user_id', auth()->id());
+                            'assignedUsers',
+                            function ($query) {
+                                return $query->where('user_id', auth()->id());
                             }
                         )
                     ),
@@ -429,15 +430,16 @@ class ItemResource extends Resource
                               ->label(trans('resources.item.assigned-to'))
                               ->multiple()
                               ->options(
-                                User::query()
+                                  User::query()
                                     ->whereIn(
-                                        'role', [
+                                        'role',
+                                        [
                                             UserRole::Employee->value,
                                             UserRole::Admin->value
                                             ]
                                     )
                                     ->pluck('name', 'id')
-                            )
+                              )
                           ]
                     )
                     ->query(
@@ -462,12 +464,12 @@ class ItemResource extends Resource
                           Select::make('project_id')
                               ->label(trans('resources.project.label'))
                               ->afterStateUpdated(
-                                function (Set $set, Get $get) {
-                                    if ($get('board_id')) {
-                                        $set('board_id', null);
-                                    }
-                                }
-                            )
+                                  function (Set $set, Get $get) {
+                                      if ($get('board_id')) {
+                                          $set('board_id', null);
+                                      }
+                                  }
+                              )
                                 ->reactive()
                                 ->options(Project::pluck('title', 'id')),
 
@@ -476,11 +478,11 @@ class ItemResource extends Resource
                               ->multiple()
                               ->preload()
                               ->options(
-                                fn (Get $get) => Project::find($get('project_id'))?->boards()->pluck(
-                                    'title',
-                                    'id'
-                                ) ?? []
-                            ),
+                                  fn (Get $get) => Project::find($get('project_id'))?->boards()->pluck(
+                                      'title',
+                                      'id'
+                                  ) ?? []
+                              ),
 
                           Toggle::make('pinned')
                               ->label(trans('resources.item.pinned')),

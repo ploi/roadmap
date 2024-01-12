@@ -31,12 +31,13 @@ class ProjectResource extends Resource
 
     protected static ?int $navigationSort = 1100;
 
-	public static function getNavigationGroup(): ?string {
-		return trans('nav.manage');
-	}
+    public static function getNavigationGroup(): ?string
+    {
+        return trans('nav.manage');
+    }
 
 
-	public static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return trans('nav.project');
     }

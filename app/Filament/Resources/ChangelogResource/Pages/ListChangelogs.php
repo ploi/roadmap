@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\ChangelogResource\Pages;
 
 use Filament\Actions\CreateAction;
-use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
 use App\Filament\Resources\ChangelogResource;
 

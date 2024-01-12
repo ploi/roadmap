@@ -51,7 +51,7 @@ class EditItem extends EditRecord
                 ->action(
                     function (array $data): void {
                         /**
-                    * @var Item $selectedItem 
+                    * @var Item $selectedItem
                     */
                         $selectedItem = Item::query()->find($data['item_id']);
 

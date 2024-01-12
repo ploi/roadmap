@@ -88,7 +88,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                         ->schema([
                             Forms\Components\Select::make('per_page_setting')
                                                    ->label(trans('profile.per-page-setting'))
-	                            ->multiple()
+                                ->multiple()
                                 ->options([
                                     5 => '5',
                                     10 => '10',

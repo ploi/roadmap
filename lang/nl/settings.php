@@ -117,14 +117,14 @@ return [
     'og' => [
         'title' => 'OG afbeeldingen',
         'label' => 'Flush OG afbeeldingen (%s)',
-	    'flush-single' => 'Flush OG afbeelding',
+        'flush-single' => 'Flush OG afbeelding',
         'delete' => 'Verwijder OG afbeeldingen',
-	    'delete-single' => 'Verwijder OG afbeelding',
+        'delete-single' => 'Verwijder OG afbeelding',
         'no-images-to-flush' => 'Er zijn geen OG afbeeldingen om te verwijderen ✅',
-	    'image-flushed' => 'OG afbeeldingen geflushed 🎉',
-	    'images-flushed' => '%s OG afbeelding(en) geflushed 🎉',
-	    'confirm' => 'Weet je zeker dat je alle OG afbeeldingen wilt verwijderen? Er zijn momenteel %s afbeeldingen. Dit kan handig zijn als je de branding kleur hebt aangepast.',
-	    'confirm-single' => 'Weet je zeker dat je deze OG afbeelding wilt verwijderen? Dit kan handig zijn als je de branding kleur hebt aangepast.',
+        'image-flushed' => 'OG afbeeldingen geflushed 🎉',
+        'images-flushed' => '%s OG afbeelding(en) geflushed 🎉',
+        'confirm' => 'Weet je zeker dat je alle OG afbeeldingen wilt verwijderen? Er zijn momenteel %s afbeeldingen. Dit kan handig zijn als je de branding kleur hebt aangepast.',
+        'confirm-single' => 'Weet je zeker dat je deze OG afbeelding wilt verwijderen? Dit kan handig zijn als je de branding kleur hebt aangepast.',
     ]
 
 ];

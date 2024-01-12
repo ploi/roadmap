@@ -355,8 +355,8 @@ class Settings extends SettingsPage
                                     TextInput::make('name')
                                         ->label(
                                             fn (Get $get) => match ($get('type')) {
-                                            'email', null => trans('settings.notifications.name-receiver'),
-                                            'discord', 'slack' => trans('settings.notifications.label'),
+                                                'email', null => trans('settings.notifications.name-receiver'),
+                                                'discord', 'slack' => trans('settings.notifications.label'),
                                             }
                                         )
                                         ->helperText(trans('settings.notifications.name-helper-text'))
@@ -365,9 +365,9 @@ class Settings extends SettingsPage
                                     TextInput::make('webhook')
                                         ->label(
                                             fn (Get $get) => match ($get('type')) {
-                                            'email', null => trans('settings.notifications.email'),
-                                            'discord'=> trans('settings.notifications.discord-webhook-url'),
-                                            'slack' => trans('settings.notifications.slack-webhook-url'),
+                                                'email', null => trans('settings.notifications.email'),
+                                                'discord'=> trans('settings.notifications.discord-webhook-url'),
+                                                'slack' => trans('settings.notifications.slack-webhook-url'),
                                             }
                                         )
                                         ->helperText(trans('settings.notifications.webhook-helper-text'))
