@@ -7,7 +7,9 @@ use Filament\Tables;
 use App\Models\Project;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\RelationManagers\RelationManager;
 
@@ -17,6 +19,11 @@ class ProjectsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    public static function getTitle(Model $ownerRecord, string $pageClass): string
+    {
+        return trans('resources.project.label-plural');
+    }
+
     public static function canViewForRecord(Model $ownerRecord, string $pageClass): bool
     {
         return Project::query()->where('private', true)->exists();
@@ -25,34 +32,48 @@ class ProjectsRelationManager extends RelationManager
     public function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
+            ->schema(
+                [
+                TextInput::make('name')
+                    ->label(trans('resources.project.name'))
                     ->required()
                     ->maxLength(255),
-            ]);
+                ]
+            );
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('title'),
-            ])
-            ->filters([
+            ->columns(
+                [
+                TextColumn::make('title')
+                    ->label(trans('resources.project.title')),
+                ]
+            )
+            ->filters(
+                [
                 //
-            ])
-            ->headerActions([
+                ]
+            )
+            ->headerActions(
+                [
                 Tables\Actions\AttachAction::make()
                     ->recordSelectOptionsQuery(fn (Builder $query): Builder => $query->where('private', true))
                     ->recordSelect(fn (Forms\Components\Select $select) => $select->helperText(__('projects.select-hidden-projects')))
                     ->inverseRelationshipName('members')
                     ->preloadRecordSelect(),
-            ])
-            ->actions([
+                ]
+            )
+            ->actions(
+                [
                 Tables\Actions\DetachAction::make(),
-            ])
-            ->bulkActions([
+                ]
+            )
+            ->bulkActions(
+                [
                 Tables\Actions\DetachBulkAction::make(),
-            ]);
+                ]
+            );
     }
 }

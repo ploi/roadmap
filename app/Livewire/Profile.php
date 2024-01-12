@@ -86,7 +86,9 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                     Forms\Components\Section::make(trans('profile.settings'))
                         ->columnSpan(1)
                         ->schema([
-                            Forms\Components\MultiSelect::make('per_page_setting')->label(trans('profile.per_page_setting'))
+                            Forms\Components\Select::make('per_page_setting')
+                                                   ->label(trans('profile.per-page-setting'))
+	                            ->multiple()
                                 ->options([
                                     5 => '5',
                                     10 => '10',
@@ -95,7 +97,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                                     50 => '50',
                                 ])
                                 ->required()
-                                ->helperText('Determine how many pages should be available for the items in the "My" page for example.')
+                                ->helperText(trans('profile.per-page-setting-helper'))
                                 ->rules(['array', 'in:5,10,15,25,50'])
                         ])->collapsible(),
                 ])

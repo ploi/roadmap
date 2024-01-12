@@ -2,13 +2,15 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
 use App\Models\User;
-use Filament\Tables;
 use App\Enums\UserRole;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
 use App\Filament\Resources\UserResource\Pages;
 use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 use App\Filament\Resources\UserResource\RelationManagers;
@@ -19,39 +21,95 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
+    protected static ?int $navigationSort = 1000;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return trans('nav.manage');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return trans('nav.users');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return trans('resources.user.label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return trans('resources.user.label-plural');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\Card::make([
-                    Forms\Components\TextInput::make('name')->required(),
-                    Forms\Components\TextInput::make('email')->email()->required(),
-                    Forms\Components\Select::make('role')
+            ->schema(
+                [
+                Section::make(
+                    [
+
+                    TextInput::make('name')
+                        ->label(trans('resources.user.name'))
+                        ->required(),
+
+                    TextInput::make('email')
+                        ->label(trans('resources.user.email'))
+                        ->email()
+                        ->required(),
+
+                    Select::make('role')
+                        ->label(trans('resources.user.role'))
                         ->required()
-                        ->options([
-                            UserRole::User->value => 'User',
-                            UserRole::Employee->value => 'Employee',
-                            UserRole::Admin->value => 'Administrator',
-                        ])
-                ])->columns(2)
-            ]);
+                        ->options(
+                            [
+                            UserRole::User->value => trans('resources.user.roles.user'),
+                            UserRole::Employee->value => trans('resources.user.roles.employee'),
+                            UserRole::Admin->value => trans('resources.user.roles.admin'),
+                            ]
+                        )
+
+                    ]
+                )->columns()
+                ]
+            );
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('email')->searchable(),
-                Tables\Columns\TextColumn::make('role'),
-                Tables\Columns\TextColumn::make('created_at')->sortable()->dateTime()->label('Date'),
-            ])
-            ->filters([
+            ->columns(
+                [
+                TextColumn::make('name')
+                    ->label(trans('resources.user.name'))
+                    ->searchable(),
+
+                TextColumn::make('email')
+                    ->label(trans('resources.user.email'))
+                    ->searchable(),
+
+                TextColumn::make('role')
+                    ->label(trans('resources.user.role'))
+                    ->formatStateUsing(fn ($state) => trans("resources.user.roles.{$state->value}")),
+
+                TextColumn::make('created_at')
+                    ->label(trans('resources.created-at'))
+                    ->sortable()
+                    ->dateTime(),
+                ]
+            )
+            ->filters(
+                [
                 //
-            ])
-            ->actions([
+                ]
+            )
+            ->actions(
+                [
                 Impersonate::make()
-            ])
+                ]
+            )
             ->defaultSort('created_at', 'desc');
     }
 

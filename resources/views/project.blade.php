@@ -91,8 +91,7 @@
                         <h2 class="text-xl font-semibold tracking-tight">{{ trans('items.all-caught-up-title') }}</h2>
 
                         <p class="font-medium text-gray-500">
-                            There are no boards in this project. If you're an administrator, you can add new boards
-                            via the administration area.
+                            {{ trans('messages.no-boards') }}
                         </p>
                     </header>
                 </div>

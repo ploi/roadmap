@@ -4,6 +4,7 @@ return [
     'create' => 'Submit item',
     'update' => 'Update item',
     'edit' => 'Edit item',
+    'edit-as-admin' => 'Edit item as admin',
     'my-items' => 'My items',
     'created-items' => 'Created items',
     'created-items-description' => 'These are the items you\'ve created.',
@@ -32,4 +33,5 @@ return [
     'not-allowed-to-create-items' => 'You are not allowed to create items in this board.',
     'update-board-success' => 'Successfully moved the item to board :board',
     'view-on-github' => 'View issue on GitHub',
+    'search-shortcut' => 'CMD + / to search'
 ];

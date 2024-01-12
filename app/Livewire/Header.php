@@ -53,7 +53,7 @@ class Header extends Component implements HasForms, HasActions
         return Action::make('searchItem')
             ->color('gray')
             ->size('xs')
-            ->label('CMD + / to search')
+            ->label(trans('items.search-shortcut'))
             ->icon('heroicon-o-magnifying-glass')
             ->requiresConfirmation()
             ->modalWidth('4xl')
@@ -70,6 +70,7 @@ class Header extends Component implements HasForms, HasActions
     public function submitItemAction(): Action
     {
         return Action::make('submitItem')
+            ->label(trans('items.create'))
             ->requiresConfirmation()
             ->color('gray')
             ->icon('heroicon-o-plus-circle')

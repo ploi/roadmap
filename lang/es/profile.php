@@ -18,6 +18,6 @@ return [
     'receive_comment_reply_notifications' => 'Recibir notificaciones de respuesta a comentarios',
     'social-login' => 'Inicio de sesión social',
     'social-login-description' => 'Aquí encontrará los inicios de sesión sociales que utilizó para iniciar sesión con su cuenta.',
-    'per_page_setting' => 'Configuración por página',
+    'per-page-setting' => 'Configuración por página',
     'settings' => 'Configuraciones'
 ];

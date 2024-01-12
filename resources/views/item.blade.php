@@ -114,7 +114,7 @@
 
                     <div>
                         <a class="text-primary-500 hover:text-primary-700 ml-1"
-                           href="{{ route('items.edit', $item) }}">Edit item</a>
+                           href="{{ route('items.edit', $item) }}">{{ trans('items.edit') }}</a>
                     </div>
 
                 @endif
@@ -124,7 +124,7 @@
 
                     <div>
                         <a class="text-red-500 hover:text-red-700 ml-1"
-                           href="{{ \App\Filament\Resources\ItemResource::getUrl('edit', ['record' => $item]) }}">Administer item</a>
+                           href="{{ \App\Filament\Resources\ItemResource::getUrl('edit', ['record' => $item]) }}">{{ trans('items.edit-as-admin') }}</a>
                     </div>
                 @endif
 
