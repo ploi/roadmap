@@ -2,7 +2,7 @@
 
 return [
     'date'        => 'Datum',
-    'pulished-at' => 'Gepubliceerd op',
+    'published-at' => 'Gepubliceerd op',
     'created-at'  => 'Aangemaakt op',
     'updated-at'  => 'Bijgewerkt op',
     'board'       => [
@@ -62,6 +62,7 @@ return [
         'private'                        => 'Privé',
         'private-comment'                => 'Als een privé reactie plaatsen?',
         'private-helper-text'            => 'Dit zal het item privé maken. Alleen de werknemers en beheerders kunnen dit item zien.',
+        'user'                           => 'Gebruiker',
         'users'                          => 'Toegewezen gebruikers',
         'users-helper-text'              => 'Dit zal de gebruikers toewijzen aan dit item.',
         'notify-subscribers'             => 'Abonnees op de hoogte brengen',
