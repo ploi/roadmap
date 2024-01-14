@@ -2,7 +2,7 @@
 
 return [
     'date'        => 'Date',
-    'pulished-at' => 'Published at',
+    'published-at' => 'Published at',
     'created-at'  => 'Created at',
     'updated-at'  => 'Updated at',
     'board'       => [
@@ -62,6 +62,7 @@ return [
         'private'                        => 'Private',
         'private-comment'                => 'As a private comment?',
         'private-helper-text'            => 'This will make the item private. Only the employees and administrators can see this item.',
+        'user'                           => 'Assignee',
         'users'                          => 'Assignees',
         'users-helper-text'              => 'Assign administrators or employees to this item.',
         'notify-subscribers'             => 'Notify subscribers',
