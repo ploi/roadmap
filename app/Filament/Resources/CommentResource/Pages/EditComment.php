@@ -15,9 +15,10 @@ class EditComment extends EditRecord
     {
         return [
             Action::make('view_public')
-                ->color('gray')
-                ->openUrlInNewTab()
-                ->url(fn () => route('items.show', $this->record->item) . '#comment-' . $this->record->id),
+                  ->label(trans('resources.item.view-public'))
+                  ->color('gray')
+                  ->openUrlInNewTab()
+                  ->url(fn () => route('items.show', $this->record->item) . '#comment-' . $this->record->id),
             DeleteAction::make(),
         ];
     }
