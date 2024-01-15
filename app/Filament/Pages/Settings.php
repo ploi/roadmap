@@ -120,8 +120,8 @@ class Settings extends SettingsPage
                                         ->hidden(fn (Get $get) => $get('select_project_when_creating_item') === false),
 
                                     Toggle::make('select_board_when_creating_item')
-                                        ->label(trans('settings.general.general.select-board-creat-item'))
-                                        ->helperText(trans('settings.general.general.select-board-creat-item-helper-text'))
+                                        ->label(trans('settings.general.select-board-creat-item'))
+                                        ->helperText(trans('settings.general.select-project-creating-item-helper-text'))
                                         ->reactive(),
 
                                     Toggle::make('board_required_when_creating_item')
