@@ -9,9 +9,11 @@
                     {{ trans('auth.login') }}
                 </h1>
 
-                <p class="mt-1 text-base font-medium text-gray-500">
-                    {!! trans('auth.register_for_free', ['route' => route('register')]) !!}
-                </p>
+                @if( ! app(\App\Settings\GeneralSettings::class)->disable_user_registration )
+                    <p class="mt-1 text-base font-medium text-gray-500">
+                        {!! trans('auth.register_for_free', ['route' => route('register')]) !!}
+                    </p>
+                @endif
 
                 @if ($errors->any())
                     <div class="alert-danger mt-8 overflow-scroll">
