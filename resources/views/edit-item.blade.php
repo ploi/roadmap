@@ -4,7 +4,7 @@
 @section('canonical', route('items.edit', $item))
 
 <x-app :breadcrumbs="[
-['title' => 'Dashboard', 'url' => route('home')],
+['title' =>  trans( 'resources.changelog.label' ), 'url' => route('home')],
 ['title' => $item->title, 'url' => route('items.show', $item)],
 ]">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
