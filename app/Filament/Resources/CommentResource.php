@@ -97,8 +97,7 @@ class CommentResource extends Resource
                 TextColumn::make('created_at')
                     ->label(trans('resources.created-at'))
                     ->dateTime()
-                    ->sortable()
-                    ->label('Date'),
+                    ->sortable(),
                 ]
             )
             ->filters(
