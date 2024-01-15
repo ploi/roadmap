@@ -96,7 +96,7 @@ class Colors extends SettingsPage
                         ->required()
                         ->helperText(new HtmlString('Choose a font family from <a href="https://fonts.bunny.net" target="_blank" rel="noreferrer">Bunny Fonts</a> (e.g. \'Roboto\')')),
                     ColorPicker::make('primary')
-                        ->label('theme.primary-color')
+                        ->label(trans('theme.primary-color'))
                         ->default('#2563EB'),
 
                     ]
