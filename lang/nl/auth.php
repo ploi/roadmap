@@ -14,6 +14,7 @@
 return [
     'login' => 'Inloggen',
     'verify-email' => 'Verifieer email',
+    'verify-email-helper-text' => 'Je hebt je e-mailadres nog niet geverifieerd, verifieer je e-mailadres.',
     'register' => 'Registreren',
     'profile' => 'Profiel',
     'register_for_free' => 'Of <a class="transition text-brand-600 hover:text-brand-500 focus:outline-none focus:underline" href=":route">maak een gratis account aan</a>.',

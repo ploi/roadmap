@@ -38,7 +38,7 @@
         <div class="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
             <div class="pr-16 sm:text-center sm:px-16">
                 <p class="font-medium text-white">
-                    <span class="md:inline"> You have not verified your email yet, please verify your email.</span>
+                    <span class="md:inline">{{ trans('auth.verify-email-helper-text') }}</span>
                     <span class="block sm:ml-2 sm:inline-block">
           <a href="{{ route('verification.notice') }}" class="text-white font-bold underline"> Verify <span
                   aria-hidden="true">&rarr;</span></a>
