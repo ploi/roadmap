@@ -11,10 +11,10 @@ return [
     'not_new' => 'Not new here?',
     'password_protected' => 'Password protected',
 
-	'verify-new-success' => 'A fresh verification link has been sent to your email address.',
-	'verify-notice' => 'Before proceeding, please check your email for a verification link.',
-	'verify-if-not-received' => 'If you did not receive the email',
-	'verify-request-new' => 'click here to request another',
+    'verify-new-success' => 'A fresh verification link has been sent to your email address.',
+    'verify-notice' => 'Before proceeding, please check your email for a verification link.',
+    'verify-if-not-received' => 'If you did not receive the email',
+    'verify-request-new' => 'click here to request another',
 
     'name' => 'Name',
     'email' => 'Email address',
