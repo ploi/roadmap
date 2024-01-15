@@ -40,7 +40,7 @@
                 <p class="font-medium text-white">
                     <span class="md:inline">{{ trans('auth.verify-email-helper-text') }}</span>
                     <span class="block sm:ml-2 sm:inline-block">
-          <a href="{{ route('verification.notice') }}" class="text-white font-bold underline"> Verify <span
+          <a href="{{ route('verification.notice') }}" class="text-white font-bold underline"> {{ trans('auth.verify') }} <span
                   aria-hidden="true">&rarr;</span></a>
         </span>
                 </p>

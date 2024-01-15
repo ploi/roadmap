@@ -13,6 +13,7 @@
 
 return [
     'login' => 'Inloggen',
+    'verify' => 'Verifiëren',
     'verify-email' => 'Verifieer email',
     'verify-email-helper-text' => 'Je hebt je e-mailadres nog niet geverifieerd, verifieer je e-mailadres.',
     'register' => 'Registreren',
@@ -20,6 +21,10 @@ return [
     'register_for_free' => 'Of <a class="transition text-brand-600 hover:text-brand-500 focus:outline-none focus:underline" href=":route">maak een gratis account aan</a>.',
     'not_new' => 'Niet nieuw hier?',
     'password_protected' => 'Beschermd met een wachtwoord',
+
+    'verify-notice' => 'Voordat je verder gaat, controleer je e-mail voor een verificatielink.',
+    'verify-if-not-received' => 'Als je de e-mail niet hebt ontvangen',
+    'verify-request-new' => 'klik dan hier om een nieuwe aan te vragen',
 
     'name' => 'Naam',
     'email' => 'E-mailadres',
