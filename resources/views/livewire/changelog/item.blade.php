@@ -1,5 +1,5 @@
 <div class="space-y-4">
-    <div class="flex flex-wrap justify-between">
+    <div class="flex justify-between space-y-4 flex-col md:flex-row">
         <div class="flex flex-col">
             <div class="flex flex-wrap flex-col">
                 <h1 class="font-bold text-2xl">{{ $changelog->title }}</h1>
