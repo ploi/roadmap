@@ -41,12 +41,24 @@ class Changelog extends Model
         return $this->belongsToMany(Item::class);
     }
 
+    /**
+     * Get the votes relationship.
+     *
+     * @return BelongsToMany
+     */
     public function votes(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
 
-    public function userVoted($user): bool
+    /**
+     * Check if a user has voted on this item.
+     *
+     * @param  User  $user  The user to check.
+     *
+     * @return bool Returns true if the user has voted on this item, otherwise false.
+     */
+    public function userVoted(User $user): bool
     {
         return $this->votes()->where('user_id', $user->id)->exists();
     }
