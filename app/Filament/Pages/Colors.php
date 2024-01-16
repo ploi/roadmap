@@ -94,9 +94,10 @@ class Colors extends SettingsPage
                         ->label(trans('theme.font-family'))
                         ->placeholder('e.g. Roboto')
                         ->required()
-                        ->helperText(new HtmlString('Choose a font family from <a href="https://fonts.bunny.net" target="_blank" rel="noreferrer">Bunny Fonts</a> (e.g. \'Roboto\')')),
+                        ->helperText(new HtmlString(trans('theme.font-family-helper-text'))),
+
                     ColorPicker::make('primary')
-                        ->label('theme.primary-color')
+                        ->label(trans('theme.primary-color'))
                         ->default('#2563EB'),
 
                     ]

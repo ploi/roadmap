@@ -9,4 +9,6 @@ return [
 
     'close' => 'Sluiten',
     'save' => 'Opslaan',
+
+    'public-user' => 'Publieke gebruiker',
 ];

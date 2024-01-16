@@ -24,3 +24,4 @@ rr
 /docker/dbdata
 frankenphp
 /public/frankenphp-worker.php
+.DS_Store

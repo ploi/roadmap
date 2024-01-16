@@ -8,7 +8,7 @@
     $board ? ['title' => $board->title, 'url' => route('projects.boards.show', [$project, $board])] : [],
     ['title' => $item->title, 'url' => route('projects.items.show', [$project, $item])]
 ]: [
-['title' => 'Dashboard', 'url' => route('home')],
+['title' => trans( 'general.dashboard' ), 'url' => route('home')],
 ['title' => $item->title, 'url' => route('items.show', $item)],
 ]">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
