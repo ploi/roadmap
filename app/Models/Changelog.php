@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasUpvote;
 use App\Traits\Sluggable;
 use App\Traits\HasOgImage;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Changelog extends Model
 {
-    use HasFactory, Sluggable, HasOgImage;
+    use HasFactory, Sluggable, HasOgImage, HasUpvote;
 
     public $fillable = [
         'slug',
@@ -39,27 +40,5 @@ class Changelog extends Model
     public function items(): BelongsToMany
     {
         return $this->belongsToMany(Item::class);
-    }
-
-    /**
-     * Get the votes relationship.
-     *
-     * @return BelongsToMany
-     */
-    public function votes(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class);
-    }
-
-    /**
-     * Check if a user has voted on this item.
-     *
-     * @param  User  $user  The user to check.
-     *
-     * @return bool Returns true if the user has voted on this item, otherwise false.
-     */
-    public function userVoted(User $user): bool
-    {
-        return $this->votes()->where('user_id', $user->id)->exists();
     }
 }

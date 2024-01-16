@@ -46,7 +46,7 @@ class Vote extends Component
      */
     public function vote(): void
     {
-        $this->changelog->votes()->toggle(auth()->user());
+        $this->changelog->toggleUpvote(auth()->user());
         $this->votes = $this->changelog->votes;
     }
 

@@ -13,7 +13,7 @@
                 @foreach($votes as $vote)
                     <dd>
                         <img class="h-10 w-10 rounded-full bg-gray-50 ring-2 ring-white"
-                             src="{{ $vote->getGravatar() }}" alt="{{ $vote->name }}">
+                             src="{{ $vote->user->getGravatar() }}" alt="{{ $vote->user->name }}">
                     </dd>
                     @php( $i++ )
                     @if( $i == 4 && $votes->count() > 5 )
@@ -44,14 +44,14 @@
         <button wire:click="vote" type="button" class="
             inline-flex items-center justify-center gap-x-1.5 rounded-md px-2.5 py-1.5
             text-sm font-semibold text-white shadow-sm
-            @if( $changelog->userVoted( auth()->user() ) )
+            @if( $changelog->hasVoted( auth()->user() ) )
                 bg-red-500 hover:bg-red-700
             @else
                bg-blue-500 hover:bg-blue-700
             @endif
             focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600
             ">
-            @if( $changelog->userVoted( auth()->user() ) )
+            @if( $changelog->hasVoted( auth()->user() ) )
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>

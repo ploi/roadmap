@@ -164,16 +164,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         $vote->update(['subscribed' => !$vote->subscribed]);
     }
 
-    /**
-     * Returns the relationship between the current model and the Changelog model.
-     *
-     * @return BelongsToMany
-     */
-    public function changelogVotes(): BelongsToMany
-    {
-        return $this->belongsToMany(Changelog::class);
-    }
-
     public static function booted()
     {
         static::creating(function (self $user) {
