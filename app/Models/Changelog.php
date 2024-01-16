@@ -40,4 +40,14 @@ class Changelog extends Model
     {
         return $this->belongsToMany(Item::class);
     }
+
+    public function votes(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function userVoted($user): bool
+    {
+        return $this->votes()->where('user_id', $user->id)->exists();
+    }
 }
