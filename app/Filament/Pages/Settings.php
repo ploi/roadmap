@@ -321,6 +321,12 @@ class Settings extends SettingsPage
                                 ->helperText(trans('settings.changelog.show-related-items-helper-text'))
                                 ->visible(fn ($get) => $get('enable_changelog'))
                                 ->columnSpan(2),
+
+                            Toggle::make('show_changelog_like')
+                                ->label(trans('settings.changelog.show-likes'))
+                                ->helperText(trans('settings.changelog.show-likes-helper-text'))
+                                ->visible(fn ($get) => $get('enable_changelog'))
+                                ->columnSpan(2),
                             ]
                         ),
 

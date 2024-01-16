@@ -25,7 +25,10 @@
             </div>
 
         </div>
-        <livewire:changelog.vote :changelog="$changelog"/>
+
+        @if(app(App\Settings\GeneralSettings::class)->show_changelog_like)
+            <livewire:changelog.vote :changelog="$changelog"/>
+        @endif
     </div>
 
     @if(app(App\Settings\GeneralSettings::class)->show_changelog_related_items && $changelog->items->count())

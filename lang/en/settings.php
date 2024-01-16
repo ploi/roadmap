@@ -82,6 +82,8 @@ return [
         'show-author-helper-text'        => 'This will show the author of the changelog item.',
         'show-related-items'             => 'Show related items',
         'show-related-items-helper-text' => 'This will show the related items of the changelog item.',
+        'show-likes'                      => 'Enable likes',
+        'show-likes-helper-text'          => 'This will enable users to like the changelog items.',
     ],
     'notifications-title'         => 'Notifications',
     'notifications-helper-text'   => 'This will send notifications once a new item has been created or when there is a new version of the roadmap software.',
