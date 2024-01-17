@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasUpvote;
 use App\Traits\Sluggable;
 use App\Traits\HasOgImage;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Changelog extends Model
 {
-    use HasFactory, Sluggable, HasOgImage;
+    use HasFactory, Sluggable, HasOgImage, HasUpvote;
 
     public $fillable = [
         'slug',

@@ -18,7 +18,9 @@ class VoteObserver
 
     protected function updateTotalVotes(Vote $vote)
     {
-        $vote->item->total_votes = $vote->item->votes()->count();
-        $vote->item->save();
+        if (isset($vote->item->total_votes)) {
+            $vote->item->total_votes = $vote->item->votes()->count();
+            $vote->item->save();
+        }
     }
 }

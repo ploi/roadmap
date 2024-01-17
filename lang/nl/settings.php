@@ -82,6 +82,8 @@ return [
         'show-author-helper-text' => 'Dit zal de auteur tonen van de changelog items.',
         'show-related-items' => 'Toon gerelateerde items',
         'show-related-items-helper-text' => 'Dit zal de gerelateerde items tonen van de changelog items.',
+        'show-likes'                      => 'Schakel likes in',
+        'show-likes-helper-text'          => 'Dit zal likes inschakelen voor de changelog items.',
     ],
     'notifications-title' => 'Notificaties',
     'notifications-helper-text' => 'Dit zal notificaties inschakelen voor de roadmap wanneer een nieuw item is aangemaakt en wanneer een update beschikbaar is.',

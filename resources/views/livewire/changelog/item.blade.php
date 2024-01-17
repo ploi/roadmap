@@ -1,29 +1,34 @@
 <div class="space-y-4">
-    <div class="space-y-2">
-        <h1 class="font-bold text-2xl hover:text-brand-500">
-            <a href="{{ route('changelog.show', $changelog) }}">{{ $changelog->title }}</a>
-        </h1>
+    <div class="flex justify-between space-y-4 flex-col md:flex-row">
+        <div class="flex flex-col">
+            <div class="flex flex-wrap flex-col">
+                <h1 class="font-bold text-2xl">{{ $changelog->title }}</h1>
 
-        @if(app(App\Settings\GeneralSettings::class)->show_changelog_author)
-            <div class="flex items-center gap-2">
-                <div class="relative w-5 h-5 rounded-full">
-                    <img class="absolute inset-0 object-cover rounded-full"
-                         src="{{ $changelog->user->getGravatar() }}"
-                         alt="{{ $changelog->user->name }}">
-                </div>
-                <span class="text-xs text-gray-500">
-                    {{ $changelog->user->name }} {{ trans('notifications.on') }} {{ $changelog->published_at->isoFormat('L') }}
-                </span>
+                @if(app(App\Settings\GeneralSettings::class)->show_changelog_author)
+                    <div class="flex items-center gap-2">
+                        <div class="relative w-5 h-5 rounded-full">
+                            <img class="absolute inset-0 object-cover rounded-full"
+                                 src="{{ $changelog->user->getGravatar() }}"
+                                 alt="{{ $changelog->user->name }}">
+                        </div>
+                        <span class="text-xs text-gray-500">
+                        {{ $changelog->user->name }} {{ trans('notifications.on') }} {{ $changelog->published_at->isoFormat('L') }}
+                    </span>
+                    </div>
+                @else
+                    <span class="text-xs text-gray-500">{{ $changelog->published_at->isoFormat('L') }}</span>
+                @endif
             </div>
-        @else
-            <span class="text-xs text-gray-500">
-                {{ $changelog->published_at->isoFormat('L') }}
-            </span>
-        @endif
-    </div>
 
-    <div class="prose break-words">
-        {!! str($changelog->content)->markdown() !!}
+            <div class="prose break-words mt-2">
+                {!! str($changelog->content)->markdown() !!}
+            </div>
+
+        </div>
+
+        @if(app(App\Settings\GeneralSettings::class)->show_changelog_like)
+            <livewire:changelog.vote :changelog="$changelog"/>
+        @endif
     </div>
 
     @if(app(App\Settings\GeneralSettings::class)->show_changelog_related_items && $changelog->items->count())
@@ -52,8 +57,8 @@
                             <li>
                                 <div>
                                     <a
-                                        href="{{ route('items.show', $item) }}"
-                                        class="cursor-pointer hover:underline"
+                                            href="{{ route('items.show', $item) }}"
+                                            class="cursor-pointer hover:underline"
                                     >
                                         {{ $item->title }}
                                     </a>
@@ -74,8 +79,8 @@
                                 <li>
                                     <div>
                                         <a
-                                            href="{{ route('items.show', $item) }}"
-                                            class="cursor-pointer hover:underline"
+                                                href="{{ route('items.show', $item) }}"
+                                                class="cursor-pointer hover:underline"
                                         >
                                             {{ $item->title }}
                                         </a>
