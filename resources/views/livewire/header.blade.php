@@ -115,10 +115,11 @@
                 @endif
 
                 <li>
-                    <x-filament::button color="secondary" onclick="Livewire.dispatch('openModal', { component: 'modals.item.create-item-modal' })"
-                                        icon="heroicon-o-plus-circle">
-                        {{ trans('items.create') }}
-                    </x-filament::button>
+                    {{ $this->searchItemAction }}
+                </li>
+
+                <li>
+                    {{ $this->submitItemAction }}
                 </li>
             </ul>
         </nav>

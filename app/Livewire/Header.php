@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\User;
 use App\Enums\UserRole;
 use App\Models\Project;
+use Filament\Forms\Components\Placeholder;
 use Livewire\Component;
 use Filament\Actions\Action;
 use App\Rules\ProfanityCheck;
@@ -78,7 +79,12 @@ class Header extends Component implements HasForms, HasActions
             ->modalDescription('')
             ->modalIcon('heroicon-o-plus-circle')
             ->modalWidth('3xl')
+            ->modalSubmitActionLabel(auth()->check() ? 'Confirm' : 'Log in')
             ->form(function () {
+                if (!auth()->check()) {
+                    return [Placeholder::make('not_logged_in')->label('You\'re currently not logged in. Please make sure to login before submitting an item.')];
+                }
+
                 $inputs = [];
 
                 $inputs[] = TextInput::make('title')
@@ -105,8 +111,8 @@ class Header extends Component implements HasForms, HasActions
                 if (app(GeneralSettings::class)->select_board_when_creating_item) {
                     $inputs[] = Select::make('board_id')
                         ->label(trans('table.board'))
-                        ->visible(fn ($get) => $get('project_id'))
-                        ->options(fn ($get) => Project::find($get('project_id'))->boards()->where('can_users_create', true)->pluck('title', 'id'))
+                        ->visible(fn($get) => $get('project_id'))
+                        ->options(fn($get) => Project::find($get('project_id'))->boards()->where('can_users_create', true)->pluck('title', 'id'))
                         ->required(app(GeneralSettings::class)->board_required_when_creating_item);
                 }
 
