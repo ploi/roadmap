@@ -282,7 +282,7 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 ## Sponsor
 
 We appreciate sponsors, we still maintain this repository, server, emails and domain. [You can do that here](https://github.com/sponsors/Cannonb4ll).
-Each sponsor gets listed on in this readme.
+Each sponsor gets listed on in this readme. #test
 
 ## Paid alternatives
 
