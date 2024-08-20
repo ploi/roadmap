@@ -18,7 +18,7 @@
                 <dt class="order-2 mt-2 text-md leading-6 font-medium text-gray-500">
                     @if($isOutOfDate)
                         <a class="border-b border-dotted border-gray-500"
-                           href="https://github.com/ploi-deploy/roadmap/releases/tag/{{ $version['remoteVersion'] }}"
+                           href="https://github.com/ploi/roadmap/releases/tag/{{ $version['remoteVersion'] }}"
                            target="_blank">
                             {{ trans( 'system.update-available') }}
                         </a>
