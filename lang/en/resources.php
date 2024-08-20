@@ -100,7 +100,7 @@ return [
         'group'        => 'Group',
         'group-helper-text' => 'Type a group here to categorise them in your roadmap',
         'slug'         => 'Slug',
-        'slug-helpter-text' => 'Leave blank to generate one automatically',
+        'slug-helper-text' => 'Leave blank to generate one automatically',
         'icon'         => 'Icon',
         'private'      => 'Private',
         'private-helper-text' => 'This will make the project private. Only the employees and administrators can see this project.',

@@ -100,7 +100,7 @@ return [
         'group'               => 'Groep',
         'group-helper-text'   => 'Dit zal het project groeperen met andere projecten.',
         'slug'                => 'Slug',
-        'slug-helpter-text'   => 'Dit is de slug van het project. Dit wordt gebruikt in de URL van het project. Laat dit veld leeg om automatisch een slug te genereren.',
+        'slug-helper-text'   => 'Dit is de slug van het project. Dit wordt gebruikt in de URL van het project. Laat dit veld leeg om automatisch een slug te genereren.',
         'icon'                => 'Icoon',
         'private'             => 'Privé',
         'private-helper-text' => 'Dit zal het project privé maken. Alleen de werknemers en beheerders kunnen dit project zien.',
