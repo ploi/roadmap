@@ -23,7 +23,7 @@ class EditItem extends EditRecord
             Action::make('view_public')
                 ->label(trans('resources.item.view-public'))
                 ->color('gray')
-                ->url(fn () => route('items.show', $this->record))
+                ->url(fn() => route('items.show', $this->record))
                 ->openUrlInNewTab(),
 
             Action::make('flush_og_images')
@@ -43,7 +43,7 @@ class EditItem extends EditRecord
                 ->requiresConfirmation()
                 ->modalHeading(trans('settings.og.delete-single'))
                 ->modalAlignment(Alignment::Left)
-                ->modalDescription(trans('settings.og.confirm-single')) ,
+                ->modalDescription(trans('settings.og.confirm-single')),
 
             Action::make('merge item')
                 ->label(trans('resources.item.merge'))
@@ -51,8 +51,8 @@ class EditItem extends EditRecord
                 ->action(
                     function (array $data): void {
                         /**
-                    * @var Item $selectedItem
-                    */
+                         * @var Item $selectedItem
+                         */
                         $selectedItem = Item::query()->find($data['item_id']);
 
                         if (!$selectedItem->hasVoted($this->record->user)) {
@@ -61,15 +61,15 @@ class EditItem extends EditRecord
 
                         $selectedItem->comments()->create(
                             [
-                            'user_id' => auth()->id(),
-                            'content' => sprintf(trans('resources.item.merged-content'), $this->record->title, $this->record->user->name, $this->record->content),
-                            'private' => $data['private'],
+                                'user_id' => auth()->id(),
+                                'content' => sprintf(trans('resources.item.merged-content'), $this->record->title, $this->record->user->name, $this->record->content),
+                                'private' => $data['private'],
                             ]
                         );
 
                         $this->record->comments()->update(
                             [
-                            'item_id' => $selectedItem->id,
+                                'item_id' => $selectedItem->id,
                             ]
                         );
 
@@ -85,9 +85,7 @@ class EditItem extends EditRecord
                         $this->redirect(ItemResource::getUrl());
                     }
                 )
-                ->form(
-                    [
-
+                ->form([
                     Select::make('item_id')
                         ->label(trans('resources.item.label'))
                         ->options(Item::query()->whereNot('id', $this->record->id)->pluck('title', 'id'))
@@ -97,11 +95,10 @@ class EditItem extends EditRecord
                     Toggle::make('private')
                         ->label(trans('resources.item.private-comment'))
                         ->default(true),
-                    ]
-                )
+                ])
                 ->modalDescription(trans('resources.item.merge-helper-text'))
                 ->modalSubmitActionLabel(trans('resources.item.merge-submit')),
-            DeleteAction::make(),
+            DeleteAction::make()->modalAlignment(Alignment::Left),
         ];
     }
 

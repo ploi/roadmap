@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Models\Comment;
 use Filament\Forms\Form;
+use Filament\Support\Enums\Alignment;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
@@ -44,44 +46,39 @@ class CommentResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema(
-                [
+            ->schema([
                 Section::make()
                     ->columns()
-                    ->schema(
-                        [
-                           Select::make('user_id')
-                               ->label(trans('resources.comment.user'))
-                               ->columnSpan(1)
-                               ->relationship('user', 'name')
-                               ->searchable(),
+                    ->schema([
+                        Select::make('user_id')
+                            ->label(trans('resources.comment.user'))
+                            ->columnSpan(1)
+                            ->relationship('user', 'name')
+                            ->searchable(),
 
-                           Select::make('item_id')
-                               ->label(trans('resources.comment.item'))
-                               ->columnSpan(1)
-                               ->relationship('item', 'title')
-                               ->searchable(),
+                        Select::make('item_id')
+                            ->label(trans('resources.comment.item'))
+                            ->columnSpan(1)
+                            ->relationship('item', 'title')
+                            ->searchable(),
 
-                           Toggle::make('private')
-                               ->label(trans('resources.comment.private'))
-                               ->helperText(trans('resources.comment.private-helper-text'))
-                               ->label('Private')
-                               ->default(false),
+                        Toggle::make('private')
+                            ->label(trans('resources.comment.private'))
+                            ->helperText(trans('resources.comment.private-helper-text'))
+                            ->label('Private')
+                            ->default(false),
 
-                           MarkdownEditor::make('content')
-                               ->label(trans('resources.comment.content'))
-                               ->columnSpan(2),
-                           ]
-                    )
-                ]
-            );
+                        MarkdownEditor::make('content')
+                            ->label(trans('resources.comment.content'))
+                            ->columnSpan(2),
+                    ])
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns(
-                [
+            ->columns([
                 TextColumn::make('content')
                     ->label(trans('resources.comment.content'))
                     ->wrap()
@@ -98,13 +95,10 @@ class CommentResource extends Resource
                     ->label(trans('resources.created-at'))
                     ->dateTime()
                     ->sortable(),
-                ]
-            )
-            ->filters(
-                [
-                //
-                ]
-            )
+            ])
+            ->actions([
+                DeleteAction::make()->modalAlignment(Alignment::Left)
+            ])
             ->defaultSort('created_at', 'desc');
     }
 
@@ -118,9 +112,9 @@ class CommentResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListComments::route('/'),
+            'index' => Pages\ListComments::route('/'),
             'create' => Pages\CreateComment::route('/create'),
-            'edit'   => Pages\EditComment::route('/{record}/edit'),
+            'edit' => Pages\EditComment::route('/{record}/edit'),
         ];
     }
 }

@@ -36,7 +36,7 @@ return [
     ],
     'comment'     => [
         'label'               => 'Comment',
-        'label-plural'        => 'Coments',
+        'label-plural'        => 'Comments',
         'user'                => 'User',
         'content'             => 'Content',
         'item'                => 'Item',
