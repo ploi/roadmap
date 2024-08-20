@@ -6,7 +6,6 @@ use App\Models\Item;
 use App\Models\User;
 use App\Enums\UserRole;
 use App\Models\Project;
-use Filament\Forms\Components\Placeholder;
 use Livewire\Component;
 use Filament\Actions\Action;
 use App\Rules\ProfanityCheck;
@@ -20,6 +19,7 @@ use App\Filament\Resources\UserResource;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Actions\Concerns\InteractsWithActions;
@@ -111,8 +111,8 @@ class Header extends Component implements HasForms, HasActions
                 if (app(GeneralSettings::class)->select_board_when_creating_item) {
                     $inputs[] = Select::make('board_id')
                         ->label(trans('table.board'))
-                        ->visible(fn($get) => $get('project_id'))
-                        ->options(fn($get) => Project::find($get('project_id'))->boards()->where('can_users_create', true)->pluck('title', 'id'))
+                        ->visible(fn ($get) => $get('project_id'))
+                        ->options(fn ($get) => Project::find($get('project_id'))->boards()->where('can_users_create', true)->pluck('title', 'id'))
                         ->required(app(GeneralSettings::class)->board_required_when_creating_item);
                 }
 
