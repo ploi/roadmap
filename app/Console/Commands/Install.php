@@ -7,17 +7,20 @@ use App\Enums\UserRole;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 use App\Console\Commands\Concerns\CanShowAnIntro;
-use Filament\Support\Commands\Concerns\CanValidateInput;
+use function Laravel\Prompts\confirm;
+use function Laravel\Prompts\password;
+use function Laravel\Prompts\text;
+use function Laravel\Prompts\info;
 
 class Install extends Command
 {
-    use CanValidateInput, CanShowAnIntro;
+    use CanShowAnIntro;
 
     protected $signature = 'roadmap:install';
 
     protected $description = 'Install Roadmap software.';
 
-    public function handle()
+    public function handle(): void
     {
         $this->intro();
         $this->refreshDatabase();
@@ -31,59 +34,71 @@ class Install extends Command
         $this->writeSeparationLine();
         $this->line(' ');
 
-        $this->info('All done! You can now login at ' . url('/admin'));
+        info('All done! You can now login at ' . url('/admin'));
     }
 
-    protected function refreshDatabase()
+    protected function refreshDatabase(): void
     {
-        if ($this->confirm('Do you want to run the migrations to set up everything fresh? (php artisan migrate:fresh)')) {
+        if (confirm(
+            label: 'Do you want to run the migrations to set up everything fresh?',
+            default: false,
+            hint: '(php artisan migrate:fresh)'
+        )) {
             $this->call('migrate:fresh');
         }
     }
 
-    protected function createUser()
+    protected function createUser(): User
     {
-        $this->info('Let\'s create a user.');
+        info('Let\'s create a user.');
 
         $user = User::create($this->getUserData());
         $user->role = UserRole::Admin;
         $user->email_verified_at = now();
         $user->save();
 
-        $this->info('User created!');
+        info('User created!');
 
         return $user;
     }
 
-    protected function linkStorage()
+    protected function linkStorage(): void
     {
-        if (!file_exists(public_path('storage')) && $this->confirm('Your storage does not seem to be linked, do you want me to do this?')) {
+        if (!file_exists(public_path('storage')) && confirm(
+                label: 'Your storage does not seem to be linked, do you want me to do this?',
+                hint: '(php artisan storage:link)'
+            )
+        ) {
             $this->call('storage:link');
         }
     }
 
-    protected function runNpm()
+    protected function runNpm(): void
     {
-        if ($this->confirm('Do you want to run npm ci & npm run production to get the assets ready?')) {
-            $this->info('Running NPM..');
+        if (confirm('Do you want to run npm ci & npm run production to get the assets ready?')) {
+            info('Running NPM...');
 
             shell_exec('npm ci');
             shell_exec('npm run production');
 
-            $this->info('NPM installation & mixing production done!');
+            info('NPM installation & mixing production done!');
         }
     }
 
     protected function publishAssets(): void
     {
-        $this->info('Publishing assets..');
+        info('Publishing assets...');
 
         $this->call('filament:assets');
     }
 
-    protected function askForStar()
+    protected function askForStar(): void
     {
-        if (User::count() === 1 && $this->confirm('Would you like to show some love by starring the repo?', true)) {
+        if (User::count() === 1 && confirm(
+                label: 'Would you like to show some love by starring the repo?',
+                default: true
+            )
+        ) {
             if (PHP_OS_FAMILY === 'Darwin') {
                 exec('open https://github.com/ploi/roadmap');
             }
@@ -99,9 +114,24 @@ class Install extends Command
     protected function getUserData(): array
     {
         return [
-            'name' => $this->validateInput(fn () => $this->ask('Name'), 'name', ['required']),
-            'email' => $this->validateInput(fn () => $this->ask('Email address'), 'email', ['required', 'email', 'unique:' . User::class]),
-            'password' => Hash::make($this->validateInput(fn () => $this->secret('Password'), 'password', ['required', 'min:8'])),
+            'name'     => text(
+                label: 'Name',
+                required: true,
+            ),
+            'email'    => text(
+                label: 'Email address',
+                required: true,
+                validate: [
+                    'email' => ['required', 'email', 'unique:' . User::class]
+                ]
+            ),
+            'password' => Hash::make(password(
+                label: 'Password',
+                required: true,
+                validate: [
+                    'password' => ['required', 'min:8']
+                ]
+            ))
         ];
     }
 }
