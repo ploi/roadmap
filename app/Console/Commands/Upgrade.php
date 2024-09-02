@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Services\SystemChecker;
 use Illuminate\Console\Command;
 use App\Console\Commands\Concerns\CanShowAnIntro;
+use function Laravel\Prompts\info;
 
 class Upgrade extends Command
 {
@@ -28,42 +29,42 @@ class Upgrade extends Command
         $this->publishAssets();
         $this->line(' ');
 
-        $this->info('Upgrading done!');
+        info('Upgrading done!');
     }
 
     protected function flushVersionData(): void
     {
-        $this->info('Clearing version data cache..');
+        info('Clearing version data cache..');
 
         (new SystemChecker)->flushVersionData();
 
-        $this->info('Version data cache has been cleared.');
+        info('Version data cache has been cleared.');
     }
 
     protected function migrateMigrations(): void
     {
-        $this->info('Running migrations..');
+        info('Running migrations..');
 
         $this->call('migrate', ['--force' => true]);
     }
 
     protected function cacheRoutes(): void
     {
-        $this->info('Caching routes..');
+        info('Caching routes..');
 
         $this->call('route:cache');
     }
 
     protected function cacheViews(): void
     {
-        $this->info('Caching views..');
+        info('Caching views..');
 
         $this->call('view:cache');
     }
 
     protected function publishAssets(): void
     {
-        $this->info('Publishing assets..');
+        info('Publishing assets..');
 
         $this->call('filament:assets');
     }

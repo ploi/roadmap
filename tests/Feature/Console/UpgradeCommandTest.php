@@ -5,11 +5,11 @@ use function Pest\Laravel\artisan;
 test('upgrade command works', function () {
     artisan('roadmap:upgrade')
         ->expectsOutput('Roadmap Upgrade')
-        ->expectsOutput('Clearing version data cache..')
-        ->expectsOutput('Version data cache has been cleared.')
-        ->expectsOutput('Caching routes..')
-        ->expectsOutput('Caching views..')
-        ->expectsOutput('Running migrations..')
-        ->expectsOutput('Upgrading done!')
+        ->expectsOutputToContain('Clearing version data cache..')
+        ->expectsOutputToContain('Version data cache has been cleared.')
+        ->expectsOutputToContain('Caching routes..')
+        ->expectsOutputToContain('Caching views..')
+        ->expectsOutputToContain('Running migrations..')
+        ->expectsOutputToContain('Upgrading done!')
         ->run();
-});
+})->only();

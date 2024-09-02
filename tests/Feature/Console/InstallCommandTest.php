@@ -9,8 +9,8 @@ use function Pest\Laravel\assertDatabaseCount;
 test('install command works', function () {
     $command = artisan('roadmap:install')
         ->expectsOutput('Roadmap Installation')
-        ->expectsConfirmation('Do you want to run the migrations to set up everything fresh? (php artisan migrate:fresh)')
-        ->expectsOutput('Let\'s create a user.')
+        ->expectsConfirmation('Do you want to run the migrations to set up everything fresh?')
+        ->expectsOutputToContain('Let\'s create a user.')
         ->expectsQuestion('Name', 'John Doe')
         ->expectsQuestion('Email address', 'johndoe@ploi.io')
         ->expectsQuestion('Password', 'ploiisawesome');
