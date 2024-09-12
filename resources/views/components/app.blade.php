@@ -32,7 +32,7 @@
         <meta name="robots" content="noindex">
     @endif
 </head>
-<body class="antialiased bg-gray-50">
+<body class="antialiased bg-gray-50 dark:bg-gray-950 dark:text-white">
 @if($userNeedsToVerify)
     <div class="relative bg-brand-600">
         <div class="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
