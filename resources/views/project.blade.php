@@ -27,7 +27,7 @@
                         @forelse($board->items as $item)
                             <li>
                                 <a href="{{ route('projects.items.show', [$project, $item]) }}"
-                                   class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50 dark:hover:bg-gray-950">
+                                   class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50 dark:bg-gray-900 dark:hover:bg-gray-950">
                                     <div class="flex justify-between">
                                         <p>
                                             {{ $item->title }}
@@ -79,7 +79,7 @@
                 <div
                     class="flex flex-col items-center justify-center max-w-md p-6 mx-auto space-y-6 text-center border rounded-2xl">
                     <div
-                        class="flex items-center justify-center w-16 h-16 text-blue-500 bg-white rounded-full shadow">
+                        class="flex items-center justify-center w-16 h-16 text-blue-500 bg-white rounded-full shadow dark:bg-gray-900">
                         <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                   stroke-width="1.5"

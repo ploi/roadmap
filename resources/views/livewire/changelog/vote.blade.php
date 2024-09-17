@@ -1,4 +1,4 @@
-<div class="flex flex-col rounded-lg p-3 bg-white h-fit md:w-52">
+<div class="flex flex-col rounded-lg p-3 bg-white h-fit md:w-52 dark:bg-gray-900">
     <b class="text-md text-center">
         @if($votes->count() > 0)
             {{ trans('changelog.votes.liked-by') }}

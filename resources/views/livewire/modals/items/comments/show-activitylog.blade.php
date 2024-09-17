@@ -16,7 +16,7 @@
     </x-slot>
 
     <x-slot name="content">
-        <div class="overflow-hidden bg-white shadow rounded-xl">
+        <div class="overflow-hidden bg-white shadow rounded-xl dark:bg-gray-900">
             <table class="w-full text-left divide-y table-auto">
                 <thead>
                     <tr class="divide-x bg-gray-50">
