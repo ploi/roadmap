@@ -112,7 +112,7 @@
                 @endif
             </div>
 
-            <div id="dropdown-cta" class="p-4 mt-6 bg-gray-100 rounded-lg" role="alert">
+            <div id="dropdown-cta" class="p-4 mt-6 bg-gray-100 rounded-lg dark:bg-white/5" role="alert">
                 <p class="text-sm text-gray-500">
                     <a href="https://github.com/ploi/roadmap" target="_blank"
                        class="font-semibold border-b border-dotted">Open-source</a>
