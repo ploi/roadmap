@@ -12,7 +12,7 @@
                 @php( $i = 0 )
                 @foreach($votes as $vote)
                     <dd>
-                        <img class="h-10 w-10 rounded-full bg-gray-50 ring-2 ring-white"
+                        <img class="h-10 w-10 rounded-full bg-gray-50 ring-2 ring-white dark:bg-gray-950"
                              src="{{ $vote->user->getGravatar() }}" alt="{{ $vote->user->name }}">
                     </dd>
                     @php( $i++ )

@@ -27,7 +27,7 @@
                         @forelse($board->items as $item)
                             <li>
                                 <a href="{{ route('projects.items.show', [$project, $item]) }}"
-                                   class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50">
+                                   class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50 dark:hover:bg-gray-950">
                                     <div class="flex justify-between">
                                         <p>
                                             {{ $item->title }}
@@ -53,7 +53,7 @@
 
                                     <footer class="flex items-end justify-between">
                                                     <span
-                                                        class="inline-flex items-center justify-center h-6 px-2 text-sm font-semibold tracking-tight text-gray-700 rounded-full bg-gray-50">
+                                                        class="inline-flex items-center justify-center h-6 px-2 text-sm font-semibold tracking-tight text-gray-700 rounded-full bg-gray-50 dark:bg-gray-950">
                                                         {{ $item->created_at->isoFormat('ll') }}
                                                     </span>
 
