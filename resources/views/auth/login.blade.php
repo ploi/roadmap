@@ -77,7 +77,7 @@
                     @endif
                 </form>
 
-                <div class="w-4 mx-auto mt-4 border-t border-gray-300"></div>
+                <div class="w-4 mx-auto mt-4 border-t border-gray-300 dark:border-white/10"></div>
 
                 <p class="mt-3 text-sm font-medium text-center">
                     <a class="text-brand-600 transition hover:text-brand-500 focus:outline-none focus:underline"

@@ -53,7 +53,7 @@
                     </div>
                 </header>
 
-                <div class="border-t"></div>
+                <div class="border-t dark:border-white/10"></div>
 
                 <div class="p-4 prose break-words dark:text-gray-600">
                     {!! str($item->content)->markdown()->sanitizeHtml() !!}
@@ -105,12 +105,12 @@
                     @endif
                 </header>
 
-                <div class="border-t"></div>
+                <div class="border-t dark:border-white/10"></div>
 
                 <livewire:item.vote-button :model="$item"/>
 
                 @if(auth()->check() && $user && $user->is(auth()->user()))
-                    <div class="border-t mb-2"></div>
+                    <div class="border-t mb-2 dark:border-white/10"></div>
 
                     <div>
                         <a class="text-primary-500 hover:text-primary-700 ml-1"
@@ -120,7 +120,7 @@
                 @endif
 
                 @if(auth()->check() && auth()->user()->hasAdminAccess())
-                    <div class="border-t mb-2"></div>
+                    <div class="border-t mb-2 dark:border-white/10"></div>
 
                     <div>
                         <a class="text-red-500 hover:text-red-700 ml-1"

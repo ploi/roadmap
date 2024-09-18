@@ -10,11 +10,11 @@
                 <dd class="order-1 text-2xl font-extrabold text-primary-600">{{ $version['currentVersion'] }}</dd>
             </div>
             <div
-                class="flex flex-col border-t border-b border-gray-100 dark:border-gray-700 p-6 text-center md:border-0 md:border-r">
+                class="flex flex-col border-t border-b border-gray-100 dark:border-gray-700 p-6 text-center md:border-0 md:border-r dark:border-white/10">
                 <dt class="order-2 mt-2 text-md leading-6 font-medium text-gray-500">{{ trans('system.remote-version') }}</dt>
                 <dd class="order-1 text-2xl font-extrabold text-primary-600">{{ $version['remoteVersion'] }}</dd>
             </div>
-            <div class="flex flex-col border-t border-gray-100 p-6 text-center md:border-0">
+            <div class="flex flex-col border-t border-gray-100 p-6 text-center md:border-0 dark:border-white/10">
                 <dt class="order-2 mt-2 text-md leading-6 font-medium text-gray-500">
                     @if($isOutOfDate)
                         <a class="border-b border-dotted border-gray-500"
@@ -43,7 +43,7 @@
                 </dd>
             </div>
 
-            <div class="flex flex-col border-t border-gray-100 dark:border-gray-700 p-6 text-center md:border-0 md:border-l">
+            <div class="flex flex-col border-t border-gray-100 dark:border-gray-700 p-6 text-center md:border-0 md:border-l dark:border-white/10">
                 <dt class="order-2 mt-2 text-md leading-6 font-medium text-gray-500">{{ trans('system.php-version') }}</dt>
                 <dd class="order-1 text-2xl font-extrabold text-primary-600">{{ $phpVersion }}</dd>
             </div>
