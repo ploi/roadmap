@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -60,7 +60,7 @@
                 @foreach(array_filter($breadcrumbs) as $breadcrumb)
                     @if(!$loop->first)
                         <li>
-                            <svg class="text-gray-400 w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            <svg class="text-gray-400 w-5 h-5 dark:text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"
                                  viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                       stroke-width="1.5" d="M10.75 8.75L14.25 12L10.75 15.25"/>
@@ -69,7 +69,7 @@
                     @endif
 
                     <li>
-                        <a class="transition hover:underline focus:outline-none focus:text-gray-800 focus:underline"
+                        <a class="transition hover:underline focus:outline-none focus:text-gray-800 focus:underline dark:focus:text-gray-600"
                            href="{{ $breadcrumb['url'] }}">
                             {{ $breadcrumb['title'] }}
                         </a>

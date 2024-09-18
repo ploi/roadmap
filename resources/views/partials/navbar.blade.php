@@ -14,7 +14,7 @@
                         <x-heroicon-o-home class="w-5 h-5 {{ !request()->is('/') ? 'text-gray-500' : ''  }}"/>
 
                         <span
-                            class="font-normal {{ !request()->is('/') ? 'text-gray-900' : ''  }}">{{ trans('general.dashboard') }}</span>
+                            class="font-normal {{ !request()->is('/') ? 'text-gray-900 dark:text-white' : ''  }}">{{ trans('general.dashboard') }}</span>
                     </a>
                 </li>
 
