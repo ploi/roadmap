@@ -70,7 +70,7 @@
         </div>
     </header>
 
-    <div class="p-4 prose">
+    <div class="p-4 prose dark:text-gray-600">
         {!! str($comment->content)->markdown()->sanitizeHtml() !!}
     </div>
 

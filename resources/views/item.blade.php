@@ -37,7 +37,7 @@
                                         <select name="board_id"
                                                 x-data
                                                 x-on:change.debounce="$event.target.form.submit()"
-                                                class="float-right inline-flex items-center justify-center h-8 px-3 pt-1.5 pr-8 text-sm tracking-tight font-bold text-gray-700 border border-gray-400 rounded-lg bg-white dark:bg-gray-950 dark:text-gray-600 dark:border-white/10">
+                                                class="float-right inline-flex items-center justify-center h-8 px-3 pt-1.5 pr-8 text-sm tracking-tight font-bold text-gray-700 border border-gray-400 rounded-lg bg-white dark:text-white dark:bg-white/5 dark:border-white/20">
                                             @foreach($item->project->boards as $board)
                                                 <option value="{{ $board->id }}" @selected($board->is($item->board))>{{ $board->title }}</option>
                                             @endforeach
@@ -55,7 +55,7 @@
 
                 <div class="border-t"></div>
 
-                <div class="p-4 prose break-words">
+                <div class="p-4 prose break-words dark:text-gray-600">
                     {!! str($item->content)->markdown()->sanitizeHtml() !!}
                 </div>
             </x-card>

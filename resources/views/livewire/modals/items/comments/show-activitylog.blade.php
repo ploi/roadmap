@@ -36,7 +36,7 @@
 
                         <tr class="divide-x">
                             <td class="px-4 py-3">{{ $activity->created_at->isoFormat('L LTS') }}</td>
-                            <td class="px-4 py-3 break-words whitespace-pre-line prose">{!! str($activity->changes['old']['content'])->markdown()->sanitizeHtml() !!}</td>
+                            <td class="px-4 py-3 break-words whitespace-pre-line prose dark:text-gray-600">{!! str($activity->changes['old']['content'])->markdown()->sanitizeHtml() !!}</td>
                         </tr>
                     @endforeach
                 </tbody>

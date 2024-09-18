@@ -2,7 +2,7 @@
 
 <x-app>
     @if($text = app(\App\Settings\GeneralSettings::class)->welcome_text)
-        <div class="prose mb-4">{!! $text !!}</div>
+        <div class="prose mb-4 dark:text-gray-600">{!! $text !!}</div>
     @endif
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         @foreach(app(\App\Settings\GeneralSettings::class)->dashboard_items as $item)
