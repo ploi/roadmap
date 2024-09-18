@@ -84,7 +84,7 @@
         <nav class="-mx-2 lg:hidden"
              x-show="open"
              x-cloak>
-            <div class="border-t border-brand-400"></div>
+            <div class="border-t border-brand-400 dark:border-gray-800"></div>
 
             <ul class="flex flex-col py-2 space-y-1 text-sm font-medium text-white">
                 <li>

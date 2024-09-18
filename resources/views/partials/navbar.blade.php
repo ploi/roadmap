@@ -6,15 +6,15 @@
                     <a
                         @class([
                                 'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                                'text-white bg-brand-500' => request()->is('/'),
-                                'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => !request()->is('/')
+                                'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-500' => request()->is('/'),
+                                'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5' => !request()->is('/')
                             ])
                         href="{{ route('home') }}">
 
                         <x-heroicon-o-home class="w-5 h-5 {{ !request()->is('/') ? 'text-gray-500' : ''  }}"/>
 
                         <span
-                            class="font-normal {{ !request()->is('/') ? 'text-gray-900 dark:text-white' : ''  }}">{{ trans('general.dashboard') }}</span>
+                            class="font-normal {{ !request()->is('/') ? 'text-gray-900 dark:text-gray-200' : ''  }}">{{ trans('general.dashboard') }}</span>
                     </a>
                 </li>
 
@@ -22,8 +22,8 @@
                     <a
                         @class([
                             'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                            'text-white bg-brand-500' => request()->is('my'),
-                            'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => !request()->is('my')
+                            'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-500' => request()->is('my'),
+                            'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5' => !request()->is('my')
                         ])
                         href="{{ route('my') }}">
                         <x-heroicon-o-queue-list class="w-5 h-5 {{ !request()->is('my') ? 'text-gray-500' : ''  }}"/>
@@ -36,8 +36,8 @@
                     <a
                         @class([
                             'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                            'text-white bg-brand-500' => request()->is('profile'),
-                            'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => !request()->is('profile')
+                            'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-500' => request()->is('profile'),
+                            'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5' => !request()->is('profile')
                         ])
                         href="{{ route('profile') }}">
                         <x-heroicon-o-user class="w-5 h-5 {{ !request()->is('profile') ? 'text-gray-500' : ''  }}"/>
@@ -51,8 +51,8 @@
                         <a
                             @class([
                                 'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                                'text-white bg-brand-500' => request()->is('changelog*'),
-                                'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => !request()->is('changelog*')
+                                'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-500' => request()->is('changelog*'),
+                                'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5' => !request()->is('changelog*')
                             ])
                             href="{{ route('changelog') }}">
                             <x-heroicon-o-rss
@@ -85,8 +85,8 @@
                                         title="{{ $project->title }}"
                                         @class([
                                        'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                                       'text-white bg-brand-500' => request()->segment(2) === $project->slug,
-                                       'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => request()->segment(2) !== $project->slug
+                                       'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-500' => request()->segment(2) === $project->slug,
+                                       'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5' => request()->segment(2) !== $project->slug
                                    ])
                                         href="{{ route('projects.show', $project) }}">
                                         <x-dynamic-component :component="$project->icon ?? 'heroicon-o-hashtag'"
