@@ -2,7 +2,7 @@
     @class([
         'ml-1 md:ml-6' => $comment->parent_id !== null,
         'mr-1 bg-brand-50 rounded-lg ring-1 ring-brand-200' => $reply == $comment->id,
-		'bg-yellow-50 border border-yellow-700 rounded-md mt-1 mb-1' => $comment->private && !$comment->parent?->private,
+		'border border-yellow-700 rounded-md mt-1 mb-1' => $comment->private && !$comment->parent?->private,
         'block py-2 overflow-hidden transition'
     ])
     id="comment-{{ $comment->id }}">
@@ -70,7 +70,7 @@
         </div>
     </header>
 
-    <div class="p-4 prose dark:text-gray-600">
+    <div class="p-4 prose dark:text-gray-600 foda-se">
         {!! str($comment->content)->markdown()->sanitizeHtml() !!}
     </div>
 
