@@ -57,6 +57,10 @@
                 <li>
                     {{ $this->submitItemAction }}
                 </li>
+
+                <li>
+                    <x-theme-toggle />
+                </li>
             </ul>
 
             <!-- Hamburger -->
