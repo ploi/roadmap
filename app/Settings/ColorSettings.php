@@ -10,6 +10,7 @@ class ColorSettings extends Settings
     public string|null $favicon;
     public string|null $logo;
     public string|null $fontFamily;
+    public bool $darkmode;
 
     public static function group(): string
     {

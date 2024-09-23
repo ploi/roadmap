@@ -6,7 +6,7 @@
                     <a
                         @class([
                                 'flex items-center h-10 px-2 space-x-2 transition rounded-lg',
-                                'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-500' => request()->is('/'),
+                                'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-400' => request()->is('/'),
                                 'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:text-brand-500' => !request()->is('/')
                             ])
                         href="{{ route('home') }}">
@@ -22,7 +22,7 @@
                     <a
                         @class([
                             'flex items-center h-10 px-2 space-x-2 transition rounded-lg',
-                            'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-500' => request()->is('my'),
+                            'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-400' => request()->is('my'),
                             'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => !request()->is('my')
                         ])
                         href="{{ route('my') }}">
@@ -36,7 +36,7 @@
                     <a
                         @class([
                             'flex items-center h-10 px-2 space-x-2 transition rounded-lg',
-                            'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-500' => request()->is('profile'),
+                            'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-400' => request()->is('profile'),
                             'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => !request()->is('profile')
                         ])
                         href="{{ route('profile') }}">
@@ -51,7 +51,7 @@
                         <a
                             @class([
                                 'flex items-center h-10 px-2 space-x-2 transition rounded-lg',
-                                'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-500' => request()->is('changelog*'),
+                                'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-400' => request()->is('changelog*'),
                                 'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => !request()->is('changelog*')
                             ])
                             href="{{ route('changelog') }}">
@@ -85,7 +85,7 @@
                                         title="{{ $project->title }}"
                                         @class([
                                        'flex items-center h-10 px-2 space-x-2 transition rounded-lg',
-                                       'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-500' => request()->segment(2) === $project->slug,
+                                       'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-400' => request()->segment(2) === $project->slug,
                                        'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => request()->segment(2) !== $project->slug
                                    ])
                                         href="{{ route('projects.show', $project) }}">
@@ -113,7 +113,7 @@
             </div>
 
             <div id="dropdown-cta" class="p-4 mt-6 bg-gray-100 rounded-lg dark:bg-white/5" role="alert">
-                <p class="text-sm text-gray-500">
+                <p class="text-sm text-gray-500 dark:text-gray-400">
                     <a href="https://github.com/ploi/roadmap" target="_blank"
                        class="font-semibold border-b border-dotted">Open-source</a>
                     roadmapping software by
