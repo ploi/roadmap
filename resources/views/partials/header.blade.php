@@ -13,7 +13,7 @@
 
             <ul class="items-center hidden space-x-3 text-sm font-medium text-gray-600 lg:flex">
                 <li>
-                    <kbd @click="$dispatch('toggle-spotlight')" class="cursor-pointer p-1 items-center shadow justify-center rounded border border-gray-400 hover:bg-gray-200 bg-white font-semibold text-gray-900">{{ trans('general.navbar-search') }}</kbd>
+                    <kbd @click="$dispatch('toggle-spotlight')" class="cursor-pointer p-1 items-center shadow justify-center rounded border border-gray-400 hover:bg-gray-200 bg-white font-semibold text-gray-900 dark:text-white">{{ trans('general.navbar-search') }}</kbd>
                 </li>
                 @guest
                     <li>
@@ -84,7 +84,7 @@
         <nav class="-mx-2 lg:hidden"
              x-show="open"
              x-cloak>
-            <div class="border-t border-brand-400"></div>
+            <div class="border-t border-brand-400 dark:border-white/10"></div>
 
             <ul class="flex flex-col py-2 space-y-1 text-sm font-medium text-white">
                 <li>

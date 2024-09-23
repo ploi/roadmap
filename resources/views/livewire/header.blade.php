@@ -1,4 +1,4 @@
-<header class="sticky top-0 z-10 w-full bg-brand-500 shadow text-white"
+<header class="sticky top-0 z-10 w-full bg-brand-500 shadow text-white dark:bg-gray-900 dark:border-b dark:border-white/10"
         x-data="{ open: false }">
     <div class="w-full px-4 mx-auto sm:px-6 md:px-8 max-w-[1500px]">
         <nav class="flex items-center justify-between h-20">
@@ -57,6 +57,10 @@
                 <li>
                     {{ $this->submitItemAction }}
                 </li>
+
+                <li>
+                    <x-theme-toggle />
+                </li>
             </ul>
 
             <!-- Hamburger -->
@@ -81,7 +85,7 @@
         <nav class="-mx-2 lg:hidden"
              x-show="open"
              x-cloak>
-            <div class="border-t border-brand-400"></div>
+            <div class="border-t border-brand-400 dark:border-white/10"></div>
 
             <ul class="flex flex-col py-2 space-y-1 text-sm font-medium text-white">
                 <li>

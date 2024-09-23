@@ -14,9 +14,9 @@
     >
         @forelse($boards as $board)
             <section class="h-full">
-                <div class="bg-gray-100 rounded-xl min-w-[18rem] lg:w-[23rem] flex flex-col max-h-full">
+                <div class="bg-gray-100 rounded-xl min-w-[18rem] lg:w-[23rem] flex flex-col max-h-full dark:bg-white/5">
                     <div
-                        class="p-2 font-semibold text-center text-gray-800 border-b bg-gray-100/80 rounded-t-xl backdrop-blur-xl backdrop-saturate-150">
+                        class="p-2 font-semibold text-center text-gray-800 border-b bg-gray-100/80 rounded-t-xl backdrop-blur-xl backdrop-saturate-150 dark:bg-gray-900 dark:text-white dark:border-b-gray-800">
                         <a
                             href="{{ route('projects.boards.show', [$project, $board]) }}"
                             class="border-b border-dotted border-black">
@@ -27,7 +27,7 @@
                         @forelse($board->items as $item)
                             <li>
                                 <a href="{{ route('projects.items.show', [$project, $item]) }}"
-                                   class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50">
+                                   class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50 dark:bg-gray-900 dark:hover:bg-gray-950">
                                     <div class="flex justify-between">
                                         <p>
                                             {{ $item->title }}
@@ -53,7 +53,7 @@
 
                                     <footer class="flex items-end justify-between">
                                                     <span
-                                                        class="inline-flex items-center justify-center h-6 px-2 text-sm font-semibold tracking-tight text-gray-700 rounded-full bg-gray-50">
+                                                        class="inline-flex items-center justify-center h-6 px-2 text-sm font-semibold tracking-tight text-gray-700 rounded-full bg-gray-50 dark:bg-gray-950">
                                                         {{ $item->created_at->isoFormat('ll') }}
                                                     </span>
 
@@ -79,7 +79,7 @@
                 <div
                     class="flex flex-col items-center justify-center max-w-md p-6 mx-auto space-y-6 text-center border rounded-2xl">
                     <div
-                        class="flex items-center justify-center w-16 h-16 text-blue-500 bg-white rounded-full shadow">
+                        class="flex items-center justify-center w-16 h-16 text-blue-500 bg-white rounded-full shadow dark:bg-gray-900">
                         <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                   stroke-width="1.5"

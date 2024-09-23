@@ -15,6 +15,17 @@
         }
     </style>
 
+    <script>
+      function updateTheme() {
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }
+      }
+      updateTheme();
+    </script>
+
     @if(file_exists($favIcon = storage_path('app/public/favicon.png')))
         <link href="{{ asset('storage/favicon.png') }}?v={{ md5_file($favIcon) }}" rel="icon" type="image/x-icon"/>
     @endif
@@ -32,7 +43,7 @@
         <meta name="robots" content="noindex">
     @endif
 </head>
-<body class="antialiased bg-gray-50">
+<body class="antialiased bg-gray-50 dark:bg-gray-950 dark:text-white">
 @if($userNeedsToVerify)
     <div class="relative bg-brand-600">
         <div class="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
@@ -54,13 +65,13 @@
 <div class="w-full mx-auto py-5 md:space-x-10 h-full grid grid-cols-6 px-2 sm:px-6 md:px-8 max-w-[1500px]">
     @include('partials.navbar')
 
-    <main class="flex-1 h-full col-span-6 lg:col-span-5 lg:border-l lg:pl-5">
+    <main class="flex-1 h-full col-span-6 lg:col-span-5 lg:border-l lg:pl-5 dark:lg:border-white/10">
         <div class="pb-4">
             <ul class="flex items-center space-x-0.5 text-sm font-medium text-gray-600">
                 @foreach(array_filter($breadcrumbs) as $breadcrumb)
                     @if(!$loop->first)
                         <li>
-                            <svg class="text-gray-400 w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            <svg class="text-gray-400 w-5 h-5 dark:text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"
                                  viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                       stroke-width="1.5" d="M10.75 8.75L14.25 12L10.75 15.25"/>
@@ -69,7 +80,7 @@
                     @endif
 
                     <li>
-                        <a class="transition hover:underline focus:outline-none focus:text-gray-800 focus:underline"
+                        <a class="transition hover:underline focus:outline-none focus:text-gray-800 focus:underline dark:focus:text-gray-600"
                            href="{{ $breadcrumb['url'] }}">
                             {{ $breadcrumb['title'] }}
                         </a>

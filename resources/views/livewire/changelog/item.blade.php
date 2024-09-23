@@ -32,7 +32,7 @@
     </div>
 
     @if(app(App\Settings\GeneralSettings::class)->show_changelog_related_items && $changelog->items->count())
-        <div class="w-full bg-gray-100 rounded-lg p-5">
+        <div class="w-full bg-gray-100 rounded-lg p-5 dark:bg-white/5">
             <div class="space-y-5">
                 {{--@foreach($changelog->items()->->get() as $item)
                     <a title="{{ $item->title }}"

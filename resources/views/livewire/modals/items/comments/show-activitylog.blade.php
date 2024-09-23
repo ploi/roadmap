@@ -16,7 +16,7 @@
     </x-slot>
 
     <x-slot name="content">
-        <div class="overflow-hidden bg-white shadow rounded-xl">
+        <div class="overflow-hidden bg-white shadow rounded-xl dark:bg-gray-900">
             <table class="w-full text-left divide-y table-auto">
                 <thead>
                     <tr class="divide-x bg-gray-50">
@@ -36,7 +36,7 @@
 
                         <tr class="divide-x">
                             <td class="px-4 py-3">{{ $activity->created_at->isoFormat('L LTS') }}</td>
-                            <td class="px-4 py-3 break-words whitespace-pre-line prose">{!! str($activity->changes['old']['content'])->markdown()->sanitizeHtml() !!}</td>
+                            <td class="px-4 py-3 break-words whitespace-pre-line prose dark:text-gray-600">{!! str($activity->changes['old']['content'])->markdown()->sanitizeHtml() !!}</td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -5,25 +5,25 @@
                 <li>
                     <a
                         @class([
-                                'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                                'text-white bg-brand-500' => request()->is('/'),
-                                'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => !request()->is('/')
+                                'flex items-center h-10 px-2 space-x-2 transition rounded-lg',
+                                'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-500' => request()->is('/'),
+                                'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:text-brand-500' => !request()->is('/')
                             ])
                         href="{{ route('home') }}">
 
                         <x-heroicon-o-home class="w-5 h-5 {{ !request()->is('/') ? 'text-gray-500' : ''  }}"/>
 
                         <span
-                            class="font-normal {{ !request()->is('/') ? 'text-gray-900' : ''  }}">{{ trans('general.dashboard') }}</span>
+                            class="font-normal {{ !request()->is('/') ? 'text-gray-900 dark:text-gray-200' : ''  }}">{{ trans('general.dashboard') }}</span>
                     </a>
                 </li>
 
                 <li>
                     <a
                         @class([
-                            'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                            'text-white bg-brand-500' => request()->is('my'),
-                            'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => !request()->is('my')
+                            'flex items-center h-10 px-2 space-x-2 transition rounded-lg',
+                            'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-500' => request()->is('my'),
+                            'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => !request()->is('my')
                         ])
                         href="{{ route('my') }}">
                         <x-heroicon-o-queue-list class="w-5 h-5 {{ !request()->is('my') ? 'text-gray-500' : ''  }}"/>
@@ -35,9 +35,9 @@
                 <li>
                     <a
                         @class([
-                            'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                            'text-white bg-brand-500' => request()->is('profile'),
-                            'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => !request()->is('profile')
+                            'flex items-center h-10 px-2 space-x-2 transition rounded-lg',
+                            'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-500' => request()->is('profile'),
+                            'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => !request()->is('profile')
                         ])
                         href="{{ route('profile') }}">
                         <x-heroicon-o-user class="w-5 h-5 {{ !request()->is('profile') ? 'text-gray-500' : ''  }}"/>
@@ -50,9 +50,9 @@
                     <li>
                         <a
                             @class([
-                                'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                                'text-white bg-brand-500' => request()->is('changelog*'),
-                                'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => !request()->is('changelog*')
+                                'flex items-center h-10 px-2 space-x-2 transition rounded-lg',
+                                'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-500' => request()->is('changelog*'),
+                                'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => !request()->is('changelog*')
                             ])
                             href="{{ route('changelog') }}">
                             <x-heroicon-o-rss
@@ -84,9 +84,9 @@
                                     <a
                                         title="{{ $project->title }}"
                                         @class([
-                                       'flex items-center h-10 px-2 space-x-2 transition rounded-lg ',
-                                       'text-white bg-brand-500' => request()->segment(2) === $project->slug,
-                                       'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none' => request()->segment(2) !== $project->slug
+                                       'flex items-center h-10 px-2 space-x-2 transition rounded-lg',
+                                       'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-500' => request()->segment(2) === $project->slug,
+                                       'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => request()->segment(2) !== $project->slug
                                    ])
                                         href="{{ route('projects.show', $project) }}">
                                         <x-dynamic-component :component="$project->icon ?? 'heroicon-o-hashtag'"
@@ -112,7 +112,7 @@
                 @endif
             </div>
 
-            <div id="dropdown-cta" class="p-4 mt-6 bg-gray-100 rounded-lg" role="alert">
+            <div id="dropdown-cta" class="p-4 mt-6 bg-gray-100 rounded-lg dark:bg-white/5" role="alert">
                 <p class="text-sm text-gray-500">
                     <a href="https://github.com/ploi/roadmap" target="_blank"
                        class="font-semibold border-b border-dotted">Open-source</a>

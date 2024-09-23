@@ -32,7 +32,7 @@
                                for="email">{{ trans('auth.email') }}</label>
 
                         <input
-                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600"
+                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600 dark:bg-gray-900 dark:border-white/10"
                             id="email"
                             name="email"
                             value="{{ old('email') }}"
@@ -44,7 +44,7 @@
                                for="password">{{ trans('auth.password') }}</label>
 
                         <input
-                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600"
+                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600 dark:bg-gray-900 dark:border-white/10"
                             id="password"
                             name="password"
                             type="password">
@@ -77,7 +77,7 @@
                     @endif
                 </form>
 
-                <div class="w-4 mx-auto mt-4 border-t border-gray-300"></div>
+                <div class="w-4 mx-auto mt-4 border-t border-gray-300 dark:border-white/10"></div>
 
                 <p class="mt-3 text-sm font-medium text-center">
                     <a class="text-brand-600 transition hover:text-brand-500 focus:outline-none focus:underline"

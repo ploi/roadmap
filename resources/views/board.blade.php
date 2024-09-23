@@ -14,7 +14,7 @@
 
         @if($board->canUsersCreateItem())
             <section class="w-96 sticky top-0">
-                <div class="bg-white rounded-lg shadow p-5">
+                <div class="bg-white rounded-lg shadow p-5 dark:bg-gray-900">
                     <livewire:item.create :project="$project" :board="$board"/>
                 </div>
             </section>

@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="min-h-[720px] flex justify-center">
-    <div class="w-full max-w-lg py-8 bg-white md:py-16">
+    <div class="w-full max-w-lg py-8 bg-white md:py-16 dark:bg-gray-900">
         <div class="w-full max-w-md px-4 mx-auto sm:px-6 md:px-8">
             <h1 class="text-xl font-semibold tracking-tight md:text-2xl">
                 {{ trans('auth.password_protected') }}

@@ -11,7 +11,7 @@
     @apply min-w-[250px] shadow-lg ring-1 ring-black/5 mt-2;
 }
 .tribute-container ul {
-    @apply rounded overflow-hidden list-none bg-white;
+    @apply rounded overflow-hidden list-none bg-white dark:bg-gray-900;
 }
 .tribute-container li {
     @apply hover:bg-brand-50 cursor-pointer py-2 px-4;
