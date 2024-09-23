@@ -166,7 +166,7 @@
                                     {{ $activity->description }}
                                 </p>
 
-                                <span class="mt-1 text-xs font-medium text-gray-500"
+                                <span class="mt-1 text-xs font-medium text-gray-500 dark:text-gray-400"
                                       x-data="{ tooltip: '{{ $activity->created_at->isoFormat('L LTS') }}' }"
                                       x-tooltip="tooltip">{{ $activity->created_at->diffForHumans() }}</span>
                             </div>

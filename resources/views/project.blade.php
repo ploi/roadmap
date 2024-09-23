@@ -53,7 +53,7 @@
 
                                     <footer class="flex items-end justify-between">
                                                     <span
-                                                        class="inline-flex items-center justify-center h-6 px-2 text-sm font-semibold tracking-tight text-gray-700 rounded-full bg-gray-50 dark:bg-gray-950">
+                                                        class="inline-flex items-center justify-center h-6 px-2 text-sm font-semibold tracking-tight text-gray-700 dark:text-gray-300 rounded-full bg-gray-50 dark:bg-gray-600">
                                                         {{ $item->created_at->isoFormat('ll') }}
                                                     </span>
 
@@ -66,7 +66,7 @@
                         @empty
                             <li>
                                 <div
-                                    class="p-3 font-medium text-center text-gray-500 border border-gray-300 border-dashed rounded-xl opacity-70">
+                                    class="p-3 font-medium text-center text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-400 border-dashed rounded-xl opacity-70">
                                     <p>{{ trans('items.no-items') }}</p>
                                 </div>
                             </li>
@@ -90,7 +90,7 @@
                     <header class="max-w-xs space-y-1">
                         <h2 class="text-xl font-semibold tracking-tight">{{ trans('items.all-caught-up-title') }}</h2>
 
-                        <p class="font-medium text-gray-500">
+                        <p class="font-medium text-gray-500 dark:text-gray-400">
                             {{ trans('messages.no-boards') }}
                         </p>
                     </header>

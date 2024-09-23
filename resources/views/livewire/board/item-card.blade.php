@@ -1,5 +1,5 @@
 <li class="pb-5 pt-5 first:pt-0 group">
-    <div class="flex space-x-3">
+    <div class="flex space-x-3 dark:text-gray-400">
         <div class="flex flex-col text-center space-y-1">
             <div>
                 <x-heroicon-o-chevron-up class="w-5 h-5"/>
@@ -9,7 +9,7 @@
         </div>
 
         <a href="{{ route('projects.items.show', [$project, $item]) }}" class="flex-1">
-            <p class="font-bold text-lg group-hover:text-brand-500">{{ $item->title }}</p>
+            <p class="font-bold text-lg group-hover:text-brand-500 dark:group-hover:text-brand-400">{{ $item->title }}</p>
             <p>{{ $item->excerpt }}</p>
         </a>
 
