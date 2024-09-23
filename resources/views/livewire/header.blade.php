@@ -5,7 +5,8 @@
             <a class="text-2xl font-semibold tracking-tight"
                href="{{ route('home') }}">
                 @if(!is_null($logo) && file_exists($logoFile = storage_path('app/public/'.$logo)))
-                    <img src="{{ asset('storage/'.$logo) }}?v={{ md5_file($logoFile) }}" alt="{{ config('app.name') }}" class="h-8"/>
+                    <img src="{{ asset('storage/'.$logo) }}?v={{ md5_file($logoFile) }}" alt="{{ config('app.name') }}"
+                         class="h-8"/>
                 @else
                     {{ config('app.name') }}
                 @endif
@@ -58,17 +59,19 @@
                     {{ $this->submitItemAction }}
                 </li>
 
-                <li>
-                    <x-theme-toggle />
-                </li>
+                @if(app(\App\Settings\ColorSettings::class)->darkmode)
+                    <li>
+                        <x-theme-toggle/>
+                    </li>
+                @endif
             </ul>
 
             <!-- Hamburger -->
             <div class="lg:hidden">
                 <button
-                    class="text-white flex items-center justify-center w-10 h-10 -mr-2 transition rounded-full focus:outline-none"
-                    x-on:click="open = !open"
-                    type="button">
+                        class="text-white flex items-center justify-center w-10 h-10 -mr-2 transition rounded-full focus:outline-none"
+                        x-on:click="open = !open"
+                        type="button">
                     <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                               d="M4.75 5.75H19.25"/>

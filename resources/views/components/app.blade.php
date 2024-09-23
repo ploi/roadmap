@@ -67,7 +67,7 @@
 
     <main class="flex-1 h-full col-span-6 lg:col-span-5 lg:border-l lg:pl-5 dark:lg:border-white/10">
         <div class="pb-4">
-            <ul class="flex items-center space-x-0.5 text-sm font-medium text-gray-600">
+            <ul class="flex items-center space-x-0.5 text-sm font-medium text-gray-600 dark:text-gray-500">
                 @foreach(array_filter($breadcrumbs) as $breadcrumb)
                     @if(!$loop->first)
                         <li>

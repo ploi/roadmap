@@ -55,7 +55,7 @@
 
                 <div class="border-t dark:border-white/10"></div>
 
-                <div class="p-4 prose break-words dark:text-gray-600">
+                <div class="p-4 prose break-words dark:text-gray-400">
                     {!! str($item->content)->markdown()->sanitizeHtml() !!}
                 </div>
             </x-card>
@@ -144,7 +144,7 @@
                     @foreach($activities as $activity)
                         <li class="flex space-x-3">
                             <div
-                                class="relative flex items-center justify-center flex-shrink-0 w-8 h-8 text-gray-400 border border-gray-200 rounded-full bg-gray-50">
+                                class="relative flex items-center justify-center flex-shrink-0 w-8 h-8 text-gray-400 border border-gray-200 dark:border-gray-600 rounded-full bg-gray-50 dark:bg-gray-800">
                                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                           stroke-width="1.5"
