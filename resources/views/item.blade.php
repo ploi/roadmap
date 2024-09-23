@@ -55,7 +55,7 @@
 
                 <div class="border-t dark:border-white/10"></div>
 
-                <div class="p-4 prose break-words dark:text-gray-400">
+                <div class="p-4 prose dark:prose-invert break-words dark:text-gray-400">
                     {!! str($item->content)->markdown()->sanitizeHtml() !!}
                 </div>
             </x-card>
