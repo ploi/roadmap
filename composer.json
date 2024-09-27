@@ -7,7 +7,7 @@
     "require": {
         "php": "^8.2",
         "doctrine/dbal": "^3.3",
-        "filament/filament": "^3.2",
+        "filament/filament": "^3.2.115",
         "filament/spatie-laravel-settings-plugin": "^3.2",
         "filament/spatie-laravel-tags-plugin": "^3.2",
         "filament/spatie-laravel-translatable-plugin": "^3.2",
