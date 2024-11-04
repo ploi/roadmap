@@ -62,7 +62,7 @@
 
 <livewire:header :logo="$logo" />
 
-<div class="flex mx-auto py-5 lg:space-x-10 h-full px-2 sm:px-6 md:px-8 max-w-[1500px]">
+<div class="flex mx-auto py-5 lg:space-x-10 h-full px-4 sm:px-6 md:px-8 max-w-[1500px]">
     @include('partials.navbar')
 
     <main class="flex-1 h-full lg:border-l lg:pl-5 dark:lg:border-white/10 overflow-x-hidden">
