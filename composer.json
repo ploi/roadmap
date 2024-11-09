@@ -40,6 +40,7 @@
         "fakerphp/faker": "^1.9.1",
         "filament/upgrade": "^3.0-stable",
         "friendsofphp/php-cs-fixer": "^3.13.1",
+        "larastan/larastan": "^2.0",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^8.1",
         "pestphp/pest": "^2.34",
