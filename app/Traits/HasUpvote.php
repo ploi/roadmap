@@ -12,6 +12,11 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait HasUpvote
 {
+    /**
+     * Get the votes for parent model.
+     * 
+     * @return MorphMany<Vote, $this>
+     */
     public function votes(): MorphMany
     {
         return $this->morphMany(Vote::class, 'model');
@@ -67,7 +72,7 @@ trait HasUpvote
      *  Returns a collection of the most recent users who have voted for this item.
      *
      * @param int $count Displays five users by default.
-     * @return Collection|\Illuminate\Support\Collection
+     * @return Collection<int, array{name: string|null, avatar: string|null}>|\Illuminate\Support\Collection<int, array{name: string|null, avatar: string|null}>
      */
     public function getRecentVoterDetails(int $count = 5): Collection|\Illuminate\Support\Collection
     {
@@ -78,8 +83,8 @@ trait HasUpvote
             ->get()
             ->map(function ($vote) {
                 return [
-                    'name' => $vote->user->name,
-                    'avatar' => $vote->user->getGravatar('50'),
+                    'name' => $vote->user?->name,
+                    'avatar' => $vote->user?->getGravatar('50'),
                 ];
             });
     }
