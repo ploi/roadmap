@@ -20,7 +20,7 @@ class OgImageGenerator
     private bool   $polygonEnabled = false;
     private ?array $polygonPoints  = null;
 
-    public static function make(string $title): self
+    public static function make(?string $title): self
     {
         return new self($title);
     }
