@@ -71,7 +71,7 @@ class App extends Component
 
         $this->userNeedsToVerify = app(GeneralSettings::class)->users_must_verify_email &&
             auth()->check() &&
-            !auth()->user()->hasVerifiedEmail();
+            !auth()->user()?->hasVerifiedEmail();
 
         return view('components.app');
     }
