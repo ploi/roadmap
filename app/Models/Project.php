@@ -30,6 +30,11 @@ class Project extends Model
         'private' => 'boolean',
     ];
 
+    /**
+     * Get the boards for the project.
+     * 
+     * @return HasMany<Board, $this>
+     */
     public function boards()
     {
         return $this->hasMany(Board::class)->orderBy('sort_order');

@@ -11,14 +11,26 @@ use Illuminate\Database\Eloquent\Collection;
 
 class App extends Component
 {
+    /**
+     * Collection of the projects to display.
+     * 
+     * @var Collection<int, Project>
+     */
     public Collection $projects;
     public string $brandColors;
     public string $primaryColors;
     public ?string $logo;
+
+    /**
+     * @var array{cssValue: string, urlValue: string}
+     */
     public array $fontFamily;
     public bool $blockRobots = false;
     public bool $userNeedsToVerify = false;
 
+    /**
+     * @param array<int, array{title: string, url: string}> $breadcrumbs
+     */
     public function __construct(public array $breadcrumbs = [])
     {
         $this->projects = Project::query()
