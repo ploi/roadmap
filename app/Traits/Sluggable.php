@@ -6,12 +6,12 @@ use Illuminate\Support\Str;
 
 trait Sluggable
 {
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
-    public static function bootSluggable()
+    public static function bootSluggable(): void
     {
         static::created(function ($model) {
             if (!$model->slug) {
