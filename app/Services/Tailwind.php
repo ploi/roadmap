@@ -8,8 +8,14 @@ use Illuminate\Support\Str;
 
 class Tailwind
 {
+    /**
+     * @var array<string, string>
+     */
     public array $shades = [];
 
+    /**
+     * @var array<int, float>
+     */
     protected array $intensityMap = [
         50 => 0.95,
         100 => 0.9,
@@ -36,7 +42,7 @@ class Tailwind
             if ($this->name === 'primary') {
                 $color = Str::between($color, '(', ')');
             }
-            
+
             $output .= "\t--color-{$shade}: {$color};" . PHP_EOL;
         }
 
@@ -46,7 +52,12 @@ class Tailwind
         return $output;
     }
 
-    public function generateColorShades(string $name, ?string $baseColor): array
+    /**
+     * @param string $name
+     * @param string $baseColor
+     * @return array<string, string>
+     */
+    public function generateColorShades(string $name, string $baseColor = ''): array
     {
         $baseColor = Hex::fromString($baseColor);
 

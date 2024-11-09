@@ -18,9 +18,13 @@ class OgImageGenerator
     private ?string $templateFile = null;
 
     private bool   $polygonEnabled = false;
+
+    /**
+     * @var array<int>|null
+     */
     private ?array $polygonPoints  = null;
 
-    public static function make(?string $title): self
+    public static function make(string $title): self
     {
         return new self($title);
     }
@@ -58,6 +62,10 @@ class OgImageGenerator
         return $this;
     }
 
+    /**
+     * @param array<int>|null $points
+     * @return $this
+     */
     public function withPolygonDecoration(?array $points = null): static
     {
         $this->polygonEnabled = true;
@@ -76,7 +84,7 @@ class OgImageGenerator
             $this->filename = 'og-' . $this->filename;
         }
 
-        return $this->filename ?? 'og-' . md5(time()) . '.jpg';
+        return $this->filename ?? 'og-' . md5((string) time()) . '.jpg';
     }
 
     public function generate(): OgImage
