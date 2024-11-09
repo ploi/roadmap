@@ -14,7 +14,7 @@ trait HasUpvote
 {
     /**
      * Get the votes for parent model.
-     * 
+     *
      * @return MorphMany<Vote, $this>
      */
     public function votes(): MorphMany
@@ -84,7 +84,7 @@ trait HasUpvote
             ->map(function ($vote) {
                 return [
                     'name' => $vote->user?->name,
-                    'avatar' => $vote->user?->getGravatar('50'),
+                    'avatar' => $vote->user?->getGravatar(50),
                 ];
             });
     }

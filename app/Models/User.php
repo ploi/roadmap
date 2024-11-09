@@ -4,12 +4,16 @@ namespace App\Models;
 
 use Filament\Panel;
 use App\Enums\UserRole;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Settings\GeneralSettings;
 use Laravel\Sanctum\HasApiTokens;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Notifications\Notifiable;
+use Database\Factories\UserSocialFactory;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -19,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerifyEmail
 {
+    /** @use HasFactory<UserSocialFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
@@ -65,12 +70,14 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         return in_array($this->role, $roles);
     }
 
-    public function getGravatar($size = 150): string
+    public function getGravatar(int $size = 150): string
     {
+        $email = is_string(Arr::get($this->attributes, 'email')) ? trim(Arr::get($this->attributes, 'email')) : '';
+
         return sprintf(
             '%s/%s?s=%d',
-            config('services.gravatar.base_url'),
-            md5(strtolower(trim(Arr::get($this->attributes, 'email')))),
+            config()->string('services.gravatar.base_url'),
+            md5(strtolower(trim($email))),
             (int)$size
         );
     }
@@ -80,37 +87,70 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         return $this->getGravatar();
     }
 
-    public function items()
+    /**
+     * Get the user's items.
+     *
+     * @return HasMany<Item, $this>
+     */
+    public function items(): HasMany
     {
         return $this->hasMany(Item::class);
     }
 
+    /**
+     * Get the projects that user belongs.
+     *
+     * @return BelongsToMany<Project, $this>
+     */
     public function projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class, 'project_member')->using(ProjectMember::class);
     }
 
+    /**
+     * Get the user's votes.
+     *
+     * @return HasMany<Vote, $this>
+     */
     public function votes(): HasMany
     {
         return $this->hasMany(Vote::class);
     }
 
-    public function votedItems()
+    /**
+     * Get the user's voted items.
+     *
+     * @return HasManyThrough<Item, Vote, $this>
+     */
+    public function votedItems(): HasManyThrough
     {
         return $this->hasManyThrough(Item::class, Vote::class, 'user_id', 'items.id', 'id', 'model_id');
     }
 
-    public function comments()
+    /**
+     * Get the user's comments.
+     *
+     * @return HasMany<Comment, $this>
+     */
+    public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }
 
-    public function assignedItems()
+    /**
+     * Get the items assigned to the user.
+     *
+     * @return BelongsToMany<Item, $this>
+     */
+    public function assignedItems(): BelongsToMany
     {
         return $this->belongsToMany(Item::class, 'item_user');
     }
 
-    public function commentedItems()
+    /**
+     * @return HasManyThrough<Item, Comment, $this>
+     */
+    public function commentedItems(): hasManyThrough
     {
         return $this->hasManyThrough(
             Item::class,
@@ -122,19 +162,29 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         )->withMax('comments', 'created_at')->distinct('comments.item_id');
     }
 
-    public function mentions()
+    /**
+     * Get the user's mentions.
+     *
+     * @return MorphToMany<Comment, $this>
+     */
+    public function mentions(): MorphToMany
     {
         return $this
             ->morphedByMany(Comment::class, 'model', 'mentions', 'recipient_id')
             ->where('recipient_type', User::class);
     }
 
-    public function userSocials()
+    /**
+     * Get the user's socials.
+     *
+     * @return HasMany<UserSocial, $this>
+     */
+    public function userSocials(): hasMany
     {
         return $this->hasMany(UserSocial::class);
     }
 
-    public function wantsNotification($type)
+    public function wantsNotification(string $type): bool
     {
         return in_array($type, $this->notification_settings ?? []);
     }
@@ -142,7 +192,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
     public function needsToVerifyEmail() : bool
     {
         return app(GeneralSettings::class)->users_must_verify_email &&
-             !auth()->user()->hasVerifiedEmail();
+             !auth()->user()?->hasVerifiedEmail();
     }
 
     public function isSubscribedToItem(Item $item): bool
@@ -150,7 +200,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         return $item->subscribedVotes()->where('user_id', $this->id)->exists();
     }
 
-    public function toggleVoteSubscription(int $id, string $type)
+    public function toggleVoteSubscription(int $id, string $type): void
     {
         $vote = Vote::where('model_id', $id)
             ->where('model_type', $type)
@@ -176,7 +226,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         });
 
         static::updating(function (self $user) {
-            $user->username = Str::lower($user->username);
+            $user->username = Str::lower((string) $user->username);
         });
     }
 }

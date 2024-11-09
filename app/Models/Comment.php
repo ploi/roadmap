@@ -3,6 +3,11 @@
 namespace App\Models;
 
 use App\Traits\HasUpvote;
+use Database\Factories\CommentFactory;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\Activitylog\LogOptions;
 use Xetaio\Mentions\Models\Mention;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +17,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Comment extends Model
 {
+    /** @use HasFactory<CommentFactory> */
     use HasFactory, HasMentionsTrait, LogsActivity, HasUpvote;
 
     public $fillable = [
@@ -25,29 +31,57 @@ class Comment extends Model
         'private' => 'boolean',
     ];
 
-    protected static $recordEvents = ['updated'];
+    /**
+     * @var string[] $recordEvents
+     */
+    protected static array $recordEvents = ['updated'];
 
-    public function user()
+    /**
+     * Get the user that owns the comment.
+     *
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function item()
+    /**
+     * Get the item that owns the comment.
+     *
+     * @return BelongsTo<Item, $this>
+     */
+    public function item(): BelongsTo
     {
         return $this->belongsTo(Item::class);
     }
 
-    public function parent()
+    /**
+     * Get the parent comment.
+     *
+     * @return BelongsTo<Comment, $this>
+     */
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(Comment::class, 'parent_id');
     }
 
-    public function comments()
+    /**
+     * Get the child comments.
+     *
+     * @return HasMany<Comment, $this>
+     */
+    public function comments(): HasMany
     {
         return $this->hasMany(Comment::class, 'parent_id');
     }
 
-    public function mentions()
+    /**
+     * Get the comment mentions.
+     *
+     * @return MorphMany<Mention, $this>
+     */
+    public function mentions(): MorphMany
     {
         return $this->morphMany(Mention::class, 'model');
     }
@@ -60,7 +94,13 @@ class Comment extends Model
             ->logOnlyDirty();
     }
 
-    public function scopePublic($query)
+    /**
+     * Scope by public comments.
+     *
+     * @param Builder<Comment> $query
+     * @return Builder<Comment>
+     */
+    public function scopePublic(Builder $query): Builder
     {
         return $query->where('private', false);
     }
