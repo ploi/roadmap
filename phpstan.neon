@@ -11,6 +11,7 @@ parameters:
         - ./app/Settings
         - ./app/Services/Icons.php
         - ./app/Services/GitHubService.php
+        - ./app/Enums/ItemActivity.php
     ignoreErrors:
         - '#Parameter \$get of static method Illuminate\\Database\\Eloquent\\Casts\\Attribute<mixed,mixed>::make\(\) expects \(callable\(mixed, mixed\): string\)\|null, Closure\(mixed, array\): string given#'
         - '#Parameter \#1 \$related of method Illuminate\\Database\\Eloquent\\Model::morphMany\(\) expects class-string<Illuminate\\Database\\Eloquent\\Model>, string given#'
