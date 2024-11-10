@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\Sluggable;
 use App\Traits\HasOgImage;
+use Database\Factories\ProjectFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Project extends Model
 {
+    /** @use HasFactory<ProjectFactory> */
     use HasFactory, Sluggable, HasOgImage;
 
     public $fillable = [
@@ -32,25 +34,41 @@ class Project extends Model
 
     /**
      * Get the boards for the project.
-     * 
+     *
      * @return HasMany<Board, $this>
      */
-    public function boards()
+    public function boards(): HasMany
     {
         return $this->hasMany(Board::class)->orderBy('sort_order');
     }
 
+    /**
+     * Get the project members.
+     *
+     * @return BelongsToMany<User, $this>
+     */
     public function members(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'project_member')->using(ProjectMember::class);
     }
 
+    /**
+     * Get the project items.
+     *
+     * @return HasMany<Item, $this>
+     */
     public function items(): HasMany
     {
         return $this->hasMany(Item::class);
     }
 
-    public function scopeVisibleForCurrentUser($query)
+    /**
+     * Scope by visible projects to current user.
+     *
+     * @param Builder<Project> $query
+     * @return Builder<Project>
+     */
+    public function scopeVisibleForCurrentUser(Builder $query): Builder
     {
         if (auth()->user()?->hasAdminAccess()) {
             return $query;

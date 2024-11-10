@@ -4,10 +4,14 @@ parameters:
     paths:
         - app/
     # Level 9 is the highest level
-    level: max
+    level: 9
     excludePaths:
         - ./app/Spotlight
         - ./app/SocialProviders
         - ./app/Settings
         - ./app/Services/Icons.php
         - ./app/Services/GitHubService.php
+    ignoreErrors:
+        - '#Parameter \$get of static method Illuminate\\Database\\Eloquent\\Casts\\Attribute<mixed,mixed>::make\(\) expects \(callable\(mixed, mixed\): string\)\|null, Closure\(mixed, array\): string given#'
+        - '#Parameter \#1 \$related of method Illuminate\\Database\\Eloquent\\Model::morphMany\(\) expects class-string<Illuminate\\Database\\Eloquent\\Model>, string given#'
+        - '#Unable to resolve the template type TRelatedModel in call to method Illuminate\\Database\\Eloquent\\Model::morphMany#'

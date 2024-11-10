@@ -4,11 +4,16 @@ namespace App\Models;
 
 use App\Traits\Sluggable;
 use App\Traits\HasOgImage;
+use Database\Factories\BoardFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Board extends Model
 {
+    /** @use HasFactory<BoardFactory> */
     use HasFactory, Sluggable, HasOgImage;
 
     const SORT_ITEMS_BY_POPULAR = 'popular';
@@ -33,22 +38,38 @@ class Board extends Model
         'block_votes' => 'boolean'
     ];
 
-    public function project()
+    /**
+     * Get the project that owns the board.
+     *
+     * @return BelongsTo<Project, $this>
+     */
+    public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
     }
 
-    public function items()
+    /**
+     * Get the items for the board.
+     *
+     * @return HasMany<Item, $this>
+     */
+    public function items(): hasMany
     {
         return $this->hasMany(Item::class);
     }
 
-    public function scopeVisible($query)
+    /**
+     * Scope by visible boards.
+     *
+     * @param Builder<Board> $query
+     * @return Builder<Board>
+     */
+    public function scopeVisible(Builder $query): Builder
     {
         return $query->where('visible', true);
     }
 
-    public function canUsersCreateItem()
+    public function canUsersCreateItem(): bool
     {
         return $this->can_users_create;
     }

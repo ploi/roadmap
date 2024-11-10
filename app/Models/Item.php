@@ -9,6 +9,7 @@ use App\Traits\HasOgImage;
 use Illuminate\Support\Str;
 use App\Enums\InboxWorkflow;
 use App\Settings\GeneralSettings;
+use Database\Factories\ItemFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -18,10 +19,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Spatie\Activitylog\Exceptions\InvalidConfiguration;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Item extends Model
 {
+    /** @use HasFactory<ItemFactory> */
     use HasFactory, Sluggable, HasOgImage, HasUpvote, HasTags;
 
     public $fillable = [
@@ -48,6 +51,9 @@ class Item extends Model
         return Tag::class;
     }
 
+    /**
+     * @return Attribute<string, string>
+     */
     protected function excerpt(): Attribute
     {
         return Attribute::make(
@@ -57,6 +63,9 @@ class Item extends Model
         );
     }
 
+    /**
+     * @return Attribute<string, string>
+     */
     protected function viewUrl(): Attribute
     {
         return Attribute::make(
@@ -70,64 +79,115 @@ class Item extends Model
         )->shouldCache();
     }
 
+    /**
+     * Get the board that owns the item..
+     *
+     * @return BelongsTo<Board, $this>
+     */
     public function board(): BelongsTo
     {
         return $this->belongsTo(Board::class);
     }
 
+    /**
+     * Get the user that owns the item.
+     *
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get the project that owns the item.
+     *
+     * @return BelongsTo<Project, $this>
+     */
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
     }
 
+    /**
+     * @return MorphMany<Vote, $this>
+     */
     public function subscribedVotes(): MorphMany
     {
         return $this->votes()->where('subscribed', true);
     }
 
+    /**
+     * Get the comments for the item.
+     *
+     * @return HasMany<Comment, $this>
+     */
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }
 
+    /**
+     * Get the parent comments for the item.
+     *
+     * @return HasMany<Comment, $this>
+     */
     public function parentComments(): HasMany
     {
         return $this->hasMany(Comment::class)->whereNotNull('parent_id')->latest();
     }
 
+    /**
+     * Get the assigned users that owns the item.
+     *
+     * @return BelongsToMany<User, $this>
+     */
     public function assignedUsers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'item_user');
     }
 
+    /**
+     * @return BelongsToMany<Changelog, $this>
+     */
     public function changelogs(): BelongsToMany
     {
         return $this->belongsToMany(Changelog::class);
     }
 
+    /**
+     * @return MorphMany<Model, $this>
+     * @throws InvalidConfiguration
+     */
     public function activities(): MorphMany
     {
         return $this->morphMany(ActivitylogServiceProvider::determineActivityModel(), 'subject');
     }
 
+    /**
+     * @return MorphToMany<Tag, $this>
+     */
     public function tags(): MorphToMany
     {
         return $this
-            ->morphToMany(self::getTagClassName(), 'taggable', 'taggables', null, 'tag_id')
+            ->morphToMany(Tag::class, 'taggable', 'taggables', null, 'tag_id')
             ->orderBy('order_column');
     }
 
-    public function scopePopular($query)
+    /**
+     * @param Builder<Item> $query
+     * @return Builder<Item>
+     */
+    public function scopePopular(Builder $query): Builder
     {
         return $query->orderBy('total_votes', 'desc');
     }
 
-    public function scopeVisibleForCurrentUser(Builder $query)
+    /**
+     * @param Builder<Item> $query
+     * @return Builder<Item>
+     */
+    public function scopeVisibleForCurrentUser(Builder $query): Builder
     {
         if (auth()->user()?->hasAdminAccess()) {
             return $query;
@@ -138,7 +198,11 @@ class Item extends Model
         });
     }
 
-    public function scopeForInbox($query)
+    /**
+     * @param Builder<Item> $query
+     * @return Builder<Item>|null
+     */
+    public function scopeForInbox(Builder $query): Builder|null
     {
         return match (app(GeneralSettings::class)->getInboxWorkflow()) {
             InboxWorkflow::WithoutBoardAndProject => $query->whereNull('project_id')->whereNull('board_id'),
@@ -148,7 +212,11 @@ class Item extends Model
         };
     }
 
-    public function scopeNoChangelogTag($query)
+    /**
+     * @param Builder<Item> $query
+     * @return Builder<Item>
+     */
+    public function scopeNoChangelogTag(Builder $query): Builder
     {
         return $query
             ->whereDoesntHave('tags', function (Builder $query) {
