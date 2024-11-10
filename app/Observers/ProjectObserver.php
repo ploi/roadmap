@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProjectObserver
 {
-    public function deleting(Project $project)
+    public function deleting(Project $project): void
     {
         try {
             Storage::delete('public/og-' . $project->slug . '-' . $project->id . '.jpg');

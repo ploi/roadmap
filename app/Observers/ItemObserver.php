@@ -15,7 +15,7 @@ use App\Notifications\Item\ItemUpdatedNotification;
 
 class ItemObserver
 {
-    public function created(Item $item)
+    public function created(Item $item): void
     {
         ItemActivity::createForItem($item, ItemActivity::Created);
 
@@ -41,7 +41,7 @@ class ItemObserver
         }
     }
 
-    public function updating(Item $item)
+    public function updating(Item $item): void
     {
         $isDirty = false;
 
@@ -103,7 +103,7 @@ class ItemObserver
         $item->updateQuietly(['notify_subscribers' => true]);
     }
 
-    public function deleting(Item $item)
+    public function deleting(Item $item): void
     {
         try {
             Storage::delete('public/og-' . $item->slug . '-' . $item->id . '.jpg');
