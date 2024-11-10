@@ -11,7 +11,7 @@ class ConvertNotifications extends Command
 
     protected $description = 'Convert notifications to new format';
 
-    public function handle()
+    public function handle(): int
     {
         $array = [];
 
