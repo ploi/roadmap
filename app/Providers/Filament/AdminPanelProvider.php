@@ -36,7 +36,7 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Blue,
             ])
-            ->spa(config('filament.spa'))
+            ->spa(config()->boolean('filament.spa'))
             ->viteTheme('resources/css/admin.css')
             ->favicon(file_exists($favIcon = storage_path('app/public/favicon.png')) ? asset('storage/favicon.png') . '?v=' . md5_file($favIcon) : null)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')

@@ -35,7 +35,7 @@ class CommentObserver
             $user->notify(new ItemHasNewCommentNotification($comment, $user));
         });
 
-        $comment->parent?->user->notify(new CommentHasReplyNotification($comment));
+        $comment->parent?->user?->notify(new CommentHasReplyNotification($comment));
     }
 
     public function deleting(Comment $comment): void
