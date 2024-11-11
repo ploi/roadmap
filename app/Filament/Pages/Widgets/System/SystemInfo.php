@@ -11,6 +11,9 @@ class SystemInfo extends Widget
 
     protected int | string | array $columnSpan = 2;
 
+    /**
+     * @var array<string, mixed>
+     */
     public array $version = [
         'remoteVersion' => 0,
         'currentVersion' => 0
@@ -18,7 +21,7 @@ class SystemInfo extends Widget
     public bool $isOutOfDate = false;
     public string $phpVersion = '8.1';
 
-    public function mount()
+    public function mount(): void
     {
         $systemChecker = (new SystemChecker);
 

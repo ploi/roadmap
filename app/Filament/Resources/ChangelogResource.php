@@ -73,7 +73,7 @@ class ChangelogResource extends Resource
                     Select::make('user_id')
                         ->label(trans('resources.changelog.author'))
                         ->relationship('user', 'name')
-                        ->default(auth()->user()->id)
+                        ->default(auth()->user()?->id)
                         ->preload()
                         ->required()
                         ->searchable(),
