@@ -40,14 +40,14 @@ class Colors extends SettingsPage
 
     public static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->hasRole(UserRole::Admin);
+        return auth()->user()?->hasRole(UserRole::Admin) ?? false;
     }
 
     public function mount(): void
     {
         parent::mount();
 
-        abort_unless(auth()->user()->hasRole(UserRole::Admin), 403);
+        abort_unless(auth()->user()?->hasRole(UserRole::Admin) ?? false, 403);
     }
 
     public function form(Form $form): Form
