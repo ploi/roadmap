@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use App\Models\Board;
 use App\Enums\UserRole;
 use App\Models\Project;
+use App\Services\OgImage;
 use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Illuminate\Support\Str;
@@ -53,18 +54,21 @@ class Settings extends SettingsPage
         return trans('settings.title');
     }
 
+    /**
+     * @var Collection<int, string>
+     */
     public Collection $ogImages;
 
     public static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->hasRole(UserRole::Admin);
+        return auth()->user()?->hasRole(UserRole::Admin) ?? false;
     }
 
     public function mount(): void
     {
         parent::mount();
 
-        abort_unless(auth()->user()->hasRole(UserRole::Admin), 403);
+        abort_unless(auth()->user()?->hasRole(UserRole::Admin) ?? false, 403);
 
         $this->ogImages = collect(Storage::disk('public')->allFiles())
             ->filter(
@@ -275,12 +279,10 @@ class Settings extends SettingsPage
                                     Select::make('column_span')
                                         ->label(trans('settings.dashboard-items.column-span'))
                                         ->helperText(trans('settings.dashboard-items.column-span-helper-text'))
-                                        ->options(
-                                            [
-                                                1 => 1,
-                                                2 => 2,
-                                            ]
-                                        )
+                                        ->options(fn () => [
+                                            1 => 1,
+                                            2 => 2,
+                                        ])
                                         ->default(1),
 
                                     Toggle::make('must_have_project')
