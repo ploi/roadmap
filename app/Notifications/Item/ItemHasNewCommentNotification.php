@@ -14,9 +14,9 @@ class ItemHasNewCommentNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $tries = 5;
+    public int $tries = 5;
 
-    public $backoff = 10;
+    public int $backoff = 10;
 
     public function __construct(
         public readonly Comment $comment,
@@ -24,7 +24,10 @@ class ItemHasNewCommentNotification extends Notification implements ShouldQueue
     ) {
     }
 
-    public function via($notifiable): array
+    /**
+     * @return array|string[]
+     */
+    public function via(): array
     {
         if ($this->comment->private) {
             return [];
@@ -33,10 +36,10 @@ class ItemHasNewCommentNotification extends Notification implements ShouldQueue
         return ['mail'];
     }
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(User $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(trans('notifications.new-comment-subject', ['title' => $this->comment->item->title]))
+            ->subject(trans('notifications.new-comment-subject', ['title' => $this->comment->item?->title ?? '']))
             ->markdown('emails.item.new-comment', [
                 'comment' => $this->comment,
                 'user'    => $this->user,
