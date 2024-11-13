@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\CommentResource\Pages;
 
+use App\Models\Comment;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
@@ -18,8 +19,14 @@ class EditComment extends EditRecord
                   ->label(trans('resources.item.view-public'))
                   ->color('gray')
                   ->openUrlInNewTab()
-                  ->url(fn () => route('items.show', $this->record->item) . '#comment-' . $this->record->id),
+                  ->url(fn () => route('items.show', $this->getCurrentComment()->item) . '#comment-' . $this->getCurrentComment()->id),
             DeleteAction::make(),
         ];
+    }
+
+    protected function getCurrentComment(): Comment
+    {
+        /** @var Comment */
+        return $this->record;
     }
 }
