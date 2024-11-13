@@ -2,22 +2,29 @@
 
 namespace App\Livewire\Project;
 
+use App\Models\Item;
 use App\Models\Board;
 use App\Models\Project;
 use Livewire\Component;
+use Illuminate\Support\Collection;
+use Illuminate\Contracts\View\View;
 
 class Items extends Component
 {
     public Project $project;
     public Board $board;
 
-    public $items = [];
+    /** @var Collection<int, Item> */
+    public Collection $items;
 
+    /**
+     * @var string[]
+     */
     protected $listeners = [
         'item-created' => '$refresh',
     ];
 
-    public function render()
+    public function render(): View
     {
         $this->items = $this->board->items()
             ->visibleForCurrentUser()
@@ -30,11 +37,11 @@ class Items extends Component
         return view('livewire.board.items');
     }
 
-    protected function getSortingColumn()
+    protected function getSortingColumn(): string
     {
         return match ($this->board->sort_items_by) {
             'popular' => 'total_votes',
-            'latest' => 'created_at',
+            default => 'created_at',
         };
     }
 }
