@@ -13,9 +13,9 @@ class MentionNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $tries = 5;
+    public int $tries = 5;
 
-    public $backoff = 10;
+    public int $backoff = 10;
 
     public function __construct(
         public readonly Comment $comment
@@ -24,7 +24,7 @@ class MentionNotification extends Notification implements ShouldQueue
 
     public function via(User $notifiable): array
     {
-        if ($this->comment->user->is($notifiable)) {
+        if ($this->comment->user?->is($notifiable)) {
             return [];
         }
 
@@ -42,8 +42,8 @@ class MentionNotification extends Notification implements ShouldQueue
     public function toMail(User $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(trans('notifications.new-mention-subject', ['title' => $this->comment->item->title]))
-            ->line(trans('notifications.new-mention-body', ['title' => $this->comment->item->title, 'user' => $this->comment->user->name]))
+            ->subject(trans('notifications.new-mention-subject', ['title' => $this->comment->item?->title ?? '']))
+            ->line(trans('notifications.new-mention-body', ['title' => $this->comment->item?->title ?? '', 'user' => $this->comment->user?->name]))
             ->action(trans('notifications.view-item'), route('items.show', $this->comment->item) . '#comment-' . $this->comment->id)
             ->line(trans('notifications.unsubscribe-info'));
     }
