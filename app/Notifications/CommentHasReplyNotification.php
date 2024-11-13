@@ -13,18 +13,22 @@ class CommentHasReplyNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $tries = 5;
+    public int $tries = 5;
 
-    public $backoff = 10;
+    public int $backoff = 10;
 
     public function __construct(
         public readonly Comment $comment
     ) {
     }
 
+    /**
+     * @param User $notifiable
+     * @return array|string[]
+     */
     public function via(User $notifiable): array
     {
-        if ($this->comment->user->is($notifiable)) {
+        if ($this->comment->user?->is($notifiable)) {
             return [];
         }
 
@@ -42,7 +46,7 @@ class CommentHasReplyNotification extends Notification implements ShouldQueue
     public function toMail(User $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(trans('notifications.new-reply-subject', ['title' => $this->comment->item->title]))
+            ->subject(trans('notifications.new-reply-subject', ['title' => $this->comment->item?->title ?? '']))
             ->greeting(trans('notifications.greeting', ['name' => $notifiable->name]))
             ->line(trans('notifications.new-reply-body'))
             ->action(trans('notifications.view-comment'), route('items.show', $this->comment->item) . '#comment-' . $this->comment->id)
