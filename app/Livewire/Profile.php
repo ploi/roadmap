@@ -2,7 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Models\UserSocial;
 use Filament\Forms;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use ResourceBundle;
 use App\Models\User;
 use Filament\Tables;
@@ -22,22 +25,27 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Actions\Concerns\InteractsWithActions;
 
+/**
+ * @property Forms\Form $form
+ */
 class Profile extends Component implements HasForms, HasTable, HasActions
 {
     use InteractsWithForms, InteractsWithTable, InteractsWithActions;
 
-    public $name;
-    public $email;
-    public $username;
-    public $locale;
-    public $per_page_setting;
-    public $notification_settings;
-    public $date_locale;
+    public string $name;
+    public string $email;
+    public string $username;
+    public string $locale;
+    public string $per_page_setting;
+    public string $notification_settings;
+    public string $date_locale;
     public User $user;
 
     public function mount(): void
     {
-        $this->user = auth()->user();
+        if (auth()->user()) {
+            $this->user = auth()->user();
+        }
 
         $this->form->fill([
             'name' => $this->user->name,
@@ -134,7 +142,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
             ->send();
     }
 
-    public function logout()
+    public function logout(): RedirectResponse
     {
         auth()->logout();
 
@@ -165,14 +173,19 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                     ->email()
                     ->required()
                     ->helperText('Enter your account\'s email address to delete your account')
-                    ->in([auth()->user()->email])
+                    ->in(function () {
+                        /** @var User $user */
+                        $user = auth()->user();
+
+                        return [$user->email];
+                    })
             ])
             ->action(fn () => $this->delete());
     }
 
-    public function delete()
+    public function delete(): RedirectResponse
     {
-        auth()->user()->delete();
+        auth()->user()?->delete();
 
         auth()->logout();
 
@@ -188,16 +201,19 @@ class Profile extends Component implements HasForms, HasTable, HasActions
             ->toArray();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.profile', [
             'hasSsoLoginAvailable' => SsoProvider::isEnabled(),
         ]);
     }
 
-    protected function getTableQuery(): Builder
+    /**
+     * @return Builder<UserSocial>|null
+     */
+    protected function getTableQuery(): Builder|null
     {
-        return auth()->user()->userSocials()->latest()->getQuery();
+        return auth()->user()?->userSocials()->latest()->getQuery();
     }
 
     protected function getTableColumns(): array
@@ -214,18 +230,23 @@ class Profile extends Component implements HasForms, HasTable, HasActions
         return [
             Tables\Actions\BulkAction::make('delete')
                 ->action(function (Collection $records) {
+                    /** @var UserSocial $record */
                     foreach ($records as $record) {
-                        $endpoint = config('services.sso.endpoints.revoke') ?? config('services.sso.url') . '/api/oauth/revoke';
+                        $endpoint = config('services.sso.endpoints.revoke')
+                            ? config()->string('services.sso.endpoints.revoke')
+                            : config()->string('services.sso.url') . '/api/oauth/revoke';
 
-                        $client = Http::withToken($record->access_token)->timeout(5);
+                        if ($record->access_token) {
+                            $client = Http::withToken($record->access_token)->timeout(5);
 
-                        if (config('services.sso.http_verify') === false) {
-                            $client->withoutVerifying();
+                            if (config('services.sso.http_verify') === false) {
+                                $client->withoutVerifying();
+                            }
+
+                            $client->delete($endpoint);
+
+                            $record->delete();
                         }
-
-                        $client->delete($endpoint);
-
-                        $record->delete();
                     }
                 })
                 ->deselectRecordsAfterCompletion()
