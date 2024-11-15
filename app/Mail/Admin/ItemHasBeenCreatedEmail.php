@@ -12,6 +12,10 @@ class ItemHasBeenCreatedEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
+    /**
+     * @param string[] $receiver
+     * @param Item $item
+     */
     public function __construct(
         public array $receiver,
         public Item $item

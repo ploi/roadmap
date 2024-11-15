@@ -11,6 +11,9 @@ class RoadmapVersionOutOfDate extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
+    /**
+     * @param string[] $receiver
+     */
     public function __construct(
         public array $receiver
     ) {

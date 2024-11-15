@@ -22,6 +22,10 @@ class MentionNotification extends Notification implements ShouldQueue
     ) {
     }
 
+    /**
+     * @param User $notifiable
+     * @return string[]
+     */
     public function via(User $notifiable): array
     {
         if ($this->comment->user?->is($notifiable)) {
