@@ -58,6 +58,11 @@ class RecentItems extends Component implements HasTable, HasForms
         };
     }
 
+    /**
+     * Get the table columns.
+     *
+     * @return Tables\Columns\TextColumn[]
+     */
     protected function getTableColumns(): array
     {
         return [

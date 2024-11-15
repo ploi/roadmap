@@ -26,11 +26,21 @@ class RecentMentions extends Component implements HasTable, HasForms
         return auth()->user()?->mentions()->latest('mentions.created_at')->getQuery();
     }
 
+    /**
+     * Get table records per page select options.
+     *
+     * @return int[]
+     */
     protected function getTableRecordsPerPageSelectOptions(): array
     {
         return auth()->user()->per_page_setting ?? [5];
     }
 
+    /**
+     * Get the table columns.
+     *
+     * @return Tables\Columns\TextColumn[]
+     */
     protected function getTableColumns(): array
     {
         return [
