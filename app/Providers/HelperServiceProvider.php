@@ -11,9 +11,9 @@ class HelperServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        foreach (glob(app_path('Helpers') . '/*.php') as $file) {
+        foreach (glob(app_path('Helpers') . '/*.php') ?: [] as $file) {
             require_once $file;
         }
     }

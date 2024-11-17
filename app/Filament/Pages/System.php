@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Enums\UserRole;
+use App\Models\User;
 use Filament\Pages\Page;
 use Filament\Actions\Action;
 use App\Services\SystemChecker;
@@ -36,12 +37,18 @@ class System extends Page
 
     public static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->hasRole(UserRole::Admin);
+        /** @var User $user */
+        $user = auth()->user();
+
+        return $user->hasRole(UserRole::Admin);
     }
 
     public function mount(): void
     {
-        abort_unless(auth()->user()->hasRole(UserRole::Admin), 403);
+        /** @var User $user */
+        $user = auth()->user();
+
+        abort_unless($user->hasRole(UserRole::Admin), 403);
     }
 
     protected function getHeaderWidgets(): array

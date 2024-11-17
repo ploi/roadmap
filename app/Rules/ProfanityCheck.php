@@ -7,7 +7,12 @@ use Illuminate\Contracts\Validation\Rule;
 
 class ProfanityCheck implements Rule
 {
-    public function passes($attribute, $value)
+    /**
+     * @param $attribute
+     * @param string $value
+     * @return bool
+     */
+    public function passes($attribute, $value): bool
     {
         $words = explode(' ', $value);
 
@@ -20,7 +25,7 @@ class ProfanityCheck implements Rule
         return true;
     }
 
-    public function message()
+    public function message(): string
     {
         return 'The content here contains profanity words, please correct these.';
     }

@@ -21,7 +21,12 @@ class WebhookClient
         return $this;
     }
 
-    public function send($method = 'get', $data = [])
+    /**
+     * @param string $method
+     * @param array<string, mixed> $data
+     * @return mixed
+     */
+    public function send(string $method = 'get', array $data = []): mixed
     {
         return $this->client->{$method}($this->url, $data);
     }

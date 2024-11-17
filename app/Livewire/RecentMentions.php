@@ -2,29 +2,45 @@
 
 namespace App\Livewire;
 
+use App\Models\Comment;
 use Closure;
 use Filament\Tables;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Xetaio\Mentions\Models\Mention;
 
 class RecentMentions extends Component implements HasTable, HasForms
 {
     use InteractsWithTable, InteractsWithForms;
 
-    protected function getTableQuery(): Builder
+    /**
+     * @return Builder<Comment>|null
+     */
+    protected function getTableQuery(): Builder|null
     {
-        return auth()->user()->mentions()->latest('mentions.created_at')->getQuery();
+        return auth()->user()?->mentions()->latest('mentions.created_at')->getQuery();
     }
 
+    /**
+     * Get table records per page select options.
+     *
+     * @return int[]
+     */
     protected function getTableRecordsPerPageSelectOptions(): array
     {
         return auth()->user()->per_page_setting ?? [5];
     }
 
+    /**
+     * Get the table columns.
+     *
+     * @return Tables\Columns\TextColumn[]
+     */
     protected function getTableColumns(): array
     {
         return [
@@ -41,7 +57,7 @@ class RecentMentions extends Component implements HasTable, HasForms
         };
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.recent-mentions');
     }

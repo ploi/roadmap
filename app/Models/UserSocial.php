@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Database\Factories\UserSocialFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserSocial extends Model
 {
+    /** @use HasFactory<UserSocialFactory> */
     use HasFactory;
 
     public $casts = [
@@ -19,7 +22,10 @@ class UserSocial extends Model
         'updated_at'
     ];
 
-    public function user()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

@@ -10,7 +10,7 @@ use App\Notifications\Item\ItemHasNewCommentNotification;
 
 class CommentObserver
 {
-    public function created(Comment $comment)
+    public function created(Comment $comment): void
     {
         $parser = new MentionParser($comment, [
             'regex_replacement' => [
@@ -35,10 +35,10 @@ class CommentObserver
             $user->notify(new ItemHasNewCommentNotification($comment, $user));
         });
 
-        $comment->parent?->user->notify(new CommentHasReplyNotification($comment));
+        $comment->parent?->user?->notify(new CommentHasReplyNotification($comment));
     }
 
-    public function deleting(Comment $comment)
+    public function deleting(Comment $comment): void
     {
         foreach ($comment->comments as $parentComment) {
             $parentComment->delete();

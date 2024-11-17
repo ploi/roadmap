@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use Illuminate\Support\Collection;
 use Mail;
 use App\Models\Item;
 use App\Models\User;
@@ -15,7 +16,7 @@ use App\Notifications\Item\ItemUpdatedNotification;
 
 class ItemObserver
 {
-    public function created(Item $item)
+    public function created(Item $item): void
     {
         ItemActivity::createForItem($item, ItemActivity::Created);
 
@@ -41,7 +42,7 @@ class ItemObserver
         }
     }
 
-    public function updating(Item $item)
+    public function updating(Item $item): void
     {
         $isDirty = false;
 
@@ -88,13 +89,14 @@ class ItemObserver
         if ($item->isDirty('issue_number') && !$item->issue_number) {
             ItemActivity::createForItem($item, ItemActivity::LinkedToIssue, [
                 'issue_number' => $item->issue_number,
-                'repo' => $item->project->repo,
+                'repo' => $item->project?->repo,
             ]);
         }
 
         if ($isDirty && $item->notify_subscribers) {
             $users = $item->subscribedVotes()->with('user')->get()->pluck('user');
 
+            /** @var Collection<int, User> $users */
             $users->each(function (User $user) use ($item) {
                 $user->notify(new ItemUpdatedNotification($item));
             });
@@ -103,7 +105,7 @@ class ItemObserver
         $item->updateQuietly(['notify_subscribers' => true]);
     }
 
-    public function deleting(Item $item)
+    public function deleting(Item $item): void
     {
         try {
             Storage::delete('public/og-' . $item->slug . '-' . $item->id . '.jpg');

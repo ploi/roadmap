@@ -5,6 +5,7 @@ namespace App\Livewire\Welcome;
 use Closure;
 use Filament\Tables;
 use App\Models\Comment;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Contracts\HasTable;
@@ -16,6 +17,9 @@ class RecentComments extends Component implements HasTable, HasForms
 {
     use InteractsWithTable, InteractsWithForms;
 
+    /**
+     * @return Builder<Comment>
+     */
     protected function getTableQuery(): Builder
     {
         return Comment::query()->public()->limit(10);
@@ -37,6 +41,11 @@ class RecentComments extends Component implements HasTable, HasForms
         };
     }
 
+    /**
+     * Get the table columns.
+     *
+     * @return Tables\Columns\TextColumn[]
+     */
     protected function getTableColumns(): array
     {
         return [
@@ -55,7 +64,7 @@ class RecentComments extends Component implements HasTable, HasForms
         return 'desc';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.welcome.recent-comments');
     }

@@ -5,6 +5,7 @@ namespace App\Livewire\Welcome;
 use Closure;
 use App\Models\Item;
 use Filament\Tables;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Illuminate\Support\Arr;
 use App\Settings\GeneralSettings;
@@ -18,6 +19,9 @@ class RecentItems extends Component implements HasTable, HasForms
 {
     use InteractsWithTable, InteractsWithForms;
 
+    /**
+     * @return Builder<Item>
+     */
     protected function getTableQuery(): Builder
     {
         $recentItemsConfig = collect(app(GeneralSettings::class)->dashboard_items)->first();
@@ -54,6 +58,11 @@ class RecentItems extends Component implements HasTable, HasForms
         };
     }
 
+    /**
+     * Get the table columns.
+     *
+     * @return Tables\Columns\TextColumn[]
+     */
     protected function getTableColumns(): array
     {
         return [
@@ -88,7 +97,7 @@ class RecentItems extends Component implements HasTable, HasForms
         return 'desc';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.welcome.recent-items');
     }

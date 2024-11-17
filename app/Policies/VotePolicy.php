@@ -11,37 +11,37 @@ class VotePolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->hasRole(UserRole::Admin, UserRole::Employee);
     }
 
-    public function view(User $user, Vote $model)
+    public function view(User $user, Vote $model): bool
     {
         return $user->hasRole(UserRole::Admin);
     }
 
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->hasRole(UserRole::Admin);
     }
 
-    public function update(User $user, Vote $model)
+    public function update(User $user, Vote $model): bool
     {
         return $user->hasRole(UserRole::Admin);
     }
 
-    public function delete(User $user, Vote $model)
+    public function delete(User $user, Vote $model): bool
     {
         return $user->hasRole(UserRole::Admin);
     }
 
-    public function restore(User $user, Vote $model)
+    public function restore(User $user, Vote $model): bool
     {
         return $user->hasRole(UserRole::Admin);
     }
 
-    public function forceDelete(User $user, Vote $model)
+    public function forceDelete(User $user, Vote $model): bool
     {
         return $user->hasRole(UserRole::Admin);
     }

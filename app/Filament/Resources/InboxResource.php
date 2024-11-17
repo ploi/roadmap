@@ -49,7 +49,8 @@ class InboxResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return Item::query()->forInbox()->count();
+        return (string) Item::query()->forInbox()->count();
+
     }
 
     public static function form(Form $form): Form

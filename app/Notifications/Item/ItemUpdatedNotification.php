@@ -14,16 +14,19 @@ class ItemUpdatedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $tries = 5;
+    public int $tries = 5;
 
-    public $backoff = 10;
+    public int $backoff = 10;
 
     public function __construct(
         public readonly Item $item
     ) {
     }
 
-    public function via($notifiable): array
+    /**
+     * @return string[]
+     */
+    public function via(): array
     {
         return ['mail'];
     }
@@ -31,7 +34,7 @@ class ItemUpdatedNotification extends Notification implements ShouldQueue
     public function toMail(User $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(trans('notifications.item-updated-subject', ['title' => $this->item->title]))
+            ->subject(trans('notifications.item-updated-subject', ['title' => $this->item->title ?? '']))
             ->markdown('emails.item.updated', [
                 'user'       => $notifiable,
                 'item'       => $this->item,

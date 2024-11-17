@@ -11,6 +11,9 @@ enum InboxWorkflow: string
     case WithoutBoardOrProject = 'without-board-or-project';
     case WithoutBoard = 'without-board';
 
+    /**
+     * @return Collection<string, string>
+     */
     public static function getSelectOptions(): Collection
     {
         return collect(InboxWorkflow::cases())

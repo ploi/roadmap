@@ -12,20 +12,20 @@ class SystemChecker
 
     public function getVersions(): self
     {
-        $this->remoteVersion = trim($this->getRemoteVersion());
-        $this->currentVersion = trim($this->getApplicationVersion());
+        $this->remoteVersion = trim((string) $this->getRemoteVersion());
+        $this->currentVersion = trim((string) $this->getApplicationVersion());
 
         return $this;
     }
 
-    public function getApplicationVersion(): string|null
+    public function getApplicationVersion(): string|null|bool
     {
         return cache()->remember($this->cacheKeyCurrent, now()->addDay(), function () {
             return shell_exec('git describe --tag --abbrev=0');
         });
     }
 
-    public function getRemoteVersion(): string|null
+    public function getRemoteVersion(): string|null|bool
     {
         return cache()->remember($this->cacheKeyRemote, now()->addDay(), function () {
             shell_exec('git fetch --tags');

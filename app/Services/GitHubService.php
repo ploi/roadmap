@@ -9,7 +9,11 @@ use GrahamCampbell\GitHub\Facades\GitHub;
 
 class GitHubService
 {
-    public function getRepositories(?string $searchQuery = null): Collection
+    /**
+     * @param string $searchQuery
+     * @return Collection<int|string, mixed>
+     */
+    public function getRepositories(string $searchQuery = ''): Collection
     {
         if (!$this->isEnabled()) {
             return collect();
@@ -31,10 +35,15 @@ class GitHubService
 
     public function isEnabled(): bool
     {
-        return config('github.enabled');
+        return (bool) config('github.enabled');
     }
 
-    public function getIssuesForRepository(?string $repository, ?string $searchQuery = null): Collection
+    /**
+     * @param string|null $repository
+     * @param string $searchQuery
+     * @return Collection<int|string, string>
+     */
+    public function getIssuesForRepository(?string $repository, string $searchQuery = ''): Collection
     {
         if (!$this->isEnabled() || $repository === null) {
             return collect();
@@ -76,7 +85,7 @@ class GitHubService
         }
     }
 
-    public function createIssueInRepository(string $repository, $title, $body): int
+    public function createIssueInRepository(string $repository, string $title, string $body): int
     {
         $repo = str($repository)->explode('/');
 

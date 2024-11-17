@@ -111,6 +111,9 @@ class Install extends Command
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getUserData(): array
     {
         return [

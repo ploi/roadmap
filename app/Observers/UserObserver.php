@@ -7,7 +7,7 @@ use App\Jobs\Items\RecalculateItemsVotes;
 
 class UserObserver
 {
-    public function deleting(User $user)
+    public function deleting(User $user): void
     {
         dispatch(new RecalculateItemsVotes($user->items()->pluck('id')));
 

@@ -5,16 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Tag extends Model
 {
     use HasTranslations;
 
-    public function items()
+    /**
+     * @return MorphToMany<Item, $this>
+     */
+    public function items(): MorphToMany
     {
         return $this->morphedByMany(Item::class, 'taggable');
     }
 
+    /**
+     * @param Builder<Tag> $query
+     * @param Changelog $changelog
+     * @return Builder<Tag>
+     */
     public function scopeForChangelog(Builder $query, Changelog $changelog): Builder
     {
         return $query
