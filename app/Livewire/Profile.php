@@ -58,6 +58,9 @@ class Profile extends Component implements HasForms, HasTable, HasActions
         ]);
     }
 
+    /**
+     * @return Forms\Components\Component[] Array of form components.
+     */
     protected function getFormSchema(): array
     {
         return [
@@ -216,6 +219,11 @@ class Profile extends Component implements HasForms, HasTable, HasActions
         return auth()->user()?->userSocials()->latest()->getQuery();
     }
 
+    /**
+     * Get the table columns.
+     *
+     * @return Tables\Columns\TextColumn[]
+     */
     protected function getTableColumns(): array
     {
         return [
@@ -225,6 +233,11 @@ class Profile extends Component implements HasForms, HasTable, HasActions
         ];
     }
 
+    /**
+     * Get the table bulk actions.
+     *
+     * @return Tables\Actions\BulkAction[]
+     */
     protected function getTableBulkActions(): array
     {
         return [

@@ -2,8 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Models\Item;
 use Closure;
 use Filament\Tables;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Illuminate\Support\Carbon;
 use Filament\Forms\Contracts\HasForms;
@@ -16,26 +19,39 @@ class My extends Component implements HasTable, HasForms
 {
     use InteractsWithTable, InteractsWithForms;
 
-    public $type = 'default';
+    public string $type = 'default';
 
-    protected function getTableQuery(): Builder
+    /**
+     * @return Builder<Item>|null
+     */
+    protected function getTableQuery(): Builder|null
     {
         if ($this->type == 'default') {
-            return auth()->user()->items()->with('board.project')->getQuery();
+            return auth()->user()?->items()->with('board.project')->getQuery();
         }
 
         if ($this->type == 'commentedOn') {
-            return auth()->user()->commentedItems()->getQuery();
+            return auth()->user()?->commentedItems()->getQuery();
         }
 
-        return auth()->user()->votedItems()->with('board.project')->latest('votes.created_at')->getQuery();
+        return auth()->user()?->votedItems()->with('board.project')->latest('votes.created_at')->getQuery();
     }
 
+    /**
+     * Get per page select options.
+     *
+     * @return int[]
+     */
     protected function getTableRecordsPerPageSelectOptions(): array
     {
         return auth()->user()->per_page_setting ?? [5];
     }
 
+    /**
+     * Get the table columns.
+     *
+     * @return Tables\Columns\TextColumn[]
+     */
     protected function getTableColumns(): array
     {
         return [
@@ -71,7 +87,7 @@ class My extends Component implements HasTable, HasForms
         };
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.my');
     }

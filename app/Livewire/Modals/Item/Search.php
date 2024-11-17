@@ -3,6 +3,7 @@
 namespace App\Livewire\Modals\Item;
 
 use App\Models\Item;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Filament\Tables\Table;
 use Filament\Forms\Contracts\HasForms;
@@ -29,7 +30,7 @@ class Search extends Component implements HasTable, HasForms
             ]);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.modals.item.search');
     }

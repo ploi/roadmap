@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Item;
 
+use App\Models\User;
 use App\Models\Vote;
 use Livewire\Component;
 use Illuminate\Support\Collection;
@@ -12,6 +13,10 @@ class VoteButton extends Component
 {
     public Model $model;
     public Vote|null $vote;
+
+    /**
+     * @var Collection<User>
+     */
     public Collection $recentVoters;
     public int $recentVotersToShow = 5;
     public bool $showSubscribeOption;
