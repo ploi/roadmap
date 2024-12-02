@@ -13,5 +13,7 @@ return [
     'edited' => 'Edited',
     'edit-comment' => 'Edit comment',
     'comment-updated' => 'Comment updated',
-    'activity' => 'Activity'
+    'activity' => 'Activity',
+    'login-to-comment' => 'Log in to comment',
+    'verify-email-to-comment' => 'Verify your email address before commenting. See email for instructions.',
 ];

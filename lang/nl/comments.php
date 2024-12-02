@@ -14,4 +14,6 @@ return [
     'edit-comment' => 'Opmerking bewerken',
     'comment-updated' => 'Opmerking aangepast',
     'activity' => 'Activiteit',
+    'login-to-comment' => 'Log in om een opmerking te plaatsen',
+    'verify-email-to-comment' => 'Verifieer je e-mailadres voordat je opmerkingen plaatst. Zie mail voor instructies.',
 ];

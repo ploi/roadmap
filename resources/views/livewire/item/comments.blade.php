@@ -10,11 +10,21 @@
 
     @if($reply === null && !$item->board?->block_comments)
         <form wire:submit="submit" class="space-y-4 mt-4">
-            {{ $this->form }}
+            @if(auth()->check() && auth()->user()->hasVerifiedEmail())
+                {{ $this->form }}
 
-            <x-filament::button wire:click="submit">
-                {{ trans('comments.submit') }}
-            </x-filament::button>
+                <x-filament::button wire:click="submit">
+                    {{ trans('comments.submit') }}
+                </x-filament::button>
+            @elseif(auth()->check() && !auth()->user()->hasVerifiedEmail())
+                <div class="text-primary-500  mt-4">
+                    {{ trans('comments.verify-email-to-comment') }}
+                </div>
+            @else
+                <div class="text-primary-500 hover:text-primary-700 mt-4">
+                    <a href="{{ route('login', ['intended' => url()->full()]) }}">{{ trans('comments.login-to-comment') }}</a>
+                </div>
+            @endif
         </form>
     @endif
 </div>
