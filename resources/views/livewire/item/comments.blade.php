@@ -17,7 +17,7 @@
                     {{ trans('comments.submit') }}
                 </x-filament::button>
             @elseif(auth()->check() && !auth()->user()->hasVerifiedEmail())
-                <div class="text-primary-500  mt-4">
+                <div class="text-primary-500 mt-4">
                     {{ trans('comments.verify-email-to-comment') }}
                 </div>
             @else
