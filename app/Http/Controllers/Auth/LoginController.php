@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\SocialProviders\SsoProvider;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -98,8 +99,12 @@ class LoginController extends Controller
         return redirect()->route('home');
     }
 
-    public function showLoginForm()
+    public function showLoginForm(Request $request)
     {
+        if ($request->has('intended')) {
+            Session::put('url.intended', $request->input('intended'));
+        }
+
         if (SsoProvider::isForced()) {
             return to_route('oauth.login');
         }
