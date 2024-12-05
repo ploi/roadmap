@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Tests\CreatesApplication;
 use function Pest\Laravel\actingAs;
 use Illuminate\Foundation\Testing\TestCase;
