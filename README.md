@@ -31,6 +31,7 @@ First set up a database, and remember the credentials.
 
 ```
 git clone https://github.com/ploi/roadmap.git
+cd roadmap
 composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 php -r "file_exists('.env') || copy('.env.example', '.env');"
 php artisan key:generate
