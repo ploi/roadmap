@@ -117,11 +117,12 @@ class ProjectResource extends Resource
                            Repeater::make('boards')
                                    ->label(trans('resources.board.label-plural'))
                                    ->collapsible()
-                               //->collapsed() // We can enable this when Filament has a way to set header titles
+                                   ->collapsed()
                                    ->relationship('boards')
                                    ->orderColumn('sort_order')
                                    ->default(app(GeneralSettings::class)->default_boards)
                                    ->columnSpan(2)
+                                   ->itemLabel(fn ($state) => $state['title'] ?? '')
                                    ->schema([
                                        Grid::make()->schema([
                                            Toggle::make('visible')
@@ -145,7 +146,8 @@ class ProjectResource extends Resource
                                        Grid::make()->schema([
                                            TextInput::make('title')
                                                     ->label(trans('resources.board.title'))
-                                                    ->required(),
+                                                    ->required()
+                                                    ->live(),
 
                                            Select::make('sort_items_by')
                                                  ->label(trans('resources.board.sort-items-by'))
