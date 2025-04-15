@@ -26,3 +26,4 @@ frankenphp
 /public/frankenphp-worker.php
 .DS_Store
 .phpunit.cache
+CLAUDE.md
