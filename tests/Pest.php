@@ -28,7 +28,7 @@ function createUser($attributes = [], $has = [])
     return $user->create($attributes);
 }
 
-function createAndLoginUser($attributes = [], User $user = null)
+function createAndLoginUser($attributes = [], ?User $user = null)
 {
     if (!$user) {
         $user = createUser($attributes);

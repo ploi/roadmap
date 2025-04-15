@@ -1,7 +1,0 @@
-/coverage
-/vendor
-composer.phar
-composer.lock
-tests/vendor/coverage
-tests/vendor/temp/database.sqlite
-.phpunit.result.cache
