@@ -18,7 +18,7 @@
 <meta name="twitter:image" content="@yield('image', $defaultImage)">
 
 <link rel="sitemap" type="application/xml" href="{{ asset('sitemap.xml') }}">
-
+<script src="https://unpkg.com/flowbite@1.3.4/dist/flowbite.js"></script>
 @hasSection('canonical')
     <link rel="canonical" href="@yield('canonical')">
 @endif
