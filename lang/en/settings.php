@@ -67,6 +67,7 @@ return [
         'type-helper-text'              => 'This will determine what will be shown.',
         'recent-items'                  => 'Latest items',
         'recent-comments'               => 'Latest comments',
+        'leaderboard'                   => 'Leaderboard',
         'column-span'                   => 'Column span',
         'column-span-helper-text'       => 'This will determine how many columns the item will span.',
         'must-have-project'             => 'Must have project',
