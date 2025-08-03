@@ -33,6 +33,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
     public $per_page_setting;
     public $notification_settings;
     public $date_locale;
+    public $hide_from_leaderboard;
     public User $user;
 
     public function mount(): void
@@ -47,6 +48,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
             'per_page_setting' => $this->user->per_page_setting ?? [5],
             'locale' => $this->user->locale,
             'date_locale' => $this->user->date_locale,
+            'hide_from_leaderboard' => $this->user->hide_from_leaderboard,
         ]);
     }
 
@@ -98,7 +100,11 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                                 ])
                                 ->required()
                                 ->helperText(trans('profile.per-page-setting-helper'))
-                                ->rules(['array', 'in:5,10,15,25,50'])
+                                ->rules(['array', 'in:5,10,15,25,50']),
+
+                            Forms\Components\Toggle::make('hide_from_leaderboard')
+                                ->label(trans('profile.hide-from-leaderboard'))
+                                ->helperText(trans('profile.hide-from-leaderboard-helper'))
                         ])->collapsible(),
                 ])
 
@@ -117,6 +123,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
             'per_page_setting' => $data['per_page_setting'],
             'locale' => $data['locale'],
             'date_locale' => $data['date_locale'],
+            'hide_from_leaderboard' => $data['hide_from_leaderboard'],
         ]);
 
         if ($this->user->wasChanged('locale', 'date_locale')) {

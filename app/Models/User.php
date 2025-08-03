@@ -31,6 +31,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         'per_page_setting',
         'locale',
         'date_locale',
+        'hide_from_leaderboard',
     ];
 
     protected $hidden = [
@@ -43,6 +44,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         'notification_settings' => 'array',
         'per_page_setting' => 'array',
         'role' => UserRole::class,
+        'hide_from_leaderboard' => 'boolean',
     ];
 
     public function canAccessPanel(Panel $panel): bool

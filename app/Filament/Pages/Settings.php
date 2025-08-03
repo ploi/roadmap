@@ -267,7 +267,8 @@ class Settings extends SettingsPage
                                         ->options(
                                             [
                                             'recent-items' => trans('settings.dashboard-items.recent-items'),
-                                            'recent-comments' => trans('settings.dashboard-items.recent-comments')
+                                            'recent-comments' => trans('settings.dashboard-items.recent-comments'),
+                                            'leaderboard' => trans('settings.dashboard-items.leaderboard')
                                             ]
                                         )
                                         ->default('recent-items'),
