@@ -35,6 +35,8 @@ class GeneralSettings extends Settings
     public array $excluded_matching_search_words;
     public array $profanity_words;
     public bool $show_github_link;
+    public bool $enable_leaderboard;
+    public int $leaderboard_users_count;
 
     public function getInboxWorkflow(): InboxWorkflow
     {

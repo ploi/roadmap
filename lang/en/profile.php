@@ -20,5 +20,7 @@ return [
     'social-login-description' => 'Here you\'ll find the social login\'s you\'ve used to log in with your account.',
     'per-page-setting' => 'Per page setting',
     'per-page-setting-helper' => 'Determine how many pages should be available for the items in the "My" page for example.',
-    'settings' => 'Settings'
+    'settings' => 'Settings',
+    'hide-from-leaderboard' => 'Hide from leaderboard',
+    'hide-from-leaderboard-helper' => 'Remove yourself from the public leaderboard rankings.'
 ];
