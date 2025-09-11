@@ -7,7 +7,7 @@ use App\Services\SystemChecker;
 
 class SystemInfo extends Widget
 {
-    protected static string $view = 'filament.widgets.system-info';
+    protected string $view = 'filament.widgets.system-info';
 
     protected int | string | array $columnSpan = 2;
 

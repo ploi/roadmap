@@ -2,11 +2,12 @@
 
 namespace App\Livewire\Item;
 
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use App\Models\Item;
 use Livewire\Component;
 use App\Rules\ProfanityCheck;
 use App\Settings\GeneralSettings;
-use Filament\Forms\Components\Tabs;
 use Filament\Forms\Contracts\HasForms;
 use App\View\Components\MarkdownEditor;
 use Filament\Notifications\Notification;
@@ -75,7 +76,7 @@ class Comments extends Component implements HasForms, HasActions
 
             return [
                 Tabs::make('')->tabs([
-                    Tabs\Tab::make(trans('comments.comment'))->schema([
+                    Tab::make(trans('comments.comment'))->schema([
                         MarkdownEditor::make('content')
                             ->label(trans('comments.comment'))
                             ->helperText(trans('comments.mention-helper-text'))
@@ -85,7 +86,7 @@ class Comments extends Component implements HasForms, HasActions
                         ->hidden($reply?->private ?? false)
                         ->id("public-{$this->reply}"),
 
-                    Tabs\Tab::make(trans('comments.private-note'))->schema([
+                    Tab::make(trans('comments.private-note'))->schema([
                         MarkdownEditor::make('private_content')
                             ->label(trans('comments.private-note'))
                             ->helperText(trans('comments.mention-helper-text'))

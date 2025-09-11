@@ -2,6 +2,9 @@
 
 namespace App\Livewire\Welcome;
 
+use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Tables\Columns\TextColumn;
 use Closure;
 use App\Models\Item;
 use Filament\Tables;
@@ -14,8 +17,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-class RecentItems extends Component implements HasTable, HasForms
+class RecentItems extends Component implements HasTable, HasForms, HasActions
 {
+    use InteractsWithActions;
     use InteractsWithTable, InteractsWithForms;
 
     protected function getTableQuery(): Builder
@@ -57,9 +61,9 @@ class RecentItems extends Component implements HasTable, HasForms
     protected function getTableColumns(): array
     {
         return [
-            Tables\Columns\TextColumn::make('title')->label(trans('table.title')),
-            Tables\Columns\TextColumn::make('total_votes')->label(trans('table.total-votes'))->sortable(),
-            Tables\Columns\TextColumn::make('project.title')->label(trans('table.project'))
+            TextColumn::make('title')->label(trans('table.title')),
+            TextColumn::make('total_votes')->label(trans('table.total-votes'))->sortable(),
+            TextColumn::make('project.title')->label(trans('table.project'))
                 ->url(function ($record) {
                     if ($project = $record->project) {
                         return route('projects.show', $project);
@@ -67,7 +71,7 @@ class RecentItems extends Component implements HasTable, HasForms
 
                     return null;
                 }),
-            Tables\Columns\TextColumn::make('board.title')->label(trans('table.board'))
+            TextColumn::make('board.title')->label(trans('table.board'))
                 ->url(function ($record) {
                     if ($board = $record->board) {
                         return route('projects.boards.show', [$record->project, $board]);

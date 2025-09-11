@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Exception;
+
 class SystemChecker
 {
     public string|null $remoteVersion;
@@ -45,7 +47,7 @@ class SystemChecker
         try {
             cache()->forget($this->cacheKeyCurrent);
             cache()->forget($this->cacheKeyRemote);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
         }
     }
 

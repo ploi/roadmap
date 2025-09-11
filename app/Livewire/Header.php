@@ -10,17 +10,18 @@ use Livewire\Component;
 use Filament\Actions\Action;
 use App\Rules\ProfanityCheck;
 use App\Settings\GeneralSettings;
-use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Support\Enums\Alignment;
 use Filament\Forms\Contracts\HasForms;
-use App\Filament\Resources\ItemResource;
-use App\Filament\Resources\UserResource;
+use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\MarkdownEditor;
+use App\Filament\Resources\Items\ItemResource;
+use App\Filament\Resources\Users\UserResource;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Actions\Concerns\InteractsWithActions;
 
@@ -80,7 +81,7 @@ class Header extends Component implements HasForms, HasActions
             ->modalIcon('heroicon-o-plus-circle')
             ->modalWidth('3xl')
             ->modalSubmitActionLabel(auth()->check() ? 'Confirm' : 'Log in')
-            ->form(function () {
+            ->schema(function () {
                 if (!auth()->check()) {
                     return [Placeholder::make('not_logged_in')->label('You\'re currently not logged in. Please make sure to login before submitting an item.')];
                 }
@@ -94,7 +95,7 @@ class Header extends Component implements HasForms, HasActions
                     ])
                     ->label(trans('table.title'))
                     ->lazy()
-                    ->afterStateUpdated(function (\Filament\Forms\Set $set, $state) {
+                    ->afterStateUpdated(function (Set $set, $state) {
                         $this->setSimilarItems($state);
                     })
                     ->minLength(3)
@@ -167,7 +168,7 @@ class Header extends Component implements HasForms, HasActions
                             ->title(trans('items.item_created'))
                             ->body(trans('items.item_created_notification_body', ['user' => auth()->user()->name, 'title' => $item->title]))
                             ->actions([
-                                \Filament\Notifications\Actions\Action::make('view')->label(trans('notifications.view-item'))->url(ItemResource::getUrl('edit', ['record' => $item])),
+                                Action::make('view')->label(trans('notifications.view-item'))->url(ItemResource::getUrl('edit', ['record' => $item])),
                                 Action::make('view_user')->label(trans('notifications.view-user'))->url(UserResource::getUrl('edit', ['record' => auth()->user()])),
                             ])
                             ->sendToDatabase($user);

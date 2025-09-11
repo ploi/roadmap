@@ -2,6 +2,11 @@
 
 namespace App\Providers\Filament;
 
+use App;
+use Filament\Pages\Dashboard;
+use Filament\Widgets\AccountWidget;
+use Filament\Widgets\FilamentInfoWidget;
+use LaraZeus\SpatieTranslatable\SpatieTranslatablePlugin;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
@@ -10,7 +15,6 @@ use Filament\Support\Colors\Color;
 use Filament\Navigation\NavigationItem;
 use Filament\Navigation\NavigationGroup;
 use Filament\Http\Middleware\Authenticate;
-use Filament\SpatieLaravelTranslatablePlugin;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -25,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        if (! \App::runningUnitTests()) {
+        if (! App::runningUnitTests()) {
             config([ 'livewire.inject_assets' => true ]);
         }
 
@@ -42,12 +46,12 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                AccountWidget::class,
+                FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -70,7 +74,7 @@ class AdminPanelProvider extends PanelProvider
                                ->collapsible(false)
 
             ])
-            ->plugin(SpatieLaravelTranslatablePlugin::make()->defaultLocales([ 'en' ]))
+            ->plugin(SpatieTranslatablePlugin::make()->defaultLocales([ 'en' ]))
             ->navigationItems([
                 NavigationItem::make()
                               ->group(trans('nav.external'))

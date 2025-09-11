@@ -2,6 +2,9 @@
 
 namespace App\Livewire\Welcome;
 
+use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Tables\Columns\TextColumn;
 use Closure;
 use Filament\Tables;
 use App\Models\Comment;
@@ -12,8 +15,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-class RecentComments extends Component implements HasTable, HasForms
+class RecentComments extends Component implements HasTable, HasForms, HasActions
 {
+    use InteractsWithActions;
     use InteractsWithTable, InteractsWithForms;
 
     protected function getTableQuery(): Builder
@@ -40,8 +44,8 @@ class RecentComments extends Component implements HasTable, HasForms
     protected function getTableColumns(): array
     {
         return [
-            Tables\Columns\TextColumn::make('content')->label(trans('table.content')),
-            Tables\Columns\TextColumn::make('item.title')->label(trans('table.item')),
+            TextColumn::make('content')->label(trans('table.content')),
+            TextColumn::make('item.title')->label(trans('table.item')),
         ];
     }
 

@@ -37,7 +37,7 @@ class Comment extends Component implements HasForms, HasActions
             ->modalAlignment(Alignment::Left)
             ->modalDescription('')
             ->modalIcon('heroicon-o-chat-bubble-left-right')
-            ->form(function (array $arguments) {
+            ->schema(function (array $arguments) {
                 return [
                     MarkdownEditor::make('content')
                         ->default(Arr::get($arguments, 'comment.content'))
@@ -63,7 +63,7 @@ class Comment extends Component implements HasForms, HasActions
             ->modalAlignment(Alignment::Left)
             ->modalDescription('')
             ->modalIcon('heroicon-o-chat-bubble-left-right')
-            ->form(function () {
+            ->schema(function () {
                 return [
                     MarkdownEditor::make('content')->required()
                 ];

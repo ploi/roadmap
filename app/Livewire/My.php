@@ -3,17 +3,20 @@
 namespace App\Livewire;
 
 use Closure;
-use Filament\Tables;
 use Livewire\Component;
 use Illuminate\Support\Carbon;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Actions\Concerns\InteractsWithActions;
 
-class My extends Component implements HasTable, HasForms
+class My extends Component implements HasTable, HasForms, HasActions
 {
+    use InteractsWithActions;
     use InteractsWithTable, InteractsWithForms;
 
     public $type = 'default';
@@ -39,11 +42,11 @@ class My extends Component implements HasTable, HasForms
     protected function getTableColumns(): array
     {
         return [
-            Tables\Columns\TextColumn::make('title')->wrap()->label(trans('table.title'))->searchable(),
-            Tables\Columns\TextColumn::make('total_votes')->label(trans('table.total-votes'))->sortable(),
-            Tables\Columns\TextColumn::make('project.title')->label(trans('table.project')),
-            Tables\Columns\TextColumn::make('board.title')->label(trans('table.board')),
-            Tables\Columns\TextColumn::make($this->type === 'commentedOn' ? 'comments_max_created_at' : 'created_at')
+            TextColumn::make('title')->wrap()->label(trans('table.title'))->searchable(),
+            TextColumn::make('total_votes')->label(trans('table.total-votes'))->sortable(),
+            TextColumn::make('project.title')->label(trans('table.project')),
+            TextColumn::make('board.title')->label(trans('table.board')),
+            TextColumn::make($this->type === 'commentedOn' ? 'comments_max_created_at' : 'created_at')
                 ->sortable()
                 ->label(function () {
                     if ($this->type === 'commentedOn') {

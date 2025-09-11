@@ -2,6 +2,14 @@
 
 namespace App\Livewire;
 
+use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Grid;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\BulkAction;
 use Filament\Forms;
 use ResourceBundle;
 use App\Models\User;
@@ -55,11 +63,11 @@ class Profile extends Component implements HasForms, HasTable, HasActions
     protected function getFormSchema(): array
     {
         return [
-            Forms\Components\Section::make(trans('auth.profile'))
+            Section::make(trans('auth.profile'))
                 ->columns()
                 ->schema([
-                    Forms\Components\TextInput::make('name')->label(trans('auth.name'))->required(),
-                    Forms\Components\TextInput::make('username')
+                    TextInput::make('name')->label(trans('auth.name'))->required(),
+                    TextInput::make('username')
                         ->label(trans('profile.username'))
                         ->helperText(trans('profile.username_description'))
                         ->required()
@@ -67,17 +75,17 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                             'alpha_dash'
                         ])
                         ->unique(table: User::class, column: 'username', ignorable: auth()->user()),
-                    Forms\Components\TextInput::make('email')->label(trans('auth.email'))->required()->email(),
-                    Forms\Components\Select::make('locale')->label(trans('auth.locale'))->options($this->locales)->placeholder(trans('auth.locale_null_value')),
-                    Forms\Components\Select::make('date_locale')->label(trans('auth.date_locale'))->options($this->locales)->placeholder(trans('auth.date_locale_null_value')),
+                    TextInput::make('email')->label(trans('auth.email'))->required()->email(),
+                    Select::make('locale')->label(trans('auth.locale'))->options($this->locales)->placeholder(trans('auth.locale_null_value')),
+                    Select::make('date_locale')->label(trans('auth.date_locale'))->options($this->locales)->placeholder(trans('auth.date_locale_null_value')),
                 ])->collapsible(),
 
-            Forms\Components\Grid::make(2)
+            Grid::make(2)
                 ->schema([
-                    Forms\Components\Section::make(trans('profile.notifications'))
+                    Section::make(trans('profile.notifications'))
                         ->columnSpan(1)
                         ->schema([
-                            Forms\Components\CheckboxList::make('notification_settings')
+                            CheckboxList::make('notification_settings')
                                 ->label(trans('profile.notification_settings'))
                                 ->options([
                                     'receive_mention_notifications' => trans('profile.receive_mention_notifications'),
@@ -85,10 +93,10 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                                 ]),
                         ])->collapsible(),
 
-                    Forms\Components\Section::make(trans('profile.settings'))
+                    Section::make(trans('profile.settings'))
                         ->columnSpan(1)
                         ->schema([
-                            Forms\Components\Select::make('per_page_setting')
+                            Select::make('per_page_setting')
                                                    ->label(trans('profile.per-page-setting'))
                                 ->multiple()
                                 ->options([
@@ -102,7 +110,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                                 ->helperText(trans('profile.per-page-setting-helper'))
                                 ->rules(['array', 'in:5,10,15,25,50']),
 
-                            Forms\Components\Toggle::make('hide_from_leaderboard')
+                            Toggle::make('hide_from_leaderboard')
                                 ->label(trans('profile.hide-from-leaderboard'))
                                 ->helperText(trans('profile.hide-from-leaderboard-helper'))
                         ])->collapsible(),
@@ -167,8 +175,8 @@ class Profile extends Component implements HasForms, HasTable, HasActions
             ->requiresConfirmation()
             ->modalAlignment(Alignment::Left)
             ->modalDescription('Are you sure you want to do this?')
-            ->form([
-                Forms\Components\TextInput::make('email')
+            ->schema([
+                TextInput::make('email')
                     ->email()
                     ->required()
                     ->helperText('Enter your account\'s email address to delete your account')
@@ -210,16 +218,16 @@ class Profile extends Component implements HasForms, HasTable, HasActions
     protected function getTableColumns(): array
     {
         return [
-            Tables\Columns\TextColumn::make('name'),
-            Tables\Columns\TextColumn::make('provider'),
-            Tables\Columns\TextColumn::make('created_at')->label('Date')->sortable()->dateTime(),
+            TextColumn::make('name'),
+            TextColumn::make('provider'),
+            TextColumn::make('created_at')->label('Date')->sortable()->dateTime(),
         ];
     }
 
     protected function getTableBulkActions(): array
     {
         return [
-            Tables\Actions\BulkAction::make('delete')
+            BulkAction::make('delete')
                 ->action(function (Collection $records) {
                     foreach ($records as $record) {
                         $endpoint = config('services.sso.endpoints.revoke') ?? config('services.sso.url') . '/api/oauth/revoke';

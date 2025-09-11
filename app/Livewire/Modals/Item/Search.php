@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Modals\Item;
 
+use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\Concerns\InteractsWithActions;
 use App\Models\Item;
 use Livewire\Component;
 use Filament\Tables\Table;
@@ -11,8 +13,9 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-class Search extends Component implements HasTable, HasForms
+class Search extends Component implements HasTable, HasForms, HasActions
 {
+    use InteractsWithActions;
     use InteractsWithForms, InteractsWithTable;
 
     public function table(Table $table): Table
