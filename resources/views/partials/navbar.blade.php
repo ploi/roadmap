@@ -90,7 +90,7 @@
                                    ])
                                         href="{{ route('projects.show', $project) }}">
                                         <x-dynamic-component :component="$project->icon ?? 'heroicon-o-hashtag'"
-                                                             class="flex-shrink-0 w-5 h-5 {{ request()->segment(2) == $project->slug ? '' : 'text-gray-500'  }}"/>
+                                                             class="shrink-0 w-5 h-5 {{ request()->segment(2) == $project->slug ? '' : 'text-gray-500'  }}"/>
 
                                         <span class="font-normal truncate">{{ $project->title }}</span>
 

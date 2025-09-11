@@ -17,7 +17,7 @@
                 <header class="flex items-center px-4 py-2 space-x-4">
                     <div class="flex items-center flex-1 space-x-3 overflow-hidden">
                         @if($user)
-                            <div class="relative flex-shrink-0 w-10 h-10 rounded-full">
+                            <div class="relative shrink-0 w-10 h-10 rounded-full">
                                 <img class="absolute inset-0 object-cover rounded-full"
                                      src="{{ $user->getGravatar() }}"
                                      alt="{{ $user->name }}">
@@ -94,7 +94,7 @@
                     @endif
                     <h2>{{ $item->title }}</h2>
 
-                    <time class="flex-shrink-0 text-sm font-medium text-gray-500">
+                    <time class="shrink-0 text-sm font-medium text-gray-500">
                         {{ $item->created_at->isoFormat('L LTS') }}
                     </time>
 
@@ -144,7 +144,7 @@
                     @foreach($activities as $activity)
                         <li class="flex space-x-3">
                             <div
-                                class="relative flex items-center justify-center flex-shrink-0 w-8 h-8 text-gray-400 border border-gray-200 dark:border-gray-600 rounded-full bg-gray-50 dark:bg-gray-800">
+                                class="relative flex items-center justify-center shrink-0 w-8 h-8 text-gray-400 border border-gray-200 dark:border-gray-600 rounded-full bg-gray-50 dark:bg-gray-800">
                                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                           stroke-width="1.5"

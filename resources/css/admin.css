@@ -1,3 +1,4 @@
-@import '../../vendor/filament/filament/resources/css/index.css';
+@import 'tailwindcss';
+@import '../../vendor/filament/filament/resources/css/base.css';
 
 @config '../../tailwind.admin.config.js';
