@@ -68,6 +68,7 @@ return [
         'recent-items'                  => 'Latest items',
         'recent-comments'               => 'Latest comments',
         'leaderboard'                   => 'Leaderboard',
+        'statistics'                    => 'Statistics',
         'column-span'                   => 'Column span',
         'column-span-helper-text'       => 'This will determine how many columns the item will span.',
         'must-have-project'             => 'Must have project',
