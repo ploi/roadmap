@@ -3,6 +3,7 @@
 @import './tribute.css';
 @import './fonts.css';
 @import './variables.css';
+@import './admin.css';
 
 @theme {
   --color-brand-50: var(--color-brand-50);
@@ -15,7 +16,7 @@
   --color-brand-700: var(--color-brand-700);
   --color-brand-800: var(--color-brand-800);
   --color-brand-900: var(--color-brand-900);
-  
+
   /* Success colors (green) */
   --color-success-50: #f0fdf4;
   --color-success-100: #dcfce7;
@@ -27,7 +28,7 @@
   --color-success-700: #15803d;
   --color-success-800: #166534;
   --color-success-900: #14532d;
-  
+
   /* Danger colors (rose) */
   --color-danger-50: #fef2f2;
   --color-danger-100: #fee2e2;
@@ -39,7 +40,7 @@
   --color-danger-700: #b91c1c;
   --color-danger-800: #991b1b;
   --color-danger-900: #7f1d1d;
-  
+
   /* Warning colors (yellow) */
   --color-warning-50: #fefce8;
   --color-warning-100: #fef3c7;
@@ -51,7 +52,7 @@
   --color-warning-700: #b45309;
   --color-warning-800: #92400e;
   --color-warning-900: #78350f;
-  
+
   /* Primary colors (blue) */
   --color-primary-50: #eff6ff;
   --color-primary-100: #dbeafe;

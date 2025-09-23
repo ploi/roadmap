@@ -21,7 +21,7 @@
                 <section class="h-full">
                     <div class="bg-gray-100 rounded-xl min-w-[18rem] lg:w-92 flex flex-col max-h-full dark:bg-white/5">
                         <div
-                            class="p-2 font-semibold text-center text-gray-800 border-b bg-gray-100/80 rounded-t-xl backdrop-blur-xl backdrop-saturate-150 dark:bg-gray-900 dark:text-white dark:border-b-gray-800">
+                            class="p-2 font-semibold text-center text-gray-800 border-b border-gray-200 bg-gray-100/80 rounded-t-xl backdrop-blur-xl backdrop-saturate-150 dark:bg-gray-900 dark:text-white dark:border-b-gray-800">
                             <a
                                 href="{{ route('projects.boards.show', [$project, $board]) }}"
                                 class="border-b border-dotted border-black">

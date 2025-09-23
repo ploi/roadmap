@@ -13,15 +13,12 @@ use App\Settings\GeneralSettings;
 use Filament\Forms\Components\Select;
 use Filament\Support\Enums\Alignment;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\Items\ItemResource;
 use App\Filament\Resources\Users\UserResource;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Actions\Concerns\InteractsWithActions;
 
@@ -31,6 +28,7 @@ class Header extends Component implements HasForms, HasActions
 
     public $logo;
     public $projects;
+    public $similarItems = [];
 
     public function mount()
     {
@@ -71,6 +69,26 @@ class Header extends Component implements HasForms, HasActions
 
     public function submitItemAction(): Action
     {
+        if (!auth()->check()) {
+            return Action::make('submitItem')
+                ->label(trans('items.create'))
+                ->color('gray')
+                ->icon('heroicon-o-plus-circle')
+                ->action(function () {
+                    Notification::make()
+                        ->title(trans('items.login_to_submit_item'))
+                        ->info()
+                        ->body(trans('items.login_to_submit_item_subtext'))
+                        ->actions([
+                            Action::make('login')
+                                ->button()
+                                ->color('primary')
+                                ->url(route('login')),
+                        ])
+                        ->send();
+                });
+        }
+
         return Action::make('submitItem')
             ->label(trans('items.create'))
             ->requiresConfirmation()
@@ -80,12 +98,9 @@ class Header extends Component implements HasForms, HasActions
             ->modalDescription('')
             ->modalIcon('heroicon-o-plus-circle')
             ->modalWidth('3xl')
-            ->modalSubmitActionLabel(auth()->check() ? 'Confirm' : 'Log in')
+            ->modalSubmitActionLabel('Confirm')
+            ->fillForm([])
             ->schema(function () {
-                if (!auth()->check()) {
-                    return [Placeholder::make('not_logged_in')->label('You\'re currently not logged in. Please make sure to login before submitting an item.')];
-                }
-
                 $inputs = [];
 
                 $inputs[] = TextInput::make('title')
@@ -94,8 +109,8 @@ class Header extends Component implements HasForms, HasActions
                         new ProfanityCheck()
                     ])
                     ->label(trans('table.title'))
-                    ->lazy()
-                    ->afterStateUpdated(function (Set $set, $state) {
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function ($state) {
                         $this->setSimilarItems($state);
                     })
                     ->minLength(3)
@@ -104,7 +119,7 @@ class Header extends Component implements HasForms, HasActions
                 if (app(GeneralSettings::class)->select_project_when_creating_item) {
                     $inputs[] = Select::make('project_id')
                         ->label(trans('table.project'))
-                        ->reactive()
+                        ->live()
                         ->options(Project::query()->visibleForCurrentUser()->pluck('title', 'id'))
                         ->required(app(GeneralSettings::class)->project_required_when_creating_item);
                 }
@@ -112,29 +127,22 @@ class Header extends Component implements HasForms, HasActions
                 if (app(GeneralSettings::class)->select_board_when_creating_item) {
                     $inputs[] = Select::make('board_id')
                         ->label(trans('table.board'))
-                        ->visible(fn ($get) => $get('project_id'))
-                        ->options(fn ($get) => Project::find($get('project_id'))->boards()->where('can_users_create', true)->pluck('title', 'id'))
+                        ->options([])
                         ->required(app(GeneralSettings::class)->board_required_when_creating_item);
                 }
 
-                $inputs[] = Group::make([
-                    MarkdownEditor::make('content')
-                        ->label(trans('table.content'))
-                        ->rules([
-                            new ProfanityCheck()
-                        ])
-                        ->disableToolbarButtons(app(GeneralSettings::class)->getDisabledToolbarButtons())
-                        ->minLength(10)
-                        ->required()
-                ]);
+                $inputs[] = MarkdownEditor::make('content')
+                    ->label(trans('table.content'))
+                    ->rules([
+                        new ProfanityCheck()
+                    ])
+                    ->disableToolbarButtons(app(GeneralSettings::class)->getDisabledToolbarButtons())
+                    ->minLength(10)
+                    ->required();
 
                 return $inputs;
             })
             ->action(function (array $data) {
-                if (!auth()->user()) {
-                    return redirect()->route('login');
-                }
-
                 if (app(GeneralSettings::class)->users_must_verify_email && !auth()->user()->hasVerifiedEmail()) {
                     Notification::make('must_verify')
                         ->title('Verification')
@@ -153,10 +161,9 @@ class Header extends Component implements HasForms, HasActions
                 ]);
 
                 $item->user()->associate(auth()->user())->save();
-
                 $item->toggleUpvote();
 
-                Notification::make('must_verify')
+                Notification::make('item_created')
                     ->title('Item')
                     ->body(trans('items.item_created'))
                     ->success()
