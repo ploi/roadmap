@@ -77,11 +77,13 @@ class InboxResource extends Resource
                 TextColumn::make('comments_count')
                     ->label(ucfirst(trans_choice('messages.comments', 2)))
                     ->counts('comments')
+                    ->sortable()
                     ->toggleable(),
 
                 TextColumn::make('votes_count')
                     ->label(ucfirst(trans_choice('messages.votes', 2)))
                     ->counts('votes')
+                    ->sortable()
                     ->toggleable(),
 
                 TextColumn::make('user.name')
