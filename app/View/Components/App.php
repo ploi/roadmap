@@ -49,8 +49,9 @@ class App extends Component
         $this->brandColors = $tw->getCssFormat();
 
         $tw = new Tailwind('primary', app(ColorSettings::class)->primary);
+        //dd($tw->getCssFormat());
 
-        $this->primaryColors = str($tw->getCssFormat())->replace('color-', '');
+        $this->primaryColors = str($tw->getCssFormat())->replace('color-primary', 'primary');
 
         $fontFamily = app(ColorSettings::class)->fontFamily ?? "Nunito";
         $this->fontFamily = [

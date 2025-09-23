@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Http\Kernel;
 use App\Services\OgImageGenerator;
+use Filament\Support\Colors\Color;
+use Filament\Support\Facades\FilamentColor;
 use Illuminate\Support\Collection;
 use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\View;
@@ -28,6 +30,15 @@ class AppServiceProvider extends ServiceProvider
 
         $this->bootSsoSocialite();
         $this->bootCollectionMacros();
+
+        FilamentColor::register([
+            'danger' => Color::Red,
+            'gray' => Color::Zinc,
+            'info' => Color::Blue,
+            'primary' => Color::Blue,
+            'success' => Color::Green,
+            'warning' => Color::Amber,
+        ]);
     }
 
     private function bootSsoSocialite(): void
