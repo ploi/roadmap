@@ -3,19 +3,21 @@
     <div class="flex border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
         <button
             wire:click="setActiveTab('voters')"
-            class="flex-1 px-4 py-3 text-sm font-medium transition-colors duration-200 focus:outline-none
-                {{ $activeTab === 'voters' 
-                    ? 'text-brand-600 bg-white dark:text-brand-400 dark:bg-gray-800 border-b-2 border-brand-600 dark:border-brand-400' 
-                    : 'text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200' }}"
+            @class([
+                'flex-1 px-4 py-3 text-sm font-medium transition-colors duration-200 focus:outline-none',
+                'text-brand-600 bg-white dark:text-brand-400 dark:bg-gray-800 border-b-2 border-brand-600 dark:border-brand-400' => $activeTab === 'voters',
+                'text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200' => $activeTab !== 'voters'
+            ])
         >
             {{ trans('general.top-voters') }}
         </button>
         <button
             wire:click="setActiveTab('commenters')"
-            class="flex-1 px-4 py-3 text-sm font-medium transition-colors duration-200 focus:outline-none
-                {{ $activeTab === 'commenters' 
-                    ? 'text-brand-600 bg-white dark:text-brand-400 dark:bg-gray-800 border-b-2 border-brand-600 dark:border-brand-400' 
-                    : 'text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200' }}"
+            @class([
+                'flex-1 px-4 py-3 text-sm font-medium transition-colors duration-200 focus:outline-none',
+                'text-brand-600 bg-white dark:text-brand-400 dark:bg-gray-800 border-b-2 border-brand-600 dark:border-brand-400' => $activeTab === 'commenters',
+                'text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200' => $activeTab !== 'commenters'
+            ])
         >
             {{ trans('general.top-commenters') }}
         </button>
@@ -26,14 +28,22 @@
         @if($activeTab === 'voters' && $topVoters->isNotEmpty())
             <div class="space-y-2">
                 @foreach($topVoters as $index => $user)
-                    <div class="flex items-center justify-between py-2 {{ $index === 0 ? 'bg-yellow-50/50 dark:bg-yellow-900/10 -mx-4 px-4 rounded-lg' : '' }} {{ $index < count($topVoters) - 1 ? 'border-b border-gray-100 dark:border-gray-700' : '' }}">
+                    <div @class([
+                        'flex items-center justify-between py-2',
+                        'bg-yellow-50/50 dark:bg-yellow-900/10 -mx-4 px-4 rounded-lg' => $index === 0,
+                        'border-b border-gray-100 dark:border-gray-700' => $index < count($topVoters) - 1
+                    ])>
                         <div class="flex items-center space-x-3">
                             {{-- Rank --}}
-                            <span class="w-5 text-center {{ $index === 0 ? 'text-lg font-bold' : 'text-sm font-semibold' }}
-                                {{ $index === 0 ? 'text-yellow-600 dark:text-yellow-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)] dark:drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]' : 
-                                   ($index === 1 ? 'text-gray-500 dark:text-gray-400' : 
-                                   ($index === 2 ? 'text-orange-600 dark:text-orange-400' : 
-                                   'text-gray-400 dark:text-gray-500')) }}">
+                            <span @class([
+                                'w-5 text-center',
+                                'text-lg font-bold' => $index === 0,
+                                'text-sm font-semibold' => $index !== 0,
+                                'text-yellow-600 dark:text-yellow-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)] dark:drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]' => $index === 0,
+                                'text-gray-500 dark:text-gray-400' => $index === 1,
+                                'text-orange-600 dark:text-orange-400' => $index === 2,
+                                'text-gray-400 dark:text-gray-500' => $index > 2
+                            ])>
                                 {{ $index + 1 }}
                             </span>
 
@@ -63,14 +73,22 @@
         @elseif($activeTab === 'commenters' && $topCommenters->isNotEmpty())
             <div class="space-y-2">
                 @foreach($topCommenters as $index => $user)
-                    <div class="flex items-center justify-between py-2 {{ $index === 0 ? 'bg-yellow-50/50 dark:bg-yellow-900/10 -mx-4 px-4 rounded-lg' : '' }} {{ $index < count($topCommenters) - 1 ? 'border-b border-gray-100 dark:border-gray-700' : '' }}">
+                    <div @class([
+                        'flex items-center justify-between py-2',
+                        'bg-yellow-50/50 dark:bg-yellow-900/10 -mx-4 px-4 rounded-lg' => $index === 0,
+                        'border-b border-gray-100 dark:border-gray-700' => $index < count($topCommenters) - 1
+                    ])>
                         <div class="flex items-center space-x-3">
                             {{-- Rank --}}
-                            <span class="w-5 text-center {{ $index === 0 ? 'text-lg font-bold' : 'text-sm font-semibold' }}
-                                {{ $index === 0 ? 'text-yellow-600 dark:text-yellow-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)] dark:drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]' : 
-                                   ($index === 1 ? 'text-gray-500 dark:text-gray-400' : 
-                                   ($index === 2 ? 'text-orange-600 dark:text-orange-400' : 
-                                   'text-gray-400 dark:text-gray-500')) }}">
+                            <span @class([
+                                'w-5 text-center',
+                                'text-lg font-bold' => $index === 0,
+                                'text-sm font-semibold' => $index !== 0,
+                                'text-yellow-600 dark:text-yellow-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)] dark:drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]' => $index === 0,
+                                'text-gray-500 dark:text-gray-400' => $index === 1,
+                                'text-orange-600 dark:text-orange-400' => $index === 2,
+                                'text-gray-400 dark:text-gray-500' => $index > 2
+                            ])>
                                 {{ $index + 1 }}
                             </span>
 

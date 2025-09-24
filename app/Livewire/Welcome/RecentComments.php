@@ -5,8 +5,8 @@ namespace App\Livewire\Welcome;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 use Closure;
-use Filament\Tables;
 use App\Models\Comment;
 use Livewire\Component;
 use Filament\Forms\Contracts\HasForms;
@@ -20,43 +20,23 @@ class RecentComments extends Component implements HasTable, HasForms, HasActions
     use InteractsWithActions;
     use InteractsWithTable, InteractsWithForms;
 
-    protected function getTableQuery(): Builder
+    public function table(Table $table): Table
     {
-        return Comment::query()->public()->limit(10);
-    }
+        return $table
+            ->query(Comment::query()->public()->limit(10))
+            ->columns([
+                TextColumn::make('content')->label(trans('table.content')),
+                TextColumn::make('item.title')->label(trans('table.item')),
+            ])
+            ->recordUrl(function ($record) {
+                if ($item = $record->item) {
+                    return route('items.show', $item). "#comment-$record->id";
+                }
 
-    protected function isTablePaginationEnabled(): bool
-    {
-        return false;
-    }
-
-    protected function getTableRecordUrlUsing(): ?Closure
-    {
-        return function ($record) {
-            if ($item = $record->item) {
-                return route('items.show', $item). "#comment-$record->id";
-            }
-
-            return null;
-        };
-    }
-
-    protected function getTableColumns(): array
-    {
-        return [
-            TextColumn::make('content')->label(trans('table.content')),
-            TextColumn::make('item.title')->label(trans('table.item')),
-        ];
-    }
-
-    protected function getDefaultTableSortColumn(): ?string
-    {
-        return 'created_at';
-    }
-
-    protected function getDefaultTableSortDirection(): ?string
-    {
-        return 'desc';
+                return null;
+            })
+            ->paginated(false)
+            ->defaultSort('created_at', 'desc');
     }
 
     public function render()
