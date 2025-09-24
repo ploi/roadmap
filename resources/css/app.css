@@ -5,6 +5,8 @@
 @import './variables.css';
 @import './admin.css';
 
+@plugin '@tailwindcss/typography';
+
 @theme {
   --color-brand-50: var(--color-brand-50);
   --color-brand-100: var(--color-brand-100);
