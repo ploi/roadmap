@@ -30,7 +30,7 @@ class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     protected static ?int $navigationSort = 1100;
 
@@ -62,111 +62,112 @@ class ProjectResource extends Resource
         return $schema
             ->components([
                 Section::make()
-                       ->columns()
-                       ->schema([
-                           TextInput::make('title')
-                                    ->label(trans('resources.project.title'))
-                                    ->columnSpan(1)
-                                    ->required()
-                                    ->maxLength(255),
+                    ->columns()
+                    ->columnSpanFull()
+                    ->schema([
+                        TextInput::make('title')
+                            ->label(trans('resources.project.title'))
+                            ->columnSpan(1)
+                            ->required()
+                            ->maxLength(255),
 // For now, we're not using this..
 //                    Forms\Components\TextInput::make('url')
 //                        ->columnSpan(1)
 //                        ->maxLength(255),
-                           TextInput::make('group')
-                                    ->label(trans('resources.project.group'))
-                                    ->helperText(trans('resources.project.group-helper-text'))
-                                    ->columnSpan(1)
-                                    ->maxLength(255),
+                        TextInput::make('group')
+                            ->label(trans('resources.project.group'))
+                            ->helperText(trans('resources.project.group-helper-text'))
+                            ->columnSpan(1)
+                            ->maxLength(255),
 
-                           TextInput::make('slug')
-                                    ->label(trans('resources.project.slug'))
-                                    ->helperText(trans('resources.project.slug-helper-text'))
-                                    ->columnSpan(1)
-                                    ->maxLength(255),
+                        TextInput::make('slug')
+                            ->label(trans('resources.project.slug'))
+                            ->helperText(trans('resources.project.slug-helper-text'))
+                            ->columnSpan(1)
+                            ->maxLength(255),
 
-                           Select::make('icon')
-                                 ->label(trans('resources.project.icon'))
-                                 ->options(Icons::all())
-                                 ->searchable(),
+                        Select::make('icon')
+                            ->label(trans('resources.project.icon'))
+                            ->options(Icons::all())
+                            ->searchable(),
 
-                           Toggle::make('private')
-                                 ->label(trans('resources.project.private'))
-                                 ->helperText(trans('resources.project.private-helper-text'))
-                                 ->reactive()
-                                 ->default(false),
+                        Toggle::make('private')
+                            ->label(trans('resources.project.private'))
+                            ->helperText(trans('resources.project.private-helper-text'))
+                            ->reactive()
+                            ->default(false),
 
-                           Select::make('repo')
-                                 ->label(trans('resources.project.github-repo'))
-                                 ->visible($gitHubService->isEnabled())
-                                 ->searchable()
-                                 ->getSearchResultsUsing(fn (
-                                     string $search
-                                 ) => $gitHubService->getRepositories($search)),
+                        Select::make('repo')
+                            ->label(trans('resources.project.github-repo'))
+                            ->visible($gitHubService->isEnabled())
+                            ->searchable()
+                            ->getSearchResultsUsing(fn(
+                                string $search
+                            ) => $gitHubService->getRepositories($search)),
 
-                           Select::make('members')
-                                 ->label(trans('resources.project.viewers'))
-                                 ->helperText(trans('resources.project.viewers-helper-text'))
-                                 ->multiple()
-                                 ->preload()
-                                 ->relationship('members', 'name')
-                                 ->visible(fn ($get) => (bool) $get('private')),
+                        Select::make('members')
+                            ->label(trans('resources.project.viewers'))
+                            ->helperText(trans('resources.project.viewers-helper-text'))
+                            ->multiple()
+                            ->preload()
+                            ->relationship('members', 'name')
+                            ->visible(fn($get) => (bool)$get('private')),
 
-                           MarkdownEditor::make('description')
-                                         ->label(trans('resources.project.description'))
-                                         ->columnSpan(2)
-                                         ->maxLength(65535),
+                        MarkdownEditor::make('description')
+                            ->label(trans('resources.project.description'))
+                            ->columnSpan(2)
+                            ->maxLength(65535),
 
-                           Repeater::make('boards')
-                                   ->label(trans('resources.board.label-plural'))
-                                   ->collapsible()
-                                   ->collapsed()
-                                   ->relationship('boards')
-                                   ->orderColumn('sort_order')
-                                   ->default(app(GeneralSettings::class)->default_boards)
-                                   ->columnSpan(2)
-                                   ->itemLabel(fn ($state) => $state['title'] ?? '')
-                                   ->schema([
-                                       Grid::make()->schema([
-                                           Toggle::make('visible')
-                                                 ->label(trans('resources.board.visible'))
-                                                 ->helperText(trans('resources.board.visible-helper-text'))
-                                                 ->default(true),
+                        Repeater::make('boards')
+                            ->label(trans('resources.board.label-plural'))
+                            ->collapsible()
+                            ->collapsed()
+                            ->relationship('boards')
+                            ->orderColumn('sort_order')
+                            ->default(app(GeneralSettings::class)->default_boards)
+                            ->columnSpan(2)
+                            ->itemLabel(fn($state) => $state['title'] ?? '')
+                            ->schema([
+                                Grid::make()->schema([
+                                    Toggle::make('visible')
+                                        ->label(trans('resources.board.visible'))
+                                        ->helperText(trans('resources.board.visible-helper-text'))
+                                        ->default(true),
 
-                                           Toggle::make('can_users_create')
-                                                 ->label(trans('resources.board.user-can-create'))
-                                                 ->helperText(trans('resources.board.user-can-create-helper-text')),
+                                    Toggle::make('can_users_create')
+                                        ->label(trans('resources.board.user-can-create'))
+                                        ->helperText(trans('resources.board.user-can-create-helper-text')),
 
-                                           Toggle::make('block_comments')
-                                                 ->label(trans('resources.board.block-comments'))
-                                                 ->helperText(trans('resources.board.block-comments-helper-text')),
+                                    Toggle::make('block_comments')
+                                        ->label(trans('resources.board.block-comments'))
+                                        ->helperText(trans('resources.board.block-comments-helper-text')),
 
-                                           Toggle::make('block_votes')
-                                                 ->label(trans('resources.board.block-votes'))
-                                                 ->helperText(trans('resources.board.block-votes-helper-text')),
-                                       ]),
+                                    Toggle::make('block_votes')
+                                        ->label(trans('resources.board.block-votes'))
+                                        ->helperText(trans('resources.board.block-votes-helper-text')),
+                                ]),
 
-                                       Grid::make()->schema([
-                                           TextInput::make('title')
-                                                    ->label(trans('resources.board.title'))
-                                                    ->required()
-                                                    ->live(),
+                                Grid::make()->schema([
+                                    TextInput::make('title')
+                                        ->label(trans('resources.board.title'))
+                                        ->required()
+                                        ->live(),
 
-                                           Select::make('sort_items_by')
-                                                 ->label(trans('resources.board.sort-items-by'))
-                                                 ->options([
-                                                     Board::SORT_ITEMS_BY_POPULAR => trans('resources.board.popular'),
-                                                     Board::SORT_ITEMS_BY_LATEST  => trans('resources.board.latest'),
-                                                 ])
-                                                 ->default(Board::SORT_ITEMS_BY_POPULAR)
-                                                 ->required(),
-                                       ]),
+                                    Select::make('sort_items_by')
+                                        ->label(trans('resources.board.sort-items-by'))
+                                        ->options([
+                                            Board::SORT_ITEMS_BY_POPULAR => trans('resources.board.popular'),
+                                            Board::SORT_ITEMS_BY_LATEST => trans('resources.board.latest'),
+                                        ])
+                                        ->default(Board::SORT_ITEMS_BY_POPULAR)
+                                        ->required(),
+                                ]),
 
-                                       Textarea::make('description')
-                                               ->label(trans('resources.board.description'))
-                                               ->helperText(trans('resources.board.description-helper-text')),
-                                   ]),
-                       ])
+                                Textarea::make('description')
+                                    ->label(trans('resources.board.description'))
+                                    ->helperText(trans('resources.board.description-helper-text')),
+                            ]),
+                    ])
             ]);
     }
 
@@ -177,22 +178,22 @@ class ProjectResource extends Resource
                 TextColumn::make('id'),
 
                 TextColumn::make('title')
-                          ->label(trans('resources.project.title'))
-                          ->searchable(),
+                    ->label(trans('resources.project.title'))
+                    ->searchable(),
 
                 TextColumn::make('boards_count')
-                          ->label(trans('resources.board.label-plural'))
-                          ->counts('boards'),
+                    ->label(trans('resources.board.label-plural'))
+                    ->counts('boards'),
 
                 IconColumn::make('private')
-                          ->label(trans('resources.project.private'))
-                          ->icon(fn (
-                              $record
-                          ) => $record->private ? 'heroicon-o-lock-closed' : 'heroicon-o-lock-open'),
+                    ->label(trans('resources.project.private'))
+                    ->icon(fn(
+                        $record
+                    ) => $record->private ? 'heroicon-o-lock-closed' : 'heroicon-o-lock-open'),
 
                 TextColumn::make('created_at')
-                          ->label(trans('resources.created-at'))
-                          ->dateTime(),
+                    ->label(trans('resources.created-at'))
+                    ->dateTime(),
             ])
             ->filters([
                 //
@@ -210,9 +211,9 @@ class ProjectResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListProjects::route('/'),
+            'index' => ListProjects::route('/'),
             'create' => CreateProject::route('/create'),
-            'edit'   => EditProject::route('/{record}/edit'),
+            'edit' => EditProject::route('/{record}/edit'),
         ];
     }
 }

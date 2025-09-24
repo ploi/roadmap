@@ -55,6 +55,7 @@ class TagResource extends Resource
             ->components(
                 [
                 Section::make()
+                    ->columnSpanFull()
                     ->schema(
                         [
                            TextInput::make('name')

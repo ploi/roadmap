@@ -55,6 +55,7 @@ class Colors extends SettingsPage
         return $schema->components(
             [
                 Section::make()
+                    ->columnSpanFull()
                     ->schema(
                         [
                             FileUpload::make('logo')

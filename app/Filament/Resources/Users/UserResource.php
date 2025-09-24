@@ -26,7 +26,7 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static ?int $navigationSort = 1000;
 
@@ -55,31 +55,32 @@ class UserResource extends Resource
         return $schema
             ->components(
                 [
-                Section::make(
-                    [
+                    Section::make(
+                        [
 
-                    TextInput::make('name')
-                        ->label(trans('resources.user.name'))
-                        ->required(),
+                            TextInput::make('name')
+                                ->label(trans('resources.user.name'))
+                                ->required(),
 
-                    TextInput::make('email')
-                        ->label(trans('resources.user.email'))
-                        ->email()
-                        ->required(),
+                            TextInput::make('email')
+                                ->label(trans('resources.user.email'))
+                                ->email()
+                                ->required(),
 
-                    Select::make('role')
-                        ->label(trans('resources.user.role'))
-                        ->required()
-                        ->options(
-                            [
-                            UserRole::User->value => trans('resources.user.roles.user'),
-                            UserRole::Employee->value => trans('resources.user.roles.employee'),
-                            UserRole::Admin->value => trans('resources.user.roles.admin'),
-                            ]
-                        )
+                            Select::make('role')
+                                ->label(trans('resources.user.role'))
+                                ->required()
+                                ->options(
+                                    [
+                                        UserRole::User->value => trans('resources.user.roles.user'),
+                                        UserRole::Employee->value => trans('resources.user.roles.employee'),
+                                        UserRole::Admin->value => trans('resources.user.roles.admin'),
+                                    ]
+                                )
 
-                    ]
-                )->columns()
+                        ]
+                    )->columns()
+                    ->columnSpanFull()
                 ]
             );
     }
@@ -89,32 +90,32 @@ class UserResource extends Resource
         return $table
             ->columns(
                 [
-                TextColumn::make('name')
-                    ->label(trans('resources.user.name'))
-                    ->searchable(),
+                    TextColumn::make('name')
+                        ->label(trans('resources.user.name'))
+                        ->searchable(),
 
-                TextColumn::make('email')
-                    ->label(trans('resources.user.email'))
-                    ->searchable(),
+                    TextColumn::make('email')
+                        ->label(trans('resources.user.email'))
+                        ->searchable(),
 
-                TextColumn::make('role')
-                    ->label(trans('resources.user.role'))
-                    ->formatStateUsing(fn ($state) => trans("resources.user.roles.{$state->value}")),
+                    TextColumn::make('role')
+                        ->label(trans('resources.user.role'))
+                        ->formatStateUsing(fn($state) => trans("resources.user.roles.{$state->value}")),
 
-                TextColumn::make('created_at')
-                    ->label(trans('resources.created-at'))
-                    ->sortable()
-                    ->dateTime(),
+                    TextColumn::make('created_at')
+                        ->label(trans('resources.created-at'))
+                        ->sortable()
+                        ->dateTime(),
                 ]
             )
             ->filters(
                 [
-                //
+                    //
                 ]
             )
             ->recordActions(
                 [
-                Impersonate::make()
+                    Impersonate::make()
                 ]
             )
             ->defaultSort('created_at', 'desc');

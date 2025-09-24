@@ -88,6 +88,7 @@ class Settings extends SettingsPage
                             [
                             Section::make('')
                                 ->columns()
+                                ->columnSpanFull()
                                 ->schema(
                                     [
                                     Toggle::make('board_centered')
@@ -154,7 +155,9 @@ class Settings extends SettingsPage
                                 ),
 
 
-                            Grid::make()->schema(
+                            Grid::make()
+                                ->columnSpanFull()
+                                ->schema(
                                 [
                                 Select::make('inbox_workflow')
                                     ->label(trans('settings.general.inbox-workflow'))

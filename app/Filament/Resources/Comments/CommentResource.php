@@ -52,6 +52,7 @@ class CommentResource extends Resource
             ->components([
                 Section::make()
                     ->columns()
+                    ->columnSpanFull()
                     ->schema([
                         Select::make('user_id')
                             ->label(trans('resources.comment.user'))
