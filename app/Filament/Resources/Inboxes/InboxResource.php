@@ -18,6 +18,7 @@ use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\InboxResource\Pages;
+use App\Filament\Resources\Items\ItemResource;
 use App\Filament\Resources\Items\RelationManagers\VotesRelationManager;
 use App\Filament\Resources\Items\RelationManagers\CommentsRelationManager;
 

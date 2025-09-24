@@ -228,7 +228,7 @@ class ItemResource extends Resource
                                         )
                                         ->hintAction(
                                             function ($get, $record) {
-                                                if (blank($record?->project->repo) || blank($get('issue_number'))) {
+                                                if (blank($record?->project?->repo) || blank($get('issue_number'))) {
                                                     return null;
                                                 }
 
