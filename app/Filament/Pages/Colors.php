@@ -2,13 +2,13 @@
 
 namespace App\Filament\Pages;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 use App\Enums\UserRole;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
 use App\Settings\ColorSettings;
 use Filament\Pages\SettingsPage;
 use Illuminate\Support\HtmlString;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\ColorPicker;
@@ -17,7 +17,7 @@ use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class Colors extends SettingsPage
 {
-    protected static ?string $navigationIcon = 'heroicon-o-swatch';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-swatch';
 
     protected static string $settings = ColorSettings::class;
 
@@ -50,11 +50,12 @@ class Colors extends SettingsPage
         abort_unless(auth()->user()->hasRole(UserRole::Admin), 403);
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form->schema(
+        return $schema->components(
             [
                 Section::make()
+                    ->columnSpanFull()
                     ->schema(
                         [
                             FileUpload::make('logo')

@@ -33,10 +33,10 @@ class Tailwind
         $output .= ':root {' . PHP_EOL;
 
         foreach ($this->shades as $shade => $color) {
-            if ($this->name === 'primary') {
+            if ($this->name === 'primary' && $this->name === 'brand') {
                 $color = Str::between($color, '(', ')');
             }
-            
+
             $output .= "\t--color-{$shade}: {$color};" . PHP_EOL;
         }
 

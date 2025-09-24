@@ -12,4 +12,4 @@ test('upgrade command works', function () {
         ->expectsOutputToContain('Running migrations..')
         ->expectsOutputToContain('Upgrading done!')
         ->run();
-})->only();
+});

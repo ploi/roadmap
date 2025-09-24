@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Filament\Resources\Comments\Pages;
+
+use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
+use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\Comments\CommentResource;
+
+class EditComment extends EditRecord
+{
+    protected static string $resource = CommentResource::class;
+
+    public function getHeaderActions(): array
+    {
+        return [
+            Action::make('view_public')
+                  ->label(trans('resources.item.view-public'))
+                  ->color('gray')
+                  ->openUrlInNewTab()
+                  ->url(fn () => route('items.show', $this->record->item) . '#comment-' . $this->record->id),
+            DeleteAction::make(),
+        ];
+    }
+}

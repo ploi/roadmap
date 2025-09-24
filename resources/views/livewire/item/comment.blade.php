@@ -9,7 +9,7 @@
     <header class="flex justify-between items-center">
         <div class="flex items-center px-4 py-2 space-x-2">
             <div class="flex items-center space-x-3 overflow-hidden">
-                <div class="relative flex-shrink-0 w-10 h-10 rounded-full">
+                <div class="relative shrink-0 w-10 h-10 rounded-full">
                     <img class="absolute inset-0 object-cover rounded-full"
                          src="{{ $comment->user->getGravatar() }}"
                          alt="{{ $comment->user->name }}">
@@ -31,7 +31,7 @@
             <time
                 x-data="{ tooltip: '{{ $comment->created_at->isoFormat('L LTS') }}' }"
                 x-tooltip="tooltip"
-                class="flex-shrink-0 text-xs font-medium items-center text-gray-500">
+                class="shrink-0 text-xs font-medium items-center text-gray-500">
                 {{ $comment->created_at->diffForHumans() }}
             </time>
 
@@ -49,11 +49,11 @@
 
         <div class="p-2 flex justify-between gap-2 items-center">
             @if($comment->user->is(auth()->user()))
-                {{ ($this->editAction)(['comment' => $comment]) }}
+                {{ $this->editAction->arguments(['comment' => $comment]) }}
                 &centerdot;
             @endif
             @if(!$item->board?->block_comments)
-                {{ ($this->replyAction)(['comment' => $comment]) }}
+                {{ $this->replyAction->arguments(['comment' => $comment]) }}
 
                 &centerdot;
             @endif

@@ -2,6 +2,9 @@
 
 namespace App\View\Components;
 
+use App\Settings\ColorSettings;
+use Illuminate\Contracts\View\View;
+use Closure;
 use App\Models\Project;
 use App\Services\Tailwind;
 use Illuminate\Support\Str;
@@ -37,25 +40,26 @@ class App extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return View|Closure|string
      */
     public function render()
     {
-        $tw = new Tailwind('brand', app(\App\Settings\ColorSettings::class)->primary);
+        $tw = new Tailwind('brand', app(ColorSettings::class)->primary);
 
         $this->brandColors = $tw->getCssFormat();
 
-        $tw = new Tailwind('primary', app(\App\Settings\ColorSettings::class)->primary);
+        $tw = new Tailwind('primary', app(ColorSettings::class)->primary);
+        //dd($tw->getCssFormat());
 
-        $this->primaryColors = str($tw->getCssFormat())->replace('color-', '');
+        $this->primaryColors = str($tw->getCssFormat())->replace('color-primary', 'primary');
 
-        $fontFamily = app(\App\Settings\ColorSettings::class)->fontFamily ?? "Nunito";
+        $fontFamily = app(ColorSettings::class)->fontFamily ?? "Nunito";
         $this->fontFamily = [
             'cssValue' => $fontFamily,
             'urlValue' => Str::snake($fontFamily, '-')
         ];
 
-        $this->logo = app(\App\Settings\ColorSettings::class)->logo;
+        $this->logo = app(ColorSettings::class)->logo;
 
         $this->userNeedsToVerify = app(GeneralSettings::class)->users_must_verify_email &&
             auth()->check() &&

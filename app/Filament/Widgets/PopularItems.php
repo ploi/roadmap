@@ -2,10 +2,11 @@
 
 namespace App\Filament\Widgets;
 
+use Filament\Tables\Columns\TextColumn;
 use App\Models\Item;
 use Filament\Tables;
 use Filament\Tables\Table;
-use App\Filament\Resources\ItemResource;
+use App\Filament\Resources\Items\ItemResource;
 use Illuminate\Contracts\Support\Htmlable;
 use Filament\Widgets\TableWidget as BaseWidget;
 
@@ -23,13 +24,13 @@ class PopularItems extends BaseWidget
             ->paginated(false)
             ->columns(
                 [
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->label(trans('widgets.title')),
-                Tables\Columns\TextColumn::make('total_votes')
+                TextColumn::make('total_votes')
                     ->label(trans('widgets.total-votes')),
-                Tables\Columns\TextColumn::make('project.title')
+                TextColumn::make('project.title')
                     ->label(trans('widgets.project')),
-                Tables\Columns\TextColumn::make('board.title')
+                TextColumn::make('board.title')
                     ->label(trans('widgets.board')),
                 ]
             )

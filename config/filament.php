@@ -37,6 +37,9 @@ return [
 
     'default_filesystem_disk' => env('FILAMENT_FILESYSTEM_DISK', 'public'),
 
-    'spa' => env('FILAMENT_SPA', true)
+    'spa' => env('FILAMENT_SPA', true),
+
+    'sidebar_collapsible_on_desktop' => env('FILAMENT_SIDEBAR_ON_DESKTOP', true),
+    'sidebar_width' => env('FILAMENT_SIDEBAR_WIDTH', '18rem'),
 
 ];

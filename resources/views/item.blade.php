@@ -17,7 +17,7 @@
                 <header class="flex items-center px-4 py-2 space-x-4">
                     <div class="flex items-center flex-1 space-x-3 overflow-hidden">
                         @if($user)
-                            <div class="relative flex-shrink-0 w-10 h-10 rounded-full">
+                            <div class="relative shrink-0 w-10 h-10 rounded-full">
                                 <img class="absolute inset-0 object-cover rounded-full"
                                      src="{{ $user->getGravatar() }}"
                                      alt="{{ $user->name }}">
@@ -37,14 +37,14 @@
                                         <select name="board_id"
                                                 x-data
                                                 x-on:change.debounce="$event.target.form.submit()"
-                                                class="float-right inline-flex items-center justify-center h-8 px-3 pt-1.5 pr-8 text-sm tracking-tight font-bold text-gray-700 border border-gray-400 rounded-lg bg-white dark:text-white dark:bg-white/5 dark:border-white/20">
+                                                class="float-right h-8 px-3 pr-7 py-0 text-sm tracking-tight font-bold text-gray-700 border border-gray-300 rounded-lg bg-white dark:text-white dark:bg-gray-800 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 appearance-none bg-[url('data:image/svg+xml,%3csvg%20xmlns%3d%27http%3a//www.w3.org/2000/svg%27%20fill%3d%27none%27%20viewBox%3d%270%200%2020%2020%27%3e%3cpath%20stroke%3d%27%236b7280%27%20stroke-linecap%3d%27round%27%20stroke-linejoin%3d%27round%27%20stroke-width%3d%271.5%27%20d%3d%27M6%208l4%204%204-4%27/%3e%3c/svg%3e')] bg-[position:right_0.5rem_center] bg-[size:1.25rem_1.25rem] bg-no-repeat">
                                             @foreach($item->project->boards as $board)
                                                 <option value="{{ $board->id }}" @selected($board->is($item->board))>{{ $board->title }}</option>
                                             @endforeach
                                         </select>
                                     </form>
                                 @else
-                                    <span class="float-right inline-flex items-center justify-center h-8 px-3 text-sm tracking-tight font-bold text-gray-700 border border-gray-400 rounded-lg bg-white">
+                                    <span class="float-right inline-flex items-center justify-center h-8 px-3 text-sm tracking-tight font-bold text-gray-700 border border-gray-300 rounded-lg bg-white dark:text-white dark:bg-gray-800 dark:border-gray-600">
                                         {{ $item->board->title }}
                                     </span>
                                 @endif
@@ -53,7 +53,7 @@
                     </div>
                 </header>
 
-                <div class="border-t dark:border-white/10"></div>
+                <div class="border-t border-gray-200 dark:border-gray-700"></div>
 
                 <div class="p-4 prose dark:prose-invert break-words dark:text-gray-400">
                     {!! str($item->content)->markdown()->sanitizeHtml() !!}
@@ -94,7 +94,7 @@
                     @endif
                     <h2>{{ $item->title }}</h2>
 
-                    <time class="flex-shrink-0 text-sm font-medium text-gray-500">
+                    <time class="shrink-0 text-sm font-medium text-gray-500">
                         {{ $item->created_at->isoFormat('L LTS') }}
                     </time>
 
@@ -105,12 +105,12 @@
                     @endif
                 </header>
 
-                <div class="border-t dark:border-white/10"></div>
+                <div class="border-t border-gray-200 dark:border-gray-700"></div>
 
                 <livewire:item.vote-button :model="$item"/>
 
                 @if(auth()->check() && $user && $user->is(auth()->user()))
-                    <div class="border-t mb-2 dark:border-white/10"></div>
+                    <div class="border-t border-gray-200 dark:border-gray-700 mb-2"></div>
 
                     <div>
                         <a class="text-primary-500 hover:text-primary-700 ml-1"
@@ -120,11 +120,11 @@
                 @endif
 
                 @if(auth()->check() && auth()->user()->hasAdminAccess())
-                    <div class="border-t mb-2 dark:border-white/10"></div>
+                    <div class="border-t border-gray-200 dark:border-gray-700 mb-2"></div>
 
                     <div>
                         <a class="text-red-500 hover:text-red-700 ml-1"
-                           href="{{ \App\Filament\Resources\ItemResource::getUrl('edit', ['record' => $item]) }}">{{ trans('items.edit-as-admin') }}</a>
+                           href="{{ App\Filament\Resources\Items\ItemResource::getUrl('edit', ['record' => $item]) }}">{{ trans('items.edit-as-admin') }}</a>
                     </div>
                 @endif
 
@@ -138,13 +138,13 @@
             </x-card>
 
             <div class="relative">
-                <div class="absolute inset-y-0 left-0 h-full ml-4 border-l border-dashed"></div>
+                <div class="absolute inset-y-0 left-0 h-full ml-4 border-l border-dashed border-gray-300 dark:border-gray-600"></div>
 
                 <ul class="space-y-4">
                     @foreach($activities as $activity)
                         <li class="flex space-x-3">
                             <div
-                                class="relative flex items-center justify-center flex-shrink-0 w-8 h-8 text-gray-400 border border-gray-200 dark:border-gray-600 rounded-full bg-gray-50 dark:bg-gray-800">
+                                class="relative flex items-center justify-center shrink-0 w-8 h-8 text-gray-400 border border-gray-200 dark:border-gray-600 rounded-full bg-gray-50 dark:bg-gray-800">
                                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                           stroke-width="1.5"

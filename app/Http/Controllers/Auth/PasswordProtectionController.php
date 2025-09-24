@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Settings\ColorSettings;
 use App\Services\Tailwind;
 use Illuminate\Http\Request;
 use App\Settings\GeneralSettings;
@@ -11,7 +12,7 @@ class PasswordProtectionController extends Controller
 {
     public function __invoke()
     {
-        $tw = new Tailwind('brand', app(\App\Settings\ColorSettings::class)->primary);
+        $tw = new Tailwind('brand', app(ColorSettings::class)->primary);
 
         return view('auth.password-protection', [
             'brandColors' => $tw->getCssFormat()

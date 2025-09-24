@@ -55,7 +55,7 @@ class LoginController extends Controller
             return redirect()->intended($this->redirectPath());
         }
 
-        $user = \App\Models\User::query()
+        $user = User::query()
             ->where('email', $social->getEmail())
             ->first();
 

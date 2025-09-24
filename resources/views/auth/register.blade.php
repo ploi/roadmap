@@ -34,7 +34,7 @@
                                for="name">{{ trans('auth.name') }}</label>
 
                         <input
-                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:border-blue-600 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:bg-gray-900 dark:border-white/10"
+                            class="block w-full h-10 p-2.5 bg-white transition duration-75 border-gray-300 rounded-lg shadow-sm focus:border-brand-600 focus:ring-1 focus:ring-inset focus:ring-brand-600 dark:bg-gray-900 dark:border-white/10"
                             id="name"
                             name="name"
                             value="{{ old('name') }}"
@@ -46,7 +46,7 @@
                                for="email">{{ trans('auth.email') }}</label>
 
                         <input
-                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-blue-600 focus:border-blue-600 dark:bg-gray-900 dark:border-white/10"
+                            class="block w-full h-10 p-2.5 bg-white transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600 dark:bg-gray-900 dark:border-white/10"
                             id="email"
                             placeholder="{{ trans('auth.email_placeholder') }}"
                             name="email"
@@ -59,7 +59,7 @@
                                for="password">{{ trans('auth.password') }}</label>
 
                         <input
-                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-blue-600 focus:border-blue-600 dark:bg-gray-900 dark:border-white/10"
+                            class="block w-full h-10 p-2.5 bg-white transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600 dark:bg-gray-900 dark:border-white/10"
                             id="password"
                             name="password"
                             type="password">
@@ -70,7 +70,7 @@
                                for="password_confirmation">{{ trans('auth.confirm_password') }}</label>
 
                         <input
-                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-blue-600 focus:border-blue-600 dark:bg-gray-900 dark:border-white/10"
+                            class="block w-full h-10 p-2.5 bg-white transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600 dark:bg-gray-900 dark:border-white/10"
                             id="password_confirmation"
                             name="password_confirmation"
                             type="password">

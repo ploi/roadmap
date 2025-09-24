@@ -19,6 +19,7 @@ return [
     'all-caught-up-description' => 'There are no items in this board yet.',
     'all-caught-up-can-create' => 'You can create an item on the right.',
     'login_to_submit_item' => 'Login to be able to submit an item.',
+    'login_to_submit_item_subtext' => 'You\'re currently not logged in. Please make sure to login before submitting an item.',
     'item_created' => 'Item created',
     'item_created_notification_body' => 'A new roadmap item has been created by :user with the title :title',
     'subscribe' => 'Subscribe',

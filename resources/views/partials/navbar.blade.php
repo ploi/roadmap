@@ -11,10 +11,15 @@
                             ])
                         href="{{ route('home') }}">
 
-                        <x-heroicon-o-home class="w-5 h-5 {{ !request()->is('/') ? 'text-gray-500' : ''  }}"/>
+                        <x-heroicon-o-home @class([
+                            'w-5 h-5',
+                            'text-gray-500' => !request()->is('/')
+                        ])/>
 
-                        <span
-                            class="font-normal {{ !request()->is('/') ? 'text-gray-900 dark:text-gray-200' : ''  }}">{{ trans('general.dashboard') }}</span>
+                        <span @class([
+                            'font-normal',
+                            'text-gray-900 dark:text-gray-200' => !request()->is('/')
+                        ])>{{ trans('general.dashboard') }}</span>
                     </a>
                 </li>
 
@@ -26,7 +31,10 @@
                             'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => !request()->is('my')
                         ])
                         href="{{ route('my') }}">
-                        <x-heroicon-o-queue-list class="w-5 h-5 {{ !request()->is('my') ? 'text-gray-500' : ''  }}"/>
+                        <x-heroicon-o-queue-list @class([
+                            'w-5 h-5',
+                            'text-gray-500' => !request()->is('my')
+                        ])/>
 
                         <span class="font-medium">{{ trans('items.my-items') }}</span>
                     </a>
@@ -40,7 +48,10 @@
                             'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => !request()->is('profile')
                         ])
                         href="{{ route('profile') }}">
-                        <x-heroicon-o-user class="w-5 h-5 {{ !request()->is('profile') ? 'text-gray-500' : ''  }}"/>
+                        <x-heroicon-o-user @class([
+                            'w-5 h-5',
+                            'text-gray-500' => !request()->is('profile')
+                        ])/>
 
                         <span class="font-medium">{{ trans('auth.profile') }}</span>
                     </a>
@@ -55,8 +66,10 @@
                                 'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => !request()->is('changelog*')
                             ])
                             href="{{ route('changelog') }}">
-                            <x-heroicon-o-rss
-                                class="w-5 h-5 {{ !request()->is('changelog*') ? 'text-gray-500' : ''  }}"/>
+                            <x-heroicon-o-rss @class([
+                                'w-5 h-5',
+                                'text-gray-500' => !request()->is('changelog*')
+                            ])/>
 
                             <span class="font-medium">{{ trans('changelog.changelog') }}</span>
                         </a>
@@ -89,15 +102,19 @@
                                        'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => request()->segment(2) !== $project->slug
                                    ])
                                         href="{{ route('projects.show', $project) }}">
-                                        <x-dynamic-component :component="$project->icon ?? 'heroicon-o-hashtag'"
-                                                             class="flex-shrink-0 w-5 h-5 {{ request()->segment(2) == $project->slug ? '' : 'text-gray-500'  }}"/>
+                                        <x-dynamic-component :component="$project->icon ?? 'heroicon-o-hashtag'" @class([
+                                            'shrink-0 w-5 h-5',
+                                            'text-gray-500' => request()->segment(2) != $project->slug
+                                        ])/>
 
                                         <span class="font-normal truncate">{{ $project->title }}</span>
 
                                         @if($project->private)
                                             <div class="flex-1 flex justify-end">
-                                                <x-heroicon-s-lock-closed
-                                                    class="w-4 h-4 {{ request()->segment(2) == $project->slug ? '' : 'text-primary'  }}"/>
+                                                <x-heroicon-s-lock-closed @class([
+                                                    'w-4 h-4',
+                                                    'text-primary' => request()->segment(2) != $project->slug
+                                                ])/>
                                             </div>
                                         @endif
                                     </a>

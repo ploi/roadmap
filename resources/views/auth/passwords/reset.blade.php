@@ -36,7 +36,7 @@
                                for="email">{{ trans('auth.email') }}</label>
 
                         <input
-                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600"
+                            class="block w-full h-10 p-2.5 bg-white transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600"
                             id="email"
                             value="{{ $email ?? old('email') }}"
                             required
@@ -51,7 +51,7 @@
                                for="password">{{ trans('auth.password') }}</label>
 
                         <input
-                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600"
+                            class="block w-full h-10 p-2.5 bg-white transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600"
                             id="password"
                             required
                             autofocus
@@ -64,7 +64,7 @@
                                for="password_confirmation">{{ trans('auth.confirm_password') }}</label>
 
                         <input
-                            class="block w-full h-10 transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600"
+                            class="block w-full h-10 p-2.5 bg-white transition duration-75 border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600"
                             id="password_confirmation"
                             required
                             autofocus

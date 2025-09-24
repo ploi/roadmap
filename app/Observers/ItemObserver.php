@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use Throwable;
 use Mail;
 use App\Models\Item;
 use App\Models\User;
@@ -107,7 +108,7 @@ class ItemObserver
     {
         try {
             Storage::delete('public/og-' . $item->slug . '-' . $item->id . '.jpg');
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
         }
 
         $item->votes()->delete();

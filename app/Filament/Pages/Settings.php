@@ -2,11 +2,16 @@
 
 namespace App\Filament\Pages;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
 use App\Models\Board;
 use App\Enums\UserRole;
 use App\Models\Project;
-use Filament\Forms\Get;
-use Filament\Forms\Form;
 use Illuminate\Support\Str;
 use App\Enums\InboxWorkflow;
 use Filament\Actions\Action;
@@ -14,13 +19,9 @@ use App\Services\GitHubService;
 use Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
 use Illuminate\Support\Collection;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Tabs;
-use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Support\Enums\Alignment;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Illuminate\Support\Facades\Storage;
@@ -32,7 +33,7 @@ use Illuminate\Contracts\Support\Htmlable;
 
 class Settings extends SettingsPage
 {
-    protected static ?string $navigationIcon = 'heroicon-o-cog';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cog';
 
     protected static string $settings = GeneralSettings::class;
 
@@ -74,19 +75,20 @@ class Settings extends SettingsPage
             );
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form->schema(
+        return $schema->components(
             [
             Tabs::make('main')
                 ->persistTabInQueryString()
                 ->schema(
                     [
-                    Tabs\Tab::make(trans('settings.general-title'))
+                    Tab::make(trans('settings.general-title'))
                         ->schema(
                             [
                             Section::make('')
                                 ->columns()
+                                ->columnSpanFull()
                                 ->schema(
                                     [
                                     Toggle::make('board_centered')
@@ -153,7 +155,9 @@ class Settings extends SettingsPage
                                 ),
 
 
-                            Grid::make()->schema(
+                            Grid::make()
+                                ->columnSpanFull()
+                                ->schema(
                                 [
                                 Select::make('inbox_workflow')
                                     ->label(trans('settings.general.inbox-workflow'))
@@ -174,7 +178,7 @@ class Settings extends SettingsPage
                             ]
                         ),
 
-                    Tabs\Tab::make(trans('settings.default-boards-title'))
+                    Tab::make(trans('settings.default-boards-title'))
                         ->schema(
                             [
                             Toggle::make('create_default_boards')
@@ -250,7 +254,7 @@ class Settings extends SettingsPage
                             ]
                         ),
 
-                    Tabs\Tab::make(trans('settings.dashboard-items-title'))
+                    Tab::make(trans('settings.dashboard-items-title'))
                         ->schema(
                             [
                             Repeater::make('dashboard_items')
@@ -302,7 +306,7 @@ class Settings extends SettingsPage
                             ]
                         ),
 
-                    Tabs\Tab::make(trans('settings.changelog-title'))
+                    Tab::make(trans('settings.changelog-title'))
                         ->schema(
                             [
 
@@ -332,7 +336,7 @@ class Settings extends SettingsPage
                             ]
                         ),
 
-                    Tabs\Tab::make(trans('settings.notifications-title'))
+                    Tab::make(trans('settings.notifications-title'))
                         ->schema(
                             [
                             Repeater::make('send_notifications_to')
@@ -389,7 +393,7 @@ class Settings extends SettingsPage
                             ]
                         ),
 
-                    Tabs\Tab::make(trans('settings.scripts-title'))
+                    Tab::make(trans('settings.scripts-title'))
                         ->schema(
                             [
                             Textarea::make('custom_scripts')
@@ -401,7 +405,7 @@ class Settings extends SettingsPage
                             ]
                         ),
 
-                    Tabs\Tab::make(trans('settings.search-title'))
+                    Tab::make(trans('settings.search-title'))
                         ->schema(
                             [
                             TagsInput::make('excluded_matching_search_words')
@@ -411,7 +415,7 @@ class Settings extends SettingsPage
                             ]
                         ),
 
-                    Tabs\Tab::make(trans('settings.profanity-title'))
+                    Tab::make(trans('settings.profanity-title'))
                         ->schema(
                             [
                             TagsInput::make('profanity_words')
