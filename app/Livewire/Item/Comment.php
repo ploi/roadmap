@@ -28,7 +28,7 @@ class Comment extends Component implements HasForms, HasActions
         return view('livewire.item.comment');
     }
 
-    public function editAction()
+    public function editAction(): Action
     {
         return Action::make('edit')
             ->label(trans('comments.edit'))
@@ -37,24 +37,31 @@ class Comment extends Component implements HasForms, HasActions
             ->modalAlignment(Alignment::Left)
             ->modalDescription('')
             ->modalIcon('heroicon-o-chat-bubble-left-right')
-            ->schema(function (array $arguments) {
+            ->fillForm(function (array $arguments): array {
+                $commentData = $arguments['comment'];
+                $content = is_array($commentData) ? ($commentData['content'] ?? '') : ($commentData->content ?? '');
                 return [
-                    MarkdownEditor::make('content')
-                        ->default(Arr::get($arguments, 'comment.content'))
-                    ->required()
+                    'content' => $content,
                 ];
             })
+            ->form([
+                MarkdownEditor::make('content')
+                    ->required()
+            ])
             ->link()
-            ->action(function (array $data, array $arguments) {
-                $comment = auth()->user()->comments()->findOrFail(Arr::get($arguments, 'comment.id'));
+            ->action(function (array $data, array $arguments): void {
+                // Handle both array and object formats
+                $commentData = $arguments['comment'];
+                $commentId = is_array($commentData) ? $commentData['id'] : $commentData->id;
 
-                $comment->update(['content' => Arr::get($data, 'content')]);
+                $comment = auth()->user()->comments()->findOrFail($commentId);
+                $comment->update(['content' => $data['content']]);
 
                 $this->redirectRoute('items.show', $comment->item->slug);
             });
     }
 
-    public function replyAction()
+    public function replyAction(): Action
     {
         return Action::make('reply')
             ->label(trans('comments.reply'))
@@ -63,21 +70,23 @@ class Comment extends Component implements HasForms, HasActions
             ->modalAlignment(Alignment::Left)
             ->modalDescription('')
             ->modalIcon('heroicon-o-chat-bubble-left-right')
-            ->schema(function () {
-                return [
-                    MarkdownEditor::make('content')->required()
-                ];
-            })
+            ->form([
+                MarkdownEditor::make('content')->required()
+            ])
             ->link()
-            ->action(function (array $data, array $arguments) {
-                $item = Item::findOrFail(Arr::get($arguments, 'comment.item_id'));
+            ->action(function (array $data, array $arguments): void {
+                // Handle both array and object formats
+                $commentData = $arguments['comment'];
+                $commentId = is_array($commentData) ? $commentData['id'] : $commentData->id;
+                $itemId = is_array($commentData) ? $commentData['item_id'] : $commentData->item_id;
 
-                $comment = $item->comments()->findOrfail(Arr::get($arguments, 'comment.id'));
+                $item = Item::findOrFail($itemId);
+                $comment = $item->comments()->findOrFail($commentId);
 
                 $item->comments()->create([
                     'parent_id' => $comment->id,
                     'user_id' => auth()->id(),
-                    'content' => Arr::get($data, 'content')
+                    'content' => $data['content']
                 ]);
 
                 $this->redirectRoute('items.show', $comment->item->slug);

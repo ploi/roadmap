@@ -49,11 +49,11 @@
 
         <div class="p-2 flex justify-between gap-2 items-center">
             @if($comment->user->is(auth()->user()))
-                {{ ($this->editAction)(['comment' => $comment]) }}
+                {{ $this->editAction->arguments(['comment' => $comment]) }}
                 &centerdot;
             @endif
             @if(!$item->board?->block_comments)
-                {{ ($this->replyAction)(['comment' => $comment]) }}
+                {{ $this->replyAction->arguments(['comment' => $comment]) }}
 
                 &centerdot;
             @endif
