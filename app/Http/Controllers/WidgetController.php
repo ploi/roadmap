@@ -15,7 +15,7 @@ class WidgetController extends Controller
     public function javascript(): Response
     {
         return response()
-            ->view('widget')
+            ->view('widget.index')
             ->header('Content-Type', 'application/javascript');
     }
 
