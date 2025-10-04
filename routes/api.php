@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WidgetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+// Widget routes (public)
+Route::prefix('widget')->group(function () {
+    Route::get('/config', [WidgetController::class, 'config']);
+    Route::post('/submit', [WidgetController::class, 'submit']);
 });

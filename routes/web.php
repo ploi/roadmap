@@ -11,6 +11,7 @@ use App\Http\Controllers\ChangelogController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\ItemEmailUnsubscribeController;
 use App\Http\Controllers\Auth\PasswordProtectionController;
+use App\Http\Controllers\WidgetController;
 
 Auth::routes();
 
@@ -21,6 +22,8 @@ Route::get('oauth/callback', [\App\Http\Controllers\Auth\LoginController::class,
 
 Route::get('password-protection', PasswordProtectionController::class)->name('password.protection');
 Route::post('password-protection', [PasswordProtectionController::class, 'login'])->name('password.protection.login');
+
+Route::get('/widget.js', [WidgetController::class, 'javascript'])->name('widget.js');
 
 Route::get('/', \App\Http\Controllers\HomeController::class)->name('home');
 
