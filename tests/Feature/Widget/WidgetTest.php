@@ -50,12 +50,20 @@ test('widget can submit feedback successfully', function () {
         ->assertJson([
             'success' => true,
             'message' => 'Feedback submitted successfully',
+        ])
+        ->assertJsonStructure([
+            'success',
+            'message',
+            'item_id',
+            'item_url',
         ]);
 
     assertDatabaseHas(Item::class, [
         'title' => 'Test Feedback',
         'content' => 'This is a test feedback from the widget',
     ]);
+
+    expect($response->json('item_url'))->toContain('/items/');
 });
 
 test('widget can submit feedback anonymously without email', function () {

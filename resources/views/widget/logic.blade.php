@@ -153,7 +153,7 @@ class RoadmapWidgetElement extends HTMLElement {
 
     showMessage(message, type) {
         const messageEl = this.shadowRoot.getElementById('roadmap-widget-message');
-        messageEl.textContent = message;
+        messageEl.innerHTML = message;
         messageEl.className = `roadmap-widget-message ${type}`;
         messageEl.classList.remove('roadmap-widget-hidden');
     }
@@ -197,7 +197,11 @@ class RoadmapWidgetElement extends HTMLElement {
             const data = await response.json();
 
             if (response.ok) {
-                this.showMessage('Thank you! Your feedback has been submitted successfully.', 'success');
+                let message = 'Thank you! Your feedback has been submitted successfully.';
+                if (data.item_url) {
+                    message += ` <a href="${data.item_url}" target="_blank" rel="noopener noreferrer">View your feedback</a>`;
+                }
+                this.showMessage(message, 'success');
                 // Clear title and description
                 this.shadowRoot.getElementById('roadmap-widget-title').value = '';
                 this.shadowRoot.getElementById('roadmap-widget-content').value = '';

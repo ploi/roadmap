@@ -124,6 +124,7 @@ class WidgetController extends Controller
             'success' => true,
             'message' => 'Feedback submitted successfully',
             'item_id' => $item->id,
+            'item_url' => route('items.show', $item),
         ], 201);
     }
 }

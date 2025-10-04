@@ -7,7 +7,10 @@
 <div id="roadmap-widget-modal" class="roadmap-widget-modal roadmap-widget-hidden">
     <div class="roadmap-widget-modal-content">
         <div class="roadmap-widget-header">
-            <h3>Send Feedback</h3>
+            <div>
+                <h3>Send Feedback</h3>
+                <p class="roadmap-widget-subtitle"><a href="https://github.com/ploi/roadmap" target="_blank" rel="noopener noreferrer">Open-source</a> roadmapping software by <a href="https://ploi.io" target="_blank" rel="noopener noreferrer">ploi.io</a></p>
+            </div>
             <button id="roadmap-widget-close" class="roadmap-widget-close">&times;</button>
         </div>
         <form id="roadmap-widget-form">
