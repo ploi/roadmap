@@ -11,6 +11,7 @@ class WidgetSettings extends Settings
     public array $allowed_domains;
     public string $primary_color;
     public string $button_text;
+    public bool $hide_button;
 
     public static function group(): string
     {

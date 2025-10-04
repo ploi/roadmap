@@ -21,6 +21,10 @@
             this._email = email;
             const widget = document.querySelector('roadmap-widget');
             if (widget) widget.updateEmail(email);
+        },
+        open: function() {
+            const widget = document.querySelector('roadmap-widget');
+            if (widget) widget.openModal();
         }
     };
 
@@ -61,6 +65,14 @@
                 ${this.getStyles()}
                 ${this.getTemplate()}
             `;
+
+            // Hide button if configured
+            if (this.config.hide_button) {
+                const button = this.shadowRoot.getElementById('roadmap-widget-button');
+                if (button) {
+                    button.style.display = 'none';
+                }
+            }
 
             // Attach event listeners
             this.attachEventListeners();
@@ -130,6 +142,12 @@
                     justify-content: center;
                     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
                 }
+                .roadmap-widget-modal.roadmap-widget-opening {
+                    animation: roadmap-fade-in 0.15s ease-out;
+                }
+                .roadmap-widget-modal.roadmap-widget-closing {
+                    animation: roadmap-fade-out 0.15s ease-out;
+                }
                 .roadmap-widget-modal-content {
                     background-color: white;
                     border-radius: 12px;
@@ -138,6 +156,48 @@
                     max-height: 90vh;
                     overflow-y: auto;
                     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                }
+                .roadmap-widget-opening .roadmap-widget-modal-content {
+                    animation: roadmap-scale-in 0.2s ease-out;
+                }
+                .roadmap-widget-closing .roadmap-widget-modal-content {
+                    animation: roadmap-scale-out 0.2s ease-out;
+                }
+                @keyframes roadmap-fade-in {
+                    from {
+                        opacity: 0;
+                    }
+                    to {
+                        opacity: 1;
+                    }
+                }
+                @keyframes roadmap-fade-out {
+                    from {
+                        opacity: 1;
+                    }
+                    to {
+                        opacity: 0;
+                    }
+                }
+                @keyframes roadmap-scale-in {
+                    from {
+                        opacity: 0;
+                        transform: scale(0.95);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: scale(1);
+                    }
+                }
+                @keyframes roadmap-scale-out {
+                    from {
+                        opacity: 1;
+                        transform: scale(1);
+                    }
+                    to {
+                        opacity: 0;
+                        transform: scale(0.95);
+                    }
                 }
                 .roadmap-widget-header {
                     display: flex;
@@ -318,7 +378,13 @@
         openModal() {
             const modal = this.shadowRoot.getElementById('roadmap-widget-modal');
             modal.classList.remove('roadmap-widget-hidden');
+            modal.classList.add('roadmap-widget-opening');
             this.isOpen = true;
+
+            // Remove opening class after animation
+            setTimeout(() => {
+                modal.classList.remove('roadmap-widget-opening');
+            }, 200);
 
             // Pre-fill name and email if set
             if (window.$roadmap._name) {
@@ -403,6 +469,9 @@
 
                 if (response.ok) {
                     this.showMessage('Thank you! Your feedback has been submitted successfully.', 'success');
+                    // Clear title and description
+                    this.shadowRoot.getElementById('roadmap-widget-title').value = '';
+                    this.shadowRoot.getElementById('roadmap-widget-content').value = '';
                     setTimeout(() => this.closeModal(), 2000);
                 } else {
                     this.showMessage(data.error || 'Failed to submit feedback. Please try again.', 'error');

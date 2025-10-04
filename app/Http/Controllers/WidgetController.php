@@ -53,6 +53,7 @@ class WidgetController extends Controller
             'position' => $settings->position,
             'primary_color' => $settings->primary_color,
             'button_text' => $settings->button_text,
+            'hide_button' => $settings->hide_button,
         ]);
     }
 
