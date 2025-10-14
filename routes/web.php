@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\ItemEmailUnsubscribeController;
 use App\Http\Controllers\Auth\PasswordProtectionController;
 use App\Http\Controllers\WidgetController;
+use App\Http\Controllers\Auth\VerifyEmailChangeController;
 
 Auth::routes();
 
@@ -41,6 +42,7 @@ Route::get('projects/{project}/boards/{board}', [BoardsController::class, 'show'
 Route::get('/email/verify', [VerificationController::class, 'show'])->middleware('auth')->name('verification.notice');
 Route::post('/email/verification-notification', [VerificationController::class, 'resend'])->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->middleware(['auth', 'signed'])->name('verification.verify');
+Route::get('/profile/verify-email-change/{id}/{email}', VerifyEmailChangeController::class)->middleware(['auth', 'signed'])->name('profile.verify-email-change');
 
 Route::group(['middleware' => 'authed'], function () {
     Route::get('profile', [\App\Http\Controllers\Auth\ProfileController::class, 'show'])->name('profile');
