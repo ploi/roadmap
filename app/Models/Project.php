@@ -23,11 +23,13 @@ class Project extends Model
         'description',
         'repo',
         'private',
+        'collapsible',
         'sort_order',
     ];
 
     protected $casts = [
         'private' => 'boolean',
+        'collapsible' => 'boolean',
     ];
 
     public function boards()

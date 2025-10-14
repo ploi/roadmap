@@ -104,6 +104,8 @@ return [
         'icon'         => 'Icon',
         'private'      => 'Private',
         'private-helper-text' => 'This will make the project private. Only the employees and administrators can see this project.',
+        'collapsible'  => 'Collapsible',
+        'collapsible-helper-text' => 'Enable collapsible dropdown for this project in the sidebar navigation.',
         'github-repo'  => 'Github Repository',
         'viewers'      => 'Viewers',
         'viewers-helper-text' => 'Allow certain users to view this project',

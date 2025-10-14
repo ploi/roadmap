@@ -20,6 +20,7 @@ class ProjectFactory extends Factory
             'title' => ucfirst($this->faker->domainWord),
             'slug' => $this->faker->word,
             'private' => false,
+            'collapsible' => false,
         ];
     }
 
@@ -28,6 +29,15 @@ class ProjectFactory extends Factory
         return $this->state(function () {
             return [
                 'private' => true,
+            ];
+        });
+    }
+
+    public function collapsible()
+    {
+        return $this->state(function () {
+            return [
+                'collapsible' => true,
             ];
         });
     }

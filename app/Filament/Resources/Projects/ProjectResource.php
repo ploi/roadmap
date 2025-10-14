@@ -97,6 +97,11 @@ class ProjectResource extends Resource
                             ->reactive()
                             ->default(false),
 
+                        Toggle::make('collapsible')
+                            ->label(trans('resources.project.collapsible'))
+                            ->helperText(trans('resources.project.collapsible-helper-text'))
+                            ->default(false),
+
                         Select::make('repo')
                             ->label(trans('resources.project.github-repo'))
                             ->visible($gitHubService->isEnabled())

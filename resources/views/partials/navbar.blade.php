@@ -82,7 +82,7 @@
                 --}}
                 @if($projects->count() > 0)
                     <ul class="space-y-2">
-                        @foreach($projects->groupBy('group') as $group => $projects)
+                        @foreach($projects->groupBy('group') as $group => $groupProjects)
                             @if($group)
                                 <li class="mb-3">
                                 <div class="flex items-center h-2 px-2 space-x-2 transition rounded-lg mt-5">
@@ -90,14 +90,15 @@
                                 </div>
                                 </li>
                             @endif
-                    <button type="button" class="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-projects" data-collapse-toggle="dropdown-projects">
-                  
-                  <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>
-                  {{ trans('projects.projects') }}</span>
-                  <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-            </button>
-            <ul id="dropdown-projects" class="{{ Request::is('projects/*') ? '' : 'hidden' }} py-2 space-y-2">
-                            @foreach($projects as $project)
+
+                            @php
+                                $nonCollapsible = $groupProjects->where('collapsible', false);
+                                $collapsible = $groupProjects->where('collapsible', true);
+                                $groupId = 'dropdown-projects-' . ($group ? Str::slug($group) : 'default');
+                            @endphp
+
+                            {{-- Non-collapsible projects - always visible --}}
+                            @foreach($nonCollapsible as $project)
                                 <li>
                                     <a
                                         title="{{ $project->title }}"
@@ -125,7 +126,59 @@
                                     </a>
                                 </li>
                             @endforeach
-                        </ul>
+
+                            {{-- Collapsible projects - hidden behind dropdown --}}
+                            @if($collapsible->count() > 0)
+                                <div x-data="{ open: {{ Request::is('projects/*') ? 'true' : 'false' }} }">
+                                    <button type="button"
+                                        @click="open = !open"
+                                        class="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                        aria-controls="{{ $groupId }}"
+                                        data-collapse-toggle="{{ $groupId }}">
+                                        <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>
+                                        {{ trans('projects.projects') }}</span>
+                                        <svg
+                                            sidebar-toggle-item
+                                            class="w-6 h-6 transition-transform duration-200"
+                                            :class="{ 'rotate-180': open }"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
+                                    <ul id="{{ $groupId }}" x-show="open" x-transition class="py-2 space-y-2">
+                                    @foreach($collapsible as $project)
+                                        <li>
+                                            <a
+                                                title="{{ $project->title }}"
+                                                @class([
+                                               'flex items-center h-10 px-2 space-x-2 transition rounded-lg',
+                                               'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-400' => request()->segment(2) === $project->slug,
+                                               'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => request()->segment(2) !== $project->slug
+                                           ])
+                                                href="{{ route('projects.show', $project) }}">
+                                                <x-dynamic-component :component="$project->icon ?? 'heroicon-o-hashtag'" @class([
+                                                    'shrink-0 w-5 h-5',
+                                                    'text-gray-500' => request()->segment(2) != $project->slug
+                                                ])/>
+
+                                                <span class="font-normal truncate">{{ $project->title }}</span>
+
+                                                @if($project->private)
+                                                    <div class="flex-1 flex justify-end">
+                                                        <x-heroicon-s-lock-closed @class([
+                                                            'w-4 h-4',
+                                                            'text-primary' => request()->segment(2) != $project->slug
+                                                        ])/>
+                                                    </div>
+                                                @endif
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                         @endforeach
                     </ul>
                 @else
