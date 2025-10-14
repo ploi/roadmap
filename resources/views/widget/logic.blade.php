@@ -25,6 +25,7 @@ class RoadmapWidgetElement extends HTMLElement {
         super();
         this.config = null;
         this.isOpen = false;
+        this.darkMode = false;
 
         // Attach shadow DOM
         this.attachShadow({ mode: 'open' });
@@ -32,6 +33,33 @@ class RoadmapWidgetElement extends HTMLElement {
 
     async connectedCallback() {
         await this.init();
+        this.setupDarkModeObserver();
+    }
+
+    setupDarkModeObserver() {
+        // Check initial dark mode state
+        this.updateDarkMode();
+
+        // Watch for changes to the HTML class
+        const observer = new MutationObserver(() => {
+            this.updateDarkMode();
+        });
+
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+    }
+
+    updateDarkMode() {
+        const isDark = document.documentElement.classList.contains('dark');
+        if (this.darkMode !== isDark) {
+            this.darkMode = isDark;
+            // Re-render if already initialized
+            if (this.config) {
+                this.render();
+            }
+        }
     }
 
     async init() {
@@ -55,7 +83,9 @@ class RoadmapWidgetElement extends HTMLElement {
         // Render into shadow DOM
         this.shadowRoot.innerHTML = `
             ${this.getStyles()}
-            ${this.getTemplate()}
+            <div class="roadmap-widget-root ${this.darkMode ? 'dark' : ''}">
+                ${this.getTemplate()}
+            </div>
         `;
 
         // Hide button if configured

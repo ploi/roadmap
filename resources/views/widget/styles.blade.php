@@ -4,6 +4,9 @@
         margin: 0;
         padding: 0;
     }
+    .roadmap-widget-root {
+        display: contents;
+    }
     .roadmap-widget-button {
         position: fixed;
         z-index: 999999;
@@ -248,5 +251,71 @@
     }
     .roadmap-widget-message a:hover {
         opacity: 0.8;
+    }
+
+    /* Dark mode styles */
+    .dark .roadmap-widget-modal {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    .dark .roadmap-widget-modal-content {
+        background-color: #1f2937;
+        color: #f3f4f6;
+    }
+    .dark .roadmap-widget-header {
+        border-bottom-color: #374151;
+    }
+    .dark .roadmap-widget-header h3 {
+        color: #f9fafb;
+    }
+    .dark .roadmap-widget-subtitle {
+        color: #9ca3af;
+    }
+    .dark .roadmap-widget-subtitle a {
+        color: #9ca3af;
+        border-bottom-color: #4b5563;
+    }
+    .dark .roadmap-widget-subtitle a:hover {
+        color: ${primaryColor};
+        border-bottom-color: ${primaryColor};
+    }
+    .dark .roadmap-widget-close {
+        color: #9ca3af;
+    }
+    .dark .roadmap-widget-close:hover {
+        background-color: #374151;
+        color: #f3f4f6;
+    }
+    .dark .roadmap-widget-form-group label {
+        color: #e5e7eb;
+    }
+    .dark .roadmap-widget-form-group input,
+    .dark .roadmap-widget-form-group textarea {
+        background-color: #374151;
+        border-color: #4b5563;
+        color: #f3f4f6;
+    }
+    .dark .roadmap-widget-form-group input::placeholder,
+    .dark .roadmap-widget-form-group textarea::placeholder {
+        color: #6b7280;
+    }
+    .dark .roadmap-widget-form-group input:focus,
+    .dark .roadmap-widget-form-group textarea:focus {
+        border-color: ${primaryColor};
+        background-color: #374151;
+    }
+    .dark .roadmap-widget-btn-secondary {
+        background-color: #374151;
+        color: #e5e7eb;
+    }
+    .dark .roadmap-widget-btn-secondary:hover {
+        background-color: #4b5563;
+    }
+    .dark .roadmap-widget-message.success {
+        background-color: #064e3b;
+        color: #d1fae5;
+    }
+    .dark .roadmap-widget-message.error {
+        background-color: #7f1d1d;
+        color: #fecaca;
     }
 </style>

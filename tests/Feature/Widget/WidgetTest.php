@@ -169,3 +169,15 @@ test('widget javascript is served correctly', function () {
         ->toContain('customElements.define')
         ->toContain('roadmap-widget');
 });
+
+test('widget javascript includes dark mode support', function () {
+    $response = $this->get('/widget.js');
+
+    $response->assertSuccessful();
+
+    expect($response->content())
+        ->toContain('setupDarkModeObserver')
+        ->toContain('updateDarkMode')
+        ->toContain('this.darkMode')
+        ->toContain("document.documentElement.classList.contains('dark')");
+});
