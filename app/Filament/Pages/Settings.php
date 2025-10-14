@@ -272,6 +272,7 @@ class Settings extends SettingsPage
                                             [
                                             'recent-items' => trans('settings.dashboard-items.recent-items'),
                                             'recent-comments' => trans('settings.dashboard-items.recent-comments'),
+                                            'recent-activity' => trans('settings.dashboard-items.recent-activity'),
                                             'leaderboard' => trans('settings.dashboard-items.leaderboard'),
                                             'statistics' => trans('settings.dashboard-items.statistics')
                                             ]
