@@ -21,6 +21,8 @@ return [
     'projects' => 'Projects',
     'boards' => 'Boards',
     'recent-activity' => 'Recent Activity',
+    'activity' => 'Activity',
+    'activity-description' => 'View all recent activity on items and comments',
     'new-items-this-week' => 'New Items',
     'new-comments-this-week' => 'New Comments',
     'new-votes-this-week' => 'New Votes',
