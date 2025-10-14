@@ -115,8 +115,3 @@
         }
     }
 }
-
-/* Fix for Filament table overflow on dashboard */
-.fi-ta {
-    @apply w-full;
-}
