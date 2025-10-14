@@ -112,6 +112,13 @@
                     </a>
                 </li>
 
+                <li>
+                    <a class="block p-2 transition rounded-lg focus:outline-none hover:bg-brand-500-400"
+                       href="{{ route('activity') }}">
+                        {{ trans('general.activity') }}
+                    </a>
+                </li>
+
                 @if(app(App\Settings\GeneralSettings::class)->enable_changelog)
                     <li>
                         <a class="block p-2 transition rounded-lg focus:outline-none hover:bg-brand-500-400"

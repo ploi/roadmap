@@ -1,7 +1,7 @@
 <div class="hidden lg:block">
     <aside class="w-60" aria-label="Sidebar">
         <div class="overflow-y-auto space-y-4">
-            <ul class="space-y-2">
+            <ul class="space-y-2 pb-4 border-b border-gray-200 dark:border-white/10">
                 <li>
                     <a
                         @class([
@@ -54,6 +54,23 @@
                         ])/>
 
                         <span class="font-medium">{{ trans('auth.profile') }}</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        @class([
+                            'flex items-center h-10 px-2 space-x-2 transition rounded-lg',
+                            'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-400' => request()->is('activity'),
+                            'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => !request()->is('activity')
+                        ])
+                        href="{{ route('activity') }}">
+                        <x-heroicon-o-clock @class([
+                            'w-5 h-5',
+                            'text-gray-500' => !request()->is('activity')
+                        ])/>
+
+                        <span class="font-medium">{{ trans('general.activity') }}</span>
                     </a>
                 </li>
 

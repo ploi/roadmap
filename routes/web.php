@@ -44,6 +44,7 @@ Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'
 
 Route::group(['middleware' => 'authed'], function () {
     Route::get('profile', [\App\Http\Controllers\Auth\ProfileController::class, 'show'])->name('profile');
+    Route::get('activity', \App\Http\Controllers\ActivityController::class)->name('activity');
     Route::get('my', MyController::class)->name('my');
 
     Route::get('mention-search', \App\Http\Controllers\MentionSearchController::class)->name('mention-search');
