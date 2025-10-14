@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Actions\Concerns\InteractsWithActions;
+use App\Notifications\VerifyEmailChange;
 
 class Profile extends Component implements HasForms, HasTable, HasActions
 {
@@ -75,7 +76,11 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                             'alpha_dash'
                         ])
                         ->unique(table: User::class, column: 'username', ignorable: auth()->user()),
-                    TextInput::make('email')->label(trans('auth.email'))->required()->email(),
+                    TextInput::make('email')
+                        ->label(trans('auth.email'))
+                        ->required()
+                        ->email()
+                        ->unique(table: User::class, column: 'email', ignorable: auth()->user()),
                     Select::make('locale')->label(trans('auth.locale'))->options($this->locales)->placeholder(trans('auth.locale_null_value')),
                     Select::make('date_locale')->label(trans('auth.date_locale'))->options($this->locales)->placeholder(trans('auth.date_locale_null_value')),
                 ])->collapsible(),
@@ -123,16 +128,43 @@ class Profile extends Component implements HasForms, HasTable, HasActions
     {
         $data = $this->form->getState();
 
-        $this->user->update([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'username' => $data['username'],
-            'notification_settings' => $data['notification_settings'],
-            'per_page_setting' => $data['per_page_setting'],
-            'locale' => $data['locale'],
-            'date_locale' => $data['date_locale'],
-            'hide_from_leaderboard' => $data['hide_from_leaderboard'],
-        ]);
+        $emailChanged = $this->user->email !== $data['email'];
+
+        if ($emailChanged) {
+            // Store the pending email and send verification
+            $this->user->update([
+                'name' => $data['name'],
+                'username' => $data['username'],
+                'notification_settings' => $data['notification_settings'],
+                'per_page_setting' => $data['per_page_setting'],
+                'locale' => $data['locale'],
+                'date_locale' => $data['date_locale'],
+                'hide_from_leaderboard' => $data['hide_from_leaderboard'],
+                'pending_email' => $data['email'],
+                'pending_email_verified_at' => null,
+            ]);
+
+            // Send verification email to the new email address
+            $tempUser = clone $this->user;
+            $tempUser->email = $data['email'];
+            $tempUser->notify(new VerifyEmailChange($data['email']));
+
+            Notification::make('email-verification-sent')
+                ->title('Email Verification Required')
+                ->body('A verification link has been sent to your new email address. Please verify it to complete the change.')
+                ->warning()
+                ->send();
+        } else {
+            $this->user->update([
+                'name' => $data['name'],
+                'username' => $data['username'],
+                'notification_settings' => $data['notification_settings'],
+                'per_page_setting' => $data['per_page_setting'],
+                'locale' => $data['locale'],
+                'date_locale' => $data['date_locale'],
+                'hide_from_leaderboard' => $data['hide_from_leaderboard'],
+            ]);
+        }
 
         if ($this->user->wasChanged('locale', 'date_locale')) {
             Notification::make('profile')
@@ -142,11 +174,13 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                 ->send();
         }
 
-        Notification::make('profile-saved')
-            ->title('Profile')
-            ->body('Profile has been saved')
-            ->success()
-            ->send();
+        if (!$emailChanged) {
+            Notification::make('profile-saved')
+                ->title('Profile')
+                ->body('Profile has been saved')
+                ->success()
+                ->send();
+        }
     }
 
     public function logout()

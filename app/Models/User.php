@@ -32,6 +32,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         'locale',
         'date_locale',
         'hide_from_leaderboard',
+        'pending_email',
+        'pending_email_verified_at',
     ];
 
     protected $hidden = [
@@ -41,6 +43,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'pending_email_verified_at' => 'datetime',
         'notification_settings' => 'array',
         'per_page_setting' => 'array',
         'role' => UserRole::class,
