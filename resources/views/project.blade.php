@@ -8,12 +8,12 @@
 ]">
     <div
         @class([
-        'w-full h-[calc(100vh-170px)] overflow-x-auto',
+        'w-screen h-[calc(100vh-170px)] overflow-x-auto -ml-4 sm:-ml-6 md:-ml-8 lg:-ml-5 pl-4 sm:pl-6 md:pl-8',
         ])
     >
         <div
             @class([
-            'inline-flex h-full w-full min-w-full gap-4 flex-nowrap overflow-x-scroll',
+            'inline-flex h-full min-w-full gap-4 flex-nowrap',
             'justify-center' => app(\App\Settings\GeneralSettings::class)->board_centered
             ])
         >
