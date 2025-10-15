@@ -50,19 +50,17 @@
                             type="password">
                     </div>
 
-                    <div class="flex space-x-3">
+                    <div class="flex items-center gap-2">
                         <input
-                            class="text-brand-500 transition border border-gray-300 rounded shadow-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500"
+                            class="w-4 h-4 text-brand-600 transition duration-75 border-gray-300 rounded shadow-sm focus:ring-1 focus:ring-inset focus:ring-brand-600 focus:border-brand-600 dark:border-white/10 dark:bg-gray-900"
                             id="remember"
                             name="remember"
                             type="checkbox">
 
-                        <div class="flex flex-col space-y-1">
-                            <label class="inline-block text-sm font-medium leading-4 text-gray-700"
-                                   for="remember">
-                                {{ trans('auth.remember_me') }}
-                            </label>
-                        </div>
+                        <label class="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer select-none"
+                               for="remember">
+                            {{ trans('auth.remember_me') }}
+                        </label>
                     </div>
 
                     <button

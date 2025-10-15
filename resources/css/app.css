@@ -6,6 +6,7 @@
 @import './admin.css';
 
 @plugin '@tailwindcss/typography';
+@plugin '@tailwindcss/forms';
 
 @theme {
   --color-brand-50: var(--color-brand-50);
