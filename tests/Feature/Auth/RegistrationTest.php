@@ -56,3 +56,14 @@ test('guests cannot access /register when this feature is disabled', function ()
     $response->assertRedirect(route('home'));
     $response->assertStatus(302);
 });
+
+test('new users cannot register with not strong password', function () {
+    $response = $this->post(route('register'), [
+        'name' => 'Test User',
+        'email' => 'test@example.com',
+        'password' => 'testings',
+        'password_confirmation' => 'testings',
+    ]);
+
+    $response->assertSessionHasErrors(['password']);
+});
