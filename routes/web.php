@@ -38,6 +38,7 @@ Route::get('projects/{project}/items/{item}', [ItemController::class, 'show'])->
 Route::post('projects/{project}/items/{item}/vote', [ItemController::class, 'vote'])->middleware('authed')->name('projects.items.vote');
 Route::post('projects/{project}/items/{item}/update-board', [ItemController::class, 'updateBoard'])->middleware('authed')->name('projects.items.update-board');
 Route::get('projects/{project}/boards/{board}', [BoardsController::class, 'show'])->name('projects.boards.show');
+Route::get('activity', \App\Http\Controllers\ActivityController::class)->name('activity');
 
 Route::get('/email/verify', [VerificationController::class, 'show'])->middleware('auth')->name('verification.notice');
 Route::post('/email/verification-notification', [VerificationController::class, 'resend'])->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
@@ -46,7 +47,6 @@ Route::get('/profile/verify-email-change/{id}/{email}', VerifyEmailChangeControl
 
 Route::group(['middleware' => 'authed'], function () {
     Route::get('profile', [\App\Http\Controllers\Auth\ProfileController::class, 'show'])->name('profile');
-    Route::get('activity', \App\Http\Controllers\ActivityController::class)->name('activity');
     Route::get('my', MyController::class)->name('my');
 
     Route::get('mention-search', \App\Http\Controllers\MentionSearchController::class)->name('mention-search');
