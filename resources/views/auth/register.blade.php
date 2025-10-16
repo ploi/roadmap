@@ -30,7 +30,7 @@
                     <x-honeypot/>
 
                     <div class="space-y-2">
-                        <label class="inline-block text-sm font-medium text-gray-700"
+                        <label class="inline-block text-sm font-medium dark:text-white text-gray-700"
                                for="name">{{ trans('auth.name') }}</label>
 
                         <input
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="space-y-2">
-                        <label class="inline-block text-sm font-medium text-gray-700"
+                        <label class="inline-block text-sm font-medium dark:text-white text-gray-700"
                                for="email">{{ trans('auth.email') }}</label>
 
                         <input
@@ -55,7 +55,7 @@
                     </div>
 
                     <div x-data="{ show: false }" class="space-y-2">
-                        <label class="inline-block text-sm font-medium text-gray-700" for="password">{{ trans('auth.password') }}</label>
+                        <label class="inline-block text-sm font-medium dark:text-white text-gray-700" for="password">{{ trans('auth.password') }}</label>
 
                         <div class="flex items-center w-full h-10 bg-white transition duration-75 border-gray-300 rounded-lg shadow-sm focus:border-brand-600 focus:ring-1 focus:ring-inset focus:ring-brand-600 dark:bg-gray-900 dark:border-white/10">
                             <input
@@ -86,7 +86,7 @@
                     </div>
 
                     <div x-data="{ show: false }" class="space-y-2">
-                        <label class="inline-block text-sm font-medium text-gray-700" for="password_confirmation">{{ trans('auth.confirm_password') }}</label>
+                        <label class="inline-block text-sm font-medium dark:text-white text-gray-700" for="password_confirmation">{{ trans('auth.confirm_password') }}</label>
 
                         <div class="flex items-center w-full h-10 bg-white transition duration-75 border-gray-300 rounded-lg shadow-sm focus:border-brand-600 focus:ring-1 focus:ring-inset focus:ring-brand-600 dark:bg-gray-900 dark:border-white/10">
                             <input
