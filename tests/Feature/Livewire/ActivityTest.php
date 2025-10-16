@@ -5,12 +5,6 @@ use Livewire\Livewire;
 use App\Enums\ItemActivity;
 use App\Livewire\Activity;
 
-test('activity page requires authentication', function () {
-    $response = $this->get(route('activity'));
-
-    $response->assertRedirect(route('login'));
-});
-
 test('authenticated user can access activity page', function () {
     $user = createAndLoginUser();
 

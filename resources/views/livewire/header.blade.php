@@ -1,5 +1,7 @@
 <header class="sticky top-0 z-10 w-full bg-brand-500 shadow text-white dark:bg-gray-900 dark:border-b dark:border-white/10"
-        x-data="{ open: false }">
+        x-data="{ open: false }"
+        @keydown.window.cmd.k.prevent="$wire.mountAction('searchItem')"
+        @keydown.window.ctrl.k.prevent="$wire.mountAction('searchItem')">
     <div class="w-full px-4 mx-auto sm:px-6 md:px-8 max-w-[1500px]">
         <nav class="flex items-center justify-between h-20">
             <a class="text-2xl font-semibold tracking-tight"
@@ -12,20 +14,72 @@
                 @endif
             </a>
 
-            <ul class="items-center hidden space-x-3 text-sm font-medium text-gray-600 lg:flex">
+            <ul class="items-center hidden space-x-2 text-sm font-medium lg:flex">
+                @if(app(\App\Settings\ColorSettings::class)->darkmode)
+                    <li x-data="themeToggle">
+                        <div class="relative" x-data="{ open: false }">
+                            <button
+                                type="button"
+                                @click="open = !open"
+                                @click.away="open = false"
+                                class="flex items-center justify-center w-10 h-10 transition rounded-lg text-white/90 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20"
+                            >
+                                <x-heroicon-o-sun x-show="theme === 'light'" class="w-5 h-5 text-white"/>
+                                <x-heroicon-o-moon x-show="theme === 'dark'" class="w-5 h-5 text-white"/>
+                                <x-heroicon-o-computer-desktop x-show="theme === 'auto'" class="w-5 h-5 text-white"/>
+                            </button>
+
+                            <div
+                                x-show="open"
+                                x-cloak
+                                @click="open = false"
+                                class="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-lg bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black/5 dark:ring-white/10"
+                            >
+                                <div class="py-1">
+                                    <button
+                                        type="button"
+                                        @click="setTheme('light')"
+                                        class="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                    >
+                                        <x-heroicon-o-sun class="w-5 h-5"/>
+                                        <span>Light</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        @click="setTheme('dark')"
+                                        class="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                    >
+                                        <x-heroicon-o-moon class="w-5 h-5"/>
+                                        <span>Dark</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        @click="setTheme('auto')"
+                                        class="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                    >
+                                        <x-heroicon-o-computer-desktop class="w-5 h-5"/>
+                                        <span>Auto</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                @endif
+                
                 <li>
                     {{ $this->searchItemAction }}
                 </li>
+
                 @guest
                     <li>
-                        <a class="flex items-center justify-center text-white hover:text-gray-50 focus:outline-none"
+                        <a class="inline-flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-white/20"
                            href="{{ route('login') }}">
                             {{ trans('auth.login') }}
                         </a>
                     </li>
                     @if(! app(App\Settings\GeneralSettings::class)->disable_user_registration)
                         <li>
-                            <a class="flex items-center justify-center text-white hover:text-gray-50 focus:outline-none"
+                            <a class="inline-flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-white/20"
                                href="{{ route('register') }}">
                                 {{ trans('auth.register') }}
                             </a>
@@ -36,17 +90,16 @@
                 @auth
                     @if(auth()->user()->hasAdminAccess())
                         <li>
-                            <a class="flex items-center justify-center w-10 h-10 text-red-500 transition rounded-full hover:bg-gray-500/5 focus:bg-blue-500/10 focus:outline-none"
+                            <a class="flex items-center justify-center w-10 h-10 transition rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20"
                                href="{{ \Filament\Pages\Dashboard::getUrl() }}">
-                                <x-heroicon-o-cog class="w-7 h-7 text-white"/>
+                                <x-heroicon-o-cog class="w-5 h-5 text-white"/>
                             </a>
                         </li>
                     @endif
                     <li>
-                        <a href="{{ route('profile') }}">
-                            <div class="relative w-7 h-7 rounded-full">
+                        <a href="{{ route('profile') }}" class="flex items-center justify-center w-10 h-10 transition rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20">
+                            <div class="relative w-8 h-8 rounded-full ring-2 ring-white/20">
                                 <div class="absolute inset-0 bg-gray-200 rounded-full animate-pulse"></div>
-
                                 <img class="absolute inset-0 object-cover rounded-full"
                                      src="{{ auth()->user()->getGravatar() }}"
                                      alt="{{ auth()->user()->name }}">
@@ -55,15 +108,9 @@
                     </li>
                 @endauth
 
-                <li>
+                <li class="pl-1">
                     {{ $this->submitItemAction }}
                 </li>
-
-                @if(app(\App\Settings\ColorSettings::class)->darkmode)
-                    <li>
-                        <x-theme-toggle/>
-                    </li>
-                @endif
             </ul>
 
             <!-- Hamburger -->

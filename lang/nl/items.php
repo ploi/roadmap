@@ -31,5 +31,5 @@ return [
     'item-private' => 'Dit item is privé',
     'update-board-success' => 'Het item is succesvol verplaats naar het bord :board',
     'view-on-github' => 'Bekijk issue op GitHub',
-    'search-shortcut' => 'CMD + / om te zoeken'
+    'search-shortcut' => 'CMD + K om te zoeken'
 ];

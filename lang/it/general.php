@@ -2,7 +2,7 @@
 
 return [
     'dashboard' => 'Home',
-    'navbar-search' => 'CMD + / per cercare',
+    'navbar-search' => 'CMD + K per cercare',
 
     'recent-items' => 'Elementi recenti',
     'recent-comments' => 'Commenti recenti',

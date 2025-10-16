@@ -51,17 +51,18 @@ class Header extends Component implements HasForms, HasActions
     public function searchItemAction(): Action
     {
         return Action::make('searchItem')
+            ->link()
             ->color('gray')
-            ->size('xs')
-            ->label(trans('items.search-shortcut'))
+            ->label(function () {
+                return view('components.search-button-label');
+            })
             ->icon('heroicon-o-magnifying-glass')
-            ->requiresConfirmation()
+            ->extraAttributes(['class' => '!px-3 !py-1.5 rounded-lg text-white hover:text-white hover:bg-white/10 focus:ring-white/20 [&_svg]:text-white'])
             ->modalWidth('4xl')
             ->modalFooterActions([
                 Action::make('👀')->hidden()
             ])
             ->modalHeading($this->getRandomFunnyPlaceholder())
-            ->modalDescription('')
             ->modalIcon('heroicon-o-magnifying-glass')
             ->modalAlignment(Alignment::Left)
             ->modalContent(view('modals.search'));
