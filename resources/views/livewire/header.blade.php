@@ -62,8 +62,53 @@
                 </li>
 
                 @if(app(\App\Settings\ColorSettings::class)->darkmode)
-                    <li>
-                        <x-theme-toggle/>
+                    <li x-data="themeToggle">
+                        <div class="relative" x-data="{ open: false }">
+                            <button
+                                type="button"
+                                @click="open = !open"
+                                @click.away="open = false"
+                                class="flex items-center justify-center w-10 h-10 transition rounded-lg text-white/90 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20"
+                            >
+                                <x-heroicon-o-sun x-show="theme === 'light'" class="w-5 h-5 text-white"/>
+                                <x-heroicon-o-moon x-show="theme === 'dark'" class="w-5 h-5 text-white"/>
+                                <x-heroicon-o-computer-desktop x-show="theme === 'auto'" class="w-5 h-5 text-white"/>
+                            </button>
+
+                            <div
+                                x-show="open"
+                                x-cloak
+                                @click="open = false"
+                                class="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-lg bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black/5 dark:ring-white/10"
+                            >
+                                <div class="py-1">
+                                    <button
+                                        type="button"
+                                        @click="setTheme('light')"
+                                        class="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                    >
+                                        <x-heroicon-o-sun class="w-5 h-5"/>
+                                        <span>Light</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        @click="setTheme('dark')"
+                                        class="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                    >
+                                        <x-heroicon-o-moon class="w-5 h-5"/>
+                                        <span>Dark</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        @click="setTheme('auto')"
+                                        class="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                    >
+                                        <x-heroicon-o-computer-desktop class="w-5 h-5"/>
+                                        <span>Auto</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 @endif
             </ul>
