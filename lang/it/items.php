@@ -33,5 +33,5 @@ return [
     'not-allowed-to-create-items' => 'Non sei autorizzato a creare elementi in questa bacheca.',
     'update-board-success' => 'Elemento spostato con successo nella bacheca :board',
     'view-on-github' => 'Visualizza su GitHub',
-    'search-shortcut' => 'CMD + / per cercare'
+    'search-shortcut' => 'CMD + K per cercare'
 ];

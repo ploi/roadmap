@@ -2,7 +2,7 @@
 
 return [
     'dashboard' => 'Dashboard',
-    'navbar-search' => 'CMD + / to search',
+    'navbar-search' => 'CMD + K to search',
 
     'recent-items' => 'Recent items',
     'recent-comments' => 'Recent comments',

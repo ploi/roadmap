@@ -34,5 +34,5 @@ return [
     'not-allowed-to-create-items' => 'You are not allowed to create items in this board.',
     'update-board-success' => 'Successfully moved the item to board :board',
     'view-on-github' => 'View issue on GitHub',
-    'search-shortcut' => 'CMD + / to search'
+    'search-shortcut' => 'CMD + K to search'
 ];

@@ -33,5 +33,5 @@ return [
     'not-allowed-to-create-items' => 'No tienes permiso para crear elementos en este tablero.',
     'update-board-success' => 'Se movió correctamente el elemento al tablero :board',
     'view-on-github' => 'Ver problema en GitHub',
-    'search-shortcut' => 'CMD + / para buscar',
+    'search-shortcut' => 'CMD + K para buscar',
 ];
