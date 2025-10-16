@@ -15,52 +15,6 @@
             </a>
 
             <ul class="items-center hidden space-x-2 text-sm font-medium lg:flex">
-                <li>
-                    {{ $this->searchItemAction }}
-                </li>
-
-                @guest
-                    <li>
-                        <a class="inline-flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-white/20"
-                           href="{{ route('login') }}">
-                            {{ trans('auth.login') }}
-                        </a>
-                    </li>
-                    @if(! app(App\Settings\GeneralSettings::class)->disable_user_registration)
-                        <li>
-                            <a class="inline-flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-white/20"
-                               href="{{ route('register') }}">
-                                {{ trans('auth.register') }}
-                            </a>
-                        </li>
-                    @endif
-                @endguest
-
-                @auth
-                    @if(auth()->user()->hasAdminAccess())
-                        <li>
-                            <a class="flex items-center justify-center w-10 h-10 transition rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20"
-                               href="{{ \Filament\Pages\Dashboard::getUrl() }}">
-                                <x-heroicon-o-cog class="w-5 h-5 text-white"/>
-                            </a>
-                        </li>
-                    @endif
-                    <li>
-                        <a href="{{ route('profile') }}" class="flex items-center justify-center w-10 h-10 transition rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20">
-                            <div class="relative w-8 h-8 rounded-full ring-2 ring-white/20">
-                                <div class="absolute inset-0 bg-gray-200 rounded-full animate-pulse"></div>
-                                <img class="absolute inset-0 object-cover rounded-full"
-                                     src="{{ auth()->user()->getGravatar() }}"
-                                     alt="{{ auth()->user()->name }}">
-                            </div>
-                        </a>
-                    </li>
-                @endauth
-
-                <li class="pl-1">
-                    {{ $this->submitItemAction }}
-                </li>
-
                 @if(app(\App\Settings\ColorSettings::class)->darkmode)
                     <li x-data="themeToggle">
                         <div class="relative" x-data="{ open: false }">
@@ -111,6 +65,52 @@
                         </div>
                     </li>
                 @endif
+                
+                <li>
+                    {{ $this->searchItemAction }}
+                </li>
+
+                @guest
+                    <li>
+                        <a class="inline-flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-white/20"
+                           href="{{ route('login') }}">
+                            {{ trans('auth.login') }}
+                        </a>
+                    </li>
+                    @if(! app(App\Settings\GeneralSettings::class)->disable_user_registration)
+                        <li>
+                            <a class="inline-flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-white/20"
+                               href="{{ route('register') }}">
+                                {{ trans('auth.register') }}
+                            </a>
+                        </li>
+                    @endif
+                @endguest
+
+                @auth
+                    @if(auth()->user()->hasAdminAccess())
+                        <li>
+                            <a class="flex items-center justify-center w-10 h-10 transition rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20"
+                               href="{{ \Filament\Pages\Dashboard::getUrl() }}">
+                                <x-heroicon-o-cog class="w-5 h-5 text-white"/>
+                            </a>
+                        </li>
+                    @endif
+                    <li>
+                        <a href="{{ route('profile') }}" class="flex items-center justify-center w-10 h-10 transition rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20">
+                            <div class="relative w-8 h-8 rounded-full ring-2 ring-white/20">
+                                <div class="absolute inset-0 bg-gray-200 rounded-full animate-pulse"></div>
+                                <img class="absolute inset-0 object-cover rounded-full"
+                                     src="{{ auth()->user()->getGravatar() }}"
+                                     alt="{{ auth()->user()->name }}">
+                            </div>
+                        </a>
+                    </li>
+                @endauth
+
+                <li class="pl-1">
+                    {{ $this->submitItemAction }}
+                </li>
             </ul>
 
             <!-- Hamburger -->
