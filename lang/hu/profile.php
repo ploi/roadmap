@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'save' => 'Mentés',
+    'logout' => 'Kijelentkezés',
+    'delete-account' => 'Fiók törlése',
+    'delete-account-confirmation' => 'Biztosan törölni szeretnéd?',
+    'delete-account-warning' => 'Figyelj, ez a művelet nem visszavonható! Az összes hozzászólásod és szavazatod törlésre kerül. Az elemek leválnak a fiókhoz tartozásról.',
+    'delete-account-cancel' => 'Nem, maradjon a fiókom',
+    'logout-warning' => 'Biztosan ki szeretnél jelentkezni?',
+    'logout-confirmation' => 'Biztos vagy benne?',
+    'logout-cancel' => 'Nem, maradjak bejelentkezve',
+    'username' => 'Felhasználónév',
+    'username_description' => 'Ez a felhasználónév jelenik meg, amikor megemlítenek a hozzászólásokban.',
+    'notifications' => 'Értesítések',
+    'notification_settings' => 'Értesítési beállítások',
+    'receive_mention_notifications' => 'Értesítések fogadása említésekről',
+    'receive_comment_reply_notifications' => 'Értesítések fogadása hozzászólás válaszokról',
+    'social-login' => 'Közösségi bejelentkezés',
+    'social-login-description' => 'Itt találod azokat a közösségi fiókokat, amelyekkel bejelentkeztél a fiókodba.',
+    'per-page-setting' => 'Oldalankénti beállítás',
+    'per-page-setting-helper' => 'Meghatározhatod, hogy például a „Saját” oldalon hány elem jelenjen meg oldalanként.',
+    'settings' => 'Beállítások',
+    'hide-from-leaderboard' => 'Elrejtés a ranglistáról',
+    'hide-from-leaderboard-helper' => 'Eltüntet téged a nyilvános ranglistáról.',
+];
