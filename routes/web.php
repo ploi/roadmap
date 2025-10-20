@@ -25,6 +25,7 @@ Route::get('password-protection', PasswordProtectionController::class)->name('pa
 Route::post('password-protection', [PasswordProtectionController::class, 'login'])->name('password.protection.login');
 
 Route::get('/widget.js', [WidgetController::class, 'javascript'])->name('widget.js');
+Route::get('/activity-widget.js', [WidgetController::class, 'activityJavascript'])->name('activity-widget.js');
 
 Route::get('/', \App\Http\Controllers\HomeController::class)->name('home');
 

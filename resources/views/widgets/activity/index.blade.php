@@ -2,9 +2,9 @@
     'use strict';
 
     // Prevent multiple initializations
-    if (customElements.get('roadmap-widget')) {
+    if (customElements.get('roadmap-activity-widget')) {
         return;
     }
 
-@include('widget.logic')
+@include('widgets.activity.logic')
 })();

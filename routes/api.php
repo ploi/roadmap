@@ -24,3 +24,9 @@ Route::prefix('widget')->group(function () {
     Route::get('/config', [WidgetController::class, 'config']);
     Route::post('/submit', [WidgetController::class, 'submit']);
 });
+
+// Activity Widget routes (public)
+Route::prefix('activity-widget')->group(function () {
+    Route::get('/config', [WidgetController::class, 'activityConfig']);
+    Route::get('/activities', [WidgetController::class, 'activityList']);
+});
