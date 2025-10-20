@@ -103,7 +103,7 @@ class RoadmapWidgetElement extends HTMLElement {
     getStyles() {
         const primaryColor = this.config.primary_color || '#2563EB';
         return `
-@include('widget.styles')
+@include('widgets.feedback.styles')
         `;
     }
 
@@ -112,7 +112,7 @@ class RoadmapWidgetElement extends HTMLElement {
         const buttonText = this.config.button_text || 'Feedback';
 
         return `
-@include('widget.template')
+@include('widgets.feedback.template')
         `;
     }
 
