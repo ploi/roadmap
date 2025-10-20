@@ -42,6 +42,11 @@ class Widget extends SettingsPage
         return 'Widgets';
     }
 
+    public function getSubheading(): string|Htmlable|null
+    {
+        return 'Embeddable widgets that can be added to external websites. Configure settings and copy the embed code to integrate with any site. These settings are saved separately. Click "Save" at the bottom after making changes.';
+    }
+
     public static function shouldRegisterNavigation(): bool
     {
         return auth()->user()->hasRole(UserRole::Admin);
@@ -137,14 +142,6 @@ class Widget extends SettingsPage
 
                     Tab::make('Activity Widget')
                         ->schema([
-                            Section::make('Activity Widget Settings')
-                                ->description('These settings are saved separately. Click "Save" at the bottom after making changes.')
-                                ->columnSpanFull()
-                                ->schema([
-                                    Placeholder::make('activity_settings_note')
-                                        ->label('')
-                                        ->content('Activity widget settings are managed independently and saved when you click the main Save button.'),
-                                ]),
                             Section::make('Widget Configuration')
                                 ->description('Configure the activity widget that displays recent activity from your roadmap.')
                                 ->columnSpanFull()
