@@ -20,6 +20,10 @@ class ItemObserver
     {
         ItemActivity::createForItem($item, ItemActivity::Created);
 
+        if ($item->isPrivate()) {
+            return;
+        }
+
         if ($receivers = app(GeneralSettings::class)->send_notifications_to) {
             foreach ($receivers as $receiver) {
                 if (!isset($receiver['type'])) {

@@ -68,3 +68,44 @@ test('A user can not submit a new item via the board page if disabled', function
 
     assertDatabaseCount(Item::class, 0);
 });
+
+test('Private items do not send notifications', function () {
+    $user = createAndLoginUser();
+
+    Item::factory()->private()->create([
+        'title' => 'A private item',
+        'content' => 'This is private content.',
+        'project_id' => $this->project->id,
+        'board_id' => $this->board->id,
+        'user_id' => $user->id,
+    ]);
+
+    assertDatabaseHas(Item::class, [
+        'title' => 'A private item',
+        'content' => 'This is private content.',
+        'private' => true,
+    ]);
+
+    Mail::assertNothingQueued();
+});
+
+test('Public items send notifications', function () {
+    $user = createAndLoginUser();
+
+    Item::factory()->create([
+        'title' => 'A public item',
+        'content' => 'This is public content.',
+        'project_id' => $this->project->id,
+        'board_id' => $this->board->id,
+        'user_id' => $user->id,
+        'private' => false,
+    ]);
+
+    assertDatabaseHas(Item::class, [
+        'title' => 'A public item',
+        'content' => 'This is public content.',
+        'private' => false,
+    ]);
+
+    Mail::assertQueued(ItemHasBeenCreatedEmail::class);
+});

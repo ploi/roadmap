@@ -163,6 +163,6 @@ class Item extends Model
 
     public function isPrivate(): bool
     {
-        return $this->private;
+        return (bool) $this->private;
     }
 }
