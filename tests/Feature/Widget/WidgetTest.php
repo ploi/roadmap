@@ -181,3 +181,40 @@ test('widget javascript includes dark mode support', function () {
         ->toContain('this.darkMode')
         ->toContain("document.documentElement.classList.contains('dark')");
 });
+
+test('widget submission automatically upvotes item for user', function () {
+    $response = $this->postJson('/api/widget/submit', [
+        'title' => 'Test Feedback with Vote',
+        'content' => 'This feedback should have an automatic upvote',
+        'email' => 'voter@example.com',
+        'name' => 'Voter User',
+    ]);
+
+    $response->assertCreated();
+
+    $item = Item::where('title', 'Test Feedback with Vote')->first();
+
+    expect($item)->not->toBeNull()
+        ->and($item->votes()->count())->toBe(1)
+        ->and($item->votes()->first()->user->email)->toBe('voter@example.com');
+});
+
+test('widget submission creates activity log with correct user', function () {
+    $response = $this->postJson('/api/widget/submit', [
+        'title' => 'Test Activity Log',
+        'content' => 'This should have correct user in activity log',
+        'email' => 'activity@example.com',
+        'name' => 'Activity User',
+    ]);
+
+    $response->assertCreated();
+
+    $item = Item::where('title', 'Test Activity Log')->first();
+    $activity = $item->activities()->first();
+
+    expect($item)->not->toBeNull()
+        ->and($activity)->not->toBeNull()
+        ->and($activity->causer)->not->toBeNull()
+        ->and($activity->causer->email)->toBe('activity@example.com')
+        ->and($activity->causer->name)->toBe('Activity User');
+});

@@ -103,7 +103,7 @@ class WidgetController extends Controller
         }
 
         // Only create/find user if email is provided
-        $userId = null;
+        $user = null;
         if ($request->filled('email')) {
             $user = User::firstOrCreate(
                 ['email' => $request->input('email')],
@@ -112,16 +112,30 @@ class WidgetController extends Controller
                     'password' => bcrypt(str()->random(32)),
                 ]
             );
-            $userId = $user->id;
+        }
+
+        // Temporarily authenticate the user for proper activity logging
+        if ($user) {
+            auth()->login($user);
         }
 
         // Create item
         $item = Item::create([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
-            'user_id' => $userId,
+            'user_id' => $user?->id,
             'private' => false,
         ]);
+
+        // Automatically upvote the item for the user
+        if ($user) {
+            $item->toggleUpvote($user);
+        }
+
+        // Logout the user after item creation
+        if ($user) {
+            auth()->logout();
+        }
 
         return response()->json([
             'success' => true,
