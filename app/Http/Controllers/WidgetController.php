@@ -114,9 +114,9 @@ class WidgetController extends Controller
             );
         }
 
-        // Temporarily authenticate the user for proper activity logging
+        // Temporarily set the user for this request without triggering login events
         if ($user) {
-            auth()->login($user);
+            auth()->setUser($user);
         }
 
         // Create item
@@ -130,11 +130,6 @@ class WidgetController extends Controller
         // Automatically upvote the item for the user
         if ($user) {
             $item->toggleUpvote($user);
-        }
-
-        // Logout the user after item creation
-        if ($user) {
-            auth()->logout();
         }
 
         return response()->json([
