@@ -26,11 +26,15 @@
                             </a>
                         @endif
 
-                        <div class="overflow-hidden font-medium">
-                            <a href="{{ route('public-user', $user->username) }}" class="hover:underline ease-in-out">
-                            <p>{{ $user->name ?? '-Unknown user-' }}</p>
-                            </a>
-                        </div>
+                            <div class="overflow-hidden font-medium">
+                                @if($user)
+                                    <a href="{{ route('public-user', $user->username) }}" class="hover:underline ease-in-out">
+                                        <p>{{ $user->name ?? '-Unknown user-' }}</p>
+                                    </a>
+                                @else
+                                    <p>-Unknown user-</p>
+                                @endif
+                            </div>
 
                         @if($item->board)
                             <div class="flex-1">
