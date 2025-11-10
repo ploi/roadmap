@@ -16,9 +16,19 @@ class PublicUserController extends Controller
         $activities = $this->getRecentActivities($user);
 
         $data = [
-            'items_created' => $user->items->count(),
-            'comments_created' => $user->comments->count(),
-            'votes_created' => $user->votes->count(),
+            'items_created' => $user->items()->visibleForCurrentUser()->count(),
+            'comments_created' => $user->comments()
+                ->whereHas('item', fn ($q) => $q->visibleForCurrentUser())
+                ->count(),
+            'votes_created' => $user->votes()
+                ->whereHasMorph('model', [Item::class, Comment::class], function ($query, $type) {
+                    if ($type === Item::class) {
+                        $query->visibleForCurrentUser();
+                    } elseif ($type === Comment::class) {
+                        $query->whereHas('item', fn ($q) => $q->visibleForCurrentUser());
+                    }
+                })
+                ->count(),
             'activities' => $activities,
         ];
 
@@ -28,6 +38,7 @@ class PublicUserController extends Controller
     private function getRecentActivities(User $user, int $limit = 20): Collection
     {
         $items = $user->items()
+            ->visibleForCurrentUser()
             ->with('project')
             ->latest()
             ->limit($limit)
@@ -38,28 +49,37 @@ class PublicUserController extends Controller
                     'title' => $item->title,
                     'content' => $item->content,
                     'url' => route('items.show', $item),
-                    'project' => $item->project->title ?? null,
+                    'project' => $item->project?->title,
                     'created_at' => $item->created_at,
                 ];
             });
 
         $comments = $user->comments()
-            ->with('item.project')
+            ->whereHas('item', fn ($query) => $query->visibleForCurrentUser())
+            ->with(['item' => fn ($q) => $q->with('project')])
             ->latest()
             ->limit($limit)
             ->get()
             ->map(function ($comment) {
                 return [
                     'type' => 'comment',
-                    'title' => $comment->item->title ?? null,
+                    'title' => $comment->item?->title,
                     'content' => $comment->content,
-                    'url' => route('items.show', $comment->item),
-                    'project' => $comment->item->project->title ?? null,
+                    'url' => $comment->item ? route('items.show', $comment->item) : null,
+                    'project' => $comment->item?->project?->title,
                     'created_at' => $comment->created_at,
                 ];
-            });
+            })
+            ->filter(fn ($comment) => $comment['url'] !== null);
 
         $votes = $user->votes()
+            ->whereHasMorph('model', [Item::class, Comment::class], function ($query, $type) {
+                if ($type === Item::class) {
+                    $query->visibleForCurrentUser();
+                } elseif ($type === Comment::class) {
+                    $query->whereHas('item', fn ($q) => $q->visibleForCurrentUser());
+                }
+            })
             ->with(['model' => function ($query) {
                 $query->when(
                     fn ($q) => $q->getModel() instanceof Item,
@@ -78,23 +98,23 @@ class PublicUserController extends Controller
                         'type' => 'vote',
                         'title' => $vote->model->title,
                         'url' => route('items.show', $vote->model),
-                        'project' => $vote->model->project->title ?? null,
+                        'project' => $vote->model->project?->title,
                         'created_at' => $vote->created_at,
                     ];
                 }
                 if ($vote->model instanceof Comment) {
                     return [
                         'type' => 'vote',
-                        'title' => $vote->model->item->title ?? null,
+                        'title' => $vote->model->item?->title,
                         'content' => $vote->model->content,
-                        'url' => route('items.show', $vote->model->item),
-                        'project' => $vote->model->item->project->title ?? null,
+                        'url' => $vote->model->item ? route('items.show', $vote->model->item) : null,
+                        'project' => $vote->model->item?->project?->title,
                         'created_at' => $vote->created_at,
                     ];
                 }
                 return null;
             })
-            ->filter();
+            ->filter(fn ($vote) => $vote !== null && ($vote['url'] ?? null) !== null);
 
         return collect()
             ->concat($items)
