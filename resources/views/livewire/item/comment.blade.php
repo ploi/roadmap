@@ -10,13 +10,19 @@
         <div class="flex items-center px-4 py-2 space-x-2">
             <div class="flex items-center space-x-3 overflow-hidden">
                 <div class="relative shrink-0 w-10 h-10 rounded-full">
+                    <a href="{{ route('public-user', $comment->user->username) }}">
                     <img class="absolute inset-0 object-cover rounded-full"
                          src="{{ $comment->user->getGravatar() }}"
                          alt="{{ $comment->user->name }}">
+                    </a>
                 </div>
 
                 <div class="overflow-hidden font-medium flex items-center space-x-2">
-                    <p class="truncate">{{ $comment->user->name }}</p>
+                    <p class="truncate">
+                        <a href="{{ route('public-user', $comment->user->username) }}" class="hover:underline ease-in-out">
+                            {{ $comment->user->name }}
+                        </a>
+                    </p>
                     @if($comment->user_id === $item->user_id)
                         <span
                             class="md:block inline-flex items-center justify-center py-0.5 px-2 text-xs font-semibold tracking-tight text-brand-900 rounded-full bg-brand-200">

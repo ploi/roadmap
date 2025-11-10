@@ -8,6 +8,7 @@
                     {{ trans('profile.save') }}
                 </x-filament::button>
 
+                {{ $this->viewProfileAction }}
                 {{ $this->logoutAction }}
             </div>
 

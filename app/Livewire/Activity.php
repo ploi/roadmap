@@ -41,7 +41,7 @@ class Activity extends Component implements HasTable, HasForms, HasActions
                     ->label(trans('table.users'))
                     ->url(function ($record) {
                         if ($causer = $record->causer) {
-                            return route('profile', $causer);
+                            return route('public-user', $causer->username);
                         }
 
                         return null;
