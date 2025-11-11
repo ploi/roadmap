@@ -9,6 +9,8 @@ use Illuminate\Support\Collection;
 
 class PublicUserController extends Controller
 {
+    public const ACTIVITY_ITEM_COUNT = 20;
+
     public function __invoke($userName)
     {
         $user = User::where('username', $userName)->firstOrFail();
@@ -35,13 +37,13 @@ class PublicUserController extends Controller
         return view('public-user', ['user' => $user, 'data' => $data]);
     }
 
-    private function getRecentActivities(User $user, int $limit = 20): Collection
+    private function getRecentActivities(User $user): Collection
     {
         $items = $user->items()
             ->visibleForCurrentUser()
             ->with('project')
             ->latest()
-            ->limit($limit)
+            ->limit(self::ACTIVITY_ITEM_COUNT)
             ->get()
             ->map(function ($item) {
                 return [
@@ -58,7 +60,7 @@ class PublicUserController extends Controller
             ->whereHas('item', fn ($query) => $query->visibleForCurrentUser())
             ->with(['item' => fn ($q) => $q->with('project')])
             ->latest()
-            ->limit($limit)
+            ->limit(self::ACTIVITY_ITEM_COUNT)
             ->get()
             ->map(function ($comment) {
                 return [
@@ -90,7 +92,7 @@ class PublicUserController extends Controller
                 );
             }])
             ->latest()
-            ->limit($limit)
+            ->limit(self::ACTIVITY_ITEM_COUNT)
             ->get()
             ->map(function ($vote) {
                 if ($vote->model instanceof Item) {
@@ -121,7 +123,7 @@ class PublicUserController extends Controller
             ->concat($comments)
             ->concat($votes)
             ->sortByDesc('created_at')
-            ->take($limit)
+            ->take(self::ACTIVITY_ITEM_COUNT)
             ->values();
     }
 }
