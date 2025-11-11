@@ -218,6 +218,13 @@ class Profile extends Component implements HasForms, HasTable, HasActions
             ])
             ->action(fn () => $this->delete());
     }
+    public function viewProfileAction(): Action
+    {
+        return Action::make('public')
+            ->label(trans('profile.view-public-profile'))
+            ->color(Color::Slate)
+            ->url(fn () => route('public-user', auth()->user()->username));
+    }
 
     public function delete()
     {

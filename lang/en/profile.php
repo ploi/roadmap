@@ -22,5 +22,6 @@ return [
     'per-page-setting-helper' => 'Determine how many pages should be available for the items in the "My" page for example.',
     'settings' => 'Settings',
     'hide-from-leaderboard' => 'Hide from leaderboard',
-    'hide-from-leaderboard-helper' => 'Remove yourself from the public leaderboard rankings.'
+    'hide-from-leaderboard-helper' => 'Remove yourself from the public leaderboard rankings.',
+    'view-public-profile' => 'View public profile',
 ];

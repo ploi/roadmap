@@ -79,6 +79,7 @@ trait HasUpvote
             ->map(function ($vote) {
                 return [
                     'name' => $vote->user->name,
+                    'username' => $vote->user->username,
                     'avatar' => $vote->user->getGravatar('50'),
                 ];
             });

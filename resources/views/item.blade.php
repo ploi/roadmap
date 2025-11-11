@@ -17,16 +17,24 @@
                 <header class="flex items-center px-4 py-2 space-x-4">
                     <div class="flex items-center flex-1 space-x-3 overflow-hidden">
                         @if($user)
+                            <a href="{{ route('public-user', $user->username) }}">
                             <div class="relative shrink-0 w-10 h-10 rounded-full">
                                 <img class="absolute inset-0 object-cover rounded-full"
                                      src="{{ $user->getGravatar() }}"
                                      alt="{{ $user->name }}">
                             </div>
+                            </a>
                         @endif
 
-                        <div class="overflow-hidden font-medium">
-                            <p>{{ $user->name ?? '-Unknown user-' }}</p>
-                        </div>
+                            <div class="overflow-hidden font-medium">
+                                @if($user)
+                                    <a href="{{ route('public-user', $user->username) }}" class="hover:underline ease-in-out">
+                                        <p>{{ $user->name ?? '-Unknown user-' }}</p>
+                                    </a>
+                                @else
+                                    <p>-Unknown user-</p>
+                                @endif
+                            </div>
 
                         @if($item->board)
                             <div class="flex-1">
@@ -161,7 +169,13 @@
                             <div>
                                 <p class="text-sm font-medium">
                                     <span class="font-semibold">
-                                        {{ $activity->causer->name ?? trans('item-activity.unknown-user') }}
+                                         @if($activity->causer)
+                                            <a href="{{ route('public-user', $activity->causer->username) }}" class="hover:underline ease-in-out">
+                                                {{ $activity->causer->name }}
+                                            </a>
+                                        @else
+                                            {{ trans('item-activity.unknown-user') }}
+                                        @endif
                                     </span>
                                     {{ $activity->description }}
                                 </p>

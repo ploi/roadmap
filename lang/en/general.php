@@ -30,6 +30,4 @@ return [
 
     'close' => 'Close',
     'save' => 'Save',
-
-    'public-user' => 'Public User',
 ];

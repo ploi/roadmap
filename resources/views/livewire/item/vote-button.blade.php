@@ -44,9 +44,11 @@
             @if($this->recentVoters->count() > 0)
                 <div class="flex -space-x-2">
                     @foreach($this->recentVoters as $voter)
+                        <a href="{{ route('public-user', $voter['username']) }}">
                         <img src="{{ $voter['avatar'] }}"
                              class="inline object-cover w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
                              alt="{{ $voter['name'] }}" x-data x-tooltip.raw="{{ $voter['name'] }}">
+                        </a>
                         @if($loop->last && $this->model->votes->count() > $this->recentVotersToShow)
                             <a class="shrink-0 flex items-center justify-center w-8 h-8 text-xs font-medium text-white bg-gray-400 border-2 border-white rounded-full cursor-auto"
                                href="#">+ {{ $this->model->votes->count() - $this->recentVotersToShow }} </a>
