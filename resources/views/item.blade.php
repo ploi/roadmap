@@ -169,7 +169,13 @@
                             <div>
                                 <p class="text-sm font-medium">
                                     <span class="font-semibold">
-                                        {{ $activity->causer->name ?? trans('item-activity.unknown-user') }}
+                                         @if($activity->causer)
+                                            <a href="{{ route('public-user', $activity->causer->username) }}" class="hover:underline ease-in-out">
+                                                {{ $activity->causer->name }}
+                                            </a>
+                                        @else
+                                            {{ trans('item-activity.unknown-user') }}
+                                        @endif
                                     </span>
                                     {{ $activity->description }}
                                 </p>
