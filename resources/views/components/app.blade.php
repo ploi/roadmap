@@ -26,8 +26,8 @@
       updateTheme();
     </script>
 
-    @if(file_exists($favIcon = storage_path('app/public/favicon.png')))
-        <link href="{{ asset('storage/favicon.png') }}?v={{ md5_file($favIcon) }}" rel="icon" type="image/x-icon"/>
+    @if(\Illuminate\Support\Facades\Storage::disk('public')->exists('favicon.png'))
+        <link href="{{ \Illuminate\Support\Facades\Storage::disk('public')->url('favicon.png') }}?v={{ \Illuminate\Support\Facades\Storage::disk('public')->lastModified('favicon.png') }}" rel="icon" type="image/x-icon"/>
     @endif
 
     @livewireStyles
