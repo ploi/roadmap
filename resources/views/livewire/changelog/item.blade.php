@@ -73,9 +73,9 @@
                     <ul class="space-y-2">
                         @foreach($items as $item)
                             <li class="flex items-start gap-2">
-                                <span class="text-brand-500 dark:text-brand-400 mt-0.5 shrink-0">•</span>
+                                <span class="text-brand-500 dark:text-brand-400 shrink-0 leading-none">•</span>
                                 <a href="{{ route('items.show', $item) }}"
-                                   class="text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 transition font-medium">
+                                   class="text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 transition font-medium leading-relaxed">
                                     {{ $item->title }}
                                 </a>
                             </li>
@@ -92,9 +92,9 @@
                         <ul class="space-y-2">
                             @foreach($tag->items as $item)
                                 <li class="flex items-start gap-2">
-                                    <span class="text-brand-500 dark:text-brand-400 mt-0.5 shrink-0">•</span>
+                                    <span class="text-brand-500 dark:text-brand-400 shrink-0 leading-none">•</span>
                                     <a href="{{ route('items.show', $item) }}"
-                                       class="text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 transition font-medium">
+                                       class="text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 transition font-medium leading-relaxed">
                                         {{ $item->title }}
                                     </a>
                                 </li>
