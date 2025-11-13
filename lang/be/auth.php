@@ -15,4 +15,11 @@ return [
     'failed'   => 'Імя карыстальніка і пароль не супадаюць.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Занадта шмат спробаў ўваходу. Калі ласка, паспрабуйце яшчэ раз праз :seconds секунд.',
+
+    'theme_light' => 'Светлая',
+    'theme_dark' => 'Цёмная',
+    'theme_auto' => 'Аўтаматычна',
+    'password_protection_description' => 'Увядзіце пароль, каб працягнуць',
+    'password_placeholder' => 'Увядзіце пароль',
+    'wrong_password' => 'Гэта няправільны пароль.',
 ];

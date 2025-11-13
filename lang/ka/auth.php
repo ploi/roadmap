@@ -15,4 +15,11 @@ return [
     'failed'   => 'მომხმარებელი ამ მონაცემებით არ არსებობს.',
     'password' => 'შეყვანილი პაროლი არასწორია.',
     'throttle' => 'წარუმატებელი ავტორიზაცია. გთხოვთ, სცადოთ :seconds წამში.',
+
+    'theme_light' => 'ღია',
+    'theme_dark' => 'მუქი',
+    'theme_auto' => 'ავტომატური',
+    'password_protection_description' => 'გაგრძელებისთვის შეიყვანეთ პაროლი',
+    'password_placeholder' => 'შეიყვანეთ პაროლი',
+    'wrong_password' => 'ეს არასწორი პაროლია.',
 ];

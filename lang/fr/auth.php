@@ -15,4 +15,11 @@ return [
     'failed'   => 'Ces identifiants ne correspondent pas à nos enregistrements.',
     'password' => 'Le mot de passe fourni est incorrect.',
     'throttle' => 'Tentatives de connexion trop nombreuses. Veuillez essayer de nouveau dans :seconds secondes.',
+
+    'theme_light' => 'Clair',
+    'theme_dark' => 'Sombre',
+    'theme_auto' => 'Automatique',
+    'password_protection_description' => 'Entrez le mot de passe pour continuer',
+    'password_placeholder' => 'Entrer le mot de passe',
+    'wrong_password' => 'Ceci est le mauvais mot de passe.',
 ];

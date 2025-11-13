@@ -71,7 +71,7 @@
                                 class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                             >
                                 <x-heroicon-o-sun class="w-5 h-5"/>
-                                <span class="font-medium">Light</span>
+                                <span class="font-medium">{{ trans('auth.theme_light') }}</span>
                             </button>
                             <button
                                 type="button"
@@ -79,7 +79,7 @@
                                 class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                             >
                                 <x-heroicon-o-moon class="w-5 h-5"/>
-                                <span class="font-medium">Dark</span>
+                                <span class="font-medium">{{ trans('auth.theme_dark') }}</span>
                             </button>
                             <button
                                 type="button"
@@ -87,7 +87,7 @@
                                 class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                             >
                                 <x-heroicon-o-computer-desktop class="w-5 h-5"/>
-                                <span class="font-medium">Auto</span>
+                                <span class="font-medium">{{ trans('auth.theme_auto') }}</span>
                             </button>
                         </div>
                     </div>
@@ -102,8 +102,8 @@
                 <div class="bg-white dark:bg-gray-800 shadow-2xl rounded-2xl p-8 md:p-10 backdrop-blur-sm transform transition hover:scale-[1.01]">
                     <!-- Logo/App name -->
                     <div class="flex justify-center mb-8">
-                        @if(!is_null($logo) && file_exists($logoFile = storage_path('app/public/'.$logo)))
-                            <img src="{{ asset('storage/'.$logo) }}?v={{ md5_file($logoFile) }}"
+                        @if(!is_null($logo) && \Illuminate\Support\Facades\Storage::disk('public')->exists($logo))
+                            <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($logo) }}?v={{ \Illuminate\Support\Facades\Storage::disk('public')->lastModified($logo) }}"
                                  alt="{{ config('app.name') }}"
                                  class="h-12 md:h-16 max-w-full object-contain"/>
                         @else
@@ -128,7 +128,7 @@
                     </h1>
 
                     <p class="text-center text-gray-600 dark:text-gray-400 mb-8">
-                        Enter the password to continue
+                        {{ trans('auth.password_protection_description') }}
                     </p>
 
                     <!-- Error messages -->
@@ -159,7 +159,7 @@
                                 id="password"
                                 name="password"
                                 type="password"
-                                placeholder="Enter password"
+                                placeholder="{{ trans('auth.password_placeholder') }}"
                                 autofocus
                                 required>
                         </div>

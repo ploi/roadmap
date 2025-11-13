@@ -37,4 +37,11 @@ return [
 
     'locale' => 'Lingua',
     'locale_null_value' => 'Usa la lingua predefinita',
+
+    'theme_light' => 'Chiaro',
+    'theme_dark' => 'Scuro',
+    'theme_auto' => 'Automatico',
+    'password_protection_description' => 'Inserisci la password per continuare',
+    'password_placeholder' => 'Inserisci password',
+    'wrong_password' => 'Questa è la password sbagliata.',
 ];

@@ -41,4 +41,11 @@ return [
 
     'locale' => 'Configuración regional',
     'locale_null_value' => 'Usar la configuración regional predeterminada',
+
+    'theme_light' => 'Claro',
+    'theme_dark' => 'Oscuro',
+    'theme_auto' => 'Automático',
+    'password_protection_description' => 'Introduzca la contraseña para continuar',
+    'password_placeholder' => 'Introducir contraseña',
+    'wrong_password' => 'Esta es la contraseña incorrecta.',
 ];

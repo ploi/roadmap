@@ -15,4 +15,11 @@ return [
     'failed'   => 'Подаци не одговарају ни једном налогу.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Превише неуспелих покушаја. Покушајте поново за :seconds секунди.',
+
+    'theme_light' => 'Светла',
+    'theme_dark' => 'Тамна',
+    'theme_auto' => 'Аутоматски',
+    'password_protection_description' => 'Унесите лозинку да наставите',
+    'password_placeholder' => 'Унесите лозинку',
+    'wrong_password' => 'Ово је погрешна лозинка.',
 ];

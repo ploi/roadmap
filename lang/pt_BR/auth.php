@@ -15,4 +15,11 @@ return [
     'failed'   => 'Credenciais informadas não correspondem com nossos registros.',
     'password' => 'A senha informada está incorreta.',
     'throttle' => 'Você realizou muitas tentativas de login. Por favor, tente novamente em :seconds segundos.',
+
+    'theme_light' => 'Claro',
+    'theme_dark' => 'Escuro',
+    'theme_auto' => 'Automático',
+    'password_protection_description' => 'Digite a senha para continuar',
+    'password_placeholder' => 'Digite a senha',
+    'wrong_password' => 'Esta é a senha errada.',
 ];

@@ -24,7 +24,7 @@ class PasswordProtectionController extends Controller
     {
         if (app(GeneralSettings::class)->password !== $request->input('password')) {
             return redirect()->back()->withErrors([
-                'This is the wrong password.'
+                trans('auth.wrong_password')
             ]);
         }
 

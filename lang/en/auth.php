@@ -38,4 +38,11 @@ return [
     'locale' => 'Locale',
     'locale_null_value' => 'Use default locale',
 
+    'theme_light' => 'Light',
+    'theme_dark' => 'Dark',
+    'theme_auto' => 'Auto',
+    'password_protection_description' => 'Enter the password to continue',
+    'password_placeholder' => 'Enter password',
+    'wrong_password' => 'This is the wrong password.',
+
 ];

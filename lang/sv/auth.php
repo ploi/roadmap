@@ -15,4 +15,11 @@ return [
     'failed'   => 'Dessa uppgifter stämmer inte överens med vårt register.',
     'password' => 'Det angivna lösenordet är felaktigt.',
     'throttle' => 'För många inloggningsförsök. Var vänlig försök igen om :seconds sekunder.',
+
+    'theme_light' => 'Ljus',
+    'theme_dark' => 'Mörk',
+    'theme_auto' => 'Automatisk',
+    'password_protection_description' => 'Ange lösenordet för att fortsätta',
+    'password_placeholder' => 'Ange lösenord',
+    'wrong_password' => 'Detta är fel lösenord.',
 ];

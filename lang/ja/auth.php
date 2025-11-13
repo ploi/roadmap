@@ -15,4 +15,11 @@ return [
     'failed'   => '認証に失敗しました。',
     'password' => 'パスワードが間違っています。',
     'throttle' => 'ログインの試行回数が多すぎます。:seconds 秒後にお試しください。',
+
+    'theme_light' => 'ライト',
+    'theme_dark' => 'ダーク',
+    'theme_auto' => '自動',
+    'password_protection_description' => '続行するにはパスワードを入力してください',
+    'password_placeholder' => 'パスワードを入力',
+    'wrong_password' => 'これは間違ったパスワードです。',
 ];

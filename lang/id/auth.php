@@ -15,4 +15,11 @@ return [
     'failed'   => 'Identitas tersebut tidak cocok dengan data kami.',
     'password' => 'Kata sandi yang dimasukkan salah.',
     'throttle' => 'Terlalu banyak upaya masuk. Silahkan coba lagi dalam :seconds detik.',
+
+    'theme_light' => 'Terang',
+    'theme_dark' => 'Gelap',
+    'theme_auto' => 'Otomatis',
+    'password_protection_description' => 'Masukkan kata sandi untuk melanjutkan',
+    'password_placeholder' => 'Masukkan kata sandi',
+    'wrong_password' => 'Ini adalah kata sandi yang salah.',
 ];

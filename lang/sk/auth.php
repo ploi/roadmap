@@ -15,4 +15,11 @@ return [
     'failed'   => 'Prihlasovacie údaje nie sú správne.',
     'password' => 'Zadané heslo je nesprávne.',
     'throttle' => 'Prekročený limit pokusov. Skúste znovu o :seconds sekúnd.',
+
+    'theme_light' => 'Svetlý',
+    'theme_dark' => 'Tmavý',
+    'theme_auto' => 'Automaticky',
+    'password_protection_description' => 'Zadajte heslo pre pokračovanie',
+    'password_placeholder' => 'Zadajte heslo',
+    'wrong_password' => 'Toto je nesprávne heslo.',
 ];

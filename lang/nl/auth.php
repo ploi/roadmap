@@ -47,4 +47,11 @@ return [
 
     'locale' => 'Taal',
     'locale_null_value' => 'Gebruik standaard taal',
+
+    'theme_light' => 'Licht',
+    'theme_dark' => 'Donker',
+    'theme_auto' => 'Automatisch',
+    'password_protection_description' => 'Voer het wachtwoord in om door te gaan',
+    'password_placeholder' => 'Voer wachtwoord in',
+    'wrong_password' => 'Dit is het verkeerde wachtwoord.',
 ];

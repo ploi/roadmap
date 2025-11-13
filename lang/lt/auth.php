@@ -15,4 +15,11 @@ return [
     'failed'   => 'Prisijungimo duomenys neatitinka.',
     'password' => 'Pateiktas slaptažodis yra neteisingas.',
     'throttle' => 'Per daug bandymų prisijungti. Bandykite po :seconds sec.',
+
+    'theme_light' => 'Šviesi',
+    'theme_dark' => 'Tamsi',
+    'theme_auto' => 'Automatinis',
+    'password_protection_description' => 'Įveskite slaptažodį, kad tęstumėte',
+    'password_placeholder' => 'Įveskite slaptažodį',
+    'wrong_password' => 'Tai neteisingas slaptažodis.',
 ];

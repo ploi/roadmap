@@ -15,4 +15,11 @@ return [
     'failed'   => 'Hii hati tambulishi hailingani na rekodi zetu.',
     'password' => 'Nenosiri lililotolewa si sahihi.',
     'throttle' => 'Majaribio mengi sana ya kuingia. Tafadhali jaribu tena katika sekunde :seconds.',
+
+    'theme_light' => 'Mwanga',
+    'theme_dark' => 'Giza',
+    'theme_auto' => 'Kiotomatiki',
+    'password_protection_description' => 'Weka nenosiri ili uendelee',
+    'password_placeholder' => 'Weka nenosiri',
+    'wrong_password' => 'Hii ni nenosiri lisilo sahihi.',
 ];

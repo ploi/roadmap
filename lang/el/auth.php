@@ -15,4 +15,11 @@ return [
     'failed'   => 'Τα στοιχεία αυτά δεν ταιριάζουν με τα δικά μας.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Πολλές προσπάθειες σύνδεσης. Παρακαλώ δοκιμάστε ξανά σε :seconds δευτερόλεπτα.',
+
+    'theme_light' => 'Φωτεινό',
+    'theme_dark' => 'Σκοτεινό',
+    'theme_auto' => 'Αυτόματο',
+    'password_protection_description' => 'Εισαγάγετε τον κωδικό πρόσβασης για να συνεχίσετε',
+    'password_placeholder' => 'Εισαγάγετε κωδικό πρόσβασης',
+    'wrong_password' => 'Αυτός είναι ο λάθος κωδικός πρόσβασης.',
 ];

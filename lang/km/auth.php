@@ -15,4 +15,11 @@ return [
     'failed'   => 'ពាក្យសម្ងាត់មិនត្រឺមត្រូវ។',
     'password' => 'ពាក្យសម្ងាត់មិនត្រឺមត្រូវ។',
     'throttle' => 'ការបញ្ចូលច្រើនដងពេក។ សូមសាកល្បង :seconds វិនាទីក្រោយ។',
+
+    'theme_light' => 'ភ្លឺ',
+    'theme_dark' => 'ងងឹត',
+    'theme_auto' => 'ស្វ័យប្រវត្តិ',
+    'password_protection_description' => 'បញ្ចូលពាក្យសម្ងាត់ដើម្បីបន្ត',
+    'password_placeholder' => 'បញ្ចូលពាក្យសម្ងាត់',
+    'wrong_password' => 'នេះគឺជាពាក្យសម្ងាត់ខុស។',
 ];

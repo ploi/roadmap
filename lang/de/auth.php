@@ -15,4 +15,11 @@ return [
     'failed'   => 'Diese Kombination aus Zugangsdaten wurde nicht in unserer Datenbank gefunden.',
     'password' => 'Das eingegebene Passwort ist nicht korrekt.',
     'throttle' => 'Zu viele Loginversuche. Versuchen Sie es bitte in :seconds Sekunden nochmal.',
+
+    'theme_light' => 'Hell',
+    'theme_dark' => 'Dunkel',
+    'theme_auto' => 'Automatisch',
+    'password_protection_description' => 'Geben Sie das Passwort ein, um fortzufahren',
+    'password_placeholder' => 'Passwort eingeben',
+    'wrong_password' => 'Dies ist das falsche Passwort.',
 ];

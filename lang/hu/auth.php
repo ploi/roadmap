@@ -37,4 +37,11 @@ return [
 
     'locale' => 'Nyelv',
     'locale_null_value' => 'Alapértelmezett nyelv használata',
+
+    'theme_light' => 'Világos',
+    'theme_dark' => 'Sötét',
+    'theme_auto' => 'Automatikus',
+    'password_protection_description' => 'A folytatáshoz adja meg a jelszót',
+    'password_placeholder' => 'Jelszó megadása',
+    'wrong_password' => 'Ez a helytelen jelszó.',
 ];

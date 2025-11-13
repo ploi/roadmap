@@ -15,4 +15,11 @@ return [
     'failed'   => 'ઈમેઈલ એડ્રેસ અને પાસવર્ડનું આ જોડાણ અમારી વિગતો સાથે બંધબેસતું નથી.',
     'password' => 'આપેલ પાસવર્ડ ખોટો છે.',
     'throttle' => 'અતિશય લૉગિન પ્રયાસો. ફરીથી પ્રયાસ કરો:seconds સેકંડ.',
+
+    'theme_light' => 'પ્રકાશ',
+    'theme_dark' => 'અંધારું',
+    'theme_auto' => 'સ્વચાલિત',
+    'password_protection_description' => 'ચાલુ રાખવા માટે પાસવર્ડ દાખલ કરો',
+    'password_placeholder' => 'પાસવર્ડ દાખલ કરો',
+    'wrong_password' => 'આ ખોટો પાસવર્ડ છે.',
 ];

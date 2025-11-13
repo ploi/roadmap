@@ -15,4 +15,11 @@ return [
     'failed'   => 'Тіркелгі деректері біздің жазбаларымызға сай емес.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Кіру әрекеті тым көп болды. :seconds секундтан соң қайталап көріңіз.',
+
+    'theme_light' => 'Ашық',
+    'theme_dark' => 'Қараңғы',
+    'theme_auto' => 'Автоматты',
+    'password_protection_description' => 'Жалғастыру үшін құпия сөзді енгізіңіз',
+    'password_placeholder' => 'Құпия сөзді енгізіңіз',
+    'wrong_password' => 'Бұл қате құпия сөз.',
 ];

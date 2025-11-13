@@ -72,3 +72,37 @@ it('shows error with incorrect password', function () {
     $response->assertRedirect();
     $response->assertSessionHasErrors();
 });
+
+it('displays all translated strings correctly', function () {
+    $colorSettings = app(ColorSettings::class);
+    $colorSettings->darkmode = true;
+    $colorSettings->save();
+
+    $response = $this->get(route('password.protection'));
+
+    $response->assertSuccessful();
+    $response->assertSee(trans('auth.password_protected'));
+    $response->assertSee(trans('auth.password_protection_description'));
+    $response->assertSee(trans('auth.password'));
+    $response->assertSee(trans('auth.password_placeholder'));
+    $response->assertSee(trans('auth.continue'));
+    $response->assertSee(trans('auth.theme_light'));
+    $response->assertSee(trans('auth.theme_dark'));
+    $response->assertSee(trans('auth.theme_auto'));
+});
+
+it('displays translated error message for wrong password', function () {
+    $generalSettings = app(GeneralSettings::class);
+    $generalSettings->password = 'secret123';
+    $generalSettings->save();
+
+    $response = $this->post(route('password.protection.login'), [
+        'password' => 'wrong-password'
+    ]);
+
+    $response->assertRedirect();
+    $response->assertSessionHasErrors();
+
+    $errors = session('errors');
+    expect($errors->first())->toBe(trans('auth.wrong_password'));
+});

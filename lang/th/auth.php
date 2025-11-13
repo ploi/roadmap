@@ -15,4 +15,11 @@ return [
     'failed'   => 'ข้อมูลที่ใช้ในการยืนยันตัวตนไม่ถูกต้อง',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'คุณได้พยายามเข้าระบบหลายครั้งเกินไป กรุณาลองใหม่ใน :seconds วินาทีข้างหน้า.',
+
+    'theme_light' => 'สว่าง',
+    'theme_dark' => 'มืด',
+    'theme_auto' => 'อัตโนมัติ',
+    'password_protection_description' => 'ป้อนรหัสผ่านเพื่อดำเนินการต่อ',
+    'password_placeholder' => 'ป้อนรหัสผ่าน',
+    'wrong_password' => 'นี่คือรหัสผ่านที่ผิด',
 ];

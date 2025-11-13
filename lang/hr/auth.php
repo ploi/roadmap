@@ -15,4 +15,11 @@ return [
     'failed'   => 'Ovi podaci ne odgovaraju našima.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Previše pokušaja prijave. Molim Vas pokušajte ponovno za :seconds sekundi.',
+
+    'theme_light' => 'Svijetla',
+    'theme_dark' => 'Tamna',
+    'theme_auto' => 'Automatski',
+    'password_protection_description' => 'Unesite lozinku za nastavak',
+    'password_placeholder' => 'Unesite lozinku',
+    'wrong_password' => 'Ovo je pogrešna lozinka.',
 ];
