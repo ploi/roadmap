@@ -11,7 +11,7 @@
                     @if(!request()->routeIs('changelog.show'))
                         <a href="{{ route('changelog.show', $changelog) }}"
                            class="shrink-0 text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300 transition">
-                            View →
+                            {{ trans('changelog.view-item') }} →
                         </a>
                     @endif
                 </div>
@@ -50,7 +50,7 @@
 
     @if(app(App\Settings\GeneralSettings::class)->show_changelog_related_items && $changelog->items->count())
         <div class="w-full bg-gray-50 dark:bg-gray-900/50 rounded-xl p-6 mt-6 border border-gray-200 dark:border-gray-700">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Related Items</h3>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{{ trans('changelog.included-items') }}</h3>
             <div class="space-y-6">
                 {{--@foreach($changelog->items()->->get() as $item)
                     <a title="{{ $item->title }}"
