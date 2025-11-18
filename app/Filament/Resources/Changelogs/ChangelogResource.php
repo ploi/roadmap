@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Changelogs;
 
+use App\Filament\Resources\Changelogs\RelationManagers\ItemsRelationManager;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
 use Filament\Actions\EditAction;
@@ -87,13 +88,6 @@ class ChangelogResource extends Resource
                     DateTimePicker::make('published_at')
                         ->label(trans('resources.published-at')),
 
-                    Select::make('related_items')
-                        ->label(trans('resources.changelog.related-items'))
-                        ->multiple()
-                        ->preload()
-                        ->relationship('items', 'title')
-                        ->getOptionLabelFromRecordUsing(fn (Item $record) => $record->title . ($record->project ? ' (' . $record->project->title . ')' : '')),
-
                     MarkdownEditor::make('content')
                         ->label(trans('resources.changelog.content'))
                         ->columnSpan(2)
@@ -102,7 +96,7 @@ class ChangelogResource extends Resource
                         ->maxLength(65535),
 
                     ]
-                )->columns(),
+                )->columns()->columnSpanFull(),
                 ]
             );
     }
@@ -159,7 +153,7 @@ class ChangelogResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ItemsRelationManager::class,
         ];
     }
 
