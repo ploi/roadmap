@@ -6,7 +6,7 @@
 <x-app :breadcrumbs="[
     ['title' => $project->title, 'url' => route('projects.show', $project)],
     ['title' => $board->title, 'url' => '']
-]">
+]" :current-project-id="$project->id">
     <main class="p-4 h-full flex space-x-10 mx-auto max-w-6xl">
         <section class="flex-1 max-h-full overflow-y-scroll">
             <livewire:project.items :project="$project" :board="$board"/>
