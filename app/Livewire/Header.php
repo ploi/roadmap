@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Enums\UserRole;
 use App\Models\Project;
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Filament\Actions\Action;
 use App\Rules\ProfanityCheck;
 use App\Settings\GeneralSettings;
@@ -41,6 +42,22 @@ class Header extends Component implements HasForms, HasActions
             ->orderBy('group')
             ->orderBy('title')
             ->get();
+    }
+
+    #[On('create-item-from-search')]
+    public function openSubmitItemWithQuery(string $query): void
+    {
+        // Mount the action with pre-filled title from search
+        $this->mountAction('submitItem', [
+            'title' => $query,
+        ]);
+    }
+
+    #[On('open-submit-item-modal')]
+    public function openSubmitItemModal(): void
+    {
+        // Mount the submit item action without pre-filled data
+        $this->mountAction('submitItem');
     }
 
     public function render()
@@ -100,7 +117,6 @@ class Header extends Component implements HasForms, HasActions
             ->modalIcon('heroicon-o-plus-circle')
             ->modalWidth('3xl')
             ->modalSubmitActionLabel('Confirm')
-            ->fillForm([])
             ->schema(function () {
                 $inputs = [];
 
