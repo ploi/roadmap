@@ -21,9 +21,12 @@ class App extends Component
     public array $fontFamily;
     public bool $blockRobots = false;
     public bool $userNeedsToVerify = false;
+    public ?int $currentProjectId = null;
 
-    public function __construct(public array $breadcrumbs = [])
+    public function __construct(public array $breadcrumbs = [], ?int $currentProjectId = null)
     {
+        $this->currentProjectId = $currentProjectId;
+
         $this->projects = Project::query()
             ->visibleForCurrentUser()
             ->when(app(GeneralSettings::class)->show_projects_sidebar_without_boards === false, function ($query) {

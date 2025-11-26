@@ -29,6 +29,7 @@ class Header extends Component implements HasForms, HasActions
     public $logo;
     public $projects;
     public $similarItems = [];
+    public $currentProjectId = null;
 
     public function mount()
     {
@@ -100,7 +101,9 @@ class Header extends Component implements HasForms, HasActions
             ->modalIcon('heroicon-o-plus-circle')
             ->modalWidth('3xl')
             ->modalSubmitActionLabel('Confirm')
-            ->fillForm([])
+            ->fillForm(function () {
+                return $this->currentProjectId ? ['project_id' => $this->currentProjectId] : [];
+            })
             ->schema(function () {
                 $inputs = [];
 

@@ -5,7 +5,7 @@
 
 <x-app :breadcrumbs="[
     ['title' => $project->title, 'url' => route('projects.show', $project)]
-]">
+]" :current-project-id="$project->id">
     <div
         @class([
         'w-full h-[calc(100vh-170px)] overflow-x-auto',
