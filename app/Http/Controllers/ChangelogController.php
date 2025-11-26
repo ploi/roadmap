@@ -18,6 +18,8 @@ class ChangelogController extends Controller
 
     public function show(Changelog $changelog)
     {
+        abort_unless(app(GeneralSettings::class)->enable_changelog, 404);
+
         abort_if($changelog->published_at > now(), 404);
 
         return view('changelog', [
