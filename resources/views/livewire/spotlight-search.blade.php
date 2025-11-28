@@ -264,7 +264,7 @@
                                 :href="route('profile')"
                                 :index="1"
                                 icon="heroicon-o-user-circle"
-                                :title="trans('spotlight.profile')"
+                                :title="trans('spotlight.profile_title')"
                                 :meta="trans('spotlight.profile_desc')"
                             />
                         @endauth
