@@ -30,6 +30,7 @@ class Header extends Component implements HasForms, HasActions
     public $logo;
     public $projects;
     public $similarItems = [];
+    public $currentProjectId = null;
 
     public function mount()
     {
@@ -98,11 +99,19 @@ class Header extends Component implements HasForms, HasActions
             ->mountUsing(function ($form, array $arguments) {
                 // Fill the form with prefilled data if available
                 $data = [];
+
+                // Add project_id if currentProjectId is set
+                if ($this->currentProjectId) {
+                    $data['project_id'] = $this->currentProjectId;
+                }
+
+                // Add prefilled title if provided from search
                 if ($prefilledTitle = $arguments['prefilledTitle'] ?? null) {
                     $data['title'] = $prefilledTitle;
                     // Also set similar items for the prefilled title
                     $this->setSimilarItems($prefilledTitle);
                 }
+
                 $form->fill($data);
             })
             ->schema(function () {

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'search' => 'Zoeken',
     'create-item' => [
         'name' => 'Item aanmaken',
         'description' => 'Maak een item aan',

@@ -48,16 +48,18 @@
                             </span>
 
                             {{-- User Avatar --}}
+                            <a href="{{ route('public-user', $user->username) }}">
                             <img 
                                 src="{{ $user->getGravatar(30) }}" 
                                 alt="{{ $user->name }}"
                                 class="w-7 h-7 rounded-full"
                             >
+                            </a>
 
                             {{-- User Name --}}
-                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate max-w-[150px]">
+                            <a class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate max-w-[150px] hover:underline ease-in-out" href="{{ route('public-user', $user->username) }}">
                                 {{ $user->name }}
-                            </span>
+                            </a>
                         </div>
 
                         {{-- Vote Count --}}
@@ -93,16 +95,18 @@
                             </span>
 
                             {{-- User Avatar --}}
+                            <a href="{{ route('public-user', $user->username) }}">
                             <img 
                                 src="{{ $user->getGravatar(30) }}" 
                                 alt="{{ $user->name }}"
                                 class="w-7 h-7 rounded-full"
                             >
+                            </a>
 
                             {{-- User Name --}}
-                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate max-w-[150px]">
+                            <a class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate max-w-[150px] hover:underline ease-in-out" href="{{ route('public-user', $user->username) }}">
                                 {{ $user->name }}
-                            </span>
+                            </a>
                         </div>
 
                         {{-- Comment Count --}}

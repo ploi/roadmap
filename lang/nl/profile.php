@@ -22,5 +22,6 @@ return [
     'per-page-setting-helper' => 'Bepaalt welke mogelijkheden er aanwezig zijn om het aantal pagina\'s te tonen.',
     'settings' => 'Instellingen',
     'hide-from-leaderboard' => 'Verbergen op ranglijst',
-    'hide-from-leaderboard-helper' => 'Verberg jezelf op de publieke ranglijst.'
+    'hide-from-leaderboard-helper' => 'Verberg jezelf op de publieke ranglijst.',
+    'view-public-profile' => 'Bekijk publieke profiel',
 ];

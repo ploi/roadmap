@@ -5,6 +5,7 @@ return [
     'all-caught-up-title' => 'Non c\'è ancora nulla',
     'all-caught-up-description' => 'Non ci sono modifiche aggiunte a questo registro',
     'included-items' => 'Elementi inclusi',
+    'view-item' => 'Visualizza',
     'votes' => [
         'liked-by' => 'Piaciuto da',
         'no-likes' => 'Ancora nessun mi piace',

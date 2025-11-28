@@ -60,7 +60,7 @@
     </div>
 @endif
 
-<livewire:header :logo="$logo" />
+<livewire:header :logo="$logo" :current-project-id="$currentProjectId" />
 
 <div class="flex mx-auto py-5 lg:space-x-10 h-full px-4 sm:px-6 md:px-8 max-w-[1500px]">
     @include('partials.navbar')
