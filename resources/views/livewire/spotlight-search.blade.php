@@ -16,7 +16,6 @@
         },
 
         handleKeydown(e) {
-            // Only handle when spotlight is open and input is focused
             const searchInput = this.$refs.searchInput;
             if (!searchInput || document.activeElement !== searchInput) return;
 
@@ -84,7 +83,7 @@
     @spotlight-opened.window="resetAndFocus()"
     x-cloak
 >
-    <!-- Backdrop Overlay with Blur -->
+    {{-- Backdrop Overlay --}}
     <div
         x-show="$wire.isOpen"
         x-transition:enter="transition ease-out duration-200"
@@ -97,7 +96,7 @@
         @click="close()"
     ></div>
 
-    <!-- Spotlight Modal -->
+    {{-- Spotlight Modal --}}
     <div
         x-show="$wire.isOpen"
         x-transition:enter="transition ease-out duration-200"
@@ -109,7 +108,7 @@
         class="fixed inset-x-0 top-[10vh] z-50 mx-auto w-full max-w-2xl px-4"
     >
         <div class="spotlight-container overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
-            <!-- Search Input -->
+            {{-- Search Input --}}
             <div class="flex items-center gap-3 border-b border-gray-200 px-4 dark:border-gray-700">
                 <x-filament::icon
                     icon="heroicon-o-magnifying-glass"
@@ -128,58 +127,41 @@
                 </kbd>
             </div>
 
-            <!-- Results Container -->
-            <div
-                x-ref="resultsContainer"
-                class="max-h-[60vh] overflow-y-auto"
-            >
+            {{-- Results Container --}}
+            <div x-ref="resultsContainer" class="max-h-[60vh] overflow-y-auto">
                 @if($query && ($items || $projects || true))
                     <div class="p-2">
                         {{-- Items Section --}}
                         @if($items)
                             <div class="mb-3">
-                                <div class="mb-1 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                                    {{ trans('spotlight.section_items') }}
-                                </div>
+                                <x-spotlight.section-header :title="trans('spotlight.section_items')" />
                                 @foreach($items as $index => $item)
-                                    @php
-                                        $itemIndex = $index;
-                                    @endphp
-                                    <a
-                                        href="{{ $item['url'] }}"
-                                        wire:navigate
-                                        @click="close()"
-                                        x-bind:data-selected="isItemSelected({{ $itemIndex }})"
-                                        class="group flex items-start gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
-                                        x-bind:class="isItemSelected({{ $itemIndex }}) ? 'bg-gray-100 dark:bg-gray-800' : ''"
+                                    <x-spotlight.result-item
+                                        :href="$item['url']"
+                                        :index="$index"
+                                        icon="heroicon-o-document-text"
+                                        :title="$item['title']"
                                     >
-                                        <x-filament::icon
-                                            icon="heroicon-o-document-text"
-                                            x-bind:class="isItemSelected({{ $itemIndex }}) ? 'mt-0.5 h-5 w-5 flex-shrink-0 text-blue-500 dark:text-blue-400' : 'mt-0.5 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-blue-500 dark:text-gray-500'"
-                                        />
-                                        <div class="min-w-0 flex-1">
-                                            <div class="truncate font-medium text-gray-900 dark:text-white">
-                                                {{ $item['title'] }}
-                                            </div>
-                                            <div class="mt-0.5 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                                                @if($item['project_title'])
-                                                    <span class="truncate">{{ $item['project_title'] }}</span>
-                                                @endif
-                                                @if($item['board_title'])
-                                                    <span class="truncate">• {{ $item['board_title'] }}</span>
-                                                @endif
-                                                @if($item['votes_count'])
-                                                    <span class="flex items-center gap-1">
-                                                        <x-filament::icon icon="heroicon-o-arrow-up" class="h-3 w-3" />
-                                                        {{ $item['votes_count'] }}
-                                                    </span>
-                                                @endif
-                                            </div>
+                                        <div class="mt-0.5 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                                            @if($item['project_title'])
+                                                <span class="truncate">{{ $item['project_title'] }}</span>
+                                            @endif
+                                            @if($item['board_title'])
+                                                <span class="truncate">• {{ $item['board_title'] }}</span>
+                                            @endif
+                                            @if($item['votes_count'])
+                                                <span class="flex items-center gap-1">
+                                                    <x-filament::icon icon="heroicon-o-arrow-up" class="h-3 w-3" />
+                                                    {{ $item['votes_count'] }}
+                                                </span>
+                                            @endif
                                         </div>
-                                        <span class="text-xs text-gray-400 dark:text-gray-500">
-                                            {{ $item['created_at'] }}
-                                        </span>
-                                    </a>
+                                        <x-slot:aside>
+                                            <span class="text-xs text-gray-400 dark:text-gray-500">
+                                                {{ $item['created_at'] }}
+                                            </span>
+                                        </x-slot:aside>
+                                    </x-spotlight.result-item>
                                 @endforeach
                             </div>
                         @endif
@@ -187,43 +169,25 @@
                         {{-- Projects Section --}}
                         @if($projects)
                             <div class="mb-3">
-                                <div class="mb-1 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                                    {{ trans('spotlight.section_projects') }}
-                                </div>
+                                <x-spotlight.section-header :title="trans('spotlight.section_projects')" />
                                 @foreach($projects as $index => $project)
                                     @php
                                         $projectIndex = count($items) + $index;
                                     @endphp
-                                    <a
-                                        href="{{ $project['url'] }}"
-                                        wire:navigate
-                                        @click="close()"
-                                        x-bind:data-selected="isItemSelected({{ $projectIndex }})"
-                                        class="group flex items-start gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
-                                        x-bind:class="isItemSelected({{ $projectIndex }}) ? 'bg-gray-100 dark:bg-gray-800' : ''"
+                                    <x-spotlight.result-item
+                                        :href="$project['url']"
+                                        :index="$projectIndex"
+                                        :icon="$project['icon'] ?: 'heroicon-o-folder'"
+                                        :iconClass="$project['icon'] ? 'emoji' : ''"
+                                        :title="$project['title']"
+                                        :meta="$project['description'] ? Str::limit($project['description'], 80) : null"
                                     >
-                                        @if($project['icon'])
-                                            <span class="mt-0.5 text-xl">{{ $project['icon'] }}</span>
-                                        @else
-                                            <x-filament::icon
-                                                icon="heroicon-o-folder"
-                                                x-bind:class="isItemSelected({{ $projectIndex }}) ? 'mt-0.5 h-5 w-5 flex-shrink-0 text-blue-500 dark:text-blue-400' : 'mt-0.5 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-blue-500 dark:text-gray-500'"
-                                            />
-                                        @endif
-                                        <div class="min-w-0 flex-1">
-                                            <div class="truncate font-medium text-gray-900 dark:text-white">
-                                                {{ $project['title'] }}
-                                            </div>
-                                            @if($project['description'])
-                                                <div class="mt-0.5 truncate text-xs text-gray-500 dark:text-gray-400">
-                                                    {{ Str::limit($project['description'], 80) }}
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <span class="text-xs text-gray-400 dark:text-gray-500">
-                                            {{ trans_choice('spotlight.board', $project['boards_count'], ['count' => $project['boards_count']]) }}
-                                        </span>
-                                    </a>
+                                        <x-slot:aside>
+                                            <span class="text-xs text-gray-400 dark:text-gray-500">
+                                                {{ trans_choice('spotlight.board', $project['boards_count'], ['count' => $project['boards_count']]) }}
+                                            </span>
+                                        </x-slot:aside>
+                                    </x-spotlight.result-item>
                                 @endforeach
                             </div>
                         @endif
@@ -234,9 +198,7 @@
                                 $createNewIndex = count($items) + count($projects);
                             @endphp
                             <div>
-                                <div class="mb-1 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                                    {{ trans('spotlight.section_actions') }}
-                                </div>
+                                <x-spotlight.section-header :title="trans('spotlight.section_actions')" />
                                 <button
                                     type="button"
                                     wire:click="createNewItem"
@@ -285,100 +247,46 @@
                 @else
                     {{-- Initial State - Quick Actions --}}
                     <div class="p-2">
-                        <div class="mb-1 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                            {{ trans('spotlight.quick_actions') }}
-                        </div>
+                        <x-spotlight.section-header :title="trans('spotlight.quick_actions')" />
 
-                        {{-- Create New Item Action --}}
-                        <button
-                            type="button"
+                        {{-- Create New Item --}}
+                        <x-spotlight.result-item
+                            :index="0"
+                            icon="heroicon-o-plus-circle"
+                            :title="trans('spotlight.create_new_item')"
+                            :meta="trans('spotlight.create_new_item_desc')"
                             @click="close(); $dispatch('open-submit-item-modal')"
-                            x-bind:data-selected="isItemSelected(0)"
-                            class="group flex w-full items-start gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
-                            x-bind:class="isItemSelected(0) ? 'bg-gray-100 dark:bg-gray-800' : ''"
-                        >
-                            <x-filament::icon
-                                icon="heroicon-o-plus-circle"
-                                class="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-500 dark:text-blue-400"
-                            />
-                            <div class="min-w-0 flex-1">
-                                <div class="font-medium text-gray-900 dark:text-white">
-                                    {{ trans('spotlight.create_new_item') }}
-                                </div>
-                                <div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
-                                    {{ trans('spotlight.create_new_item_desc') }}
-                                </div>
-                            </div>
-                        </button>
+                        />
 
-                        {{-- Profile Link (only for authenticated users) --}}
+                        {{-- Profile (authenticated users only) --}}
                         @auth
-                            <a
-                                href="{{ route('profile') }}"
-                                @click="close()"
-                                x-bind:data-selected="isItemSelected(1)"
-                                class="group flex w-full items-start gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
-                                x-bind:class="isItemSelected(1) ? 'bg-gray-100 dark:bg-gray-800' : ''"
-                            >
-                                <x-filament::icon
-                                    icon="heroicon-o-user-circle"
-                                    class="mt-0.5 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-blue-500 dark:text-gray-500"
-                                />
-                                <div class="min-w-0 flex-1">
-                                    <div class="font-medium text-gray-900 dark:text-white">
-                                        {{ trans('spotlight.profile') }}
-                                    </div>
-                                    <div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
-                                        {{ trans('spotlight.profile_desc') }}
-                                    </div>
-                                </div>
-                            </a>
+                            <x-spotlight.result-item
+                                :href="route('profile')"
+                                :index="1"
+                                icon="heroicon-o-user-circle"
+                                :title="trans('spotlight.profile')"
+                                :meta="trans('spotlight.profile_desc')"
+                            />
                         @endauth
 
-                        {{-- Activity Link --}}
-                        <a
-                            href="{{ route('activity') }}"
-                            @click="close()"
-                            x-bind:data-selected="isItemSelected({{ auth()->check() ? 2 : 1 }})"
-                            class="group flex w-full items-start gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
-                            x-bind:class="isItemSelected({{ auth()->check() ? 2 : 1 }}) ? 'bg-gray-100 dark:bg-gray-800' : ''"
-                        >
-                            <x-filament::icon
-                                icon="heroicon-o-bolt"
-                                class="mt-0.5 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-blue-500 dark:text-gray-500"
-                            />
-                            <div class="min-w-0 flex-1">
-                                <div class="font-medium text-gray-900 dark:text-white">
-                                    {{ trans('spotlight.activity') }}
-                                </div>
-                                <div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
-                                    {{ trans('spotlight.activity_desc') }}
-                                </div>
-                            </div>
-                        </a>
+                        {{-- Activity --}}
+                        <x-spotlight.result-item
+                            :href="route('activity')"
+                            :index="auth()->check() ? 2 : 1"
+                            icon="heroicon-o-bolt"
+                            :title="trans('spotlight.activity')"
+                            :meta="trans('spotlight.activity_desc')"
+                        />
 
-                        {{-- Admin Panel Link (only if user has access) --}}
+                        {{-- Admin Panel (admin users only) --}}
                         @if(auth()->check() && auth()->user()->hasAdminAccess())
-                            <a
-                                href="{{ route('filament.admin.pages.dashboard') }}"
-                                @click="close()"
-                                x-bind:data-selected="isItemSelected(3)"
-                                class="group flex w-full items-start gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
-                                x-bind:class="isItemSelected(3) ? 'bg-gray-100 dark:bg-gray-800' : ''"
-                            >
-                                <x-filament::icon
-                                    icon="heroicon-o-cog-6-tooth"
-                                    class="mt-0.5 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-blue-500 dark:text-gray-500"
-                                />
-                                <div class="min-w-0 flex-1">
-                                    <div class="font-medium text-gray-900 dark:text-white">
-                                        {{ trans('spotlight.admin_panel') }}
-                                    </div>
-                                    <div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
-                                        {{ trans('spotlight.admin_panel_desc') }}
-                                    </div>
-                                </div>
-                            </a>
+                            <x-spotlight.result-item
+                                :href="route('filament.admin.pages.dashboard')"
+                                :index="3"
+                                icon="heroicon-o-cog-6-tooth"
+                                :title="trans('spotlight.admin_panel')"
+                                :meta="trans('spotlight.admin_panel_desc')"
+                            />
                         @endif
 
                         <div class="mt-4 px-3 py-2 text-center text-xs text-gray-400 dark:text-gray-500">
