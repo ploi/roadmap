@@ -105,8 +105,9 @@ class SpotlightSearch extends Component
 
     public function createNewItem(): void
     {
+        $query = $this->query;
         $this->close();
-        $this->dispatch('create-item-from-search', query: $this->query);
+        $this->dispatch('create-item-from-search', query: $query);
     }
 
     public function render()
