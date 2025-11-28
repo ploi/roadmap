@@ -2,6 +2,7 @@
 
 return [
     'search' => 'Zoeken',
+    'search_button' => 'Zoeken',
     'create-item' => [
         'name' => 'Item aanmaken',
         'description' => 'Maak een item aan',

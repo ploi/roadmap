@@ -2,6 +2,7 @@
 
 return [
     'search' => 'Search',
+    'search_button' => 'Search',
     'create-item' => [
         'name' => 'Create item',
         'description' => 'Create an item',

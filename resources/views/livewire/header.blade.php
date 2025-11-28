@@ -73,7 +73,7 @@
                         class="inline-flex items-center gap-2 !px-3 !py-1.5 rounded-lg text-white hover:text-white hover:bg-white/10 focus:ring-white/20 transition focus:outline-none focus:ring-2"
                     >
                         <x-heroicon-o-magnifying-glass class="w-5 h-5" />
-                        <span>Search</span>
+                        <span>{{ trans('spotlight.search_button') }}</span>
                         <kbd class="hidden sm:inline-block ml-1 rounded border border-white/20 px-2 py-0.5 text-xs font-semibold">
                             ⌘K
                         </kbd>
@@ -192,7 +192,7 @@
                         class="flex items-center gap-2 w-full p-2 transition rounded-lg focus:outline-none hover:bg-brand-500-400 text-left"
                     >
                         <x-heroicon-o-magnifying-glass class="w-5 h-5" />
-                        <span>Search</span>
+                        <span>{{ trans('spotlight.search_button') }}</span>
                         <kbd class="ml-auto rounded border border-white/20 px-2 py-0.5 text-xs font-semibold">
                             ⌘K
                         </kbd>
