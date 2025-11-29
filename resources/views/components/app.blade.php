@@ -97,6 +97,7 @@
 @livewireScriptConfig
 @filamentScripts
 @livewire('notifications')
+@livewire('spotlight-search')
 
 @stack('javascript')
 <x-impersonate::banner/>

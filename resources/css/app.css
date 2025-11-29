@@ -134,3 +134,42 @@
 .fi-ta {
     @apply w-full;
 }
+
+/* Spotlight Search Styles */
+.spotlight-container {
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+@media (prefers-color-scheme: dark) {
+    .spotlight-container {
+        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+    }
+}
+
+/* Custom scrollbar for spotlight results */
+.spotlight-container .max-h-\[60vh\]::-webkit-scrollbar {
+    width: 8px;
+}
+
+.spotlight-container .max-h-\[60vh\]::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.spotlight-container .max-h-\[60vh\]::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.3);
+    border-radius: 4px;
+}
+
+.spotlight-container .max-h-\[60vh\]::-webkit-scrollbar-thumb:hover {
+    background: rgba(156, 163, 175, 0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+    .spotlight-container .max-h-\[60vh\]::-webkit-scrollbar-thumb {
+        background: rgba(75, 85, 99, 0.5);
+    }
+
+    .spotlight-container .max-h-\[60vh\]::-webkit-scrollbar-thumb:hover {
+        background: rgba(75, 85, 99, 0.7);
+    }
+}

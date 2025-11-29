@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Enums\UserRole;
 use App\Models\Project;
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Filament\Actions\Action;
 use App\Rules\ProfanityCheck;
 use App\Settings\GeneralSettings;
@@ -44,29 +45,23 @@ class Header extends Component implements HasForms, HasActions
             ->get();
     }
 
+    #[On('create-item-from-search')]
+    public function openSubmitItemWithQuery(string $query): void
+    {
+        // Mount the submit item action with the query as an argument
+        $this->mountAction('submitItem', ['prefilledTitle' => $query]);
+    }
+
+    #[On('open-submit-item-modal')]
+    public function openSubmitItemModal(): void
+    {
+        // Mount the submit item action without pre-filled data
+        $this->mountAction('submitItem');
+    }
+
     public function render()
     {
         return view('livewire.header');
-    }
-
-    public function searchItemAction(): Action
-    {
-        return Action::make('searchItem')
-            ->link()
-            ->color('gray')
-            ->label(function () {
-                return view('components.search-button-label');
-            })
-            ->icon('heroicon-o-magnifying-glass')
-            ->extraAttributes(['class' => '!px-3 !py-1.5 rounded-lg text-white hover:text-white hover:bg-white/10 focus:ring-white/20 [&_svg]:text-white'])
-            ->modalWidth('4xl')
-            ->modalFooterActions([
-                Action::make('👀')->hidden()
-            ])
-            ->modalHeading($this->getRandomFunnyPlaceholder())
-            ->modalIcon('heroicon-o-magnifying-glass')
-            ->modalAlignment(Alignment::Left)
-            ->modalContent(view('modals.search'));
     }
 
     public function submitItemAction(): Action
@@ -101,8 +96,23 @@ class Header extends Component implements HasForms, HasActions
             ->modalIcon('heroicon-o-plus-circle')
             ->modalWidth('3xl')
             ->modalSubmitActionLabel('Confirm')
-            ->fillForm(function () {
-                return $this->currentProjectId ? ['project_id' => $this->currentProjectId] : [];
+            ->mountUsing(function ($form, array $arguments) {
+                // Fill the form with prefilled data if available
+                $data = [];
+
+                // Add project_id if currentProjectId is set
+                if ($this->currentProjectId) {
+                    $data['project_id'] = $this->currentProjectId;
+                }
+
+                // Add prefilled title if provided from search
+                if ($prefilledTitle = $arguments['prefilledTitle'] ?? null) {
+                    $data['title'] = $prefilledTitle;
+                    // Also set similar items for the prefilled title
+                    $this->setSimilarItems($prefilledTitle);
+                }
+
+                $form->fill($data);
             })
             ->schema(function () {
                 $inputs = [];
@@ -214,29 +224,5 @@ class Header extends Component implements HasForms, HasActions
 
                 return $query;
             })->get(['title', 'slug']) : collect([]);
-    }
-
-    protected function getRandomFunnyPlaceholder(): string
-    {
-        $placeholders = [
-            "Type here to find your lost keys... or your sanity",
-            "Searching for Wi-Fi signals and lost socks",
-            "Type something brilliant or your cat will judge you",
-            "Looking for answers, memes, and cat videos",
-            "Search for unicorns, we might find one",
-            "Finding a needle in a digital haystack",
-            "Type your thoughts, we'll pretend to understand",
-            "Searching for dinosaurs in the digital age",
-            "Lost in the web? We've got a virtual map",
-            "Hunting for pixels and easter eggs",
-            "Type something epic or order pizza, your choice",
-            "Lost in the code? We'll be your debugger",
-            "Looking for a shortcut to success",
-            "Searching for the meaning of life... or cute cat videos"
-        ];
-
-        shuffle($placeholders);
-
-        return $placeholders[0];
     }
 }
