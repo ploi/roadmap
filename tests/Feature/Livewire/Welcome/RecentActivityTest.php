@@ -2,11 +2,11 @@
 
 use App\Models\Item;
 use App\Models\User;
-use App\Models\Comment;
 use Livewire\Livewire;
+use App\Models\Comment;
 use App\Enums\ItemActivity;
-use App\Livewire\Welcome\RecentActivity;
 use Spatie\Activitylog\Models\Activity;
+use App\Livewire\Welcome\RecentActivity;
 
 test('recent activity component renders', function () {
     $user = createAndLoginUser();

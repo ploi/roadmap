@@ -2,22 +2,22 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
 use App\Enums\UserRole;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\ColorPicker;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\TagsInput;
-use Filament\Forms\Components\Placeholder;
+use Filament\Schemas\Schema;
 use App\Settings\WidgetSettings;
-use App\Settings\ActivityWidgetSettings;
 use Filament\Pages\SettingsPage;
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\HtmlString;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Tabs;
+use App\Settings\ActivityWidgetSettings;
+use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Forms\Components\ColorPicker;
+use Filament\Forms\Components\Placeholder;
+use Illuminate\Contracts\Support\Htmlable;
 
 class Widget extends SettingsPage
 {

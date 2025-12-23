@@ -2,18 +2,16 @@
 
 namespace App\Livewire\Welcome;
 
-use Filament\Actions\Contracts\HasActions;
-use Filament\Actions\Concerns\InteractsWithActions;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
-use Closure;
 use App\Models\Comment;
 use Livewire\Component;
+use Filament\Tables\Table;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Actions\Concerns\InteractsWithActions;
 
 class RecentComments extends Component implements HasTable, HasForms, HasActions
 {

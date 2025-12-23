@@ -5,11 +5,11 @@ namespace App\Providers;
 use App\Http\Kernel;
 use App\Services\OgImageGenerator;
 use Filament\Support\Colors\Color;
-use Filament\Support\Facades\FilamentColor;
 use Illuminate\Support\Collection;
 use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Filament\Support\Facades\FilamentColor;
 use Laravel\Socialite\Contracts\Factory as SocialiteFactory;
 
 class AppServiceProvider extends ServiceProvider

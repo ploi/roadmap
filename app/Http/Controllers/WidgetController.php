@@ -7,11 +7,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Settings\WidgetSettings;
-use App\Settings\ActivityWidgetSettings;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Validator;
 use Spatie\Activitylog\Models\Activity;
+use App\Settings\ActivityWidgetSettings;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 
 class WidgetController extends Controller
 {

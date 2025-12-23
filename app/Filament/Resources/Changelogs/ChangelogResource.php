@@ -2,29 +2,27 @@
 
 namespace App\Filament\Resources\Changelogs;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\Resources\Changelogs\Pages\ListChangelogs;
-use App\Filament\Resources\Changelogs\Pages\CreateChangelog;
-use App\Filament\Resources\Changelogs\Pages\EditChangelog;
 use Exception;
 use App\Models\Item;
-use Filament\Tables;
 use App\Models\Changelog;
 use Filament\Tables\Table;
+use Filament\Schemas\Schema;
+use Filament\Actions\EditAction;
 use Filament\Resources\Resource;
 use App\Settings\GeneralSettings;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Select;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\MarkdownEditor;
-use App\Filament\Resources\ChangelogResource\Pages;
+use App\Filament\Resources\Changelogs\Pages\EditChangelog;
+use App\Filament\Resources\Changelogs\Pages\ListChangelogs;
+use App\Filament\Resources\Changelogs\Pages\CreateChangelog;
 
 class ChangelogResource extends Resource
 {

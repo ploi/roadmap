@@ -2,34 +2,32 @@
 
 namespace App\Livewire;
 
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Schemas\Components\Grid;
-use Filament\Forms\Components\CheckboxList;
-use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\BulkAction;
-use Filament\Forms;
 use ResourceBundle;
 use App\Models\User;
-use Filament\Tables;
 use Livewire\Component;
 use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
 use Filament\Support\Colors\Color;
 use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\Http;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Grid;
 use Filament\Support\Enums\Alignment;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use App\Notifications\VerifyEmailChange;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Section;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\CheckboxList;
 use Illuminate\Database\Eloquent\Collection;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Actions\Concerns\InteractsWithActions;
-use App\Notifications\VerifyEmailChange;
 
 class Profile extends Component implements HasForms, HasTable, HasActions
 {

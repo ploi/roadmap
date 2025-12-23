@@ -2,12 +2,12 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Board;
-use App\Models\Comment;
 use App\Models\Item;
-use App\Models\Project;
 use App\Models\User;
 use App\Models\Vote;
+use App\Models\Board;
+use App\Models\Comment;
+use App\Models\Project;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 

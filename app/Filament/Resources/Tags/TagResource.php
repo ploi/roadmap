@@ -2,22 +2,21 @@
 
 namespace App\Filament\Resources\Tags;
 
-use LaraZeus\SpatieTranslatable\Resources\Concerns\Translatable;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\Resources\Tags\Pages\ListTags;
-use App\Filament\Resources\Tags\Pages\CreateTag;
-use App\Filament\Resources\Tags\Pages\EditTag;
 use Spatie\Tags\Tag;
 use Filament\Tables\Table;
+use Filament\Schemas\Schema;
+use Filament\Actions\EditAction;
 use Filament\Resources\Resource;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Components\Checkbox;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-use App\Filament\Resources\TagResource\Pages;
+use Filament\Schemas\Components\Section;
+use App\Filament\Resources\Tags\Pages\EditTag;
+use App\Filament\Resources\Tags\Pages\ListTags;
+use App\Filament\Resources\Tags\Pages\CreateTag;
+use LaraZeus\SpatieTranslatable\Resources\Concerns\Translatable;
 
 class TagResource extends Resource
 {

@@ -2,12 +2,11 @@
 
 namespace App\Filament\Widgets;
 
-use Filament\Tables\Columns\TextColumn;
 use App\Models\Item;
-use Filament\Tables;
 use Filament\Tables\Table;
-use App\Filament\Resources\Items\ItemResource;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Contracts\Support\Htmlable;
+use App\Filament\Resources\Items\ItemResource;
 use Filament\Widgets\TableWidget as BaseWidget;
 
 class LatestItems extends BaseWidget

@@ -2,12 +2,10 @@
 
 namespace App\Livewire\Welcome;
 
-use App\Models\Board;
-use App\Models\Comment;
 use App\Models\Item;
-use App\Models\Project;
 use App\Models\User;
 use App\Models\Vote;
+use App\Models\Comment;
 use Livewire\Component;
 
 class Statistics extends Component

@@ -2,13 +2,12 @@
 
 namespace App\Livewire;
 
-use Closure;
 use Livewire\Component;
+use Filament\Tables\Table;
 use Illuminate\Support\Carbon;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
-use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;

@@ -2,15 +2,13 @@
 
 namespace App\Filament\Resources\Users\RelationManagers;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\AttachAction;
-use Filament\Forms\Components\Select;
-use Filament\Actions\DetachAction;
-use Filament\Actions\DetachBulkAction;
-use Filament\Forms;
-use Filament\Tables;
 use App\Models\Project;
 use Filament\Tables\Table;
+use Filament\Schemas\Schema;
+use Filament\Actions\AttachAction;
+use Filament\Actions\DetachAction;
+use Filament\Forms\Components\Select;
+use Filament\Actions\DetachBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;

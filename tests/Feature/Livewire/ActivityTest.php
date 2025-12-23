@@ -2,8 +2,8 @@
 
 use App\Models\Item;
 use Livewire\Livewire;
-use App\Enums\ItemActivity;
 use App\Livewire\Activity;
+use App\Enums\ItemActivity;
 
 test('authenticated user can access activity page', function () {
     $user = createAndLoginUser();

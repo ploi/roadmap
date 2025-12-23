@@ -4,8 +4,8 @@ namespace App\Console\Commands;
 
 use App\Services\SystemChecker;
 use Illuminate\Console\Command;
-use App\Console\Commands\Concerns\CanShowAnIntro;
 use function Laravel\Prompts\info;
+use App\Console\Commands\Concerns\CanShowAnIntro;
 
 class Upgrade extends Command
 {

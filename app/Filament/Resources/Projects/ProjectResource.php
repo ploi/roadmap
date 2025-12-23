@@ -2,29 +2,28 @@
 
 namespace App\Filament\Resources\Projects;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Grid;
-use App\Filament\Resources\Projects\Pages\ListProjects;
-use App\Filament\Resources\Projects\Pages\CreateProject;
-use App\Filament\Resources\Projects\Pages\EditProject;
 use Filament\Forms;
 use App\Models\Board;
 use App\Models\Project;
 use App\Services\Icons;
 use Filament\Tables\Table;
+use Filament\Schemas\Schema;
 use App\Services\GitHubService;
 use Filament\Resources\Resource;
 use App\Settings\GeneralSettings;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\MarkdownEditor;
-use App\Filament\Resources\ProjectResource\Pages;
+use App\Filament\Resources\Projects\Pages\EditProject;
+use App\Filament\Resources\Projects\Pages\ListProjects;
+use App\Filament\Resources\Projects\Pages\CreateProject;
 
 class ProjectResource extends Resource
 {
@@ -106,7 +105,7 @@ class ProjectResource extends Resource
                             ->label(trans('resources.project.github-repo'))
                             ->visible($gitHubService->isEnabled())
                             ->searchable()
-                            ->getSearchResultsUsing(fn(
+                            ->getSearchResultsUsing(fn (
                                 string $search
                             ) => $gitHubService->getRepositories($search)),
 
@@ -116,7 +115,7 @@ class ProjectResource extends Resource
                             ->multiple()
                             ->preload()
                             ->relationship('members', 'name')
-                            ->visible(fn($get) => (bool)$get('private')),
+                            ->visible(fn ($get) => (bool)$get('private')),
 
                         MarkdownEditor::make('description')
                             ->label(trans('resources.project.description'))
@@ -131,7 +130,7 @@ class ProjectResource extends Resource
                             ->orderColumn('sort_order')
                             ->default(app(GeneralSettings::class)->default_boards)
                             ->columnSpan(2)
-                            ->itemLabel(fn($state) => $state['title'] ?? '')
+                            ->itemLabel(fn ($state) => $state['title'] ?? '')
                             ->schema([
                                 Grid::make()->schema([
                                     Toggle::make('visible')
@@ -192,7 +191,7 @@ class ProjectResource extends Resource
 
                 IconColumn::make('private')
                     ->label(trans('resources.project.private'))
-                    ->icon(fn(
+                    ->icon(fn (
                         $record
                     ) => $record->private ? 'heroicon-o-lock-closed' : 'heroicon-o-lock-open'),
 

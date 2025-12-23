@@ -4,9 +4,9 @@ namespace App\Filament\Resources\Items\Pages;
 
 use App\Models\Item;
 use Filament\Actions\CreateAction;
-use App\Filament\Resources\Items\ItemResource;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\Items\ItemResource;
 
 class ListItems extends ListRecords
 {

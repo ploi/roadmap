@@ -1,12 +1,12 @@
 <?php
 
 use App\Models\User;
-use App\Livewire\Profile;
 use Livewire\Livewire;
+use App\Livewire\Profile;
+use function Pest\Laravel\actingAs;
+use Illuminate\Support\Facades\URL;
 use App\Notifications\VerifyEmailChange;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\URL;
-use function Pest\Laravel\actingAs;
 
 beforeEach(function () {
     $this->user = User::factory()->create([

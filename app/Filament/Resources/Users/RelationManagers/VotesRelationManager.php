@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Users\RelationManagers;
 
-use Filament\Schemas\Schema;
 use Filament\Tables\Table;
+use Filament\Schemas\Schema;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;

@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Votes\Pages;
 
-use App\Filament\Resources\Votes\VoteResource;
 use Filament\Resources\Pages\CreateRecord;
+use App\Filament\Resources\Votes\VoteResource;
 
 class CreateVote extends CreateRecord
 {

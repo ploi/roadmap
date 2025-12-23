@@ -2,25 +2,23 @@
 
 namespace App\Filament\Resources\Users;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use App\Filament\Resources\Users\RelationManagers\ItemsRelationManager;
-use App\Filament\Resources\Users\RelationManagers\CommentsRelationManager;
-use App\Filament\Resources\Users\RelationManagers\VotesRelationManager;
-use App\Filament\Resources\Users\RelationManagers\ProjectsRelationManager;
-use App\Filament\Resources\Users\Pages\ListUsers;
-use App\Filament\Resources\Users\Pages\CreateUser;
-use App\Filament\Resources\Users\Pages\EditUser;
 use App\Models\User;
 use App\Enums\UserRole;
 use Filament\Tables\Table;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-use App\Filament\Resources\UserResource\Pages;
+use Filament\Schemas\Components\Section;
+use App\Filament\Resources\Users\Pages\EditUser;
 use STS\FilamentImpersonate\Actions\Impersonate;
-use App\Filament\Resources\UserResource\RelationManagers;
+use App\Filament\Resources\Users\Pages\ListUsers;
+use App\Filament\Resources\Users\Pages\CreateUser;
+use App\Filament\Resources\Users\RelationManagers\ItemsRelationManager;
+use App\Filament\Resources\Users\RelationManagers\VotesRelationManager;
+use App\Filament\Resources\Users\RelationManagers\CommentsRelationManager;
+use App\Filament\Resources\Users\RelationManagers\ProjectsRelationManager;
 
 class UserResource extends Resource
 {
@@ -100,7 +98,7 @@ class UserResource extends Resource
 
                     TextColumn::make('role')
                         ->label(trans('resources.user.role'))
-                        ->formatStateUsing(fn($state) => trans("resources.user.roles.{$state->value}")),
+                        ->formatStateUsing(fn ($state) => trans("resources.user.roles.{$state->value}")),
 
                     TextColumn::make('created_at')
                         ->label(trans('resources.created-at'))
