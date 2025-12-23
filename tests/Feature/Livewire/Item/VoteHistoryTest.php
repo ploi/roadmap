@@ -26,6 +26,7 @@ test('vote history shows empty state when no votes exist', function () {
     ]);
 
     Livewire::test(VoteHistory::class, ['item' => $item])
+        ->dispatch('open-modal', id: 'vote-history-modal')
         ->assertSee(trans('items.no-vote-history'));
 });
 

@@ -9,17 +9,23 @@
             </button>
         </x-slot>
 
-        @if($this->item->votes()->exists())
-            @livewire(\App\Filament\Widgets\VoteHistoryChart::class, ['item' => $this->item])
+        @if($modalOpened)
+            @if($this->item->votes()->exists())
+                @livewire(\App\Filament\Widgets\VoteHistoryChart::class, ['item' => $this->item], key('vote-history-chart-' . $this->item->id))
+            @else
+                <x-filament::section>
+                    <x-slot name="heading">
+                        {{ trans('items.vote-history') }}
+                    </x-slot>
+                    <div class="text-center py-8 text-gray-500 dark:text-gray-400">
+                        {{ trans('items.no-vote-history') }}
+                    </div>
+                </x-filament::section>
+            @endif
         @else
-            <x-filament::section>
-                <x-slot name="heading">
-                    {{ trans('items.vote-history') }}
-                </x-slot>
-                <div class="text-center py-8 text-gray-500 dark:text-gray-400">
-                    {{ trans('items.no-vote-history') }}
-                </div>
-            </x-filament::section>
+            <div class="flex items-center justify-center py-12">
+                <x-filament::loading-indicator class="h-8 w-8" />
+            </div>
         @endif
     </x-filament::modal>
 </div>
