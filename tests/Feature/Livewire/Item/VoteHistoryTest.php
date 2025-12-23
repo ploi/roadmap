@@ -38,6 +38,7 @@ test('vote history chart widget renders with item', function () {
     ]);
 
     Livewire::test(VoteHistoryChart::class, ['item' => $item])
+        ->set('filter', '30')
         ->assertStatus(200);
 });
 
@@ -55,7 +56,8 @@ test('vote history chart provides data with votes', function () {
     $vote->subscribed = false;
     $vote->save();
 
-    $component = Livewire::test(VoteHistoryChart::class, ['item' => $item]);
+    $component = Livewire::test(VoteHistoryChart::class, ['item' => $item])
+        ->set('filter', '30');
 
     $component->assertStatus(200);
 });
@@ -86,7 +88,8 @@ test('vote history chart aggregates votes by date', function () {
     $vote2->created_at = $today;
     $vote2->save();
 
-    $component = Livewire::test(VoteHistoryChart::class, ['item' => $item]);
+    $component = Livewire::test(VoteHistoryChart::class, ['item' => $item])
+        ->set('filter', '30');
 
     $component->assertStatus(200);
 });
@@ -115,7 +118,8 @@ test('vote history chart fills gaps between dates', function () {
     $vote2->created_at = Carbon::today();
     $vote2->save();
 
-    $component = Livewire::test(VoteHistoryChart::class, ['item' => $item]);
+    $component = Livewire::test(VoteHistoryChart::class, ['item' => $item])
+        ->set('filter', '30');
 
     $component->assertStatus(200);
 });

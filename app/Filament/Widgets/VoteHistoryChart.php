@@ -48,11 +48,37 @@ class VoteHistoryChart extends ChartWidget
 
         $query = $this->item->votes();
 
-        if ($this->filter && $this->filter !== 'all') {
-            $days = (int) $this->filter;
+        $days = $this->filter && $this->filter !== 'all' ? (int) $this->filter : null;
+
+        if ($days) {
             $query->where('created_at', '>=', Carbon::now()->subDays($days));
         }
 
+        // Determine grouping based on time range
+        $groupBy = $this->getGroupingStrategy($days);
+
+        if ($groupBy === 'month') {
+            return $this->getMonthlyData($query);
+        } elseif ($groupBy === 'week') {
+            return $this->getWeeklyData($query);
+        }
+
+        return $this->getDailyData($query);
+    }
+
+    protected function getGroupingStrategy(?int $days): string
+    {
+        if ($days === null || $days > 365) {
+            return 'month';
+        } elseif ($days > 90) {
+            return 'week';
+        }
+
+        return 'day';
+    }
+
+    protected function getDailyData($query): array
+    {
         $votes = $query
             ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
             ->groupByRaw('DATE(created_at)')
@@ -60,10 +86,7 @@ class VoteHistoryChart extends ChartWidget
             ->get();
 
         if ($votes->isEmpty()) {
-            return [
-                'datasets' => [],
-                'labels' => [],
-            ];
+            return ['datasets' => [], 'labels' => []];
         }
 
         $startDate = Carbon::parse($votes->first()->date);
@@ -76,11 +99,58 @@ class VoteHistoryChart extends ChartWidget
         $currentDate = $startDate->copy();
         while ($currentDate->lte($endDate)) {
             $dateKey = $currentDate->format('Y-m-d');
-            $labels[] = $currentDate->format('M d, Y');
+            $labels[] = $currentDate->format('M d');
             $data[] = $votesMap[$dateKey] ?? 0;
             $currentDate->addDay();
         }
 
+        return $this->formatChartData($labels, $data);
+    }
+
+    protected function getWeeklyData($query): array
+    {
+        $votes = $query->orderBy('created_at')->get();
+
+        if ($votes->isEmpty()) {
+            return ['datasets' => [], 'labels' => []];
+        }
+
+        $grouped = $votes->groupBy(fn ($vote) => Carbon::parse($vote->created_at)->startOfWeek()->format('Y-m-d'));
+
+        $labels = [];
+        $data = [];
+
+        foreach ($grouped as $weekStart => $weekVotes) {
+            $labels[] = Carbon::parse($weekStart)->format('M d');
+            $data[] = $weekVotes->count();
+        }
+
+        return $this->formatChartData($labels, $data);
+    }
+
+    protected function getMonthlyData($query): array
+    {
+        $votes = $query->orderBy('created_at')->get();
+
+        if ($votes->isEmpty()) {
+            return ['datasets' => [], 'labels' => []];
+        }
+
+        $grouped = $votes->groupBy(fn ($vote) => Carbon::parse($vote->created_at)->format('Y-m'));
+
+        $labels = [];
+        $data = [];
+
+        foreach ($grouped as $month => $monthVotes) {
+            $labels[] = Carbon::createFromFormat('Y-m', $month)->format('M Y');
+            $data[] = $monthVotes->count();
+        }
+
+        return $this->formatChartData($labels, $data);
+    }
+
+    protected function formatChartData(array $labels, array $data): array
+    {
         return [
             'datasets' => [
                 [
