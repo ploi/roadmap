@@ -4,7 +4,6 @@ namespace App\Livewire\Item;
 
 use App\Models\Item;
 use Livewire\Component;
-use Illuminate\Support\Arr;
 use Filament\Actions\Action;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Alignment;

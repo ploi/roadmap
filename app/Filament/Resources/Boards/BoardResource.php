@@ -2,19 +2,18 @@
 
 namespace App\Filament\Resources\Boards;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use App\Filament\Resources\Boards\Pages\ListBoards;
-use App\Filament\Resources\Boards\Pages\CreateBoard;
-use App\Filament\Resources\Boards\Pages\EditBoard;
 use App\Models\Board;
 use Filament\Tables\Table;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-use App\Filament\Resources\BoardResource\Pages;
+use Filament\Schemas\Components\Section;
+use App\Filament\Resources\Boards\Pages\EditBoard;
+use App\Filament\Resources\Boards\Pages\ListBoards;
+use App\Filament\Resources\Boards\Pages\CreateBoard;
 
 class BoardResource extends Resource
 {

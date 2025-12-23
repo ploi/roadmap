@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Items\RelationManagers;
 
-use Filament\Schemas\Schema;
 use Filament\Tables\Table;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Resources\RelationManagers\RelationManager;

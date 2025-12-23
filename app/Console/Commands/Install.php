@@ -5,12 +5,12 @@ namespace App\Console\Commands;
 use App\Models\User;
 use App\Enums\UserRole;
 use Illuminate\Console\Command;
+use function Laravel\Prompts\info;
+use function Laravel\Prompts\text;
 use Illuminate\Support\Facades\Hash;
-use App\Console\Commands\Concerns\CanShowAnIntro;
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\password;
-use function Laravel\Prompts\text;
-use function Laravel\Prompts\info;
+use App\Console\Commands\Concerns\CanShowAnIntro;
 
 class Install extends Command
 {
@@ -65,9 +65,9 @@ class Install extends Command
     protected function linkStorage(): void
     {
         if (!file_exists(public_path('storage')) && confirm(
-                label: 'Your storage does not seem to be linked, do you want me to do this?',
-                hint: '(php artisan storage:link)'
-            )
+            label: 'Your storage does not seem to be linked, do you want me to do this?',
+            hint: '(php artisan storage:link)'
+        )
         ) {
             $this->call('storage:link');
         }
@@ -95,9 +95,9 @@ class Install extends Command
     protected function askForStar(): void
     {
         if (User::count() === 1 && confirm(
-                label: 'Would you like to show some love by starring the repo?',
-                default: true
-            )
+            label: 'Would you like to show some love by starring the repo?',
+            default: true
+        )
         ) {
             if (PHP_OS_FAMILY === 'Darwin') {
                 exec('open https://github.com/ploi/roadmap');

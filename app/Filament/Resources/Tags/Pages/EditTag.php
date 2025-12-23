@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\Tags\Pages;
 
-use LaraZeus\SpatieTranslatable\Resources\Pages\EditRecord\Concerns\Translatable;
 use Filament\Actions\DeleteAction;
-use App\Filament\Resources\Tags\TagResource;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\Tags\TagResource;
+use LaraZeus\SpatieTranslatable\Resources\Pages\EditRecord\Concerns\Translatable;
 
 class EditTag extends EditRecord
 {

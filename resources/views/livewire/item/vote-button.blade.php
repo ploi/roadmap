@@ -25,6 +25,8 @@
         <span
             class="text-sm">{{ trans_choice('messages.total-votes', $model->total_votes, ['votes' => $model->total_votes]) }}</span>
 
+        <livewire:item.vote-history :item="$model" />
+
         @if($vote && $showSubscribeOption)
             @if($vote->subscribed)
                 <button class="border-b border-dotted font-semibold border-gray-500" x-data

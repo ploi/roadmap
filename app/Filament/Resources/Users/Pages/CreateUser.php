@@ -6,8 +6,8 @@ use App\Mail\UserCreated;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
-use App\Filament\Resources\Users\UserResource;
 use Filament\Resources\Pages\CreateRecord;
+use App\Filament\Resources\Users\UserResource;
 
 class CreateUser extends CreateRecord
 {

@@ -2,18 +2,17 @@
 
 namespace App\Filament\Resources\Votes;
 
-use Filament\Actions\DeleteAction;
-use App\Filament\Resources\Votes\Pages\ListVotes;
-use App\Filament\Resources\Votes\Pages\CreateVote;
-use App\Filament\Resources\Votes\Pages\EditVote;
 use App\Models\Vote;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Actions\DeleteAction;
 use Filament\Support\Enums\Alignment;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
-use App\Filament\Resources\VoteResource\Pages;
+use App\Filament\Resources\Votes\Pages\EditVote;
+use App\Filament\Resources\Votes\Pages\ListVotes;
+use App\Filament\Resources\Votes\Pages\CreateVote;
 
 class VoteResource extends Resource
 {

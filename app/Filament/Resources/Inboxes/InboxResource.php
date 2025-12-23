@@ -2,23 +2,22 @@
 
 namespace App\Filament\Resources\Inboxes;
 
-use Filament\Schemas\Schema;
-use App\Filament\Resources\Inboxes\Pages\ListInboxes;
-use App\Filament\Resources\Inboxes\Pages\CreateInbox;
-use App\Filament\Resources\Inboxes\Pages\EditInbox;
 use Exception;
 use App\Models\Item;
 use App\Models\Project;
 use Filament\Tables\Table;
 use App\Enums\InboxWorkflow;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use App\Settings\GeneralSettings;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\InboxResource\Pages;
 use App\Filament\Resources\Items\ItemResource;
+use App\Filament\Resources\Inboxes\Pages\EditInbox;
+use App\Filament\Resources\Inboxes\Pages\CreateInbox;
+use App\Filament\Resources\Inboxes\Pages\ListInboxes;
 use App\Filament\Resources\Items\RelationManagers\VotesRelationManager;
 use App\Filament\Resources\Items\RelationManagers\CommentsRelationManager;
 

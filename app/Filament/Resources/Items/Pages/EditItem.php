@@ -9,9 +9,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Support\Enums\Alignment;
 use Illuminate\Support\Facades\Storage;
-use App\Filament\Resources\Items\ItemResource;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\Items\ItemResource;
 
 class EditItem extends EditRecord
 {
@@ -23,7 +23,7 @@ class EditItem extends EditRecord
             Action::make('view_public')
                 ->label(trans('resources.item.view-public'))
                 ->color('gray')
-                ->url(fn() => route('items.show', $this->record))
+                ->url(fn () => route('items.show', $this->record))
                 ->openUrlInNewTab(),
 
             Action::make('flush_og_images')

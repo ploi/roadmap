@@ -2,14 +2,14 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
 use App\Enums\UserRole;
-use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Schema;
 use App\Settings\ColorSettings;
 use Filament\Pages\SettingsPage;
 use Illuminate\Support\HtmlString;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\ColorPicker;
 use Illuminate\Contracts\Support\Htmlable;

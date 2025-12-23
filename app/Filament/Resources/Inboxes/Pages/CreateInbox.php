@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Inboxes\Pages;
 
-use App\Filament\Resources\Inboxes\InboxResource;
 use Filament\Resources\Pages\CreateRecord;
+use App\Filament\Resources\Inboxes\InboxResource;
 
 class CreateInbox extends CreateRecord
 {

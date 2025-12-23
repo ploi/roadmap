@@ -3,8 +3,8 @@
 use App\Models\User;
 use App\Settings\ColorSettings;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use function Pest\Laravel\actingAs;
+use Illuminate\Support\Facades\Storage;
 
 beforeEach(function () {
     $this->user = User::factory()->create();

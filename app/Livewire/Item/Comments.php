@@ -2,15 +2,15 @@
 
 namespace App\Livewire\Item;
 
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
 use App\Models\Item;
 use Livewire\Component;
 use App\Rules\ProfanityCheck;
 use App\Settings\GeneralSettings;
+use Filament\Schemas\Components\Tabs;
 use Filament\Forms\Contracts\HasForms;
 use App\View\Components\MarkdownEditor;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Actions\Concerns\InteractsWithActions;

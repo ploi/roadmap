@@ -2,34 +2,34 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Group;
 use App\Models\Board;
 use App\Enums\UserRole;
 use App\Models\Project;
 use Illuminate\Support\Str;
 use App\Enums\InboxWorkflow;
 use Filament\Actions\Action;
+use Filament\Schemas\Schema;
 use App\Services\GitHubService;
 use Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
 use Illuminate\Support\Collection;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Tabs;
 use Filament\Support\Enums\Alignment;
+use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\RichEditor;
+use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Contracts\Support\Htmlable;
+use Filament\Schemas\Components\Utilities\Get;
 
 class Settings extends SettingsPage
 {
@@ -158,7 +158,7 @@ class Settings extends SettingsPage
                             Grid::make()
                                 ->columnSpanFull()
                                 ->schema(
-                                [
+                                    [
                                 Select::make('inbox_workflow')
                                     ->label(trans('settings.general.inbox-workflow'))
                                     ->helperText(trans('settings.general.inbox-workflow-helper-text'))
@@ -169,7 +169,7 @@ class Settings extends SettingsPage
                                     ->label(trans('settings.general.roadmap-password'))
                                     ->helperText(trans('settings.general.roadmap-password-helper-text')),
                                 ]
-                            ),
+                                ),
 
                             RichEditor::make('welcome_text')
                                 ->label(trans('settings.general.welcome-text'))

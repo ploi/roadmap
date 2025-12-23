@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use Throwable;
 use Mail;
+use Throwable;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\Project;

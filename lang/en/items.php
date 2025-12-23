@@ -34,5 +34,10 @@ return [
     'not-allowed-to-create-items' => 'You are not allowed to create items in this board.',
     'update-board-success' => 'Successfully moved the item to board :board',
     'view-on-github' => 'View issue on GitHub',
-    'search-shortcut' => 'CMD + K to search'
+    'search-shortcut' => 'CMD + K to search',
+    'view-vote-history' => 'View vote history',
+    'vote-history' => 'Vote history',
+    'vote-history-description' => 'See how votes have been added over time.',
+    'votes-per-day' => 'Votes',
+    'no-vote-history' => 'No votes have been recorded yet.',
 ];

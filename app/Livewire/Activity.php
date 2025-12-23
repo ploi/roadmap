@@ -7,12 +7,12 @@ use Filament\Tables\Table;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
-use Spatie\Activitylog\Models\Activity as ActivityModel;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Actions\Concerns\InteractsWithActions;
+use Spatie\Activitylog\Models\Activity as ActivityModel;
 
 class Activity extends Component implements HasTable, HasForms, HasActions
 {

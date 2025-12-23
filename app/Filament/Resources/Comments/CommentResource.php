@@ -2,21 +2,20 @@
 
 namespace App\Filament\Resources\Comments;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Actions\DeleteAction;
-use App\Filament\Resources\Comments\Pages\ListComments;
-use App\Filament\Resources\Comments\Pages\CreateComment;
-use App\Filament\Resources\Comments\Pages\EditComment;
 use App\Models\Comment;
-use Filament\Support\Enums\Alignment;
 use Filament\Tables\Table;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
+use Filament\Support\Enums\Alignment;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\MarkdownEditor;
-use App\Filament\Resources\CommentResource\Pages;
+use App\Filament\Resources\Comments\Pages\EditComment;
+use App\Filament\Resources\Comments\Pages\ListComments;
+use App\Filament\Resources\Comments\Pages\CreateComment;
 
 class CommentResource extends Resource
 {

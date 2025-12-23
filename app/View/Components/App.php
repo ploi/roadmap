@@ -2,14 +2,14 @@
 
 namespace App\View\Components;
 
-use App\Settings\ColorSettings;
-use Illuminate\Contracts\View\View;
 use Closure;
 use App\Models\Project;
 use App\Services\Tailwind;
 use Illuminate\Support\Str;
 use Illuminate\View\Component;
+use App\Settings\ColorSettings;
 use App\Settings\GeneralSettings;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 
 class App extends Component
