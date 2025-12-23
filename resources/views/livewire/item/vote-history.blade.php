@@ -1,13 +1,11 @@
 <div>
-    <x-filament::modal id="vote-history-modal" width="2xl">
+    <x-filament::modal id="vote-history-modal" width="3xl">
         <x-slot name="trigger">
             <button
                 type="button"
-                class="text-sm text-gray-500 hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400 transition-colors cursor-pointer"
-                x-data
-                x-tooltip.raw="{{ trans('items.view-vote-history') }}"
+                class="text-sm text-gray-500 hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400 transition-colors cursor-pointer border-b border-dotted border-gray-400"
             >
-                <x-heroicon-o-chart-bar class="w-5 h-5" />
+                {{ trans('items.vote-history') }}
             </button>
         </x-slot>
 

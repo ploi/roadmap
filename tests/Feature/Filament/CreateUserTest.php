@@ -1,10 +1,10 @@
 <?php
 
+use Livewire\Livewire;
 use App\Enums\UserRole;
 use App\Mail\UserCreated;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Livewire\Livewire;
 use App\Filament\Resources\Users\Pages\CreateUser as CreateUserPage;
 
 test('admin can access create user page', function () {

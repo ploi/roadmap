@@ -4,8 +4,8 @@ namespace App\Filament\Resources\Users\Pages;
 
 use App\Mail\UserCreated;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Resources\Users\UserResource;
 

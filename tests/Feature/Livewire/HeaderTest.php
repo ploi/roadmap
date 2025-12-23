@@ -1,12 +1,9 @@
 <?php
 
-use App\Models\User;
-use App\Models\Project;
-use App\Models\Board;
 use Livewire\Livewire;
+use App\Models\Project;
 use App\Livewire\Header;
 use App\Settings\GeneralSettings;
-use function Pest\Laravel\actingAs;
 
 beforeEach(function () {
     GeneralSettings::fake([

@@ -2,9 +2,7 @@
 
 namespace App\Filament\Resources\Changelogs;
 
-use App\Filament\Resources\Changelogs\RelationManagers\ItemsRelationManager;
 use Exception;
-use App\Models\Item;
 use App\Models\Changelog;
 use Filament\Tables\Table;
 use Filament\Schemas\Schema;
@@ -24,6 +22,7 @@ use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\Changelogs\Pages\EditChangelog;
 use App\Filament\Resources\Changelogs\Pages\ListChangelogs;
 use App\Filament\Resources\Changelogs\Pages\CreateChangelog;
+use App\Filament\Resources\Changelogs\RelationManagers\ItemsRelationManager;
 
 class ChangelogResource extends Resource
 {

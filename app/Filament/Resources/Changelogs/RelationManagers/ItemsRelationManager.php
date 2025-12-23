@@ -2,13 +2,13 @@
 
 namespace App\Filament\Resources\Changelogs\RelationManagers;
 
-use App\Filament\Resources\Items\ItemResource;
-use Filament\Actions\AttachAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DetachAction;
-use Filament\Actions\DetachBulkAction;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Table;
+use Filament\Actions\AttachAction;
+use Filament\Actions\DetachAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DetachBulkAction;
+use App\Filament\Resources\Items\ItemResource;
+use Filament\Resources\RelationManagers\RelationManager;
 
 class ItemsRelationManager extends RelationManager
 {

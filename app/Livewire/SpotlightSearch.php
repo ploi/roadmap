@@ -4,9 +4,8 @@ namespace App\Livewire;
 
 use App\Models\Item;
 use App\Models\Project;
-use Illuminate\Support\Collection;
-use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class SpotlightSearch extends Component
 {

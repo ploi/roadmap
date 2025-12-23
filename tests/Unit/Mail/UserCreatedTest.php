@@ -1,8 +1,6 @@
 <?php
 
-use App\Models\User;
 use App\Mail\UserCreated;
-use Illuminate\Support\Facades\Mail;
 
 it('can create a UserCreated mailable with correct properties', function () {
     $user = createUser(['name' => 'Test User', 'email' => 'test@example.com']);

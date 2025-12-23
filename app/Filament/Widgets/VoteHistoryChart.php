@@ -12,6 +12,8 @@ class VoteHistoryChart extends ChartWidget
 
     public ?Item $item = null;
 
+    public ?string $filter = 'all';
+
     public function getHeading(): ?string
     {
         return trans('items.vote-history');
@@ -22,16 +24,36 @@ class VoteHistoryChart extends ChartWidget
         return trans('items.vote-history-description');
     }
 
+    protected function getFilters(): ?array
+    {
+        return [
+            'all' => trans('items.filter-all-time'),
+            '7' => trans('items.filter-last-7-days'),
+            '30' => trans('items.filter-last-30-days'),
+            '90' => trans('items.filter-last-90-days'),
+            '365' => trans('items.filter-last-year'),
+            '730' => trans('items.filter-last-2-years'),
+            '1095' => trans('items.filter-last-3-years'),
+        ];
+    }
+
     protected function getData(): array
     {
-        if (!$this->item) {
+        if (! $this->item) {
             return [
                 'datasets' => [],
                 'labels' => [],
             ];
         }
 
-        $votes = $this->item->votes()
+        $query = $this->item->votes();
+
+        if ($this->filter && $this->filter !== 'all') {
+            $days = (int) $this->filter;
+            $query->where('created_at', '>=', Carbon::now()->subDays($days));
+        }
+
+        $votes = $query
             ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
             ->groupByRaw('DATE(created_at)')
             ->orderBy('date')
@@ -54,7 +76,7 @@ class VoteHistoryChart extends ChartWidget
         $currentDate = $startDate->copy();
         while ($currentDate->lte($endDate)) {
             $dateKey = $currentDate->format('Y-m-d');
-            $labels[] = $currentDate->format('M d');
+            $labels[] = $currentDate->format('M d, Y');
             $data[] = $votesMap[$dateKey] ?? 0;
             $currentDate->addDay();
         }
