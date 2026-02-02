@@ -69,11 +69,6 @@ class Colors extends SettingsPage
                                     function (TemporaryUploadedFile $file): string {
                                         return (string)str($file->getClientOriginalName())->prepend('logo-');
                                     }
-                                )
-                                ->getUploadedFileNameForStorageUsing(
-                                    function ($record) {
-                                        return storage_path('app/public/' . app(ColorSettings::class)->logo);
-                                    }
                                 ),
                             FileUpload::make('favicon')
                                 ->label(trans('theme.favicon'))
@@ -82,11 +77,6 @@ class Colors extends SettingsPage
                                 //                    ->imageResizeTargetHeight('64')
                                 //                    ->imageResizeTargetWidth('64')
                                 ->maxSize(1024)
-                                ->getUploadedFileNameForStorageUsing(
-                                    function ($record) {
-                                        return storage_path('app/public/favicon.png');
-                                    }
-                                )
                                 ->getUploadedFileNameForStorageUsing(
                                     function (TemporaryUploadedFile $file): string {
                                         return (string)'favicon.png';
