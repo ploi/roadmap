@@ -6,7 +6,10 @@ use App\Models\Item;
 use App\Models\Project;
 use App\Enums\ItemActivity;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use App\Settings\GeneralSettings;
+use Symfony\Component\Yaml\Yaml;
 use Illuminate\Http\RedirectResponse;
 use Spatie\Activitylog\Models\Activity;
 use Filament\Notifications\Notification;
@@ -54,6 +57,67 @@ class ItemController extends Controller
             'user' => $item->user,
             'activities' => $activities,
         ]);
+    }
+
+    public function ai(Request $request, $projectSlug, $itemSlug): JsonResponse|Response
+    {
+        $project = Project::query()->visibleForCurrentUser()->where('slug', $projectSlug)->firstOrFail();
+        $item = $project->items()->visibleForCurrentUser()->where('slug', $itemSlug)->firstOrFail();
+
+        $data = [
+            'title' => $item->title,
+            'content' => $item->content,
+            'board' => $item->board?->title,
+            'project' => $project->title,
+            'votes' => $item->total_votes,
+            'tags' => $item->tags->pluck('name')->toArray(),
+        ];
+
+        $includes = $request->query('include', []);
+
+        if (!empty($includes['comments'])) {
+            $data['comments'] = $item->comments()
+                ->with('user:id,name,username')
+                ->whereNull('parent_id')
+                ->where('private', false)
+                ->oldest()
+                ->get()
+                ->map(fn ($comment) => [
+                    'author' => $comment->user->name ?? $comment->user->username,
+                    'content' => $comment->content,
+                    'created_at' => $comment->created_at->toIso8601String(),
+                ])
+                ->toArray();
+        }
+
+        return match ($request->query('format', 'json')) {
+            'yml', 'yaml' => response(Yaml::dump($data, 4, 2), 200, ['Content-Type' => 'text/yaml']),
+            'markdown', 'md' => response($this->toMarkdown($data), 200, ['Content-Type' => 'text/markdown']),
+            default => response()->json($data),
+        };
+    }
+
+    protected function toMarkdown(array $data): string
+    {
+        $md = "# {$data['title']}\n\n";
+        $md .= "**Project:** {$data['project']}";
+        $md .= $data['board'] ? " | **Board:** {$data['board']}" : '';
+        $md .= " | **Votes:** {$data['votes']}\n";
+
+        if (!empty($data['tags'])) {
+            $md .= '**Tags:** ' . implode(', ', $data['tags']) . "\n";
+        }
+
+        $md .= "\n---\n\n{$data['content']}\n";
+
+        if (!empty($data['comments'])) {
+            $md .= "\n---\n\n## Comments\n\n";
+            foreach ($data['comments'] as $comment) {
+                $md .= "**{$comment['author']}** ({$comment['created_at']}):\n{$comment['content']}\n\n";
+            }
+        }
+
+        return $md;
     }
 
     public function edit($id)
