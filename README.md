@@ -215,6 +215,30 @@ public function boot()
 Now head over to the login page in your roadmap software and view the log in button in action. The title of the button can be set with the `.env` variable: `SSO_LOGIN_TITLE=`
 
 
+## AI endpoint
+
+Each item has an `/ai` endpoint that returns its data in a machine-readable format, useful for AI agents and automation.
+
+```
+GET /projects/{project}/items/{item}/ai
+```
+
+**Query parameters:**
+
+| Parameter | Description | Example |
+|---|---|---|
+| `format` | Response format: `json` (default), `yml`/`yaml`, `markdown`/`md` | `?format=yml` |
+| `include[comments]` | Include public comments | `?include[comments]=1` |
+
+**Examples:**
+
+```
+/projects/1-bugs/items/2-bug-in-sites-overview/ai
+/projects/1-bugs/items/2-bug-in-sites-overview/ai?include[comments]=1
+/projects/1-bugs/items/2-bug-in-sites-overview/ai?format=markdown
+/projects/1-bugs/items/2-bug-in-sites-overview/ai?format=yml&include[comments]=1
+```
+
 ## Docker Support
 
 ### Getting up and running...

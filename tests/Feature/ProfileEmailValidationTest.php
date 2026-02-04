@@ -25,9 +25,9 @@ test('profile form validates email format', function () {
             'email' => 'invalid-email',
             'notification_settings' => [],
             'per_page_setting' => [5],
-        ])
+        ], 'form')
         ->call('submit')
-        ->assertHasFormErrors(['email']);
+        ->assertHasFormErrors(['email'], 'form');
 });
 
 test('profile form validates email uniqueness', function () {
@@ -40,9 +40,9 @@ test('profile form validates email uniqueness', function () {
             'email' => 'taken@example.com',
             'notification_settings' => [],
             'per_page_setting' => [5],
-        ])
+        ], 'form')
         ->call('submit')
-        ->assertHasFormErrors(['email']);
+        ->assertHasFormErrors(['email'], 'form');
 });
 
 test('user can keep their current email without validation error', function () {
@@ -53,9 +53,9 @@ test('user can keep their current email without validation error', function () {
             'email' => $this->user->email,
             'notification_settings' => [],
             'per_page_setting' => [5],
-        ])
+        ], 'form')
         ->call('submit')
-        ->assertHasNoFormErrors();
+        ->assertHasNoFormErrors([], 'form');
 
     expect($this->user->fresh()->email)->toBe('original@example.com');
 });
@@ -70,7 +70,7 @@ test('changing email stores pending email and sends verification', function () {
             'email' => 'newemail@example.com',
             'notification_settings' => [],
             'per_page_setting' => [5],
-        ])
+        ], 'form')
         ->call('submit');
 
     $this->user->refresh();
@@ -91,7 +91,7 @@ test('changing email shows warning notification', function () {
             'email' => 'newemail@example.com',
             'notification_settings' => [],
             'per_page_setting' => [5],
-        ])
+        ], 'form')
         ->call('submit')
         ->assertNotified();
 });
@@ -183,9 +183,9 @@ test('cannot set email to invalid format', function () {
             'email' => 'not-an-email',
             'notification_settings' => [],
             'per_page_setting' => [5],
-        ])
+        ], 'form')
         ->call('submit')
-        ->assertHasFormErrors(['email']);
+        ->assertHasFormErrors(['email'], 'form');
 
     expect($this->user->fresh()->email)->toBe('original@example.com');
 });
