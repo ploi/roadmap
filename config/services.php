@@ -64,4 +64,8 @@ return [
     'gravatar' => [
         'base_url' => rtrim(env('GRAVATAR_BASE_URL', 'https://www.gravatar.com/avatar'), '/'),
     ],
+
+    'fathom' => [
+        'site_id' => env('FATHOM_SITE_ID'),
+    ],
 ];
