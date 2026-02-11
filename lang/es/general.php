@@ -9,4 +9,10 @@ return [
 
     'close' => 'Cerrar',
     'save' => 'Guardar',
+
+    'search-items' => 'Buscar elementos...',
+    'sort-by' => 'Ordenar por',
+    'sort-newest' => 'Más recientes',
+    'sort-most-voted' => 'Más votados',
+    'sort-last-commented' => 'Último comentado',
 ];

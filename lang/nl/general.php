@@ -30,4 +30,10 @@ return [
 
     'close' => 'Sluiten',
     'save' => 'Opslaan',
+
+    'search-items' => 'Zoek items...',
+    'sort-by' => 'Sorteren op',
+    'sort-newest' => 'Nieuwste',
+    'sort-most-voted' => 'Meeste stemmen',
+    'sort-last-commented' => 'Laatst becommentarieerd',
 ];

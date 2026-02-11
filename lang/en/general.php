@@ -30,4 +30,10 @@ return [
 
     'close' => 'Close',
     'save' => 'Save',
+
+    'search-items' => 'Search items...',
+    'sort-by' => 'Sort by',
+    'sort-newest' => 'Newest',
+    'sort-most-voted' => 'Most voted',
+    'sort-last-commented' => 'Last commented',
 ];
