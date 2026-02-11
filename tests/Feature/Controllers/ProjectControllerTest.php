@@ -25,12 +25,14 @@ it('includes the boards', function () {
 it('includes the items', function () {
     $project = Project::factory()
         ->has(
-            Board::factory(5)
-            ->has(Item::factory(10))
+            Board::factory()
+            ->has(Item::factory(3))
         )
         ->create();
 
-    get(route('projects.show', $project))->assertSeeInOrder(Item::all()->pluck('title')->toArray());
+    $response = get(route('projects.show', $project));
+
+    Item::all()->each(fn (Item $item) => $response->assertSeeText($item->title));
 });
 
 it('includes votes for items', function () {
@@ -71,14 +73,14 @@ test('pinned items are at the top', function () {
     get(route('projects.show', $project))->assertSeeInOrder(['item 2' , 'item 1']);
 });
 
-test('items are sorted by vote count', function () {
+test('items are sorted by newest by default', function () {
     $project = Project::factory()
         ->has(
             Board::factory()
             ->has(
                 Item::factory(2)->state(new Sequence(
-                    ['title' => 'item 1', 'total_votes' => 1],
-                    ['title' => 'item 2', 'total_votes' => 10]
+                    ['title' => 'item 1', 'created_at' => now()->subDay()],
+                    ['title' => 'item 2', 'created_at' => now()]
                 ))
             )
         )->create();

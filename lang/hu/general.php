@@ -31,5 +31,11 @@ return [
     'close' => 'Bezárás',
     'save' => 'Mentés',
 
+    'search-items' => 'Elemek keresése...',
+    'sort-by' => 'Rendezés',
+    'sort-newest' => 'Legújabb',
+    'sort-most-voted' => 'Legtöbb szavazat',
+    'sort-last-commented' => 'Utoljára hozzászólt',
+
     'public-user' => 'Nyilvános felhasználó',
 ];

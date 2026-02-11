@@ -10,5 +10,11 @@ return [
     'close' => 'Chiudi',
     'save' => 'Salva',
 
+    'search-items' => 'Cerca elementi...',
+    'sort-by' => 'Ordina per',
+    'sort-newest' => 'Più recenti',
+    'sort-most-voted' => 'Più votati',
+    'sort-last-commented' => 'Ultimo commento',
+
     'public-user' => 'Utente pubblico',
 ];

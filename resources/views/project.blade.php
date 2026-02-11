@@ -18,67 +18,7 @@
             ])
         >
             @forelse($boards as $board)
-                <section class="h-full">
-                    <div class="bg-gray-100 rounded-xl min-w-[18rem] lg:w-92 flex flex-col max-h-full dark:bg-white/5">
-                        <div
-                            class="p-2 font-semibold text-center text-gray-800 border-b border-gray-200 bg-gray-100/80 rounded-t-xl backdrop-blur-xl backdrop-saturate-150 dark:bg-gray-900 dark:text-white dark:border-b-gray-800">
-                            <a
-                                href="{{ route('projects.boards.show', [$project, $board]) }}"
-                                class="border-b border-dotted border-black">
-                                {{ $board->title }}
-                            </a>
-                        </div>
-                        <ul class="p-2 space-y-2 o overflow-y-auto flex-1 min-h-0">
-                            @forelse($board->items as $item)
-                                <li>
-                                    <a href="{{ route('projects.items.show', [$project, $item]) }}"
-                                       class="block p-4 space-y-4 bg-white shadow rounded-xl hover:bg-gray-50 dark:bg-gray-900 dark:hover:bg-gray-950">
-                                        <div class="flex justify-between">
-                                            <p>
-                                                {{ $item->title }}
-                                            </p>
-
-                                            <div class="flex items-center">
-                                                @if($item->isPrivate())
-                                                    <span x-data x-tooltip.raw="{{ trans('items.item-private') }}">
-                                                        <x-heroicon-s-lock-closed class="text-gray-500 fill-gray-500 w-5 h-5" />
-                                                    </span>
-                                                @endif
-                                                @if($item->isPinned())
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                         x-data
-                                                         x-tooltip.raw="{{ trans('items.item-pinned') }}"
-                                                         class="text-gray-500 fill-gray-500">
-                                                        <path
-                                                            d="M15 11.586V6h2V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2h2v5.586l-2.707 1.707A.996.996 0 0 0 6 14v2a1 1 0 0 0 1 1h4v3l1 2 1-2v-3h4a1 1 0 0 0 1-1v-2a.996.996 0 0 0-.293-.707L15 11.586z"></path>
-                                                    </svg>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <footer class="flex items-end justify-between">
-                                                        <span
-                                                            class="inline-flex items-center justify-center h-6 px-2 text-sm font-semibold tracking-tight text-gray-700 dark:text-gray-300 rounded-full bg-gray-50 dark:bg-gray-600">
-                                                            {{ $item->created_at->isoFormat('ll') }}
-                                                        </span>
-
-                                            <div class="text-gray-500 text-sm">
-                                                {{ $item->total_votes }} {{ trans_choice('messages.votes', $item->total_votes) }}
-                                            </div>
-                                        </footer>
-                                    </a>
-                                </li>
-                            @empty
-                                <li>
-                                    <div
-                                        class="p-3 font-medium text-center text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-400 border-dashed rounded-xl opacity-70">
-                                        <p>{{ trans('items.no-items') }}</p>
-                                    </div>
-                                </li>
-                            @endforelse
-                        </ul>
-                    </div>
-                </section>
+                <livewire:project.board-column :project="$project" :board="$board" :key="$board->id" />
             @empty
                 <div class="w-full">
                     <div
