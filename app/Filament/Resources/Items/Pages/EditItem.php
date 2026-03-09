@@ -55,9 +55,16 @@ class EditItem extends EditRecord
                          */
                         $selectedItem = Item::query()->find($data['item_id']);
 
-                        if (!$selectedItem->hasVoted($this->record->user)) {
-                            $selectedItem->toggleUpvote($this->record->user);
-                        }
+                        $existingVoterIds = $selectedItem->votes()->pluck('user_id')->toArray();
+
+                        $this->record->votes()->whereNotNull('user_id')->whereNotIn('user_id', $existingVoterIds)->update([
+                            'model_id' => $selectedItem->id,
+                        ]);
+
+                        $this->record->votes()->delete();
+
+                        $selectedItem->total_votes = $selectedItem->votes()->count();
+                        $selectedItem->save();
 
                         $selectedItem->comments()->create(
                             [
