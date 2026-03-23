@@ -3,6 +3,7 @@
 namespace App\Livewire\Item;
 
 use App\Models\Item;
+use App\Models\Comment as CommentModel;
 use Livewire\Component;
 use Filament\Actions\Action;
 use Filament\Support\Colors\Color;
@@ -37,10 +38,9 @@ class Comment extends Component implements HasForms, HasActions
             ->modalDescription('')
             ->modalIcon('heroicon-o-chat-bubble-left-right')
             ->fillForm(function (array $arguments): array {
-                $commentData = $arguments['comment'];
-                $content = is_array($commentData) ? ($commentData['content'] ?? '') : ($commentData->content ?? '');
+                $comment = CommentModel::findOrFail($arguments['comment']);
                 return [
-                    'content' => $content,
+                    'content' => $comment->content,
                 ];
             })
             ->form([
@@ -49,11 +49,7 @@ class Comment extends Component implements HasForms, HasActions
             ])
             ->link()
             ->action(function (array $data, array $arguments): void {
-                // Handle both array and object formats
-                $commentData = $arguments['comment'];
-                $commentId = is_array($commentData) ? $commentData['id'] : $commentData->id;
-
-                $comment = auth()->user()->comments()->findOrFail($commentId);
+                $comment = auth()->user()->comments()->findOrFail($arguments['comment']);
                 $comment->update(['content' => $data['content']]);
 
                 $this->redirectRoute('items.show', $comment->item->slug);
@@ -74,15 +70,9 @@ class Comment extends Component implements HasForms, HasActions
             ])
             ->link()
             ->action(function (array $data, array $arguments): void {
-                // Handle both array and object formats
-                $commentData = $arguments['comment'];
-                $commentId = is_array($commentData) ? $commentData['id'] : $commentData->id;
-                $itemId = is_array($commentData) ? $commentData['item_id'] : $commentData->item_id;
+                $comment = CommentModel::findOrFail($arguments['comment']);
 
-                $item = Item::findOrFail($itemId);
-                $comment = $item->comments()->findOrFail($commentId);
-
-                $item->comments()->create([
+                $comment->item->comments()->create([
                     'parent_id' => $comment->id,
                     'user_id' => auth()->id(),
                     'content' => $data['content']
