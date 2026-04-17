@@ -146,8 +146,10 @@
 
                             {{-- Collapsible projects - hidden behind dropdown --}}
                             @if($collapsible->count() > 0)
+                            
                             <div class="relative">
                                 {{-- 
+                                
                                 <div x-data="{ open: {{ Request::is('projects/*') ? 'true' : 'false' }} }">
                                     
                                     <button type="button"
@@ -156,7 +158,7 @@
                                     aria-controls="{{ $groupId }}"
                                     data-collapse-toggle="{{ $groupId }}">
                                     
-                                    --}}
+
                                     <button class="w-full text-left p-2 rounded hover:bg-gray-700 flex items-center" onclick="toggleDropdown()">
                                         <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>
                                         {{ trans('projects.projects') }}</span>
@@ -164,9 +166,8 @@
                                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                         </svg>
                                     </button>
-                                    {{-- 
                                     <ul id="{{ $groupId }}" x-show="open" x-transition class="py-2 space-y-2">
-                                        --}}
+
                                         <div id="dropdownMenu" class="hidden pl-4 py-2 overflow-y-auto ">
                                                 @foreach($collapsible as $project)
                                             
@@ -180,7 +181,7 @@
 
                                                 @endforeach
                                             </div>
-                                            {{-- 
+
                                             <li>
                                                 <a
                                                 title="{{ $project->title }}"
@@ -207,16 +208,35 @@
                                                             @endif
                                                         </a>
                                                     </li>
-                                                    --}}
-                                    
-                                    {{-- 
+
                                     </ul>
                                 </div>
-                                --}}
+                                
 
-                            @endif
+ --}}
+
+<div x-data="{ open: false }" class="space-y-1">
+    <!-- Button -->
+    <button @click="open = !open" class="flex items-center justify-between w-full p-2 text-gray-900 rounded-lg hover:bg-gray-100 bg-gray-700 text-white">
+        <span>
+          {{ trans('projects.projects') }}
+        </span>
+        <svg :class="{'rotate-180': open}" class="w-4 h-4 ms-1.5 -me-0.5 text-white" aria-hidden="true" xmlns="https://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/></svg>
+    </button>
+    <!-- Submenu -->
+    <div x-show="open" class="pl-6 space-y-1">
+      @foreach($collapsible as $project)
+        <a href="{{ route('projects.show', $project) }}" class="block p-2 transition rounded-lg focus:outline-none hover:bg-brand-500-400">
+          {{ $project->title }}
+        </a>
+        @endforeach
+    </div>
+</div>
+{{--  --}}
+                             @endif
                         @endforeach
                     </ul>
+                    
                 @else
                     <div class="px-2">
                         <span class="text-sm text-gray-500">{{ trans('projects.no-projects') }}</span>
