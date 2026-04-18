@@ -27,3 +27,5 @@ frankenphp
 .DS_Store
 .phpunit.cache
 CLAUDE.md
+package-lock.json
+composer.lock

@@ -217,18 +217,23 @@
 
 <div x-data="{ open: false }" class="space-y-1">
     <!-- Button -->
-    <button @click="open = !open" class="flex items-center justify-between w-full p-2 text-gray-900 rounded-lg hover:bg-gray-100 bg-gray-700 text-white">
+    <button @click="open = !open" class="flex items-center justify-between w-full p-2 rounded-lg hover:bg-gray-700 text-white">
         <span>
           {{ trans('projects.projects') }}
         </span>
         <svg :class="{'rotate-180': open}" class="w-4 h-4 ms-1.5 -me-0.5 text-white" aria-hidden="true" xmlns="https://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/></svg>
     </button>
     <!-- Submenu -->
-    <div x-show="open" class="pl-6 space-y-1">
-      @foreach($collapsible as $project)
-        <a href="{{ route('projects.show', $project) }}" class="block p-2 transition rounded-lg focus:outline-none hover:bg-brand-500-400">
-          {{ $project->title }}
-        </a>
+    <div x-show="open" class="">
+        @foreach($collapsible as $project)
+            <a href="{{ route('projects.show', $project) }}" @class([
+                                'flex items-center h-10 px-2 space-x-2 transition rounded-lg',
+                                'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-400' => request()->is('changelog*'),
+                                'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => !request()->is('changelog*')
+                            ])>
+                            <x-dynamic-component :component="$project->icon ?? 'heroicon-o-hashtag'" @class([ 'shrink-0 w-5 h-5','text-gray-500' => request()->segment(2) != $project->slug]) />
+                                {{ $project->title }}
+                            </a>
         @endforeach
     </div>
 </div>
