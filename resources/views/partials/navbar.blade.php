@@ -231,7 +231,7 @@
                                 'text-white bg-brand-500 dark:bg-white/5 dark:hover:bg-white/5 dark:text-brand-400' => request()->is('changelog*'),
                                 'hover:bg-gray-500/5 focus:bg-brand-500/10 focus:text-brand-600 focus:outline-none dark:hover:bg-white/5 dark:focus:text-gray-200 dark:text-gray-200' => !request()->is('changelog*')
                             ])>
-                            <x-dynamic-component :component="$project->icon ?? 'heroicon-o-hashtag'" @class([ 'shrink-0 w-5 h-5','text-gray-500' => request()->segment(2) != $project->slug]) />
+                            <x-dynamic-component :component="$project->icon ?? 'heroicon-o-hashtag'" @class([ 'shrink-0 w-5 h-5','text-gray-500 mr-2' => request()->segment(2) != $project->slug]) />
                                 {{ $project->title }}
                             </a>
         @endforeach
