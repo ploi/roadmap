@@ -36,7 +36,7 @@
 
             <!-- Content -->
             <div class="prose prose-gray dark:prose-invert max-w-none break-words">
-                {!! str($changelog->content)->markdown() !!}
+                {!! str($changelog->content)->markdown()->sanitizeHtml() !!}
             </div>
 
         </div>
