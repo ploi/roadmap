@@ -1,7 +1,7 @@
 <div
     @class([
         'ml-1 md:ml-6' => $comment->parent_id !== null,
-        'mr-1 bg-brand-50 rounded-lg ring-1 ring-brand-200' => $reply == $comment->id,
+        'mr-1 bg-brand-50 dark:bg-brand-900/30 rounded-lg ring-1 ring-brand-200 dark:ring-brand-800' => $reply == $comment->id,
 		'border border-yellow-700 rounded-md mt-1 mb-1' => $comment->private && !$comment->parent?->private,
         'block py-2 overflow-hidden transition'
     ])

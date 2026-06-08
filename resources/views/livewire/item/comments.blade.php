@@ -36,7 +36,10 @@
 
             if (hash) {
                 const commentElement = document.getElementById(hash.replace('#', ''));
-                commentElement.classList.add('bg-brand-50', 'rounded-lg', 'ring-1', 'ring-brand-200', 'mt-2', 'mb-2');
+
+                if (commentElement) {
+                    commentElement.classList.add('bg-brand-50', 'dark:bg-brand-900/30', 'rounded-lg', 'ring-1', 'ring-brand-200', 'dark:ring-brand-800', 'mt-2', 'mb-2');
+                }
             }
         })();
     </script>
