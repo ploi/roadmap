@@ -16,6 +16,16 @@ use App\Http\Controllers\Auth\PasswordProtectionController;
 
 Auth::routes();
 
+// Two-factor authentication challenge (shown after a valid password when the
+// account has 2FA enabled). Handled by Fortify's controller; all other 2FA
+// routes are intentionally not registered (see App\Providers\FortifyServiceProvider).
+Route::get('two-factor-challenge', [\Laravel\Fortify\Http\Controllers\TwoFactorAuthenticatedSessionController::class, 'create'])
+    ->middleware('guest')
+    ->name('two-factor.login');
+Route::post('two-factor-challenge', [\Laravel\Fortify\Http\Controllers\TwoFactorAuthenticatedSessionController::class, 'store'])
+    ->middleware(array_filter(['guest', config('fortify.limiters.two-factor') ? 'throttle:'.config('fortify.limiters.two-factor') : null]))
+    ->name('two-factor.login.store');
+
 Route::get('oauth/login', [\App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider'])
     ->middleware('guest')
     ->name('oauth.login');

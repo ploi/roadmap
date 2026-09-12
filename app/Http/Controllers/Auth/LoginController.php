@@ -23,6 +23,50 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * Handle a login request.
+     *
+     * Mirrors the AuthenticatesUsers trait's login(), but when the credentials
+     * are valid and the account has two-factor authentication enabled it
+     * redirects to the 2FA challenge instead of completing the login. The user
+     * is not authenticated until the challenge is passed. SSO/Socialite logins
+     * are unaffected since they authenticate in handleProviderCallback().
+     */
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        $provider = $this->guard()->getProvider();
+        $user = $provider->retrieveByCredentials($this->credentials($request));
+
+        if (! $user || ! $provider->validateCredentials($user, $this->credentials($request))) {
+            $this->incrementLoginAttempts($request);
+
+            return $this->sendFailedLoginResponse($request);
+        }
+
+        if ($user->hasEnabledTwoFactorAuthentication()) {
+            $this->clearLoginAttempts($request);
+
+            $request->session()->put([
+                'login.id' => $user->getKey(),
+                'login.remember' => $request->boolean('remember'),
+            ]);
+
+            return redirect()->route('two-factor.login');
+        }
+
+        $this->guard()->login($user, $request->boolean('remember'));
+
+        return $this->sendLoginResponse($request);
+    }
+
     public function redirectToProvider($provider = 'sso')
     {
         return Socialite::driver($provider)->redirect();
