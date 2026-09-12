@@ -138,7 +138,7 @@ class ItemResource extends Resource
                                                     ->icon('heroicon-s-plus')
                                                     ->tooltip(trans('resources.item.github.create'))
                                                     ->modalHeading(trans('resources.item.github.create-new'))
-                                                    ->modalSubmitActionLabel(trans('resources.item.github-issue-create'))
+                                                    ->modalSubmitActionLabel(trans('resources.item.github.create'))
                                                     ->schema(
                                                         [
                                                                                     Grid::make()
