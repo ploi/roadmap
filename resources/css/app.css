@@ -130,6 +130,43 @@
     }
 }
 
+/* Underlined tabs for the admin comment form (public comment / private note) */
+.comment-tabs {
+    /* The surrounding form already provides the card */
+    &.fi-contained {
+        @apply rounded-none bg-transparent shadow-none ring-0 dark:bg-transparent;
+    }
+
+    & .fi-tabs.fi-contained {
+        @apply gap-x-6 px-6 py-0;
+    }
+
+    & .fi-tabs-item {
+        @apply -mb-px rounded-none border-b-2 border-transparent px-0.5 py-3 hover:bg-transparent focus-visible:bg-transparent dark:hover:bg-transparent dark:focus-visible:bg-transparent;
+
+        &:not(.fi-active):hover {
+            @apply border-gray-300 dark:border-gray-600;
+        }
+
+        &.fi-active {
+            @apply border-primary-600 bg-transparent dark:border-primary-400 dark:bg-transparent;
+        }
+
+        &.comment-tab-private.fi-active {
+            @apply border-warning-500;
+
+            & .fi-tabs-item-label,
+            & > .fi-icon {
+                @apply text-warning-700 dark:text-warning-400;
+            }
+        }
+    }
+
+    & .fi-sc-tabs-tab.comment-tab-private {
+        @apply bg-warning-50/60 dark:bg-warning-500/5;
+    }
+}
+
 /* Fix for Filament table overflow on dashboard */
 .fi-ta {
     @apply w-full;
