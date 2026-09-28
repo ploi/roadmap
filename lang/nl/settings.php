@@ -67,6 +67,7 @@ return [
         'type-helper-text' => 'Dit zal bepalen welke type items worden getoond.',
         'recent-items' => 'Laatste items',
         'recent-comments' => 'Laatste reacties',
+        'recent-changelogs' => 'Laatste changelogs',
         'leaderboard' => 'Ranglijst',
         'column-span' => 'Kolom breedte',
         'column-span-helper-text' => 'Dit zal de kolom breedte bepalen van het item.',

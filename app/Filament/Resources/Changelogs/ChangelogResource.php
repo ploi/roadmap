@@ -85,6 +85,12 @@ class ChangelogResource extends Resource
                     DateTimePicker::make('published_at')
                         ->label(trans('resources.published-at')),
 
+                    Select::make('project_id')
+                        ->label(trans('resources.changelog.project'))
+                        ->relationship('project', 'title')
+                        ->preload()
+                        ->searchable(),
+
                     MarkdownEditor::make('content')
                         ->label(trans('resources.changelog.content'))
                         ->columnSpan(2)
@@ -111,6 +117,11 @@ class ChangelogResource extends Resource
                     ->searchable()
                     ->wrap(),
 
+                TextColumn::make('project.title')
+                    ->label(trans('resources.changelog.project'))
+                    ->placeholder('-')
+                    ->sortable(),
+
                 IconColumn::make('published')
                     ->label(trans('resources.changelog.published'))
                     ->boolean()
@@ -128,6 +139,7 @@ class ChangelogResource extends Resource
                     ->sortable(),
                 ]
             )
+            ->defaultSort('published_at', 'desc')
             ->filters(
                 [
                 Filter::make('is_published')

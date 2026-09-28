@@ -6,6 +6,8 @@
     @endif
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         @foreach(app(\App\Settings\GeneralSettings::class)->dashboard_items as $item)
+            @continue($item['type'] === 'recent-changelogs' && ! app(\App\Settings\GeneralSettings::class)->enable_changelog)
+
             <div @class([
                 'space-y-2 min-w-0',
                 'col-span-1' => ($item['column_span'] ?? 1) == 1,

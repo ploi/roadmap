@@ -49,6 +49,11 @@ class Project extends Model
         return $this->hasMany(Item::class);
     }
 
+    public function changelogs(): HasMany
+    {
+        return $this->hasMany(Changelog::class);
+    }
+
     /**
      * Get the public URL of the uploaded icon image, if one is set.
      */
@@ -59,6 +64,15 @@ class Project extends Model
         }
 
         return Storage::disk('public')->url($this->icon_image);
+    }
+
+    public function isVisibleForCurrentUser(): bool
+    {
+        if (! $this->private || auth()->user()?->hasAdminAccess()) {
+            return true;
+        }
+
+        return auth()->check() && $this->members()->where('user_id', auth()->id())->exists();
     }
 
     public function scopeVisibleForCurrentUser($query)

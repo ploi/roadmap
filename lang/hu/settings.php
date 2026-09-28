@@ -67,6 +67,7 @@ return [
         'type-helper-text'              => 'Meghatározza, mi fog megjelenni.',
         'recent-items'                  => 'Legújabb elemek',
         'recent-comments'               => 'Legújabb hozzászólások',
+        'recent-changelogs'             => 'Legutóbbi változásnaplók',
         'recent-activity'               => 'Legutóbbi aktivitás',
         'leaderboard'                   => 'Ranglista',
         'statistics'                    => 'Statisztikák',

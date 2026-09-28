@@ -5,12 +5,16 @@ return [
     'all-caught-up-title' => 'Nog geen items',
     'all-caught-up-description' => 'Er zijn nog geen wijzigingen toegevoegd aan het changelog',
     'included-items' => 'Gerelateerde items',
-    'view-item' => 'Bekijken',
+    'read-more' => 'Lees meer',
+    'newer-changes' => 'Nieuwere wijzigingen',
+    'older-changes' => 'Oudere wijzigingen',
+    'loading' => 'Laden…',
+    'filter' => [
+        'all' => 'Alles',
+        'without-project' => 'Algemeen',
+    ],
     'votes' => [
-        'liked-by' => 'Leuk gevonden door',
-        'no-likes' => 'Nog geen likes',
-        'like' => 'Vind ik leuk',
-        'remove-like' => 'Verwijder like',
+        'total-likes' => '{0} Nog geen likes|{1} 1 like|[2,*] :likes likes',
         'login' => 'Login om te liken',
     ]
 ];

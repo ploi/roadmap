@@ -6,6 +6,7 @@ return [
 
     'recent-items' => 'Legutóbbi elemek',
     'recent-comments' => 'Legutóbbi hozzászólások',
+    'recent-changelogs' => 'Legutóbbi változásnaplók',
     'leaderboard' => 'Ranglista',
     'statistics' => 'Statisztikák',
     'top-voters' => 'Top szavazók',

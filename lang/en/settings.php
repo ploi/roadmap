@@ -67,6 +67,7 @@ return [
         'type-helper-text'              => 'This will determine what will be shown.',
         'recent-items'                  => 'Latest items',
         'recent-comments'               => 'Latest comments',
+        'recent-changelogs'             => 'Latest changelogs',
         'recent-activity'               => 'Recent activity',
         'leaderboard'                   => 'Leaderboard',
         'statistics'                    => 'Statistics',

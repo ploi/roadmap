@@ -15,4 +15,5 @@ return [
     'last_comment_posted_at' => 'Laatste opmerking geplaatst op',
     'activity' => 'Activiteit',
     'date' => 'Datum',
+    'published_at' => 'Gepubliceerd op',
 ];

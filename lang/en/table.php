@@ -15,4 +15,5 @@ return [
     'last_comment_posted_at' => 'Last comment posted at',
     'activity' => 'Activity',
     'date' => 'Date',
+    'published_at' => 'Published at',
 ];

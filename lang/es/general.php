@@ -6,6 +6,7 @@ return [
 
     'recent-items' => 'Elementos recientes',
     'recent-comments' => 'Comentarios Recientes',
+    'recent-changelogs' => 'Changelogs recientes',
 
     'close' => 'Cerrar',
     'save' => 'Guardar',

@@ -33,6 +33,7 @@ return [
         'content'       => 'Contenido',
         'published'     => 'Publicado',
         'is-published'  => 'Está publicado',
+        'project'       => 'Proyecto',
     ],
     'comment'     => [
         'label'               => 'Comentario',

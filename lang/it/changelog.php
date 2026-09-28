@@ -5,12 +5,16 @@ return [
     'all-caught-up-title' => 'Non c\'è ancora nulla',
     'all-caught-up-description' => 'Non ci sono modifiche aggiunte a questo registro',
     'included-items' => 'Elementi inclusi',
-    'view-item' => 'Visualizza',
+    'read-more' => 'Leggi di più',
+    'newer-changes' => 'Modifiche più recenti',
+    'older-changes' => 'Modifiche precedenti',
+    'loading' => 'Caricamento…',
+    'filter' => [
+        'all' => 'Tutti',
+        'without-project' => 'Generale',
+    ],
     'votes' => [
-        'liked-by' => 'Piaciuto da',
-        'no-likes' => 'Ancora nessun mi piace',
-        'like' => 'Mi piace',
-        'remove-like' => 'Rimuovi il mi piace',
+        'total-likes' => '{0} Ancora nessun mi piace|{1} 1 mi piace|[2,*] :likes mi piace',
         'login' => 'Accedi per mettere mi piace',
     ]
 ];
