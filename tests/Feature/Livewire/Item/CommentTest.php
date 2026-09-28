@@ -6,9 +6,17 @@ use App\Models\Board;
 use Livewire\Livewire;
 use App\Models\Comment;
 use App\Models\Project;
+use App\Settings\GeneralSettings;
 use Illuminate\Support\Facades\DB;
 use Filament\Actions\Testing\TestAction;
 use App\Livewire\Item\Comment as CommentComponent;
+
+beforeEach(function () {
+    GeneralSettings::fake([
+        'users_must_verify_email' => false,
+        'profanity_words' => ['badword'],
+    ]);
+});
 
 function mountComment(Comment $comment): \Livewire\Features\SupportTesting\Testable
 {
@@ -132,4 +140,73 @@ test('interacting with a comment does not reload the rest of the thread', functi
     $commentQueries = collect(DB::getQueryLog())->filter(fn (array $query) => str_contains($query['query'], 'from "comments"'));
 
     expect($commentQueries)->toHaveCount(1);
+});
+
+test('an unverified user is redirected to verify their email when replying', function () {
+    app(GeneralSettings::class)->users_must_verify_email = true;
+    createAndLoginUser(user: User::factory()->unverified()->create());
+
+    $comment = Comment::factory()->for(Item::factory())->for(User::factory())->create();
+
+    mountComment($comment)
+        ->set('replyContent', 'An unverified reply')
+        ->call('submitReply')
+        ->assertRedirect(route('verification.notice'));
+
+    expect(Comment::query()->where('parent_id', $comment->id)->exists())->toBeFalse();
+});
+
+test('a reply containing profanity is rejected', function () {
+    createAndLoginUser();
+
+    $comment = Comment::factory()->for(Item::factory())->for(User::factory())->create();
+
+    mountComment($comment)
+        ->set('replyContent', 'A badword reply')
+        ->call('submitReply')
+        ->assertHasErrors(['replyContent']);
+
+    expect(Comment::query()->where('parent_id', $comment->id)->exists())->toBeFalse();
+});
+
+test('a user can edit their own comment', function () {
+    $user = createAndLoginUser();
+
+    $comment = Comment::factory()->for(Item::factory())->for($user)->create(['content' => 'Original content']);
+
+    mountComment($comment)
+        ->mountAction(TestAction::make('edit')->arguments(['comment' => $comment->id]))
+        ->assertSchemaStateSet(['content' => 'Original content'])
+        ->fillForm(['content' => 'Updated content'])
+        ->callMountedAction()
+        ->assertHasNoFormErrors();
+
+    expect($comment->fresh()->content)->toBe('Updated content');
+});
+
+test('an edit containing profanity is rejected', function () {
+    $user = createAndLoginUser();
+
+    $comment = Comment::factory()->for(Item::factory())->for($user)->create(['content' => 'Original content']);
+
+    mountComment($comment)
+        ->callAction(TestAction::make('edit')->arguments(['comment' => $comment->id]), data: ['content' => 'A badword edit'])
+        ->assertHasFormErrors(['content']);
+
+    expect($comment->fresh()->content)->toBe('Original content');
+});
+
+test('the edit form does not expose the content of another user\'s comment', function () {
+    $user = createAndLoginUser();
+
+    $item = Item::factory()->create();
+    $ownComment = Comment::factory()->for($item)->for($user)->create();
+    $privateNote = Comment::factory()->for($item)->for(User::factory()->admin())->create([
+        'content' => 'Secret internal note',
+        'private' => true,
+    ]);
+
+    expect(fn () => mountComment($ownComment)
+        ->mountAction(TestAction::make('edit')->arguments(['comment' => $privateNote->id])))
+        ->toThrow(Illuminate\Database\Eloquent\ModelNotFoundException::class);
 });

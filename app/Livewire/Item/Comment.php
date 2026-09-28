@@ -65,7 +65,8 @@ class Comment extends Component implements HasForms, HasActions
             ->modalWidth(Width::TwoExtraLarge)
             ->modalSubmitActionLabel(trans('general.save'))
             ->fillForm(function (array $arguments): array {
-                $comment = CommentModel::findOrFail($arguments['comment']);
+                $comment = $this->findOwnComment($arguments['comment'] ?? null);
+
                 return [
                     'content' => $comment->content,
                 ];
@@ -74,11 +75,12 @@ class Comment extends Component implements HasForms, HasActions
                 MarkdownEditor::make('content')
                     ->hiddenLabel()
                     ->mentions($this->item)
+                    ->rules([new ProfanityCheck()])
                     ->required()
             ])
             ->link()
             ->action(function (array $data, array $arguments): void {
-                $comment = auth()->user()->comments()->findOrFail($arguments['comment']);
+                $comment = $this->findOwnComment($arguments['comment'] ?? null);
                 $comment->update(['content' => $data['content']]);
 
                 $this->redirectRoute('items.show', $comment->item->slug);
@@ -161,5 +163,17 @@ class Comment extends Component implements HasForms, HasActions
                 ->required()
                 ->rules([new ProfanityCheck()]),
         ];
+    }
+
+    /**
+     * Find a comment owned by the current user.
+     *
+     * Action arguments are supplied by the client, so they can never be trusted to reference an owned comment.
+     */
+    protected function findOwnComment(mixed $commentId): CommentModel
+    {
+        return CommentModel::query()
+            ->where('user_id', auth()->id())
+            ->findOrFail((int) $commentId);
     }
 }
