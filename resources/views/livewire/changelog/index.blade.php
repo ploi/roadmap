@@ -25,7 +25,7 @@
                         @foreach($changelogsOnDate as $changelog)
                             @php($project = $changelog->project?->isVisibleForCurrentUser() ? $changelog->project : null)
 
-                            <li class="group relative flex flex-col gap-2 p-5 transition hover:bg-gray-50 dark:hover:bg-white/5">
+                            <li class="group relative isolate flex flex-col gap-2 p-5 transition hover:bg-gray-50 dark:hover:bg-white/5">
                                 @if($project || $showAuthor || $groupByMonth)
                                     <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
                                         @if($project)
