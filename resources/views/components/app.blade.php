@@ -65,8 +65,8 @@
 <div class="flex mx-auto py-5 lg:space-x-10 h-full px-4 sm:px-6 md:px-8 max-w-[1500px]">
     @include('partials.navbar')
 
-    {{-- The horizontal padding leaves room for card shadows, which overflow-x-hidden would otherwise clip. --}}
-    <main class="flex-1 h-full lg:border-l border-gray-200 px-1 lg:pl-5 dark:lg:border-white/10 overflow-x-hidden">
+    {{-- overflow-x-clip (not hidden) keeps overflow-y visible, so card rings at the bottom aren't cut off. The horizontal padding leaves room for card shadows on the sides. --}}
+    <main class="flex-1 h-full lg:border-l border-gray-200 px-1 lg:pl-5 dark:lg:border-white/10 overflow-x-clip">
         <div class="pb-4">
             <ul class="flex items-center space-x-0.5 text-sm font-medium text-gray-600 dark:text-gray-500">
                 @foreach(array_filter($breadcrumbs) as $breadcrumb)
