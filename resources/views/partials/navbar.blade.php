@@ -1,4 +1,4 @@
-<div class="hidden lg:block">
+<div class="hidden lg:block pb-5">
     <aside class="w-60" aria-label="Sidebar">
         <div class="overflow-y-auto space-y-4">
             <ul class="space-y-2 pb-4 border-b border-gray-200 dark:border-white/10">

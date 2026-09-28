@@ -43,7 +43,7 @@
         <meta name="robots" content="noindex">
     @endif
 </head>
-<body class="antialiased bg-gray-50 dark:bg-gray-950 dark:text-white">
+<body class="flex min-h-dvh flex-col antialiased bg-gray-50 dark:bg-gray-950 dark:text-white">
 @if($userNeedsToVerify)
     <div class="relative bg-brand-600">
         <div class="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
@@ -62,11 +62,11 @@
 
 <livewire:header :logo="$logo" :current-project-id="$currentProjectId" />
 
-<div class="flex mx-auto py-5 lg:space-x-10 h-full px-4 sm:px-6 md:px-8 max-w-[1500px]">
+<div class="flex flex-1 w-full mx-auto pt-5 lg:space-x-10 px-4 sm:px-6 md:px-8 max-w-[1500px]">
     @include('partials.navbar')
 
-    {{-- overflow-x-clip (not hidden) keeps overflow-y visible, so card rings at the bottom aren't cut off. The horizontal padding leaves room for card shadows on the sides. --}}
-    <main class="flex-1 h-full lg:border-l border-gray-200 px-1 lg:pl-5 dark:lg:border-white/10 overflow-x-clip">
+    {{-- overflow-x-clip (not hidden) keeps overflow-y visible, so card rings at the bottom aren't cut off. The horizontal and bottom padding leave room for card shadows inside the column. min-w-0 stops wide content (like the board columns) from stretching main, since clip doesn't do that like hidden did. --}}
+    <main class="flex-1 min-w-0 lg:border-l border-gray-200 px-1 pb-5 lg:pl-5 dark:lg:border-white/10 overflow-x-clip">
         <div class="pb-4">
             <ul class="flex items-center space-x-0.5 text-sm font-medium text-gray-600 dark:text-gray-500">
                 @foreach(array_filter($breadcrumbs) as $breadcrumb)
