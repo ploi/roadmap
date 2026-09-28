@@ -18,7 +18,7 @@ class ChangelogFactory extends Factory
     {
         return [
             'title' => $this->faker->words(3, true),
-            'slug' => $this->faker->word,
+            'slug' => $this->faker->unique()->slug(),
             'content' => $this->faker->paragraphs(3, true),
         ];
     }
