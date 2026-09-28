@@ -45,4 +45,14 @@ return [
     'password_placeholder' => 'Enter password',
     'wrong_password' => 'This is the wrong password.',
 
+    'two_factor' => [
+        'title' => 'Two-factor authentication',
+        'challenge_help' => 'Enter the code from your authenticator app to continue.',
+        'recovery_help' => 'Enter one of your recovery codes to continue.',
+        'code' => 'Authentication code',
+        'recovery_code' => 'Recovery code',
+        'use_recovery' => 'Use a recovery code',
+        'use_code' => 'Use an authentication code',
+    ],
+
 ];

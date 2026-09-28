@@ -82,7 +82,7 @@ class BoardResource extends Resource
                           ->label(trans('resources.board.project')),
 
                 TextColumn::make('created_at')
-                    ->label(trans('resources.user.created-at'))
+                    ->label(trans('resources.created-at'))
                     ->dateTime()
                     ->sortable(),
                 ]

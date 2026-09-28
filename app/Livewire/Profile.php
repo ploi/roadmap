@@ -2,10 +2,12 @@
 
 namespace App\Livewire;
 
+use Closure;
 use ResourceBundle;
 use App\Models\User;
 use Livewire\Component;
 use Filament\Actions\Action;
+use Laravel\Fortify\Fortify;
 use Filament\Actions\BulkAction;
 use Filament\Support\Colors\Color;
 use App\SocialProviders\SsoProvider;
@@ -28,6 +30,11 @@ use Illuminate\Database\Eloquent\Collection;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Actions\Concerns\InteractsWithActions;
+use Laravel\Fortify\Actions\GenerateNewRecoveryCodes;
+use Laravel\Fortify\Actions\EnableTwoFactorAuthentication;
+use Laravel\Fortify\Actions\DisableTwoFactorAuthentication;
+use Laravel\Fortify\Events\TwoFactorAuthenticationConfirmed;
+use Laravel\Fortify\Contracts\TwoFactorAuthenticationProvider;
 
 class Profile extends Component implements HasForms, HasTable, HasActions
 {
@@ -233,6 +240,138 @@ class Profile extends Component implements HasForms, HasTable, HasActions
         return redirect()->route('home');
     }
 
+    /**
+     * Begin two-factor enrollment: generate a secret + recovery codes.
+     * The user must then scan the QR code and confirm with a valid code.
+     */
+    public function enableTwoFactorAction(): Action
+    {
+        return Action::make('enableTwoFactor')
+            ->label(trans('profile.two_factor.enable'))
+            ->color(Color::Blue)
+            ->schema([
+                TextInput::make('current_password')
+                    ->label(trans('auth.password'))
+                    ->password()
+                    ->required()
+                    ->rule('current_password'),
+            ])
+            ->action(function () {
+                app(EnableTwoFactorAuthentication::class)($this->user);
+
+                $this->user->refresh();
+
+                Notification::make('two-factor-enabled')
+                    ->title(trans('profile.two_factor.enabled_notification'))
+                    ->success()
+                    ->send();
+            });
+    }
+
+    /**
+     * Confirm enrollment by verifying a code from the authenticator app.
+     */
+    public function confirmTwoFactorAction(): Action
+    {
+        return Action::make('confirmTwoFactor')
+            ->label(trans('profile.two_factor.confirm'))
+            ->color(Color::Blue)
+            ->schema([
+                TextInput::make('code')
+                    ->label(trans('profile.two_factor.code'))
+                    ->required()
+                    ->rule(fn (): Closure => function (string $attribute, $value, Closure $fail) {
+                        if (empty($this->user->two_factor_secret) ||
+                            ! app(TwoFactorAuthenticationProvider::class)->verify(
+                                Fortify::currentEncrypter()->decrypt($this->user->two_factor_secret),
+                                $value
+                            )) {
+                            $fail(trans('profile.two_factor.invalid_code'));
+                        }
+                    }),
+            ])
+            ->action(function () {
+                // The code has already been verified by the field rule above;
+                // verifying again here would trip Fortify's replay protection.
+                $this->user->forceFill(['two_factor_confirmed_at' => now()])->save();
+                $this->user->refresh();
+
+                TwoFactorAuthenticationConfirmed::dispatch($this->user);
+
+                Notification::make('two-factor-confirmed')
+                    ->title(trans('profile.two_factor.confirmed_notification'))
+                    ->success()
+                    ->send();
+            });
+    }
+
+    /**
+     * Cancel an in-progress enrollment that was never confirmed.
+     */
+    public function cancelTwoFactorAction(): Action
+    {
+        return Action::make('cancelTwoFactor')
+            ->label(trans('profile.two_factor.cancel'))
+            ->color(Color::Slate)
+            ->action(function () {
+                app(DisableTwoFactorAuthentication::class)($this->user);
+
+                $this->user->refresh();
+            });
+    }
+
+    /**
+     * Generate a fresh set of recovery codes, invalidating the old ones.
+     */
+    public function regenerateRecoveryCodesAction(): Action
+    {
+        return Action::make('regenerateRecoveryCodes')
+            ->label(trans('profile.two_factor.regenerate_codes'))
+            ->color(Color::Slate)
+            ->requiresConfirmation()
+            ->modalAlignment(Alignment::Left)
+            ->action(function () {
+                app(GenerateNewRecoveryCodes::class)($this->user);
+
+                $this->user->refresh();
+
+                Notification::make('recovery-codes-regenerated')
+                    ->title(trans('profile.two_factor.codes_regenerated_notification'))
+                    ->success()
+                    ->send();
+            });
+    }
+
+    /**
+     * Disable two-factor authentication after confirming the password.
+     */
+    public function disableTwoFactorAction(): Action
+    {
+        return Action::make('disableTwoFactor')
+            ->label(trans('profile.two_factor.disable'))
+            ->color(Color::Red)
+            ->requiresConfirmation()
+            ->modalAlignment(Alignment::Left)
+            ->modalDescription(trans('profile.two_factor.disable_confirmation'))
+            ->schema([
+                TextInput::make('current_password')
+                    ->label(trans('auth.password'))
+                    ->password()
+                    ->required()
+                    ->rule('current_password'),
+            ])
+            ->action(function () {
+                app(DisableTwoFactorAuthentication::class)($this->user);
+
+                $this->user->refresh();
+
+                Notification::make('two-factor-disabled')
+                    ->title(trans('profile.two_factor.disabled_notification'))
+                    ->success()
+                    ->send();
+            });
+    }
+
     public function getLocalesProperty(): array
     {
         $locales = ResourceBundle::getLocales('');
@@ -244,8 +383,18 @@ class Profile extends Component implements HasForms, HasTable, HasActions
 
     public function render()
     {
+        $twoFactorEnabled = ! is_null($this->user->two_factor_secret);
+        $twoFactorConfirmed = ! is_null($this->user->two_factor_confirmed_at);
+
         return view('livewire.profile', [
             'hasSsoLoginAvailable' => SsoProvider::isEnabled(),
+            'twoFactorEnabled' => $twoFactorEnabled,
+            'twoFactorConfirmed' => $twoFactorConfirmed,
+            'twoFactorQrCode' => $twoFactorEnabled ? $this->user->twoFactorQrCodeSvg() : null,
+            'twoFactorSetupKey' => $twoFactorEnabled
+                ? Fortify::currentEncrypter()->decrypt($this->user->two_factor_secret)
+                : null,
+            'recoveryCodes' => $twoFactorConfirmed ? $this->user->recoveryCodes() : [],
         ]);
     }
 

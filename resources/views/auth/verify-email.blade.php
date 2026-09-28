@@ -11,7 +11,7 @@
 
                 @if (session('resent'))
                     <div class="alert-success" role="alert">
-                        {{ trans('auth.verify-new-success.') }}
+                        {{ trans('auth.verify-new-success') }}
                     </div>
                 @endif
 

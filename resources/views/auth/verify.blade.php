@@ -10,7 +10,7 @@
                 <div class="card-body">
                     @if (session('resent'))
                         <div class="alert alert-success" role="alert">
-                            {{ trans('auth.verify-new-success.') }}
+                            {{ trans('auth.verify-new-success') }}
                         </div>
                     @endif
 
