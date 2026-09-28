@@ -70,6 +70,19 @@ class Item extends Model
         )->shouldCache();
     }
 
+    protected function markdownUrl(): Attribute
+    {
+        return Attribute::make(
+            get: function (mixed $value, array $attributes) {
+                if ($this->project) {
+                    return route('projects.items.markdown', [$this->project, $attributes['slug']]);
+                }
+
+                return route('items.markdown', [$attributes['slug']]);
+            },
+        )->shouldCache();
+    }
+
     public function board(): BelongsTo
     {
         return $this->belongsTo(Board::class);

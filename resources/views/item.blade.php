@@ -2,6 +2,9 @@
 @section('image', $item->getOgImage('"' . $item->excerpt .'"', 'Roadmap - Item'))
 @section('description', $item->excerpt)
 @section('canonical', $item->view_url)
+@section('additional_meta')
+    <link rel="alternate" type="text/markdown" href="{{ $item->markdown_url }}" title="{{ $item->title }} (Markdown)">
+@endsection
 
 <x-app :breadcrumbs="$project ? [
     ['title' => $project->title, 'url' => route('projects.show', $project)],
@@ -144,6 +147,11 @@
 {{--                    @endforeach--}}
 {{--                @endif--}}
             </x-card>
+
+            {{-- External assistants can't read items behind a password or private flag, so only offer them for public items. --}}
+            <x-llm-actions :url="$item->markdown_url"
+                           :prompt="trans('items.ask-ai-prompt', ['url' => $item->markdown_url])"
+                           :ask-ai="! $item->isPrivate() && ! $item->project?->private && ! app(\App\Settings\GeneralSettings::class)->password"/>
 
             <div class="relative">
                 <div class="absolute inset-y-0 left-0 h-full ml-4 border-l border-dashed border-gray-300 dark:border-gray-600"></div>

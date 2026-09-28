@@ -7,30 +7,24 @@ use App\Models\Project;
 use App\Enums\ItemActivity;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Http\JsonResponse;
 use App\Settings\GeneralSettings;
-use Symfony\Component\Yaml\Yaml;
 use Illuminate\Http\RedirectResponse;
 use Spatie\Activitylog\Models\Activity;
 use Filament\Notifications\Notification;
 
 class ItemController extends Controller
 {
-    public function show($projectId, $itemId = null)
+    public function show(Request $request, $projectId, $itemId = null)
     {
-        $project = null;
+        if ($request->prefers(['text/html', 'text/markdown']) === 'text/markdown') {
+            return $this->markdown($request, $projectId, $itemId);
+        }
 
-        if (!$itemId) {
-            $item = Item::query()->visibleForCurrentUser()->where('slug', $projectId)->firstOrFail();
+        $item = $this->findItem($projectId, $itemId);
 
-            if ($item->project) {
-                // Looks like this item is added to the project, let's redirect to the correct view for the item.
-                return redirect()->to($item->view_url);
-            }
-        } else {
-            $project = Project::query()->visibleForCurrentUser()->where('slug', $projectId)->firstOrFail();
-
-            $item = $project->items()->visibleForCurrentUser()->where('slug', $itemId)->firstOrFail();
+        if (!$itemId && $item->project) {
+            // Looks like this item is added to the project, let's redirect to the correct view for the item.
+            return redirect()->to($item->view_url);
         }
 
         $showGitHubLink = app(GeneralSettings::class)->show_github_link;
@@ -50,70 +44,86 @@ class ItemController extends Controller
             return $activity;
         });
 
-        return view('item', [
-            'project' => $project,
+        return response()->view('item', [
+            'project' => $item->project,
             'board' => $item->board,
             'item' => $item,
             'user' => $item->user,
             'activities' => $activities,
+        ])->header('Vary', 'Accept');
+    }
+
+    public function markdown(Request $request, $projectId, $itemId = null): Response|RedirectResponse
+    {
+        $item = $this->findItem($projectId, $itemId);
+
+        if (!$itemId && $item->project) {
+            return redirect()->to($item->markdown_url);
+        }
+
+        return response($this->toMarkdown($item, $request->boolean('include.comments')), 200, [
+            'Content-Type' => 'text/markdown; charset=UTF-8',
+            'Vary' => 'Accept',
+            'X-Robots-Tag' => 'noindex',
         ]);
     }
 
-    public function ai(Request $request, $projectSlug, $itemSlug): JsonResponse|Response
+    /**
+     * The old AI endpoint, superseded by the ".md" variant of the item URL.
+     */
+    public function ai(Request $request, $projectSlug, $itemSlug): RedirectResponse
     {
+        return redirect()->route('projects.items.markdown', [
+            'project' => $projectSlug,
+            'item' => $itemSlug,
+            ...$request->only('include'),
+        ], 301);
+    }
+
+    protected function findItem(string $projectSlug, ?string $itemSlug): Item
+    {
+        if (!$itemSlug) {
+            return Item::query()->visibleForCurrentUser()->where('slug', $projectSlug)->firstOrFail();
+        }
+
         $project = Project::query()->visibleForCurrentUser()->where('slug', $projectSlug)->firstOrFail();
-        $item = $project->items()->visibleForCurrentUser()->where('slug', $itemSlug)->firstOrFail();
 
-        $data = [
-            'title' => $item->title,
-            'content' => $item->content,
-            'board' => $item->board?->title,
-            'project' => $project->title,
-            'votes' => $item->total_votes,
-            'tags' => $item->tags->pluck('name')->toArray(),
-        ];
+        return $project->items()->visibleForCurrentUser()->where('slug', $itemSlug)->firstOrFail()->setRelation('project', $project);
+    }
 
-        $includes = $request->query('include', []);
+    protected function toMarkdown(Item $item, bool $includeComments): string
+    {
+        $meta = array_filter([
+            $item->project ? "**Project:** {$item->project->title}" : null,
+            $item->board ? "**Board:** {$item->board->title}" : null,
+            "**Votes:** {$item->total_votes}",
+        ]);
 
-        if (!empty($includes['comments'])) {
-            $data['comments'] = $item->comments()
+        $md = "# {$item->title}\n\n";
+        $md .= implode(' | ', $meta) . "\n";
+
+        if ($item->tags->isNotEmpty()) {
+            $md .= '**Tags:** ' . $item->tags->pluck('name')->implode(', ') . "\n";
+        }
+
+        $md .= "**URL:** {$item->view_url}\n";
+        $md .= "\n---\n\n{$item->content}\n";
+
+        if ($includeComments) {
+            $comments = $item->comments()
                 ->with('user:id,name,username')
                 ->whereNull('parent_id')
                 ->where('private', false)
                 ->oldest()
-                ->get()
-                ->map(fn ($comment) => [
-                    'author' => $comment->user->name ?? $comment->user->username,
-                    'content' => $comment->content,
-                    'created_at' => $comment->created_at->toIso8601String(),
-                ])
-                ->toArray();
-        }
+                ->get();
 
-        return match ($request->query('format', 'json')) {
-            'yml', 'yaml' => response(Yaml::dump($data, 4, 2), 200, ['Content-Type' => 'text/yaml']),
-            'markdown', 'md' => response($this->toMarkdown($data), 200, ['Content-Type' => 'text/markdown']),
-            default => response()->json($data),
-        };
-    }
+            if ($comments->isNotEmpty()) {
+                $md .= "\n---\n\n## Comments\n\n";
 
-    protected function toMarkdown(array $data): string
-    {
-        $md = "# {$data['title']}\n\n";
-        $md .= "**Project:** {$data['project']}";
-        $md .= $data['board'] ? " | **Board:** {$data['board']}" : '';
-        $md .= " | **Votes:** {$data['votes']}\n";
-
-        if (!empty($data['tags'])) {
-            $md .= '**Tags:** ' . implode(', ', $data['tags']) . "\n";
-        }
-
-        $md .= "\n---\n\n{$data['content']}\n";
-
-        if (!empty($data['comments'])) {
-            $md .= "\n---\n\n## Comments\n\n";
-            foreach ($data['comments'] as $comment) {
-                $md .= "**{$comment['author']}** ({$comment['created_at']}):\n{$comment['content']}\n\n";
+                foreach ($comments as $comment) {
+                    $author = $comment->user?->name ?? $comment->user?->username;
+                    $md .= "**{$author}** ({$comment->created_at->toIso8601String()}):\n{$comment->content}\n\n";
+                }
             }
         }
 

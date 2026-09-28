@@ -31,5 +31,12 @@ return [
     'item-private' => 'Dit item is privé',
     'update-board-success' => 'Het item is succesvol verplaats naar het bord :board',
     'view-on-github' => 'Bekijk issue op GitHub',
-    'search-shortcut' => 'CMD + K om te zoeken'
+    'search-shortcut' => 'CMD + K om te zoeken',
+    'copy-for-llms' => 'Kopieer voor LLMs',
+    'copy-for-llms-label' => 'Kopieer dit item als markdown voor een AI-assistent',
+    'copied' => 'Gekopieerd',
+    'copied-to-clipboard' => 'Gekopieerd naar klembord',
+    'view-as-markdown' => 'Markdown',
+    'ask-ai' => 'Vraag AI',
+    'ask-ai-prompt' => 'Lees :url en beantwoord mijn vragen over dit roadmap-item.',
 ];

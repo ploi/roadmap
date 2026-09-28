@@ -43,6 +43,9 @@ Route::get('changelog', [ChangelogController::class, 'index'])->name('changelog'
 Route::get('changelog/{changelog}', [ChangelogController::class, 'show'])->name('changelog.show');
 
 Route::get('projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+// The markdown routes must be registered before the show routes, otherwise "{item}" swallows the ".md" suffix.
+Route::get('items/{item}.md', [ItemController::class, 'markdown'])->name('items.markdown');
+Route::get('projects/{project}/items/{item}.md', [ItemController::class, 'markdown'])->name('projects.items.markdown');
 Route::get('items/{item}', [ItemController::class, 'show'])->name('items.show');
 Route::get('items/{item}/edit', [ItemController::class, 'edit'])->middleware('authed')->name('items.edit');
 Route::get('projects/{project}/items/{item}', [ItemController::class, 'show'])->name('projects.items.show');
