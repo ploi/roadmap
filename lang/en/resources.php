@@ -33,6 +33,7 @@ return [
         'content'       => 'Content',
         'published'     => 'Published',
         'is-published'  => 'Is published',
+        'project'       => 'Project',
     ],
     'comment'     => [
         'label'               => 'Comment',

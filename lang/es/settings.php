@@ -67,6 +67,7 @@ return [
         'type-helper-text'              => 'Esto determinará qué se mostrará.',
         'recent-items'                  => 'Últimos elementos',
         'recent-comments'               => 'Últimos comentarios',
+        'recent-changelogs'             => 'Últimos changelogs',
         'column-span'                   => 'Amplitud de columna',
         'column-span-helper-text'       => 'Esto determinará cuántas columnas abarcará el elemento.',
         'must-have-project'             => 'Debe tener proyecto',

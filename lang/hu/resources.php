@@ -33,6 +33,7 @@ return [
         'content'       => 'Tartalom',
         'published'     => 'Közzétéve',
         'is-published'  => 'Közzétéve?',
+        'project'       => 'Projekt',
     ],
     'comment'     => [
         'label'               => 'Hozzászólás',

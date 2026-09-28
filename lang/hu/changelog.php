@@ -5,12 +5,16 @@ return [
     'all-caught-up-title' => 'Még nincs itt semmi',
     'all-caught-up-description' => 'Ehhez a változáslistához még nem adtunk hozzá módosításokat',
     'included-items' => 'Tartalmazott elemek',
-    'view-item' => 'Megtekintés',
+    'read-more' => 'Tovább',
+    'newer-changes' => 'Újabb változások',
+    'older-changes' => 'Korábbi változások',
+    'loading' => 'Betöltés…',
+    'filter' => [
+        'all' => 'Összes',
+        'without-project' => 'Általános',
+    ],
     'votes' => [
-        'liked-by' => 'Kedvelte',
-        'no-likes' => 'Még nincs kedvelés',
-        'like' => 'Kedveld',
-        'remove-like' => 'Kedvelés visszavonása',
+        'total-likes' => '{0} Még nincs kedvelés|{1} 1 kedvelés|[2,*] :likes kedvelés',
         'login' => 'Jelentkezz be a kedveléshez',
     ]
 ];

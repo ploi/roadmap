@@ -33,6 +33,7 @@ return [
         'content'       => 'Inhoud',
         'published'     => 'Gepubliceerd',
         'is-published'  => 'Is gepubliceerd',
+        'project'       => 'Project',
     ],
     'comment'     => [
         'label'               => 'Reactie',

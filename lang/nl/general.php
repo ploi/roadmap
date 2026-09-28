@@ -6,6 +6,7 @@ return [
 
     'recent-items' => 'Recente items',
     'recent-comments' => 'Recent opmerkingen',
+    'recent-changelogs' => 'Recente changelogs',
     'leaderboard' => 'Ranglijst',
     'statistics' => 'Statistieken',
     'top-voters' => 'Meest actieve stemmers',

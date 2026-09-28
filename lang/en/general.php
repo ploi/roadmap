@@ -6,6 +6,7 @@ return [
 
     'recent-items' => 'Recent items',
     'recent-comments' => 'Recent comments',
+    'recent-changelogs' => 'Recent changelogs',
     'leaderboard' => 'Leaderboard',
     'statistics' => 'Statistics',
     'top-voters' => 'Top Voters',

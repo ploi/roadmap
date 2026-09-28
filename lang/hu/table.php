@@ -15,4 +15,5 @@ return [
     'last_comment_posted_at' => 'Utolsó hozzászólás ekkor',
     'activity' => 'Aktivitás',
     'date' => 'Dátum',
+    'published_at' => 'Közzétéve',
 ];

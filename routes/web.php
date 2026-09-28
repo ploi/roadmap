@@ -40,7 +40,7 @@ Route::get('/activity-widget.js', [WidgetController::class, 'activityJavascript'
 Route::get('/', \App\Http\Controllers\HomeController::class)->name('home');
 
 Route::get('changelog', [ChangelogController::class, 'index'])->name('changelog');
-Route::get('changelog/{changelog}', [ChangelogController::class, 'show'])->name('changelog.show');
+Route::get('changelog/{slug}', [ChangelogController::class, 'show'])->name('changelog.show');
 
 Route::get('projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
 // The markdown routes must be registered before the show routes, otherwise "{item}" swallows the ".md" suffix.
