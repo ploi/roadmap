@@ -56,3 +56,18 @@ it('makes the locale fields searchable', function () {
         ->assertFormFieldExists('locale', fn (Select $field): bool => $field->isSearchable())
         ->assertFormFieldExists('date_locale', fn (Select $field): bool => $field->isSearchable());
 });
+
+it('renders action modals outside the social login table in its hidden tab', function () {
+    config([
+        'services.sso.url' => 'https://sso.example.com',
+        'services.sso.client_id' => 'client-id',
+        'services.sso.client_secret' => 'client-secret',
+        'services.sso.redirect' => 'https://roadmap.test/oauth/callback',
+    ]);
+
+    createAndLoginUser();
+
+    // Filament only renders the first modals container on the page, so it must come before the table's own one.
+    Livewire::test(Profile::class)
+        ->assertSeeHtmlInOrder(['filamentActionModals', 'filamentTable']);
+});
