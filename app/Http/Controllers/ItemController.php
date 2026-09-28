@@ -17,7 +17,7 @@ class ItemController extends Controller
     public function show(Request $request, $projectId, $itemId = null)
     {
         if ($request->prefers(['text/html', 'text/markdown']) === 'text/markdown') {
-            return $this->markdown($request, $projectId, $itemId);
+            return $this->markdown($projectId, $itemId);
         }
 
         $item = $this->findItem($projectId, $itemId);
@@ -53,7 +53,7 @@ class ItemController extends Controller
         ])->header('Vary', 'Accept');
     }
 
-    public function markdown(Request $request, $projectId, $itemId = null): Response|RedirectResponse
+    public function markdown($projectId, $itemId = null): Response|RedirectResponse
     {
         $item = $this->findItem($projectId, $itemId);
 
@@ -61,7 +61,7 @@ class ItemController extends Controller
             return redirect()->to($item->markdown_url);
         }
 
-        return response($this->toMarkdown($item, $request->boolean('include.comments')), 200, [
+        return response($this->toMarkdown($item), 200, [
             'Content-Type' => 'text/markdown; charset=UTF-8',
             'Vary' => 'Accept',
             'X-Robots-Tag' => 'noindex',
@@ -71,12 +71,11 @@ class ItemController extends Controller
     /**
      * The old AI endpoint, superseded by the ".md" variant of the item URL.
      */
-    public function ai(Request $request, $projectSlug, $itemSlug): RedirectResponse
+    public function ai($projectSlug, $itemSlug): RedirectResponse
     {
         return redirect()->route('projects.items.markdown', [
             'project' => $projectSlug,
             'item' => $itemSlug,
-            ...$request->only('include'),
         ], 301);
     }
 
@@ -91,7 +90,7 @@ class ItemController extends Controller
         return $project->items()->visibleForCurrentUser()->where('slug', $itemSlug)->firstOrFail()->setRelation('project', $project);
     }
 
-    protected function toMarkdown(Item $item, bool $includeComments): string
+    protected function toMarkdown(Item $item): string
     {
         $meta = array_filter([
             $item->project ? "**Project:** {$item->project->title}" : null,
@@ -109,21 +108,19 @@ class ItemController extends Controller
         $md .= "**URL:** {$item->view_url}\n";
         $md .= "\n---\n\n{$item->content}\n";
 
-        if ($includeComments) {
-            $comments = $item->comments()
-                ->with('user:id,name,username')
-                ->whereNull('parent_id')
-                ->where('private', false)
-                ->oldest()
-                ->get();
+        $comments = $item->comments()
+            ->with('user:id,name,username')
+            ->whereNull('parent_id')
+            ->where('private', false)
+            ->oldest()
+            ->get();
 
-            if ($comments->isNotEmpty()) {
-                $md .= "\n---\n\n## Comments\n\n";
+        if ($comments->isNotEmpty()) {
+            $md .= "\n---\n\n## Comments\n\n";
 
-                foreach ($comments as $comment) {
-                    $author = $comment->user?->name ?? $comment->user?->username;
-                    $md .= "**{$author}** ({$comment->created_at->toIso8601String()}):\n{$comment->content}\n\n";
-                }
+            foreach ($comments as $comment) {
+                $author = $comment->user?->name ?? $comment->user?->username;
+                $md .= "**{$author}** ({$comment->created_at->toIso8601String()}):\n{$comment->content}\n\n";
             }
         }
 

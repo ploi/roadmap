@@ -74,8 +74,8 @@ test('it redirects the project-less .md url to the project .md url when the item
         ->assertRedirect($this->item->markdown_url);
 });
 
-test('it excludes comments by default', function () {
-    Comment::factory()->create([
+test('it includes public comments', function () {
+    $comment = Comment::factory()->create([
         'item_id' => $this->item->id,
         'user_id' => $this->user->id,
         'private' => false,
@@ -83,37 +83,23 @@ test('it excludes comments by default', function () {
 
     $response = $this->get($this->item->markdown_url)->assertOk();
 
-    expect($response->getContent())->not->toContain('## Comments');
-});
-
-test('it includes public comments when requested via include[comments]=1', function () {
-    $comment = Comment::factory()->create([
-        'item_id' => $this->item->id,
-        'user_id' => $this->user->id,
-        'private' => false,
-    ]);
-
-    $response = $this->get($this->item->markdown_url . '?include[comments]=1')->assertOk();
-
     expect($response->getContent())
         ->toContain('## Comments')
         ->toContain($comment->content);
 });
 
-test('it ignores a malformed include query', function () {
-    $this->get($this->item->markdown_url . '?include=comments')->assertOk();
-});
-
-test('it excludes private comments even when comments are included', function () {
+test('it excludes private comments', function () {
     $comment = Comment::factory()->create([
         'item_id' => $this->item->id,
         'user_id' => $this->user->id,
         'private' => true,
     ]);
 
-    $response = $this->get($this->item->markdown_url . '?include[comments]=1')->assertOk();
+    $response = $this->get($this->item->markdown_url)->assertOk();
 
-    expect($response->getContent())->not->toContain($comment->content);
+    expect($response->getContent())
+        ->not->toContain('## Comments')
+        ->not->toContain($comment->content);
 });
 
 test('it returns 404 for private items', function () {
@@ -132,19 +118,6 @@ test('the old ai endpoint permanently redirects to the .md url', function () {
     $this->get(route('projects.items.ai', [$this->project->slug, $this->item->slug]))
         ->assertStatus(301)
         ->assertRedirect($this->item->markdown_url);
-});
-
-test('the old ai endpoint keeps the include query when redirecting', function () {
-    $this->get(route('projects.items.ai', [
-        'project' => $this->project->slug,
-        'item' => $this->item->slug,
-        'format' => 'json',
-        'include' => ['comments' => 1],
-    ]))->assertRedirect(route('projects.items.markdown', [
-        'project' => $this->project->slug,
-        'item' => $this->item->slug,
-        'include' => ['comments' => 1],
-    ]));
 });
 
 test('it hides the ask ai menu for private items', function () {
