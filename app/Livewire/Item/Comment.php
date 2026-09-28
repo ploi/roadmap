@@ -2,13 +2,12 @@
 
 namespace App\Livewire\Item;
 
-use App\Models\Item;
-use App\Models\Comment as CommentModel;
 use Livewire\Component;
 use Filament\Actions\Action;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Alignment;
 use Filament\Forms\Contracts\HasForms;
+use App\Models\Comment as CommentModel;
 use App\View\Components\MarkdownEditor;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
