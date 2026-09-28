@@ -4,6 +4,7 @@ return [
     'comment' => 'Commento',
     'public-comment' => 'Commento pubblico',
     'private-note' => 'Nota privata',
+    'private-reply-hint' => 'Questa risposta sarà una nota privata, visibile solo agli amministratori.',
     'item-author' => 'Autore dell\'elemento',
     'click-to-copy' => 'Clicca per copiare il link a questo commento',
     'mention-helper-text' => 'Puoi usare @ per menzionare qualcuno.',

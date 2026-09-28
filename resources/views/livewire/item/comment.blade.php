@@ -1,6 +1,5 @@
 <div
     @class([
-        'bg-brand-50 dark:bg-brand-900/30 rounded-lg ring-1 ring-brand-200 dark:ring-brand-800 -mx-3 px-3 -my-2 py-2' => $reply == $comment->id,
         'bg-warning-50/60 dark:bg-warning-500/5 rounded-lg ring-1 ring-warning-200 dark:ring-warning-500/20 -mx-3 px-3 -my-2 py-2' => $comment->private && !$comment->parent?->private,
         'transition',
     ])
@@ -62,7 +61,7 @@
                         <span>&centerdot;</span>
                     @endif
                     @if(!$item->board?->block_comments)
-                        {{ ($this->replyAction)(['comment' => $comment->id]) }}
+                        {{ $this->replyAction }}
                         <span>&centerdot;</span>
                     @endif
                     @if(auth()->user()?->hasAdminAccess())
@@ -87,22 +86,44 @@
                 {!! str($comment->content)->markdown()->sanitizeHtml() !!}
             </div>
 
-            @if($reply == $comment->id)
-                <form wire:submit="submit" class="space-y-4 mt-4">
-                    {{ $this->form }}
+            <div class="mt-2">
+                <livewire:item.vote-button :model="$comment" :hideSubscribeOption="true" :compact="true"/>
+            </div>
 
-                    <x-filament::button wire:click="submit">
-                        {{ trans('comments.submit') }}
-                    </x-filament::button>
+            @if($isReplying)
+                <form wire:submit="submitReply"
+                      x-data
+                      x-init="
+                          $dispatch('comment-reply-opened', { id: {{ $comment->id }} });
+                          $nextTick(() => $el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }))
+                      "
+                      x-on:comment-reply-opened.window="if ($event.detail.id !== {{ $comment->id }}) $wire.cancelReply()"
+                      @class([
+                          'mt-3 rounded-xl ring-1 overflow-hidden',
+                          'ring-warning-200 bg-warning-50/60 dark:ring-warning-500/20 dark:bg-warning-500/5' => $comment->private,
+                          'ring-gray-200 dark:ring-gray-700' => ! $comment->private,
+                      ])>
+                    @if($comment->private)
+                        <div class="flex items-center gap-2 px-4 py-2 text-xs font-medium text-warning-800 border-b border-warning-200 dark:text-warning-300 dark:border-warning-500/20">
+                            <x-heroicon-s-lock-closed class="w-3.5 h-3.5 shrink-0"/>
+                            {{ trans('comments.private-reply-hint') }}
+                        </div>
+                    @endif
 
-                    <a wire:click="reply()" class="text-xs font-medium text-gray-500 ml-3 cursor-pointer">
-                        {{ trans('comments.cancel') }}
-                    </a>
+                    <div class="p-4">
+                        {{ $this->form }}
+                    </div>
+
+                    <footer class="flex justify-end gap-2 px-4 py-3 border-t border-gray-200 dark:border-gray-700">
+                        <x-filament::button color="gray" wire:click="cancelReply">
+                            {{ trans('comments.cancel') }}
+                        </x-filament::button>
+
+                        <x-filament::button type="submit">
+                            {{ trans('comments.reply') }}
+                        </x-filament::button>
+                    </footer>
                 </form>
-            @else
-                <div class="mt-2">
-                    <livewire:item.vote-button :model="$comment" :hideSubscribeOption="true" :compact="true"/>
-                </div>
             @endif
         </div>
     </div>
@@ -114,7 +135,6 @@
                     :comments="$comments"
                     :comment="$replyComment"
                     :item="$item"
-                    :reply="$reply"
                     key="comment-{{ $comment->id }}-{{ $replyComment->id }}"
                 />
             @endforeach

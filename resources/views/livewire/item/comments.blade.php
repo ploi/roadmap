@@ -7,14 +7,13 @@
                         :comments="$comments"
                         :comment="$comment"
                         :item="$item"
-                        :reply="$reply"
                         key="comment-{{ $comment->id }}" />
                 </div>
             @endforeach
         </div>
     @endif
 
-    @if($reply === null && !$item->board?->block_comments)
+    @if(!$item->board?->block_comments)
         @if(auth()->check() && auth()->user()->hasVerifiedEmail())
             <form wire:submit="submit" class="bg-white shadow rounded-xl dark:bg-gray-900 overflow-hidden">
                 <div @class(['p-6' => !auth()->user()->hasAdminAccess()])>

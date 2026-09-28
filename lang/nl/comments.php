@@ -4,6 +4,7 @@ return [
     'comment' => 'Opmerking',
     'public-comment' => 'Openbare opmerking',
     'private-note' => 'Privé notitie',
+    'private-reply-hint' => 'Deze reactie wordt een privé notitie, alleen zichtbaar voor beheerders.',
     'item-author' => 'Item auteur',
     'click-to-copy' => 'Klik om link naar deze opmerking te kopiëren',
     'mention-helper-text' => 'Je kunt @ gebruiken om iemand te noemen.',
