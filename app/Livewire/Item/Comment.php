@@ -3,12 +3,12 @@
 namespace App\Livewire\Item;
 
 use Livewire\Component;
-use App\Rules\ProfanityCheck;
-use Illuminate\Support\Collection;
 use Filament\Actions\Action;
+use App\Rules\ProfanityCheck;
 use App\Settings\GeneralSettings;
-use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Width;
+use Filament\Support\Colors\Color;
+use Illuminate\Support\Collection;
 use Filament\Forms\Contracts\HasForms;
 use App\Models\Comment as CommentModel;
 use App\View\Components\MarkdownEditor;
