@@ -76,25 +76,31 @@ class Comments extends Component implements HasForms, HasActions
 
             return [
                 Tabs::make('')->tabs([
-                    Tab::make(trans('comments.comment'))->schema([
+                    Tab::make(trans('comments.public-comment'))->schema([
                         MarkdownEditor::make('content')
-                            ->label(trans('comments.comment'))
+                            ->label(trans('comments.public-comment'))
+                            ->hiddenLabel()
                             ->helperText(trans('comments.mention-helper-text'))
                             ->minLength(3)
                             ->rules(['required_if:private_content,null,""', 'prohibited_unless:private_content,null,""', new ProfanityCheck()]),
                     ])
+                        ->icon('heroicon-o-globe-alt')
                         ->hidden($reply?->private ?? false)
                         ->id("public-{$this->reply}"),
 
                     Tab::make(trans('comments.private-note'))->schema([
                         MarkdownEditor::make('private_content')
                             ->label(trans('comments.private-note'))
+                            ->hiddenLabel()
                             ->helperText(trans('comments.mention-helper-text'))
                             ->minLength(3)
                             ->visible(auth()->check() && auth()->user()->hasAdminAccess())
                             ->rules(['required_if:content,null,""', 'prohibited_unless:content,null,""', new ProfanityCheck()]),
-                    ])->extraAttributes(['class' => 'bg-yellow-50 rounded-xl'])->id("private-{$this->reply}"),
-                ]),
+                    ])
+                        ->icon('heroicon-o-lock-closed')
+                        ->extraAttributes(['class' => 'comment-tab-private'])
+                        ->id("private-{$this->reply}"),
+                ])->extraAttributes(['class' => 'comment-tabs']),
             ];
         }
 

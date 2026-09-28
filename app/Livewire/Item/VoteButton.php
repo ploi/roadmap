@@ -15,6 +15,7 @@ class VoteButton extends Component
     public Collection $recentVoters;
     public int $recentVotersToShow = 5;
     public bool $showSubscribeOption;
+    public bool $compact = false;
 
     public function mount(bool $hideSubscribeOption = false)
     {

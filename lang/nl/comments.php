@@ -2,6 +2,7 @@
 
 return [
     'comment' => 'Opmerking',
+    'public-comment' => 'Openbare opmerking',
     'private-note' => 'Privé notitie',
     'item-author' => 'Item auteur',
     'click-to-copy' => 'Klik om link naar deze opmerking te kopiëren',

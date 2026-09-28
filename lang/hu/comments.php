@@ -2,6 +2,7 @@
 
 return [
     'comment' => 'Hozzászólás',
+    'public-comment' => 'Nyilvános hozzászólás',
     'private-note' => 'Személyes megjegyzés',
     'item-author' => 'Bejegyzés szerzője',
     'click-to-copy' => 'Kattints ide a hozzászólás linkjének másolásához',

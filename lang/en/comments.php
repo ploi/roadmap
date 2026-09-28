@@ -2,6 +2,7 @@
 
 return [
     'comment' => 'Comment',
+    'public-comment' => 'Public comment',
     'private-note' => 'Private note',
     'item-author' => 'Item author',
     'click-to-copy' => 'Click to copy link to this comment',

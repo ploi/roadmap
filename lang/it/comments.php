@@ -2,6 +2,7 @@
 
 return [
     'comment' => 'Commento',
+    'public-comment' => 'Commento pubblico',
     'private-note' => 'Nota privata',
     'item-author' => 'Autore dell\'elemento',
     'click-to-copy' => 'Clicca per copiare il link a questo commento',
