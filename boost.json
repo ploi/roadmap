@@ -12,6 +12,7 @@
     "sail": false,
     "skills": [
         "infer-conventions",
+        "fortify-development",
         "laravel-best-practices",
         "octane-development",
         "socialite-development",
