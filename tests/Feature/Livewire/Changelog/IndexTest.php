@@ -3,24 +3,34 @@
 use Livewire\Livewire;
 use App\Models\Project;
 use App\Models\Changelog;
-use App\Livewire\Changelog\Index;
 use App\Settings\GeneralSettings;
+use App\Livewire\Changelog\Index;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 
-test('changelog shows the connected project with a link to it', function () {
+test('changelog shows the connected project with a link to its changelog', function () {
     $project = Project::factory()->create(['title' => 'Connected project']);
     Changelog::factory()->published()->for(createUser())->for($project)->create();
 
     Livewire::test(Index::class)
         ->assertSeeText('Connected project')
-        ->assertSee(route('projects.show', $project), false);
+        ->assertSee(route('changelog.show', $project), false);
 });
 
 test('changelog without a connected project does not link to a project', function () {
+    $project = Project::factory()->create();
     Changelog::factory()->published()->for(createUser())->create();
 
     Livewire::test(Index::class)
-        ->assertDontSee('/projects/', false);
+        ->assertDontSee(route('changelog.show', $project), false);
+});
+
+test('changelog links the author to their public profile when authors are shown', function () {
+    GeneralSettings::fake(['show_changelog_author' => true]);
+    $author = createUser();
+    Changelog::factory()->published()->for($author)->create();
+
+    Livewire::test(Index::class)
+        ->assertSee(route('public-user', $author->username), false);
 });
 
 test('changelog hides a connected private project from non-members', function () {
