@@ -23,4 +23,10 @@ return [
     'settings' => 'Beállítások',
     'hide-from-leaderboard' => 'Elrejtés a ranglistáról',
     'hide-from-leaderboard-helper' => 'Eltüntet téged a nyilvános ranglistáról.',
+
+    'tabs' => [
+        'account' => 'Fiók',
+        'preferences' => 'Beállítások',
+        'security' => 'Biztonság',
+    ],
 ];

@@ -24,4 +24,10 @@ return [
     'hide-from-leaderboard' => 'Verbergen op ranglijst',
     'hide-from-leaderboard-helper' => 'Verberg jezelf op de publieke ranglijst.',
     'view-public-profile' => 'Bekijk publieke profiel',
+
+    'tabs' => [
+        'account' => 'Account',
+        'preferences' => 'Voorkeuren',
+        'security' => 'Beveiliging',
+    ],
 ];
