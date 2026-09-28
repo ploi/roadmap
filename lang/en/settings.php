@@ -88,6 +88,8 @@ return [
         'show-related-items-helper-text' => 'This will show the related items of the changelog item.',
         'show-likes'                      => 'Enable likes',
         'show-likes-helper-text'          => 'This will enable users to like the changelog items.',
+        'group-by-month'                  => 'Group by month',
+        'group-by-month-helper-text'      => 'This will group the changelog items by month instead of by day.',
     ],
     'mcp-title'                   => 'MCP',
     'mcp'                         => [

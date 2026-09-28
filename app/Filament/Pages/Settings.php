@@ -336,6 +336,12 @@ class Settings extends SettingsPage
                                 ->helperText(trans('settings.changelog.show-likes-helper-text'))
                                 ->visible(fn ($get) => $get('enable_changelog'))
                                 ->columnSpan(2),
+
+                            Toggle::make('group_changelog_by_month')
+                                ->label(trans('settings.changelog.group-by-month'))
+                                ->helperText(trans('settings.changelog.group-by-month-helper-text'))
+                                ->visible(fn ($get) => $get('enable_changelog'))
+                                ->columnSpan(2),
                             ]
                         ),
 

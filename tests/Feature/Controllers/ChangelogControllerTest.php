@@ -4,9 +4,9 @@ use App\Models\Tag;
 use App\Models\Item;
 use App\Models\Project;
 use App\Models\Changelog;
+use function Pest\Laravel\get;
 use App\Livewire\Changelog\Vote;
 use App\Livewire\Changelog\Index;
-use function Pest\Laravel\get;
 use App\Settings\GeneralSettings;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 

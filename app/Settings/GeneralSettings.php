@@ -30,6 +30,7 @@ class GeneralSettings extends Settings
     public bool $show_changelog_author;
     public bool $show_changelog_related_items;
     public bool $show_changelog_like;
+    public bool $group_changelog_by_month;
     public bool $disable_file_uploads;
     public bool $disable_user_registration;
     public array $excluded_matching_search_words;

@@ -85,6 +85,8 @@ return [
         'show-related-items-helper-text' => 'Mostra gli elementi correlati nella voce del registro modifiche.',
         'show-likes'                     => 'Attiva “mi piace”',
         'show-likes-helper-text'         => 'Permette agli utenti di mettere “mi piace” alle voci del registro modifiche.',
+        'group-by-month'                 => 'Raggruppa per mese',
+        'group-by-month-helper-text'     => 'Raggruppa le voci del registro modifiche per mese anziché per giorno.',
     ],
     'notifications-title'         => 'Notifiche',
     'notifications-helper-text'   => 'Invia notifiche quando viene creato un nuovo elemento o rilasciata una nuova versione del software roadmap.',
