@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Item;
-use App\Models\User;
 use App\Models\Board;
 use App\Models\Comment;
 use App\Models\Project;

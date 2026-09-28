@@ -102,6 +102,8 @@ return [
         'slug'         => 'Slug',
         'slug-helper-text' => 'Leave blank to generate one automatically',
         'icon'         => 'Icon',
+        'icon-image' => 'Custom icon',
+        'icon-image-helper-text' => 'Upload a PNG or SVG to show in the sidebar instead of the selected icon.',
         'private'      => 'Private',
         'private-helper-text' => 'This will make the project private. Only the employees and administrators can see this project.',
         'collapsible'  => 'Collapsible',

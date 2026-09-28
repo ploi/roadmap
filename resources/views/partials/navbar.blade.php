@@ -110,7 +110,7 @@
                                             request()->segment(2) !== $project->slug,
                                     ])
                                         href="{{ route('projects.show', $project) }}">
-                                        <x-dynamic-component :component="$project->icon ?? 'heroicon-o-hashtag'" @class([
+                                        <x-project-icon :project="$project" @class([
                                             'shrink-0 w-5 h-5',
                                             'text-gray-500' => request()->segment(2) != $project->slug,
                                         ]) />
@@ -227,7 +227,7 @@
                                                     @if ($project->private)
                                                     <x-heroicon-s-lock-closed @class([ 'w-4 h-4 mr-2', 'text-gray-500 mr-2' => request()->segment(2) != $project->slug ])/>
                                                         @else
-                                                    <x-dynamic-component :component="$project->icon ?? 'heroicon-o-hashtag'"
+                                                    <x-project-icon :project="$project"
                                                         @class([
                                                             'shrink-0 w-5 h-5',
                                                             'text-gray-500 mr-2' => request()->segment(2) != $project->slug,
