@@ -118,7 +118,9 @@
 
                 <div class="border-t border-gray-200 dark:border-gray-700"></div>
 
-                <livewire:item.vote-button :model="$item"/>
+                <div class="px-1">
+                    <livewire:item.vote-button :model="$item"/>
+                </div>
 
                 @if(auth()->check() && $user && $user->is(auth()->user()))
                     <div class="border-t border-gray-200 dark:border-gray-700 mb-2"></div>
