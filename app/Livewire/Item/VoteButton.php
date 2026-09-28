@@ -15,6 +15,7 @@ class VoteButton extends Component
     public Collection $recentVoters;
     public int $recentVotersToShow = 5;
     public bool $showSubscribeOption;
+    public bool $compact = false;
 
     public function mount(bool $hideSubscribeOption = false)
     {
@@ -24,21 +25,33 @@ class VoteButton extends Component
     public function toggleUpvote()
     {
         $this->model->toggleUpvote();
-        $this->model = $this->model->refresh();
+        $this->refreshModel();
     }
 
     public function unsubscribe()
     {
         $this->vote->update(['subscribed' => false]);
 
-        $this->model = $this->model->refresh();
+        $this->refreshModel();
     }
 
     public function subscribe()
     {
         $this->vote->update(['subscribed' => true]);
 
+        $this->refreshModel();
+    }
+
+    /**
+     * Comments come with their votes (and voters) eager loaded; keep it that way after a change.
+     */
+    private function refreshModel(): void
+    {
         $this->model = $this->model->refresh();
+
+        if ($this->model->relationLoaded('votes')) {
+            $this->model->loadMissing('votes.user');
+        }
     }
 
     public function render(): View

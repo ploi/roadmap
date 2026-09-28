@@ -14,12 +14,14 @@ use App\Settings\GeneralSettings;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\Projects\Pages\EditProject;
 use App\Filament\Resources\Projects\Pages\ListProjects;
@@ -64,31 +66,45 @@ class ProjectResource extends Resource
                     ->columns()
                     ->columnSpanFull()
                     ->schema([
-                        TextInput::make('title')
-                            ->label(trans('resources.project.title'))
+                        Group::make()
                             ->columnSpan(1)
-                            ->required()
-                            ->maxLength(255),
+                            ->schema([
+                                TextInput::make('title')
+                                    ->label(trans('resources.project.title'))
+                                    ->required()
+                                    ->maxLength(255),
 // For now, we're not using this..
 //                    Forms\Components\TextInput::make('url')
 //                        ->columnSpan(1)
 //                        ->maxLength(255),
-                        TextInput::make('group')
-                            ->label(trans('resources.project.group'))
-                            ->helperText(trans('resources.project.group-helper-text'))
-                            ->columnSpan(1)
-                            ->maxLength(255),
+                                TextInput::make('group')
+                                    ->label(trans('resources.project.group'))
+                                    ->helperText(trans('resources.project.group-helper-text'))
+                                    ->maxLength(255),
 
-                        TextInput::make('slug')
-                            ->label(trans('resources.project.slug'))
-                            ->helperText(trans('resources.project.slug-helper-text'))
-                            ->columnSpan(1)
-                            ->maxLength(255),
+                                TextInput::make('slug')
+                                    ->label(trans('resources.project.slug'))
+                                    ->helperText(trans('resources.project.slug-helper-text'))
+                                    ->maxLength(255),
+                            ]),
 
-                        Select::make('icon')
-                            ->label(trans('resources.project.icon'))
-                            ->options(Icons::all())
-                            ->searchable(),
+                        Group::make()
+                            ->columnSpan(1)
+                            ->schema([
+                                Select::make('icon')
+                                    ->label(trans('resources.project.icon'))
+                                    ->options(Icons::all())
+                                    ->searchable(),
+
+                                FileUpload::make('icon_image')
+                                    ->label(trans('resources.project.icon-image'))
+                                    ->helperText(trans('resources.project.icon-image-helper-text'))
+                                    ->acceptedFileTypes(['image/png', 'image/svg+xml'])
+                                    ->disk('public')
+                                    ->directory('project-icons')
+                                    ->visibility('public')
+                                    ->maxSize(1024),
+                            ]),
 
                         Toggle::make('private')
                             ->label(trans('resources.project.private'))

@@ -1,4 +1,42 @@
 <div>
+    @if($compact)
+    <div class="flex items-center gap-2">
+        <button type="button"
+                wire:click="toggleUpvote"
+                @disabled($model->board?->block_votes)
+                x-data
+                x-tooltip.raw="{{ trans_choice('messages.total-votes', $model->total_votes, ['votes' => $model->total_votes]) }}"
+                aria-label="{{ trans_choice('messages.total-votes', $model->total_votes, ['votes' => $model->total_votes]) }}"
+                @class([
+                    'inline-flex items-center gap-1.5 h-7 px-2.5 rounded-full text-xs font-medium ring-1 transition disabled:opacity-50 disabled:cursor-not-allowed',
+                    'bg-brand-50 text-brand-700 ring-brand-200 hover:bg-brand-100 dark:bg-brand-500/10 dark:text-brand-300 dark:ring-brand-500/30' => $vote,
+                    'text-gray-600 ring-gray-200 hover:bg-gray-50 dark:text-gray-300 dark:ring-gray-700 dark:hover:bg-gray-800' => ! $vote,
+                ])>
+            @if($vote)
+                <x-heroicon-s-hand-thumb-up class="w-4 h-4"/>
+            @else
+                <x-heroicon-o-hand-thumb-up class="w-4 h-4"/>
+            @endif
+            <span>{{ $model->total_votes }}</span>
+        </button>
+
+        @if(app(\App\Settings\GeneralSettings::class)->show_voter_avatars && $this->recentVoters->count() > 0)
+            <div class="flex -space-x-1.5">
+                @foreach($this->recentVoters as $voter)
+                    <a href="{{ route('public-user', $voter['username']) }}">
+                        <img src="{{ $voter['avatar'] }}"
+                             class="inline object-cover w-6 h-6 border-2 border-white rounded-full dark:border-gray-900"
+                             alt="{{ $voter['name'] }}" x-data x-tooltip.raw="{{ $voter['name'] }}">
+                    </a>
+                @endforeach
+            </div>
+
+            @if($this->model->votes->count() > $this->recentVotersToShow)
+                <span class="text-xs font-medium text-gray-500 dark:text-gray-400">+{{ $this->model->votes->count() - $this->recentVotersToShow }}</span>
+            @endif
+        @endif
+    </div>
+    @else
     <div class="flex items-center space-x-4 p-1">
         @if($model->board?->block_votes)
             <x-filament::button
@@ -62,4 +100,5 @@
             @endif
         @endif
     </div>
+    @endif
 </div>

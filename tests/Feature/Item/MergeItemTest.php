@@ -1,11 +1,11 @@
 <?php
 
 use App\Models\Item;
-use App\Models\Board;
-use App\Models\Project;
-use App\Enums\UserRole;
 use App\Models\User;
+use App\Models\Board;
 use Livewire\Livewire;
+use App\Enums\UserRole;
+use App\Models\Project;
 use App\Filament\Resources\Items\Pages\EditItem;
 
 beforeEach(function () {
