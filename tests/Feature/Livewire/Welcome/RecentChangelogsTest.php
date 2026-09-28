@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Project;
 use Livewire\Livewire;
+use App\Models\Project;
 use App\Models\Changelog;
 use function Pest\Laravel\get;
 use App\Settings\GeneralSettings;

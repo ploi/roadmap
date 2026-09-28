@@ -4,8 +4,8 @@ namespace App\Livewire\Changelog;
 
 use Livewire\Component;
 use App\Models\Changelog;
-use App\Settings\GeneralSettings;
 use Livewire\Attributes\Locked;
+use App\Settings\GeneralSettings;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Controllers\ChangelogController;

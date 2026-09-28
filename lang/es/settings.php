@@ -83,6 +83,8 @@ return [
         'show-author-helper-text'        => 'Esto mostrará el autor del elemento del Elementos alcanzados.',
         'show-related-items'             => 'Mostrar elementos relacionados',
         'show-related-items-helper-text' => 'Esto mostrará los elementos relacionados del elemento del Elementos alcanzados.',
+        'group-by-month'                 => 'Agrupar por mes',
+        'group-by-month-helper-text'     => 'Esto agrupará los elementos por mes en lugar de por día.',
     ],
     'notifications-title'         => 'Notificaciones',
     'notifications-helper-text'   => 'Esto enviará notificaciones una vez que se haya creado un nuevo elemento o cuando haya una nueva versión del software de la hoja de ruta.',

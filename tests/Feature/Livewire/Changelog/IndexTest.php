@@ -1,10 +1,11 @@
 <?php
 
-use App\Models\Project;
 use Livewire\Livewire;
+use App\Models\Project;
 use App\Models\Changelog;
 use App\Settings\GeneralSettings;
 use App\Livewire\Changelog\Index;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 
 test('changelog shows the connected project with a link to its changelog', function () {
     $project = Project::factory()->create(['title' => 'Connected project']);
@@ -105,4 +106,28 @@ test('changelog filtered on a project links to the next page of that project', f
 
     Livewire::test(Index::class, ['projectFilter' => $project->slug])
         ->assertSee(route('changelog.show', ['slug' => $project->slug, 'page' => 2]), false);
+});
+
+test('changelog groups changelogs by day by default', function () {
+    GeneralSettings::fake(['group_changelog_by_month' => false]);
+    Changelog::factory(2)->for(createUser())->state(new Sequence(
+        ['published_at' => '2022-06-24 12:00:00'],
+        ['published_at' => '2022-06-10 12:00:00'],
+    ))->create();
+
+    Livewire::test(Index::class)
+        ->assertSeeTextInOrder(['June 24, 2022', 'June 10, 2022'])
+        ->assertDontSeeText('June 2022');
+});
+
+test('changelog groups changelogs by month when enabled and shows the date per changelog', function () {
+    GeneralSettings::fake(['group_changelog_by_month' => true]);
+    Changelog::factory(2)->for(createUser())->state(new Sequence(
+        ['published_at' => '2022-06-24 12:00:00'],
+        ['published_at' => '2022-06-10 12:00:00'],
+    ))->create();
+
+    Livewire::test(Index::class)
+        ->assertSeeTextInOrder(['June 2022', 'Jun 24, 2022', 'Jun 10, 2022'])
+        ->assertDontSeeText('June 24, 2022');
 });

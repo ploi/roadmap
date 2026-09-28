@@ -10,13 +10,14 @@
     @if($changelogs->isNotEmpty())
         @php($showAuthor = app(App\Settings\GeneralSettings::class)->show_changelog_author)
         @php($showLikes = app(App\Settings\GeneralSettings::class)->show_changelog_like)
+        @php($groupByMonth = app(App\Settings\GeneralSettings::class)->group_changelog_by_month)
 
         <div class="w-full space-y-8">
-            @foreach($changelogs->groupBy(fn ($changelog) => $changelog->published_at->toDateString()) as $date => $changelogsOnDate)
+            @foreach($changelogs->groupBy(fn ($changelog) => $changelog->published_at->format($groupByMonth ? 'Y-m' : 'Y-m-d')) as $date => $changelogsOnDate)
                 <section class="md:grid md:grid-cols-[9rem_1fr] md:gap-6">
                     <div class="mb-2 md:mb-0 md:pt-5">
                         <time datetime="{{ $date }}" class="block text-sm font-medium text-gray-500 md:sticky md:top-20 dark:text-gray-400">
-                            {{ $changelogsOnDate->first()->published_at->isoFormat('LL') }}
+                            {{ $changelogsOnDate->first()->published_at->isoFormat($groupByMonth ? 'MMMM YYYY' : 'LL') }}
                         </time>
                     </div>
 
@@ -25,7 +26,7 @@
                             @php($project = $changelog->project?->isVisibleForCurrentUser() ? $changelog->project : null)
 
                             <li class="group relative flex flex-col gap-2 p-5 transition hover:bg-gray-50 dark:hover:bg-white/5">
-                                @if($project || $showAuthor)
+                                @if($project || $showAuthor || $groupByMonth)
                                     <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
                                         @if($project)
                                             <x-project-badge :project="$project" :href="App\Http\Controllers\ChangelogController::overviewUrl($project->slug)" class="relative z-10"/>
@@ -39,6 +40,12 @@
                                                      alt="">
                                                 {{ $changelog->user->name }}
                                             </a>
+                                        @endif
+
+                                        @if($groupByMonth)
+                                            <time datetime="{{ $changelog->published_at->toDateString() }}" class="text-xs text-gray-500 dark:text-gray-400">
+                                                {{ $changelog->published_at->isoFormat('ll') }}
+                                            </time>
                                         @endif
                                     </div>
                                 @endif

@@ -88,6 +88,8 @@ return [
         'show-related-items-helper-text' => 'Megmutatja a változásnapló elem kapcsolódó elemeit.',
         'show-likes'                     => 'Kedvelések engedélyezése',
         'show-likes-helper-text'         => 'Lehetővé teszi a felhasználóknak, hogy kedveljék a változásnapló elemeket.',
+        'group-by-month'                 => 'Csoportosítás hónap szerint',
+        'group-by-month-helper-text'     => 'A változásnapló elemeit napok helyett hónapok szerint csoportosítja.',
     ],
     'notifications-title'         => 'Értesítések',
     'notifications-helper-text'   => 'Értesítéseket küld, ha új elem jön létre, vagy új verzió jelenik meg az ütemterv szoftverből.',
