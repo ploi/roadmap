@@ -50,7 +50,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['daily'],
+            'channels' => ['daily', 'flare'],
             'ignore_exceptions' => false,
         ],
 
@@ -109,6 +109,12 @@ return [
         'null' => [
             'driver' => 'monolog',
             'handler' => NullHandler::class,
+        ],
+
+        // Reports to Flare (flareapp.io) when FLARE_KEY is set; a harmless
+        // no-op otherwise. Included in the 'stack' channel above.
+        'flare' => [
+            'driver' => 'flare',
         ],
 
         'emergency' => [
