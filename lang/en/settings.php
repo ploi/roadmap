@@ -88,6 +88,11 @@ return [
         'show-likes'                      => 'Enable likes',
         'show-likes-helper-text'          => 'This will enable users to like the changelog items.',
     ],
+    'mcp-title'                   => 'MCP',
+    'mcp'                         => [
+        'enable-mcp'             => 'Enable MCP server',
+        'enable-mcp-helper-text' => 'Let users connect AI assistants such as Claude or Cursor to the roadmap with a personal token. They can read projects and items, and comment. Admins and employees can also move items. <a href=":url" target="_blank" class="underline">Read how it works</a>.',
+    ],
     'notifications-title'         => 'Notifications',
     'notifications-helper-text'   => 'This will send notifications once a new item has been created or when there is a new version of the roadmap software.',
     'notifications'               => [

@@ -2,8 +2,11 @@
 
 use App\Models\User;
 use App\Enums\UserRole;
+use App\Settings\GeneralSettings;
 use function Pest\Laravel\postJson;
 use function Pest\Laravel\withToken;
+
+beforeEach(fn () => GeneralSettings::fake(['enable_mcp' => true]));
 
 function listToolsRequest(): array
 {
@@ -38,4 +41,12 @@ it('lists the move tool for employees', function () {
         ->json('result.tools.*.name');
 
     expect($tools)->toContain('move-item');
+});
+
+it('is not available when an admin has disabled mcp', function () {
+    GeneralSettings::fake(['enable_mcp' => false]);
+
+    $token = User::factory()->admin()->create()->createToken('MCP')->plainTextToken;
+
+    withToken($token)->postJson('/mcp', listToolsRequest())->assertNotFound();
 });

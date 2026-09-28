@@ -9,6 +9,7 @@ use Livewire\Component;
 use Filament\Actions\Action;
 use Laravel\Fortify\Fortify;
 use Filament\Actions\BulkAction;
+use App\Settings\GeneralSettings;
 use Filament\Support\Colors\Color;
 use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\Http;
@@ -380,6 +381,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
     {
         return Action::make('createMcpToken')
             ->label(trans('profile.mcp.create_token'))
+            ->visible(fn (): bool => app(GeneralSettings::class)->enable_mcp)
             ->color(Color::Blue)
             ->modalWidth('md')
             ->schema([
@@ -446,6 +448,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                 ? Fortify::currentEncrypter()->decrypt($this->user->two_factor_secret)
                 : null,
             'recoveryCodes' => $twoFactorConfirmed ? $this->user->recoveryCodes() : [],
+            'mcpEnabled' => app(GeneralSettings::class)->enable_mcp,
             'mcpTokens' => $this->user->tokens()->latest()->get(),
         ]);
     }

@@ -28,7 +28,12 @@ use Laravel\Mcp\Server\Attributes\Instructions;
     MARKDOWN)]
 class RoadmapServer extends Server
 {
-    protected array $tools = [
+    /**
+     * The tools of this server, public so the MCP documentation page can list them.
+     *
+     * @var array<int, class-string<\Laravel\Mcp\Server\Tool>>
+     */
+    public const TOOLS = [
         ListProjectsTool::class,
         GetProjectTool::class,
         ListItemsTool::class,
@@ -36,6 +41,8 @@ class RoadmapServer extends Server
         CommentOnItemTool::class,
         MoveItemTool::class,
     ];
+
+    protected array $tools = self::TOOLS;
 
     protected array $resources = [
         //

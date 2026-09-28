@@ -13,6 +13,7 @@ use App\Services\GitHubService;
 use Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
 use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Grid;
@@ -333,6 +334,16 @@ class Settings extends SettingsPage
                                 ->label(trans('settings.changelog.show-likes'))
                                 ->helperText(trans('settings.changelog.show-likes-helper-text'))
                                 ->visible(fn ($get) => $get('enable_changelog'))
+                                ->columnSpan(2),
+                            ]
+                        ),
+
+                    Tab::make(trans('settings.mcp-title'))
+                        ->schema(
+                            [
+                            Toggle::make('enable_mcp')
+                                ->label(trans('settings.mcp.enable-mcp'))
+                                ->helperText(fn () => new HtmlString(trans('settings.mcp.enable-mcp-helper-text', ['url' => e(route('mcp.docs'))])))
                                 ->columnSpan(2),
                             ]
                         ),

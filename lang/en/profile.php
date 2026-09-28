@@ -51,7 +51,8 @@ return [
 
     'mcp' => [
         'heading' => 'MCP access',
-        'description' => 'Connect AI assistants such as Claude or Cursor to the roadmap through MCP. Create a token and send it as a bearer token to the endpoint below. The assistant can do everything you can do on the roadmap.',
+        'description' => 'Connect AI assistants such as Claude or Cursor to the roadmap through MCP. The assistant can do everything you can do on the roadmap.',
+        'read_docs' => 'Read how to connect.',
         'endpoint' => 'Endpoint',
         'create_token' => 'Create token',
         'token_name' => 'Token name',

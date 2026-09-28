@@ -3,9 +3,12 @@
 use App\Models\User;
 use Livewire\Livewire;
 use App\Livewire\Profile;
+use App\Settings\GeneralSettings;
 use Laravel\Sanctum\PersonalAccessToken;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\assertDatabaseMissing;
+
+beforeEach(fn () => GeneralSettings::fake(['enable_mcp' => true]));
 
 it('creates an mcp token and shows it once', function () {
     $user = createAndLoginUser();
@@ -44,4 +47,14 @@ it('does not revoke tokens of other users', function () {
         ->callAction('revokeMcpToken', arguments: ['token' => $token->id]);
 
     assertDatabaseHas(PersonalAccessToken::class, ['id' => $token->id]);
+});
+
+it('hides mcp access when an admin has disabled mcp', function () {
+    GeneralSettings::fake(['enable_mcp' => false]);
+
+    createAndLoginUser();
+
+    Livewire::test(Profile::class)
+        ->assertDontSee(trans('profile.mcp.heading'))
+        ->assertActionHidden('createMcpToken');
 });
