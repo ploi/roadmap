@@ -66,4 +66,10 @@ return [
         'token_created_notification' => 'Token created.',
         'token_revoked_notification' => 'Token revoked.',
     ],
+
+    'tabs' => [
+        'account' => 'Account',
+        'preferences' => 'Preferences',
+        'security' => 'Security',
+    ],
 ];

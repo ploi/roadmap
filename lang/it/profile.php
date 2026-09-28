@@ -20,5 +20,11 @@ return [
     'social-login-description' => 'Qui troverai le tue credenziali d\'accesso sociali utilizzate per accedere al tuo account.',
     'per-page-setting' => 'Impostazioni pagina per pagina',
     'per-page-setting-helper' => 'Determina quanti elementi saranno disponibili per la pagina "Il mio" per esempio.',
-    'settings' => 'Impostazioni'
+    'settings' => 'Impostazioni',
+
+    'tabs' => [
+        'account' => 'Account',
+        'preferences' => 'Preferenze',
+        'security' => 'Sicurezza',
+    ],
 ];

@@ -21,4 +21,10 @@ return [
     'per-page-setting' => 'Configuración por página',
     'per-page-setting-helper' => 'Determina cuántas páginas deben estar disponibles para los elementos en la página "Mis elementos", por ejemplo.',
     'settings' => 'Configuraciones',
+
+    'tabs' => [
+        'account' => 'Cuenta',
+        'preferences' => 'Preferencias',
+        'security' => 'Seguridad',
+    ],
 ];

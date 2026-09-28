@@ -15,15 +15,18 @@ use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\Http;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\View;
 use Filament\Support\Enums\Alignment;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Components\Group;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use App\Notifications\VerifyEmailChange;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Actions;
+use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\CheckboxList;
@@ -71,31 +74,38 @@ class Profile extends Component implements HasForms, HasTable, HasActions
     protected function getFormSchema(): array
     {
         return [
-            Section::make(trans('auth.profile'))
-                ->columns()
-                ->schema([
-                    TextInput::make('name')->label(trans('auth.name'))->required(),
-                    TextInput::make('username')
-                        ->label(trans('profile.username'))
-                        ->helperText(trans('profile.username_description'))
-                        ->required()
-                        ->rules([
-                            'alpha_dash'
-                        ])
-                        ->unique(table: User::class, column: 'username', ignorable: auth()->user()),
-                    TextInput::make('email')
-                        ->label(trans('auth.email'))
-                        ->required()
-                        ->email()
-                        ->unique(table: User::class, column: 'email', ignorable: auth()->user()),
-                    Select::make('locale')->label(trans('auth.locale'))->options($this->locales)->placeholder(trans('auth.locale_null_value')),
-                    Select::make('date_locale')->label(trans('auth.date_locale'))->options($this->locales)->placeholder(trans('auth.date_locale_null_value')),
-                ])->collapsible(),
+            Tabs::make('profile')
+                ->persistTabInQueryString()
+                ->tabs([
+                    Tab::make(trans('profile.tabs.account'))
+                        ->key('account', isInheritable: false)
+                        ->icon('heroicon-o-user')
+                        ->columns()
+                        ->schema([
+                            TextInput::make('name')->label(trans('auth.name'))->required(),
+                            TextInput::make('username')
+                                ->label(trans('profile.username'))
+                                ->helperText(trans('profile.username_description'))
+                                ->required()
+                                ->rules([
+                                    'alpha_dash'
+                                ])
+                                ->unique(table: User::class, column: 'username', ignorable: auth()->user()),
+                            TextInput::make('email')
+                                ->label(trans('auth.email'))
+                                ->required()
+                                ->email()
+                                ->unique(table: User::class, column: 'email', ignorable: auth()->user()),
+                            Select::make('locale')->label(trans('auth.locale'))->options($this->locales)->placeholder(trans('auth.locale_null_value'))->searchable(),
+                            Select::make('date_locale')->label(trans('auth.date_locale'))->options($this->locales)->placeholder(trans('auth.date_locale_null_value'))->searchable(),
+                            $this->getSaveFormActions(),
+                            View::make('livewire.profile.delete-account')->columnSpanFull(),
+                        ]),
 
-            Grid::make(2)
-                ->schema([
-                    Section::make(trans('profile.notifications'))
-                        ->columnSpan(1)
+                    Tab::make(trans('profile.tabs.preferences'))
+                        ->key('preferences', isInheritable: false)
+                        ->icon('heroicon-o-adjustments-horizontal')
+                        ->columns()
                         ->schema([
                             CheckboxList::make('notification_settings')
                                 ->label(trans('profile.notification_settings'))
@@ -103,31 +113,88 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                                     'receive_mention_notifications' => trans('profile.receive_mention_notifications'),
                                     'receive_comment_reply_notifications' => trans('profile.receive_comment_reply_notifications'),
                                 ]),
-                        ])->collapsible(),
 
-                    Section::make(trans('profile.settings'))
-                        ->columnSpan(1)
+                            Group::make([
+                                Select::make('per_page_setting')
+                                    ->label(trans('profile.per-page-setting'))
+                                    ->multiple()
+                                    ->options([
+                                        5 => '5',
+                                        10 => '10',
+                                        15 => '15',
+                                        25 => '25',
+                                        50 => '50',
+                                    ])
+                                    ->required()
+                                    ->helperText(trans('profile.per-page-setting-helper'))
+                                    ->rules(['array', 'in:5,10,15,25,50']),
+
+                                Toggle::make('hide_from_leaderboard')
+                                    ->label(trans('profile.hide-from-leaderboard'))
+                                    ->helperText(trans('profile.hide-from-leaderboard-helper')),
+                            ]),
+
+                            $this->getSaveFormActions(),
+                        ]),
+
+                    Tab::make(trans('profile.tabs.security'))
+                        ->key('security', isInheritable: false)
+                        ->icon('heroicon-o-shield-check')
                         ->schema([
-                            Select::make('per_page_setting')
-                                                   ->label(trans('profile.per-page-setting'))
-                                ->multiple()
-                                ->options([
-                                    5 => '5',
-                                    10 => '10',
-                                    15 => '15',
-                                    25 => '25',
-                                    50 => '50',
-                                ])
-                                ->required()
-                                ->helperText(trans('profile.per-page-setting-helper'))
-                                ->rules(['array', 'in:5,10,15,25,50']),
+                            View::make('livewire.profile.two-factor')
+                                ->viewData(fn (): array => $this->getTwoFactorViewData()),
+                        ]),
 
-                            Toggle::make('hide_from_leaderboard')
-                                ->label(trans('profile.hide-from-leaderboard'))
-                                ->helperText(trans('profile.hide-from-leaderboard-helper'))
-                        ])->collapsible(),
-                ])
+                    Tab::make(trans('profile.mcp.heading'))
+                        ->key('mcp', isInheritable: false)
+                        ->icon('heroicon-o-command-line')
+                        ->visible(fn (): bool => app(GeneralSettings::class)->enable_mcp)
+                        ->schema([
+                            View::make('livewire.profile.mcp-tokens')
+                                ->viewData(fn (): array => [
+                                    'mcpTokens' => $this->user->tokens()->latest()->get(),
+                                ]),
+                        ]),
 
+                    Tab::make(trans('profile.social-login'))
+                        ->key('social-login', isInheritable: false)
+                        ->icon('heroicon-o-link')
+                        ->visible(fn (): bool => SsoProvider::isEnabled())
+                        ->schema([
+                            View::make('livewire.profile.social-login'),
+                        ]),
+                ]),
+        ];
+    }
+
+    /**
+     * The save button shown at the bottom of each tab that holds form fields.
+     */
+    protected function getSaveFormActions(): Actions
+    {
+        return Actions::make([
+            Action::make('save')
+                ->label(trans('profile.save'))
+                ->submit('submit'),
+        ])->columnSpanFull();
+    }
+
+    /**
+     * @return array{twoFactorEnabled: bool, twoFactorConfirmed: bool, twoFactorQrCode: ?string, twoFactorSetupKey: ?string, recoveryCodes: array<int, string>}
+     */
+    protected function getTwoFactorViewData(): array
+    {
+        $twoFactorEnabled = ! is_null($this->user->two_factor_secret);
+        $twoFactorConfirmed = ! is_null($this->user->two_factor_confirmed_at);
+
+        return [
+            'twoFactorEnabled' => $twoFactorEnabled,
+            'twoFactorConfirmed' => $twoFactorConfirmed,
+            'twoFactorQrCode' => $twoFactorEnabled ? $this->user->twoFactorQrCodeSvg() : null,
+            'twoFactorSetupKey' => $twoFactorEnabled
+                ? Fortify::currentEncrypter()->decrypt($this->user->two_factor_secret)
+                : null,
+            'recoveryCodes' => $twoFactorConfirmed ? $this->user->recoveryCodes() : [],
         ];
     }
 
@@ -436,21 +503,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
 
     public function render()
     {
-        $twoFactorEnabled = ! is_null($this->user->two_factor_secret);
-        $twoFactorConfirmed = ! is_null($this->user->two_factor_confirmed_at);
-
-        return view('livewire.profile', [
-            'hasSsoLoginAvailable' => SsoProvider::isEnabled(),
-            'twoFactorEnabled' => $twoFactorEnabled,
-            'twoFactorConfirmed' => $twoFactorConfirmed,
-            'twoFactorQrCode' => $twoFactorEnabled ? $this->user->twoFactorQrCodeSvg() : null,
-            'twoFactorSetupKey' => $twoFactorEnabled
-                ? Fortify::currentEncrypter()->decrypt($this->user->two_factor_secret)
-                : null,
-            'recoveryCodes' => $twoFactorConfirmed ? $this->user->recoveryCodes() : [],
-            'mcpEnabled' => app(GeneralSettings::class)->enable_mcp,
-            'mcpTokens' => $this->user->tokens()->latest()->get(),
-        ]);
+        return view('livewire.profile');
     }
 
     protected function getTableQuery(): Builder
