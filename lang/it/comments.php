@@ -2,7 +2,9 @@
 
 return [
     'comment' => 'Commento',
+    'public-comment' => 'Commento pubblico',
     'private-note' => 'Nota privata',
+    'private-reply-hint' => 'Questa risposta sarà una nota privata, visibile solo agli amministratori.',
     'item-author' => 'Autore dell\'elemento',
     'click-to-copy' => 'Clicca per copiare il link a questo commento',
     'mention-helper-text' => 'Puoi usare @ per menzionare qualcuno.',
@@ -10,6 +12,9 @@ return [
     'cancel' => 'Annulla',
     'submit' => 'Invia',
     'edit' => 'Modifica',
+    'delete' => 'Elimina',
+    'delete-comment' => 'Elimina commento',
+    'delete-comment-description' => 'Verranno eliminate anche tutte le risposte a questo commento. L\'operazione non può essere annullata.',
     'edited' => 'Modificato',
     'edit-comment' => 'Modifica commento',
     'comment-updated' => 'Commento aggiornato',

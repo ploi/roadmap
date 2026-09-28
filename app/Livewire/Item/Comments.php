@@ -20,10 +20,8 @@ class Comments extends Component implements HasForms, HasActions
     use InteractsWithForms, InteractsWithActions;
 
     public Item $item;
-    public $comments;
     public $content;
     public $private_content;
-    public $reply;
 
     protected $listeners = ['updatedComment' => '$refresh'];
 
@@ -47,7 +45,6 @@ class Comments extends Component implements HasForms, HasActions
         }
 
         $formState = array_merge($this->form->getState(), [
-            'parent_id' => $this->reply,
             'user_id' => auth()->id(),
         ]);
 
@@ -60,7 +57,6 @@ class Comments extends Component implements HasForms, HasActions
 
         $this->content = '';
         $this->private_content = '';
-        $this->reply = null;
 
         if ($this->item->project) {
             $this->redirectRoute('projects.items.show', [$this->item->project, $this->item]);
@@ -72,29 +68,34 @@ class Comments extends Component implements HasForms, HasActions
     protected function getFormSchema(): array
     {
         if (auth()->user()?->hasAdminAccess()) {
-            $reply = $this->item->comments()->find($this->reply);
-
             return [
                 Tabs::make('')->tabs([
-                    Tab::make(trans('comments.comment'))->schema([
+                    Tab::make(trans('comments.public-comment'))->schema([
                         MarkdownEditor::make('content')
-                            ->label(trans('comments.comment'))
+                            ->label(trans('comments.public-comment'))
+                            ->hiddenLabel()
+                            ->mentions($this->item)
                             ->helperText(trans('comments.mention-helper-text'))
                             ->minLength(3)
                             ->rules(['required_if:private_content,null,""', 'prohibited_unless:private_content,null,""', new ProfanityCheck()]),
                     ])
-                        ->hidden($reply?->private ?? false)
-                        ->id("public-{$this->reply}"),
+                        ->icon('heroicon-o-globe-alt')
+                        ->id('public'),
 
                     Tab::make(trans('comments.private-note'))->schema([
                         MarkdownEditor::make('private_content')
                             ->label(trans('comments.private-note'))
+                            ->hiddenLabel()
+                            ->mentions($this->item)
                             ->helperText(trans('comments.mention-helper-text'))
                             ->minLength(3)
                             ->visible(auth()->check() && auth()->user()->hasAdminAccess())
                             ->rules(['required_if:content,null,""', 'prohibited_unless:content,null,""', new ProfanityCheck()]),
-                    ])->extraAttributes(['class' => 'bg-yellow-50 rounded-xl'])->id("private-{$this->reply}"),
-                ]),
+                    ])
+                        ->icon('heroicon-o-lock-closed')
+                        ->extraAttributes(['class' => 'comment-tab-private'])
+                        ->id('private'),
+                ])->extraAttributes(['class' => 'comment-tabs']),
             ];
         }
 
@@ -105,6 +106,7 @@ class Comments extends Component implements HasForms, HasActions
                 ])
                 ->label(trans('comments.comment'))
                 ->helperText(trans('comments.mention-helper-text'))
+                ->mentions($this->item)
                 ->disableToolbarButtons(app(GeneralSettings::class)->getDisabledToolbarButtons())
                 ->minLength(3)
                 ->required(),
@@ -113,16 +115,22 @@ class Comments extends Component implements HasForms, HasActions
 
     public function render()
     {
-        $this->comments = $this->item
+        $comments = $this->item
             ->comments()
             ->withWhereHas('user:id,name,email,username')
+            ->with('votes.user:id,name,email,username')
             ->orderByRaw('COALESCE(parent_id, id), parent_id IS NOT NULL, id')
             ->when(!auth()->user()?->hasAdminAccess(), fn ($query) => $query->where('private', false))
-            ->get()
-            ->mapToGroups(function ($comment) {
-                return [(int)$comment->parent_id => $comment];
-            });
+            ->get();
 
-        return view('livewire.item.comments');
+        $commentsById = $comments->keyBy('id');
+
+        $comments->each(fn ($comment) => $comment->setRelation('parent', $commentsById->get($comment->parent_id)));
+
+        return view('livewire.item.comments', [
+            'comments' => $comments->mapToGroups(function ($comment) {
+                return [(int)$comment->parent_id => $comment];
+            }),
+        ]);
     }
 }

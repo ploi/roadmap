@@ -7,9 +7,8 @@ use Livewire\Livewire;
 use App\Models\Comment;
 use App\Models\Project;
 use App\Settings\GeneralSettings;
+use Illuminate\Support\Facades\DB;
 use Filament\Actions\Testing\TestAction;
-use function Pest\Laravel\assertDatabaseHas;
-use function Pest\Laravel\assertDatabaseMissing;
 use App\Livewire\Item\Comment as CommentComponent;
 
 beforeEach(function () {
@@ -17,184 +16,197 @@ beforeEach(function () {
         'users_must_verify_email' => false,
         'profanity_words' => ['badword'],
     ]);
-
-    $this->author = createUser();
-    $this->project = Project::factory()->create();
-    $this->board = Board::factory()->create(['project_id' => $this->project->id]);
-    $this->item = Item::factory()->create([
-        'user_id' => $this->author->id,
-        'project_id' => $this->project->id,
-        'board_id' => $this->board->id,
-    ]);
-    $this->comment = $this->item->comments()->create([
-        'user_id' => $this->author->id,
-        'content' => 'A public comment',
-    ]);
 });
 
-function commentComponent(Item $item, Comment $comment)
+function mountComment(Comment $comment): \Livewire\Features\SupportTesting\Testable
 {
     return Livewire::test(CommentComponent::class, [
         'comments' => collect(),
         'comment' => $comment,
-        'item' => $item,
-        'reply' => null,
+        'item' => $comment->item,
     ]);
 }
 
-function replyTo(Comment $comment): TestAction
-{
-    return TestAction::make('reply')->arguments(['comment' => $comment->id]);
-}
+test('an admin can delete a comment and its replies', function () {
+    createAndLoginUser(user: User::factory()->admin()->create());
 
-function editComment(Comment $comment): TestAction
-{
-    return TestAction::make('edit')->arguments(['comment' => $comment->id]);
-}
+    $item = Item::factory()->create();
+    $comment = Comment::factory()->for($item)->for(User::factory())->create();
+    $reply = Comment::factory()->for($item)->for(User::factory())->create(['parent_id' => $comment->id]);
 
-test('a user can reply to a comment on a visible item', function () {
+    mountComment($comment)
+        ->callAction(TestAction::make('delete')->arguments(['comment' => $comment->id]))
+        ->assertRedirect(route('items.show', $item->slug));
+
+    $this->assertModelMissing($comment);
+    $this->assertModelMissing($reply);
+});
+
+test('a non admin cannot delete a comment', function () {
     $user = createAndLoginUser();
 
-    commentComponent($this->item, $this->comment)
-        ->callAction(replyTo($this->comment), data: ['content' => 'A reply'])
-        ->assertHasNoFormErrors()
-        ->assertRedirect(route('items.show', $this->item->slug));
+    $comment = Comment::factory()->for(Item::factory())->for($user)->create();
 
-    assertDatabaseHas(Comment::class, [
-        'item_id' => $this->item->id,
-        'parent_id' => $this->comment->id,
-        'user_id' => $user->id,
-        'content' => 'A reply',
-    ]);
+    mountComment($comment)
+        ->assertActionHidden(TestAction::make('delete')->arguments(['comment' => $comment->id]))
+        ->call('mountAction', 'delete', ['comment' => $comment->id])
+        ->call('callMountedAction');
+
+    $this->assertModelExists($comment);
 });
 
-test('a user can not reply to a comment on an item they can not see', function (Closure $makeHiddenItem) {
-    createAndLoginUser();
+test('a user can reply inline to a comment', function () {
+    $user = createAndLoginUser();
 
-    $hiddenItem = $makeHiddenItem($this->author);
-    $hiddenComment = $hiddenItem->comments()->create([
-        'user_id' => $this->author->id,
-        'content' => 'A hidden comment',
-    ]);
+    $item = Item::factory()->create();
+    $comment = Comment::factory()->for($item)->for(User::factory())->create();
 
-    expect(fn () => commentComponent($this->item, $this->comment)
-        ->callAction(replyTo($hiddenComment), data: ['content' => 'A sneaky reply']))
-        ->toThrow(Illuminate\Database\Eloquent\ModelNotFoundException::class);
+    $component = mountComment($comment)
+        ->callAction(TestAction::make('reply'))
+        ->assertSet('isReplying', true)
+        ->set('replyContent', 'Thanks for the idea!')
+        ->call('submitReply');
 
-    assertDatabaseMissing(Comment::class, ['content' => 'A sneaky reply']);
-})->with([
-    'private item' => fn (User $author) => Item::factory()->private()->create(['user_id' => $author->id]),
-    'item in private project' => fn (User $author) => Item::factory()->create([
-        'user_id' => $author->id,
-        'project_id' => Project::factory()->private()->create()->id,
-    ]),
-]);
+    $reply = Comment::query()->where('parent_id', $comment->id)->sole();
 
-test('an admin can reply to a comment on a private item', function () {
-    $admin = createAndLoginUser(user: User::factory()->admin()->create());
+    expect($reply->content)->toBe('Thanks for the idea!')
+        ->and($reply->user_id)->toBe($user->id);
 
-    $privateItem = Item::factory()->private()->create(['user_id' => $this->author->id]);
-    $privateItemComment = $privateItem->comments()->create([
-        'user_id' => $this->author->id,
-        'content' => 'A comment on a private item',
-    ]);
-
-    commentComponent($this->item, $this->comment)
-        ->callAction(replyTo($privateItemComment), data: ['content' => 'An admin reply'])
-        ->assertHasNoFormErrors();
-
-    assertDatabaseHas(Comment::class, [
-        'parent_id' => $privateItemComment->id,
-        'user_id' => $admin->id,
-        'content' => 'An admin reply',
-    ]);
+    $component->assertRedirect($item->view_url . '#comment-' . $reply->id);
 });
 
-test('a user can not reply to a private note', function () {
+test('an inline reply needs content', function () {
     createAndLoginUser();
 
-    $privateNote = $this->item->comments()->create([
-        'user_id' => User::factory()->admin()->create()->id,
-        'content' => 'An internal note',
-        'private' => true,
-    ]);
+    $comment = Comment::factory()->for(Item::factory())->for(User::factory())->create();
 
-    expect(fn () => commentComponent($this->item, $this->comment)
-        ->callAction(replyTo($privateNote), data: ['content' => 'A sneaky reply']))
-        ->toThrow(Illuminate\Database\Eloquent\ModelNotFoundException::class);
+    mountComment($comment)
+        ->callAction(TestAction::make('reply'))
+        ->set('replyContent', '')
+        ->call('submitReply')
+        ->assertHasErrors(['replyContent' => 'required']);
 
-    assertDatabaseMissing(Comment::class, ['content' => 'A sneaky reply']);
+    expect(Comment::query()->where('parent_id', $comment->id)->exists())->toBeFalse();
 });
 
-test('a user can not reply when the board blocks comments', function () {
+test('replying is refused when the board blocks comments', function () {
     createAndLoginUser();
 
-    $this->board->update(['block_comments' => true]);
+    $board = Board::factory()->for(Project::factory())->create(['block_comments' => true]);
+    $item = Item::factory()->for($board)->create();
+    $comment = Comment::factory()->for($item)->for(User::factory())->create();
 
-    commentComponent($this->item, $this->comment)
-        ->callAction(replyTo($this->comment), data: ['content' => 'A blocked reply'])
+    mountComment($comment)
+        ->set('replyContent', 'Sneaky reply')
+        ->call('submitReply')
         ->assertForbidden();
 
-    assertDatabaseMissing(Comment::class, ['content' => 'A blocked reply']);
+    expect(Comment::query()->where('parent_id', $comment->id)->exists())->toBeFalse();
 });
 
-test('a guest is redirected to login when replying', function () {
-    commentComponent($this->item, $this->comment)
-        ->callAction(replyTo($this->comment), data: ['content' => 'A guest reply'])
+test('guests are sent to the login page when replying', function () {
+    $comment = Comment::factory()->for(Item::factory())->for(User::factory())->create();
+
+    mountComment($comment)
+        ->set('replyContent', 'Anonymous reply')
+        ->call('submitReply')
         ->assertRedirect(route('login'));
 
-    assertDatabaseMissing(Comment::class, ['content' => 'A guest reply']);
+    expect(Comment::query()->where('parent_id', $comment->id)->exists())->toBeFalse();
+});
+
+test('interacting with a comment does not reload the rest of the thread', function () {
+    createAndLoginUser();
+
+    $item = Item::factory()->create();
+    $comment = Comment::factory()->for($item)->for(User::factory())->create();
+    $parent = $comment;
+
+    foreach (range(1, 4) as $depth) {
+        $parent = Comment::factory()->for($item)->for(User::factory())->create(['parent_id' => $parent->id]);
+    }
+
+    $component = Livewire::test(CommentComponent::class, [
+        'comments' => $item->comments()->get()->mapToGroups(fn (Comment $comment) => [(int) $comment->parent_id => $comment]),
+        'comment' => $comment,
+        'item' => $item,
+    ]);
+
+    DB::flushQueryLog();
+    DB::enableQueryLog();
+
+    $component->call('cancelReply');
+
+    $commentQueries = collect(DB::getQueryLog())->filter(fn (array $query) => str_contains($query['query'], 'from "comments"'));
+
+    expect($commentQueries)->toHaveCount(1);
 });
 
 test('an unverified user is redirected to verify their email when replying', function () {
     app(GeneralSettings::class)->users_must_verify_email = true;
     createAndLoginUser(user: User::factory()->unverified()->create());
 
-    commentComponent($this->item, $this->comment)
-        ->callAction(replyTo($this->comment), data: ['content' => 'An unverified reply'])
+    $comment = Comment::factory()->for(Item::factory())->for(User::factory())->create();
+
+    mountComment($comment)
+        ->set('replyContent', 'An unverified reply')
+        ->call('submitReply')
         ->assertRedirect(route('verification.notice'));
 
-    assertDatabaseMissing(Comment::class, ['content' => 'An unverified reply']);
+    expect(Comment::query()->where('parent_id', $comment->id)->exists())->toBeFalse();
 });
 
 test('a reply containing profanity is rejected', function () {
     createAndLoginUser();
 
-    commentComponent($this->item, $this->comment)
-        ->callAction(replyTo($this->comment), data: ['content' => 'A badword reply'])
-        ->assertHasFormErrors(['content']);
+    $comment = Comment::factory()->for(Item::factory())->for(User::factory())->create();
 
-    assertDatabaseMissing(Comment::class, ['content' => 'A badword reply']);
+    mountComment($comment)
+        ->set('replyContent', 'A badword reply')
+        ->call('submitReply')
+        ->assertHasErrors(['replyContent']);
+
+    expect(Comment::query()->where('parent_id', $comment->id)->exists())->toBeFalse();
 });
 
 test('a user can edit their own comment', function () {
     $user = createAndLoginUser();
 
-    $ownComment = $this->item->comments()->create([
-        'user_id' => $user->id,
-        'content' => 'Original content',
-    ]);
+    $comment = Comment::factory()->for(Item::factory())->for($user)->create(['content' => 'Original content']);
 
-    commentComponent($this->item, $ownComment)
-        ->mountAction(editComment($ownComment))
+    mountComment($comment)
+        ->mountAction(TestAction::make('edit')->arguments(['comment' => $comment->id]))
         ->assertSchemaStateSet(['content' => 'Original content'])
         ->fillForm(['content' => 'Updated content'])
         ->callMountedAction()
         ->assertHasNoFormErrors();
 
-    expect($ownComment->fresh()->content)->toBe('Updated content');
+    expect($comment->fresh()->content)->toBe('Updated content');
+});
+
+test('an edit containing profanity is rejected', function () {
+    $user = createAndLoginUser();
+
+    $comment = Comment::factory()->for(Item::factory())->for($user)->create(['content' => 'Original content']);
+
+    mountComment($comment)
+        ->callAction(TestAction::make('edit')->arguments(['comment' => $comment->id]), data: ['content' => 'A badword edit'])
+        ->assertHasFormErrors(['content']);
+
+    expect($comment->fresh()->content)->toBe('Original content');
 });
 
 test('the edit form does not expose the content of another user\'s comment', function () {
-    createAndLoginUser();
+    $user = createAndLoginUser();
 
-    $privateNote = $this->item->comments()->create([
-        'user_id' => User::factory()->admin()->create()->id,
+    $item = Item::factory()->create();
+    $ownComment = Comment::factory()->for($item)->for($user)->create();
+    $privateNote = Comment::factory()->for($item)->for(User::factory()->admin())->create([
         'content' => 'Secret internal note',
         'private' => true,
     ]);
 
-    expect(fn () => commentComponent($this->item, $this->comment)
-        ->mountAction(editComment($privateNote)))
+    expect(fn () => mountComment($ownComment)
+        ->mountAction(TestAction::make('edit')->arguments(['comment' => $privateNote->id])))
         ->toThrow(Illuminate\Database\Eloquent\ModelNotFoundException::class);
 });

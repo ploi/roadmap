@@ -1,31 +1,40 @@
-<div>
-    @foreach($comments[0] ?? [] as $comment)
-        <livewire:item.comment
-            :comments="$comments"
-            :comment="$comment"
-            :item="$item"
-            :reply="$reply"
-            key="comment-{{ $comment->id }}" />
-    @endforeach
-
-    @if($reply === null && !$item->board?->block_comments)
-        <form wire:submit="submit" class="space-y-4 mt-4">
-            @if(auth()->check() && auth()->user()->hasVerifiedEmail())
-                {{ $this->form }}
-
-                <x-filament::button wire:click="submit">
-                    {{ trans('comments.submit') }}
-                </x-filament::button>
-            @elseif(auth()->check() && !auth()->user()->hasVerifiedEmail())
-                <div class="text-primary-500 mt-4">
-                    {{ trans('comments.verify-email-to-comment') }}
+<div class="space-y-4">
+    @if(count($comments[0] ?? []))
+        <div class="bg-white shadow rounded-xl dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+            @foreach($comments[0] as $comment)
+                <div class="p-4">
+                    <livewire:item.comment
+                        :comments="$comments"
+                        :comment="$comment"
+                        :item="$item"
+                        key="comment-{{ $comment->id }}" />
                 </div>
-            @else
-                <div class="text-primary-500 hover:text-primary-700 mt-4">
-                    <a href="{{ route('login', ['intended' => url()->full()]) }}">{{ trans('comments.login-to-comment') }}</a>
+            @endforeach
+        </div>
+    @endif
+
+    @if(!$item->board?->block_comments)
+        @if(auth()->check() && auth()->user()->hasVerifiedEmail())
+            <form wire:submit="submit" class="bg-white shadow rounded-xl dark:bg-gray-900 overflow-hidden">
+                <div @class(['p-6' => !auth()->user()->hasAdminAccess()])>
+                    {{ $this->form }}
                 </div>
-            @endif
-        </form>
+
+                <footer class="flex justify-end px-6 py-3 border-t border-gray-200 dark:border-gray-700">
+                    <x-filament::button wire:click="submit">
+                        {{ trans('comments.submit') }}
+                    </x-filament::button>
+                </footer>
+            </form>
+        @elseif(auth()->check() && !auth()->user()->hasVerifiedEmail())
+            <div class="text-primary-500">
+                {{ trans('comments.verify-email-to-comment') }}
+            </div>
+        @else
+            <div class="text-primary-500 hover:text-primary-700">
+                <a href="{{ route('login', ['intended' => url()->full()]) }}">{{ trans('comments.login-to-comment') }}</a>
+            </div>
+        @endif
     @endif
 </div>
 
@@ -38,7 +47,7 @@
                 const commentElement = document.getElementById(hash.replace('#', ''));
 
                 if (commentElement) {
-                    commentElement.classList.add('bg-brand-50', 'dark:bg-brand-900/30', 'rounded-lg', 'ring-1', 'ring-brand-200', 'dark:ring-brand-800', 'mt-2', 'mb-2');
+                    commentElement.classList.add('bg-brand-50', 'dark:bg-brand-900/30', 'rounded-lg', 'ring-1', 'ring-brand-200', 'dark:ring-brand-800', '-mx-3', 'px-3', '-my-2', 'py-2');
                 }
             }
         })();
