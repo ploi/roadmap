@@ -37,6 +37,7 @@ class GeneralSettings extends Settings
     public bool $show_github_link;
     public bool $enable_leaderboard;
     public int $leaderboard_users_count;
+    public bool $enable_mcp;
 
     public function getInboxWorkflow(): InboxWorkflow
     {

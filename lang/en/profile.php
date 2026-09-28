@@ -48,4 +48,22 @@ return [
         'disabled_notification' => 'Two-factor authentication has been disabled.',
         'codes_regenerated_notification' => 'New recovery codes have been generated.',
     ],
+
+    'mcp' => [
+        'heading' => 'MCP access',
+        'description' => 'Connect AI assistants such as Claude or Cursor to the roadmap through MCP. The assistant can do everything you can do on the roadmap.',
+        'read_docs' => 'Read how to connect.',
+        'endpoint' => 'Endpoint',
+        'create_token' => 'Create token',
+        'token_name' => 'Token name',
+        'token_name_placeholder' => 'Claude on my laptop',
+        'new_token' => 'Copy your new token now, it won\'t be shown again.',
+        'no_tokens' => 'You have not created any tokens yet.',
+        'last_used' => 'Last used :date',
+        'never_used' => 'Never used',
+        'revoke' => 'Revoke',
+        'revoke_confirmation' => 'Clients using this token will lose access to the roadmap.',
+        'token_created_notification' => 'Token created.',
+        'token_revoked_notification' => 'Token revoked.',
+    ],
 ];

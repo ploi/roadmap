@@ -17,6 +17,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\View;
 use Filament\Support\Enums\Alignment;
 use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Repeater;
@@ -334,6 +335,21 @@ class Settings extends SettingsPage
                                 ->label(trans('settings.changelog.show-likes'))
                                 ->helperText(trans('settings.changelog.show-likes-helper-text'))
                                 ->visible(fn ($get) => $get('enable_changelog'))
+                                ->columnSpan(2),
+                            ]
+                        ),
+
+                    Tab::make(trans('settings.mcp-title'))
+                        ->schema(
+                            [
+                            Toggle::make('enable_mcp')
+                                ->label(trans('settings.mcp.enable-mcp'))
+                                ->helperText(trans('settings.mcp.enable-mcp-helper-text'))
+                                ->live()
+                                ->columnSpan(2),
+
+                            View::make('filament.settings.mcp')
+                                ->visible(fn (Get $get): bool => (bool) $get('enable_mcp'))
                                 ->columnSpan(2),
                             ]
                         ),

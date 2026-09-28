@@ -9,6 +9,7 @@ use Livewire\Component;
 use Filament\Actions\Action;
 use Laravel\Fortify\Fortify;
 use Filament\Actions\BulkAction;
+use App\Settings\GeneralSettings;
 use Filament\Support\Colors\Color;
 use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\Http;
@@ -48,6 +49,7 @@ class Profile extends Component implements HasForms, HasTable, HasActions
     public $notification_settings;
     public $date_locale;
     public $hide_from_leaderboard;
+    public ?string $newMcpToken = null;
     public User $user;
 
     public function mount(): void
@@ -372,6 +374,57 @@ class Profile extends Component implements HasForms, HasTable, HasActions
             });
     }
 
+    /**
+     * Create a personal access token for connecting an MCP client, the plain text token is only shown once.
+     */
+    public function createMcpTokenAction(): Action
+    {
+        return Action::make('createMcpToken')
+            ->label(trans('profile.mcp.create_token'))
+            ->visible(fn (): bool => app(GeneralSettings::class)->enable_mcp)
+            ->color(Color::Blue)
+            ->modalWidth('md')
+            ->schema([
+                TextInput::make('name')
+                    ->label(trans('profile.mcp.token_name'))
+                    ->placeholder(trans('profile.mcp.token_name_placeholder'))
+                    ->required()
+                    ->maxLength(255),
+            ])
+            ->action(function (array $data) {
+                $this->newMcpToken = $this->user->createToken($data['name'])->plainTextToken;
+
+                Notification::make('mcp-token-created')
+                    ->title(trans('profile.mcp.token_created_notification'))
+                    ->success()
+                    ->send();
+            });
+    }
+
+    /**
+     * Revoke one of the user's own personal access tokens.
+     */
+    public function revokeMcpTokenAction(): Action
+    {
+        return Action::make('revokeMcpToken')
+            ->label(trans('profile.mcp.revoke'))
+            ->color(Color::Red)
+            ->link()
+            ->requiresConfirmation()
+            ->modalAlignment(Alignment::Left)
+            ->modalDescription(trans('profile.mcp.revoke_confirmation'))
+            ->action(function (array $arguments) {
+                $this->user->tokens()->whereKey((int) ($arguments['token'] ?? 0))->delete();
+
+                $this->newMcpToken = null;
+
+                Notification::make('mcp-token-revoked')
+                    ->title(trans('profile.mcp.token_revoked_notification'))
+                    ->success()
+                    ->send();
+            });
+    }
+
     public function getLocalesProperty(): array
     {
         $locales = ResourceBundle::getLocales('');
@@ -395,6 +448,8 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                 ? Fortify::currentEncrypter()->decrypt($this->user->two_factor_secret)
                 : null,
             'recoveryCodes' => $twoFactorConfirmed ? $this->user->recoveryCodes() : [],
+            'mcpEnabled' => app(GeneralSettings::class)->enable_mcp,
+            'mcpTokens' => $this->user->tokens()->latest()->get(),
         ]);
     }
 
