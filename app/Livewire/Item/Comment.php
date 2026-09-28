@@ -4,6 +4,7 @@ namespace App\Livewire\Item;
 
 use Livewire\Component;
 use App\Rules\ProfanityCheck;
+use Illuminate\Support\Collection;
 use Filament\Actions\Action;
 use App\Settings\GeneralSettings;
 use Filament\Support\Colors\Color;
@@ -19,16 +20,40 @@ class Comment extends Component implements HasForms, HasActions
 {
     use InteractsWithForms, InteractsWithActions;
 
-    public $comments;
     public $comment;
     public $item;
+
+    /**
+     * Ids of the direct replies. Only the ids are kept between requests: on later requests the reply
+     * components already exist, so Livewire just needs their keys. Keeping the whole comment tree in
+     * the component state would re-query it on every request (e.g. when opening the reply box).
+     *
+     * @var list<int>
+     */
+    public array $replyIds = [];
 
     public bool $isReplying = false;
     public $replyContent;
 
+    /**
+     * All comments grouped by parent id, only available during the initial render of the thread.
+     *
+     * @var Collection<int, Collection<int, CommentModel>>|null
+     */
+    protected ?Collection $commentsByParent = null;
+
+    public function mount(?Collection $comments = null): void
+    {
+        $this->commentsByParent = $comments;
+        $this->replyIds = $comments?->get($this->comment->id)?->pluck('id')->all() ?? [];
+    }
+
     public function render()
     {
-        return view('livewire.item.comment');
+        return view('livewire.item.comment', [
+            'commentsByParent' => $this->commentsByParent,
+            'repliesById' => $this->commentsByParent?->get($this->comment->id)?->keyBy('id') ?? collect(),
+        ]);
     }
 
     public function editAction(): Action

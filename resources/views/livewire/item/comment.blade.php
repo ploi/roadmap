@@ -128,14 +128,14 @@
         </div>
     </div>
 
-    @if(count($comments[$comment->id] ?? []))
+    @if(count($replyIds))
         <div class="mt-4 ml-4 pl-4 space-y-4 border-l-2 border-gray-100 dark:border-gray-800">
-            @foreach($comments[$comment->id] as $replyComment)
+            @foreach($replyIds as $replyId)
                 <livewire:item.comment
-                    :comments="$comments"
-                    :comment="$replyComment"
+                    :comments="$commentsByParent"
+                    :comment="$repliesById->get($replyId)"
                     :item="$item"
-                    key="comment-{{ $comment->id }}-{{ $replyComment->id }}"
+                    key="comment-{{ $comment->id }}-{{ $replyId }}"
                 />
             @endforeach
         </div>

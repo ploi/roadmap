@@ -6,6 +6,7 @@ use App\Models\Board;
 use App\Models\Project;
 use Livewire\Livewire;
 use App\Models\Comment;
+use Illuminate\Support\Facades\DB;
 use Filament\Actions\Testing\TestAction;
 use App\Livewire\Item\Comment as CommentComponent;
 
@@ -104,4 +105,31 @@ test('guests are sent to the login page when replying', function () {
         ->assertRedirect(route('login'));
 
     expect(Comment::query()->where('parent_id', $comment->id)->exists())->toBeFalse();
+});
+
+test('interacting with a comment does not reload the rest of the thread', function () {
+    createAndLoginUser();
+
+    $item = Item::factory()->create();
+    $comment = Comment::factory()->for($item)->for(User::factory())->create();
+    $parent = $comment;
+
+    foreach (range(1, 4) as $depth) {
+        $parent = Comment::factory()->for($item)->for(User::factory())->create(['parent_id' => $parent->id]);
+    }
+
+    $component = Livewire::test(CommentComponent::class, [
+        'comments' => $item->comments()->get()->mapToGroups(fn (Comment $comment) => [(int) $comment->parent_id => $comment]),
+        'comment' => $comment,
+        'item' => $item,
+    ]);
+
+    DB::flushQueryLog();
+    DB::enableQueryLog();
+
+    $component->call('cancelReply');
+
+    $commentQueries = collect(DB::getQueryLog())->filter(fn (array $query) => str_contains($query['query'], 'from "comments"'));
+
+    expect($commentQueries)->toHaveCount(1);
 });

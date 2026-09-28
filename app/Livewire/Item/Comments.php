@@ -20,7 +20,6 @@ class Comments extends Component implements HasForms, HasActions
     use InteractsWithForms, InteractsWithActions;
 
     public Item $item;
-    public $comments;
     public $content;
     public $private_content;
 
@@ -116,16 +115,22 @@ class Comments extends Component implements HasForms, HasActions
 
     public function render()
     {
-        $this->comments = $this->item
+        $comments = $this->item
             ->comments()
             ->withWhereHas('user:id,name,email,username')
+            ->with('votes.user:id,name,email,username')
             ->orderByRaw('COALESCE(parent_id, id), parent_id IS NOT NULL, id')
             ->when(!auth()->user()?->hasAdminAccess(), fn ($query) => $query->where('private', false))
-            ->get()
-            ->mapToGroups(function ($comment) {
-                return [(int)$comment->parent_id => $comment];
-            });
+            ->get();
 
-        return view('livewire.item.comments');
+        $commentsById = $comments->keyBy('id');
+
+        $comments->each(fn ($comment) => $comment->setRelation('parent', $commentsById->get($comment->parent_id)));
+
+        return view('livewire.item.comments', [
+            'comments' => $comments->mapToGroups(function ($comment) {
+                return [(int)$comment->parent_id => $comment];
+            }),
+        ]);
     }
 }
