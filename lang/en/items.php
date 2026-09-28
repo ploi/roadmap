@@ -47,4 +47,11 @@ return [
     'filter-last-year' => 'Last year',
     'filter-last-2-years' => 'Last 2 years',
     'filter-last-3-years' => 'Last 3 years',
+    'copy-for-llms' => 'Copy for LLMs',
+    'copy-for-llms-label' => 'Copy this item as markdown for an AI assistant',
+    'copied' => 'Copied',
+    'copied-to-clipboard' => 'Copied to clipboard',
+    'view-as-markdown' => 'Markdown',
+    'ask-ai' => 'Ask AI',
+    'ask-ai-prompt' => 'Read :url and answer my questions about this roadmap item.',
 ];
