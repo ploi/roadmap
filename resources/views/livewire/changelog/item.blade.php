@@ -3,7 +3,7 @@
         <!-- Header -->
         <div class="flex flex-col gap-3 mb-6">
             @if($changelog->project?->isVisibleForCurrentUser())
-                <x-project-badge :project="$changelog->project" class="self-start"/>
+                <x-project-badge :project="$changelog->project" :href="App\Http\Controllers\ChangelogController::overviewUrl($changelog->project->slug)" class="self-start"/>
             @endif
 
             <h1 class="font-bold text-2xl md:text-3xl text-gray-900 dark:text-white leading-tight">

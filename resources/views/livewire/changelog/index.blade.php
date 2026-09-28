@@ -20,48 +20,51 @@
                         </time>
                     </div>
 
-                    <ul class="divide-y divide-gray-200 rounded-xl border border-gray-200 bg-white shadow-sm dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800">
+                    <ul class="divide-y divide-gray-200 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800">
                         @foreach($changelogsOnDate as $changelog)
                             @php($project = $changelog->project?->isVisibleForCurrentUser() ? $changelog->project : null)
 
-                            <li class="flex flex-col gap-2 p-5">
+                            <li class="group relative flex flex-col gap-2 p-5 transition hover:bg-gray-50 dark:hover:bg-white/5">
                                 @if($project || $showAuthor)
                                     <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
                                         @if($project)
-                                            <x-project-badge :project="$project"/>
+                                            <x-project-badge :project="$project" :href="App\Http\Controllers\ChangelogController::overviewUrl($project->slug)" class="relative z-10"/>
                                         @endif
 
                                         @if($showAuthor)
-                                            <span class="inline-flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+                                            <a href="{{ route('public-user', $changelog->user->username) }}"
+                                               class="relative z-10 inline-flex items-center gap-1.5 text-xs text-gray-500 transition hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                                                 <img class="size-4 rounded-full object-cover"
                                                      src="{{ $changelog->user->getGravatar() }}"
                                                      alt="">
                                                 {{ $changelog->user->name }}
-                                            </span>
+                                            </a>
                                         @endif
                                     </div>
                                 @endif
 
                                 <h2 class="text-lg font-semibold leading-snug text-gray-900 dark:text-white">
                                     <a href="{{ route('changelog.show', $changelog) }}"
-                                       class="transition hover:text-brand-600 dark:hover:text-brand-400">
+                                       class="transition group-hover:text-brand-600 focus:outline-none after:absolute after:inset-0 focus-visible:after:ring-2 focus-visible:after:ring-inset focus-visible:after:ring-brand-500 dark:group-hover:text-brand-400">
                                         {{ $changelog->title }}
                                     </a>
                                 </h2>
 
-                                <div class="prose prose-sm prose-gray max-w-none break-words dark:prose-invert prose-p:my-0">
+                                <div class="prose prose-sm prose-gray max-w-none break-words dark:prose-invert prose-p:my-0 [&_a]:relative [&_a]:z-10">
                                     {!! $changelog->excerpt_html !!}
                                 </div>
 
                                 @if($showLikes || $changelog->hasMoreContentThanExcerpt())
                                     <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
                                         @if($showLikes)
-                                            <livewire:changelog.vote :changelog="$changelog" :key="'changelog-vote-' . $changelog->id"/>
+                                            <div class="relative z-10">
+                                                <livewire:changelog.vote :changelog="$changelog" :key="'changelog-vote-' . $changelog->id"/>
+                                            </div>
                                         @endif
 
                                         @if($changelog->hasMoreContentThanExcerpt())
                                             <a href="{{ route('changelog.show', $changelog) }}"
-                                               class="text-sm font-medium text-brand-600 transition hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300">
+                                               class="relative z-10 text-sm font-medium text-brand-600 transition hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300">
                                                 {{ trans('changelog.read-more') }} &rarr;
                                             </a>
                                         @endif
