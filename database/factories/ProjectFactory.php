@@ -18,7 +18,7 @@ class ProjectFactory extends Factory
     {
         return [
             'title' => ucfirst($this->faker->domainWord),
-            'slug' => $this->faker->word,
+            'slug' => $this->faker->unique()->slug(),
             'private' => false,
             'collapsible' => false,
         ];
