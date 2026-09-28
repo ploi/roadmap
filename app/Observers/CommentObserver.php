@@ -10,6 +10,16 @@ use App\Notifications\Item\ItemHasNewCommentNotification;
 
 class CommentObserver
 {
+    /**
+     * Replies to a private note are private as well, otherwise they would leak into public listings and notifications.
+     */
+    public function creating(Comment $comment)
+    {
+        if ($comment->parent?->private) {
+            $comment->private = true;
+        }
+    }
+
     public function created(Comment $comment)
     {
         $this->processMentions($comment);
