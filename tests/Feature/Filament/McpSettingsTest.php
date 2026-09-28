@@ -19,3 +19,14 @@ test('admins can enable mcp in the settings', function () {
 
     expect(app(GeneralSettings::class)->refresh()->enable_mcp)->toBeTrue();
 });
+
+test('the settings show how to connect once mcp is enabled', function () {
+    createAndLoginUser(['role' => UserRole::Admin]);
+
+    Livewire::test(Settings::class)
+        ->fillForm(['enable_mcp' => false])
+        ->assertDontSeeText(trans('settings.mcp.connect-heading'))
+        ->fillForm(['enable_mcp' => true])
+        ->assertSeeText([trans('settings.mcp.connect-heading'), 'Claude Desktop', 'ChatGPT'])
+        ->assertSee(route('mcp.docs'));
+});

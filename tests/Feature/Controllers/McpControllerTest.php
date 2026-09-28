@@ -11,6 +11,7 @@ it('explains how to connect to the mcp server', function () {
         ->assertOk()
         ->assertSee(url('mcp'))
         ->assertSee(['list-projects', 'get-item', 'comment-on-item', 'move-item'])
+        ->assertSeeText(['Claude Code', 'Claude Desktop', 'ChatGPT', 'Cursor', 'VS Code', 'Codex'])
         ->assertSeeText(trans('mcp.step-token-login'))
         ->assertDontSeeText(trans('mcp.disabled'));
 });

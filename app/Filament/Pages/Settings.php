@@ -13,11 +13,11 @@ use App\Services\GitHubService;
 use Filament\Pages\SettingsPage;
 use App\Settings\GeneralSettings;
 use Illuminate\Support\Collection;
-use Illuminate\Support\HtmlString;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\View;
 use Filament\Support\Enums\Alignment;
 use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Repeater;
@@ -343,7 +343,12 @@ class Settings extends SettingsPage
                             [
                             Toggle::make('enable_mcp')
                                 ->label(trans('settings.mcp.enable-mcp'))
-                                ->helperText(fn () => new HtmlString(trans('settings.mcp.enable-mcp-helper-text', ['url' => e(route('mcp.docs'))])))
+                                ->helperText(trans('settings.mcp.enable-mcp-helper-text'))
+                                ->live()
+                                ->columnSpan(2),
+
+                            View::make('filament.settings.mcp')
+                                ->visible(fn (Get $get): bool => (bool) $get('enable_mcp'))
                                 ->columnSpan(2),
                             ]
                         ),

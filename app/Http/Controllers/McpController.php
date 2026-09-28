@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Laravel\Mcp\Server\Tool;
 use App\Settings\GeneralSettings;
-use App\Mcp\Servers\RoadmapServer;
 use Illuminate\Contracts\View\View;
 
 class McpController extends Controller
@@ -20,7 +18,6 @@ class McpController extends Controller
 
         return view('mcp', [
             'enabled' => $enabled,
-            'tools' => collect(RoadmapServer::TOOLS)->map(fn (string $tool): Tool => app($tool)),
         ]);
     }
 }

@@ -91,7 +91,11 @@ return [
     'mcp-title'                   => 'MCP',
     'mcp'                         => [
         'enable-mcp'             => 'Enable MCP server',
-        'enable-mcp-helper-text' => 'Let users connect AI assistants such as Claude or Cursor to the roadmap with a personal token. They can read projects and items, and comment. Admins and employees can also move items. <a href=":url" target="_blank" class="underline">Read how it works</a>.',
+        'enable-mcp-helper-text' => 'Let users connect AI assistants such as Claude, ChatGPT or Cursor to the roadmap with a personal token.',
+        'how-it-works'           => 'How it works',
+        'how-it-works-description' => 'Users create a personal token under "MCP access" on their profile page and add the roadmap to their AI client. Share the documentation page with your users, it has the same instructions as below.',
+        'view-docs'              => 'Open the documentation page',
+        'connect-heading'        => 'Connect an AI client',
     ],
     'notifications-title'         => 'Notifications',
     'notifications-helper-text'   => 'This will send notifications once a new item has been created or when there is a new version of the roadmap software.',
