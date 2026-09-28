@@ -53,7 +53,7 @@ Route::get('projects/{project}/boards/{board}', [BoardsController::class, 'show'
 Route::get('activity', \App\Http\Controllers\ActivityController::class)->name('activity');
 
 Route::get('/email/verify', [VerificationController::class, 'show'])->middleware('auth')->name('verification.notice');
-Route::post('/email/verification-notification', [VerificationController::class, 'resend'])->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
+Route::post('/email/verification-notification', [VerificationController::class, 'resend'])->middleware(['auth', 'throttle:verification'])->name('verification.resend');
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->middleware(['auth', 'signed'])->name('verification.verify');
 Route::get('/profile/verify-email-change/{id}/{email}', VerifyEmailChangeController::class)->middleware(['auth', 'signed'])->name('profile.verify-email-change');
 
