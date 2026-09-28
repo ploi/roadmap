@@ -14,9 +14,10 @@
         "infer-conventions",
         "fortify-development",
         "laravel-best-practices",
+        "testing-best-practices",
         "octane-development",
         "socialite-development",
-        "pest-testing",
-        "tailwindcss-development"
+        "tailwindcss-development",
+        "filament-development"
     ]
 }
