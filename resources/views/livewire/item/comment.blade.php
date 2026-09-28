@@ -65,6 +65,10 @@
                         {{ ($this->replyAction)(['comment' => $comment->id]) }}
                         <span>&centerdot;</span>
                     @endif
+                    @if(auth()->user()?->hasAdminAccess())
+                        {{ ($this->deleteAction)(['comment' => $comment->id]) }}
+                        <span>&centerdot;</span>
+                    @endif
                     <button x-data
                             class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                             x-tooltip.raw="{{ trans('comments.click-to-copy') }}"

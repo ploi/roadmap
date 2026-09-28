@@ -56,6 +56,27 @@ class Comment extends Component implements HasForms, HasActions
             });
     }
 
+    public function deleteAction(): Action
+    {
+        return Action::make('delete')
+            ->label(trans('comments.delete'))
+            ->requiresConfirmation()
+            ->color(Color::Gray)
+            ->modalIcon('heroicon-o-trash')
+            ->modalIconColor('danger')
+            ->modalHeading(trans('comments.delete-comment'))
+            ->modalDescription(trans('comments.delete-comment-description'))
+            ->modalSubmitAction(fn (Action $action) => $action->color('danger')->label(trans('comments.delete')))
+            ->link()
+            ->visible(fn (): bool => (bool) auth()->user()?->hasAdminAccess())
+            ->action(function (array $arguments): void {
+                $comment = CommentModel::findOrFail($arguments['comment']);
+                $comment->delete();
+
+                $this->redirectRoute('items.show', $comment->item->slug);
+            });
+    }
+
     public function replyAction(): Action
     {
         return Action::make('reply')
