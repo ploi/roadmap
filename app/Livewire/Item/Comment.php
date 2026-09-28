@@ -44,6 +44,7 @@ class Comment extends Component implements HasForms, HasActions
             })
             ->form([
                 MarkdownEditor::make('content')
+                    ->mentions($this->item)
                     ->required()
             ])
             ->link()
@@ -65,7 +66,7 @@ class Comment extends Component implements HasForms, HasActions
             ->modalDescription('')
             ->modalIcon('heroicon-o-chat-bubble-left-right')
             ->form([
-                MarkdownEditor::make('content')->required()
+                MarkdownEditor::make('content')->mentions($this->item)->required()
             ])
             ->link()
             ->action(function (array $data, array $arguments): void {

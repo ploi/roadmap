@@ -4,7 +4,7 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Models\Comment;
-use Xetaio\Mentions\Parser\MentionParser;
+use App\Services\MentionParser;
 use App\Notifications\CommentHasReplyNotification;
 use App\Notifications\Item\ItemHasNewCommentNotification;
 
@@ -12,19 +12,7 @@ class CommentObserver
 {
     public function created(Comment $comment)
     {
-        $parser = new MentionParser($comment, [
-            'regex_replacement' => [
-                '{character}' => '@',
-                '{pattern}' => '[A-Za-z0-9_-]',
-                '{rules}' => '{4,20}'
-            ],
-        ]);
-
-        $content = $parser->parse($comment->content);
-
-        $comment->updateQuietly([
-            'content' => $content,
-        ]);
+        $this->processMentions($comment);
 
         $userIds = $comment->item?->votes()
                 ->subscribed()
@@ -38,6 +26,13 @@ class CommentObserver
         $comment->parent?->user->notify(new CommentHasReplyNotification($comment));
     }
 
+    public function updated(Comment $comment)
+    {
+        if ($comment->wasChanged('content')) {
+            $this->processMentions($comment);
+        }
+    }
+
     public function deleting(Comment $comment)
     {
         foreach ($comment->comments as $parentComment) {
@@ -45,5 +40,27 @@ class CommentObserver
         }
 
         $comment->mentions()->delete();
+    }
+
+    /**
+     * Link mentions in the content and notify users that are mentioned for the first time in this comment.
+     */
+    private function processMentions(Comment $comment): void
+    {
+        ['content' => $content, 'users' => $users] = app(MentionParser::class)->parse($comment->content ?? '');
+
+        if ($content !== $comment->content) {
+            $comment->updateQuietly(['content' => $content]);
+        }
+
+        $users
+            ->reject(fn (User $user) => $user->id === $comment->user_id)
+            ->each(function (User $user) use ($comment) {
+                $mention = $comment->mention($user, notify: false);
+
+                if ($mention->wasRecentlyCreated) {
+                    $mention->notify($comment, $user);
+                }
+            });
     }
 }

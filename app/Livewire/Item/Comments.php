@@ -80,6 +80,7 @@ class Comments extends Component implements HasForms, HasActions
                         MarkdownEditor::make('content')
                             ->label(trans('comments.public-comment'))
                             ->hiddenLabel()
+                            ->mentions($this->item)
                             ->helperText(trans('comments.mention-helper-text'))
                             ->minLength(3)
                             ->rules(['required_if:private_content,null,""', 'prohibited_unless:private_content,null,""', new ProfanityCheck()]),
@@ -92,6 +93,7 @@ class Comments extends Component implements HasForms, HasActions
                         MarkdownEditor::make('private_content')
                             ->label(trans('comments.private-note'))
                             ->hiddenLabel()
+                            ->mentions($this->item)
                             ->helperText(trans('comments.mention-helper-text'))
                             ->minLength(3)
                             ->visible(auth()->check() && auth()->user()->hasAdminAccess())
@@ -111,6 +113,7 @@ class Comments extends Component implements HasForms, HasActions
                 ])
                 ->label(trans('comments.comment'))
                 ->helperText(trans('comments.mention-helper-text'))
+                ->mentions($this->item)
                 ->disableToolbarButtons(app(GeneralSettings::class)->getDisabledToolbarButtons())
                 ->minLength(3)
                 ->required(),

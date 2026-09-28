@@ -7,6 +7,9 @@ Alpine.plugin(Clipboard)
 import { themeToggle } from './theme-toggle.js';
 Alpine.data('themeToggle', themeToggle);
 
+import { mentions } from './mentions.js';
+Alpine.directive('mentions', mentions);
+
 Livewire.start()
 
 
