@@ -21,7 +21,12 @@ class RecentComments extends Component implements HasTable, HasForms, HasActions
     public function table(Table $table): Table
     {
         return $table
-            ->query(Comment::query()->public()->limit(10))
+            ->query(
+                Comment::query()
+                    ->public()
+                    ->whereHas('item', fn ($query) => $query->visibleForCurrentUser())
+                    ->limit(10)
+            )
             ->columns([
                 TextColumn::make('content')->label(trans('table.content')),
                 TextColumn::make('item.title')->label(trans('table.item')),
