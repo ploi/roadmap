@@ -55,6 +55,19 @@ test('login accepts a local intended path', function () {
     ])->assertRedirect('/items/example');
 });
 
+test('login accepts a same-origin intended URL', function () {
+    $user = createUser();
+    $intended = route('items.show', 'example');
+
+    $this->get(route('login', ['intended' => $intended]))
+        ->assertSessionHas('url.intended', $intended);
+
+    $this->post(route('login'), [
+        'email' => $user->email,
+        'password' => 'password',
+    ])->assertRedirect($intended);
+});
+
 test('login rejects a protocol-relative intended URL', function () {
     $this->get(route('login', ['intended' => '//attacker.example/landing']))
         ->assertSessionMissing('url.intended');
