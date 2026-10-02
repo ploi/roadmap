@@ -9,6 +9,8 @@ use App\Traits\HasOgImage;
 use Illuminate\Support\Str;
 use App\Enums\InboxWorkflow;
 use App\Settings\GeneralSettings;
+use Illuminate\Routing\Redirector;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -22,7 +24,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Item extends Model
 {
-    use HasFactory, Sluggable, HasOgImage, HasUpvote, HasTags;
+    use HasFactory, Sluggable, HasOgImage, HasTags;
+    use HasUpvote {
+        toggleUpvote as private toggleUpvoteWithoutBoardGuard;
+    }
 
     public $fillable = [
         'slug',
@@ -86,6 +91,15 @@ class Item extends Model
     public function board(): BelongsTo
     {
         return $this->belongsTo(Board::class);
+    }
+
+    public function toggleUpvote(?User $user = null): Vote|Model|RedirectResponse|bool|Redirector
+    {
+        if ($this->board?->block_votes) {
+            return false;
+        }
+
+        return $this->toggleUpvoteWithoutBoardGuard($user);
     }
 
     public function user(): BelongsTo

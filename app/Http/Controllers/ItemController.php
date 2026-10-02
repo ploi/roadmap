@@ -142,6 +142,8 @@ class ItemController extends Controller
 
         $item = $project->items()->visibleForCurrentUser()->findOrfail($itemId);
 
+        abort_if($item->board?->block_votes, 403);
+
         $item->toggleUpvote();
 
         return redirect()->back();
