@@ -30,25 +30,8 @@ class WidgetController extends Controller
             return response()->json(['enabled' => false], 200);
         }
 
-        // Validate origin domain if restrictions are set
-        if (!empty($settings->allowed_domains)) {
-            $origin = $request->header('Origin') ?? $request->header('Referer');
-
-            if ($origin) {
-                $domain = parse_url($origin, PHP_URL_HOST);
-                $allowed = false;
-
-                foreach ($settings->allowed_domains as $allowedDomain) {
-                    if ($domain === $allowedDomain || str_ends_with($domain, '.' . $allowedDomain)) {
-                        $allowed = true;
-                        break;
-                    }
-                }
-
-                if (!$allowed) {
-                    return response()->json(['enabled' => false], 200);
-                }
-            }
+        if (! $this->isOriginAllowed($request, $settings->allowed_domains)) {
+            return response()->json(['enabled' => false], 200);
         }
 
         return response()->json([
@@ -69,25 +52,8 @@ class WidgetController extends Controller
             return response()->json(['error' => 'Widget is not enabled'], 403);
         }
 
-        // Validate origin domain if restrictions are set
-        if (!empty($settings->allowed_domains)) {
-            $origin = $request->header('Origin') ?? $request->header('Referer');
-
-            if ($origin) {
-                $domain = parse_url($origin, PHP_URL_HOST);
-                $allowed = false;
-
-                foreach ($settings->allowed_domains as $allowedDomain) {
-                    if ($domain === $allowedDomain || str_ends_with($domain, '.' . $allowedDomain)) {
-                        $allowed = true;
-                        break;
-                    }
-                }
-
-                if (!$allowed) {
-                    return response()->json(['error' => 'Domain not allowed'], 403);
-                }
-            }
+        if (! $this->isOriginAllowed($request, $settings->allowed_domains)) {
+            return response()->json(['error' => 'Domain not allowed'], 403);
         }
 
         // Validate request
@@ -155,25 +121,8 @@ class WidgetController extends Controller
             return response()->json(['enabled' => false], 200);
         }
 
-        // Validate origin domain if restrictions are set
-        if (!empty($settings->allowed_domains)) {
-            $origin = $request->header('Origin') ?? $request->header('Referer');
-
-            if ($origin) {
-                $domain = parse_url($origin, PHP_URL_HOST);
-                $allowed = false;
-
-                foreach ($settings->allowed_domains as $allowedDomain) {
-                    if ($domain === $allowedDomain || str_ends_with($domain, '.' . $allowedDomain)) {
-                        $allowed = true;
-                        break;
-                    }
-                }
-
-                if (!$allowed) {
-                    return response()->json(['enabled' => false], 200);
-                }
-            }
+        if (! $this->isOriginAllowed($request, $settings->allowed_domains)) {
+            return response()->json(['enabled' => false], 200);
         }
 
         return response()->json([
@@ -196,25 +145,8 @@ class WidgetController extends Controller
             return response()->json(['error' => 'Widget is not enabled'], 403);
         }
 
-        // Validate origin domain if restrictions are set
-        if (!empty($settings->allowed_domains)) {
-            $origin = $request->header('Origin') ?? $request->header('Referer');
-
-            if ($origin) {
-                $domain = parse_url($origin, PHP_URL_HOST);
-                $allowed = false;
-
-                foreach ($settings->allowed_domains as $allowedDomain) {
-                    if ($domain === $allowedDomain || str_ends_with($domain, '.' . $allowedDomain)) {
-                        $allowed = true;
-                        break;
-                    }
-                }
-
-                if (!$allowed) {
-                    return response()->json(['error' => 'Domain not allowed'], 403);
-                }
-            }
+        if (! $this->isOriginAllowed($request, $settings->allowed_domains)) {
+            return response()->json(['error' => 'Domain not allowed'], 403);
         }
 
         $page = max(1, (int) $request->input('page', 1));
@@ -280,5 +212,35 @@ class WidgetController extends Controller
             'last_page' => $paginator->lastPage(),
             'has_more' => $paginator->hasMorePages(),
         ]);
+    }
+
+    /**
+     * @param  array<int, string>  $allowedDomains
+     */
+    private function isOriginAllowed(Request $request, array $allowedDomains): bool
+    {
+        if (empty($allowedDomains)) {
+            return true;
+        }
+
+        $origin = $request->header('Origin') ?? $request->header('Referer');
+
+        if (! is_string($origin)) {
+            return false;
+        }
+
+        $domain = parse_url($origin, PHP_URL_HOST);
+
+        if (! is_string($domain)) {
+            return false;
+        }
+
+        foreach ($allowedDomains as $allowedDomain) {
+            if ($domain === $allowedDomain || str_ends_with($domain, '.'.$allowedDomain)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
