@@ -1,7 +1,11 @@
 <?php
 
 use App\Models\Item;
+use App\Models\Comment;
+use App\Models\Project;
+use App\Enums\ItemActivity;
 use App\Settings\WidgetSettings;
+use App\Settings\ActivityWidgetSettings;
 use function Pest\Laravel\assertDatabaseHas;
 
 beforeEach(function () {
@@ -12,6 +16,44 @@ beforeEach(function () {
     $this->settings->button_text = 'Feedback';
     $this->settings->allowed_domains = [];
     $this->settings->save();
+});
+
+test('activity widget excludes private project items and private note counts', function () {
+    $activitySettings = app(ActivityWidgetSettings::class);
+    $activitySettings->enabled = true;
+    $activitySettings->allowed_domains = [];
+    $activitySettings->save();
+
+    $user = createUser();
+    $this->actingAs($user);
+    $privateProject = Project::factory()->private()->create();
+    $privateProjectItem = Item::factory()->create([
+        'project_id' => $privateProject->id,
+        'title' => 'Private Project Widget Activity',
+        'user_id' => $user->id,
+    ]);
+    $publicItem = Item::factory()->create([
+        'title' => 'Public Widget Activity',
+        'user_id' => $user->id,
+    ]);
+
+    Comment::factory()->create(['item_id' => $publicItem->id, 'private' => false]);
+    Comment::factory()->create(['item_id' => $publicItem->id, 'private' => true]);
+    ItemActivity::createForItem($privateProjectItem, ItemActivity::Created);
+    ItemActivity::createForItem($publicItem, ItemActivity::Created);
+
+    $response = $this->getJson('/api/activity-widget/activities');
+
+    $response->assertSuccessful();
+
+    expect(json_encode($response->json(), JSON_THROW_ON_ERROR))
+        ->not->toContain('Private Project Widget Activity');
+
+    $publicActivity = collect($response->json('activities'))
+        ->first(fn (array $activity) => str_contains($activity['description'], 'Public Widget Activity'));
+
+    expect($publicActivity)->not->toBeNull()
+        ->and($publicActivity['comments'])->toBe(1);
 });
 
 test('widget config endpoint returns configuration when enabled', function () {
