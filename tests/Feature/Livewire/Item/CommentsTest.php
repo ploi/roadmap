@@ -41,3 +41,34 @@ test('rendering comments does not run extra queries per comment', function () {
 
     expect(countQueriesRenderingComments($item))->toBe($queriesForOneThread);
 });
+
+test('a normal user cannot create a private note through component state', function () {
+    $user = User::factory()->create();
+    $item = Item::factory()->create();
+
+    $this->actingAs($user);
+
+    Livewire::test(Comments::class, ['item' => $item])
+        ->set('content', 'Valid public content')
+        ->set('private_content', 'Forged private note')
+        ->call('submit')
+        ->assertForbidden();
+
+    expect($item->comments()->where('private', true)->exists())->toBeFalse();
+});
+
+test('an administrator can create a private note', function () {
+    $admin = User::factory()->admin()->create();
+    $item = Item::factory()->create();
+
+    $this->actingAs($admin);
+
+    Livewire::test(Comments::class, ['item' => $item])
+        ->set('private_content', 'Authorized private note')
+        ->call('submit');
+
+    expect($item->comments()
+        ->where('content', 'Authorized private note')
+        ->where('private', true)
+        ->exists())->toBeTrue();
+});

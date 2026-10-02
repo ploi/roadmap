@@ -49,6 +49,8 @@ class Comments extends Component implements HasForms, HasActions
         ]);
 
         if (filled($this->private_content)) {
+            abort_unless(auth()->user()->hasAdminAccess(), 403);
+
             $formState['content'] = $this->private_content;
             $formState['private'] = true;
         }
