@@ -74,6 +74,23 @@ test('shows comments on public items only', function () {
         ->assertDontSee('Private');
 });
 
+test('hides private comments on public items', function () {
+    $viewer = User::factory()->create();
+    $author = User::factory()->create();
+    $item = Item::factory()->create(['private' => false]);
+
+    Comment::factory()->create([
+        'user_id' => $author->id,
+        'item_id' => $item->id,
+        'content' => 'Private profile note',
+        'private' => true,
+    ]);
+
+    actingAs($viewer)
+        ->get(route('public-user', $author->username))
+        ->assertDontSee('Private profile note');
+});
+
 test('hides comments on items in private projects', function () {
     $viewer = User::factory()->create();
     $author = User::factory()->create();
@@ -131,6 +148,27 @@ test('hides votes on comments on private items', function () {
         ->assertDontSee('Hidden Comment');
 });
 
+test('hides votes on private comments', function () {
+    $viewer = User::factory()->create();
+    $voter = User::factory()->create();
+    $item = Item::factory()->create(['title' => 'Public Item', 'private' => false]);
+    $comment = Comment::factory()->create([
+        'item_id' => $item->id,
+        'content' => 'Private voted note',
+        'private' => true,
+    ]);
+
+    Vote::factory()->create([
+        'user_id' => $voter->id,
+        'model_type' => Comment::class,
+        'model_id' => $comment->id,
+    ]);
+
+    actingAs($viewer)
+        ->get(route('public-user', $voter->username))
+        ->assertDontSee('Private voted note');
+});
+
 test('counts only visible items', function () {
     $viewer = User::factory()->create();
     $author = User::factory()->create();
@@ -151,6 +189,11 @@ test('counts only visible comments', function () {
     $privateItem = Item::factory()->create(['private' => true]);
 
     Comment::factory()->count(2)->create(['user_id' => $author->id, 'item_id' => $publicItem->id]);
+    Comment::factory()->create([
+        'user_id' => $author->id,
+        'item_id' => $publicItem->id,
+        'private' => true,
+    ]);
     Comment::factory()->create(['user_id' => $author->id, 'item_id' => $privateItem->id]);
 
     $response = actingAs($viewer)->get(route('public-user', $author->username));
