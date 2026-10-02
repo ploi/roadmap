@@ -3,6 +3,7 @@
 use App\Models\Item;
 use App\Models\User;
 use Livewire\Livewire;
+use App\Enums\UserRole;
 use App\Models\Comment;
 use App\Livewire\Item\Comments;
 use Illuminate\Support\Facades\DB;
@@ -57,11 +58,11 @@ test('a normal user cannot create a private note through component state', funct
     expect($item->comments()->where('private', true)->exists())->toBeFalse();
 });
 
-test('an administrator can create a private note', function () {
-    $admin = User::factory()->admin()->create();
+test('staff can create a private note', function (UserRole $role) {
+    $staff = User::factory()->create(['role' => $role]);
     $item = Item::factory()->create();
 
-    $this->actingAs($admin);
+    $this->actingAs($staff);
 
     Livewire::test(Comments::class, ['item' => $item])
         ->set('private_content', 'Authorized private note')
@@ -71,4 +72,7 @@ test('an administrator can create a private note', function () {
         ->where('content', 'Authorized private note')
         ->where('private', true)
         ->exists())->toBeTrue();
-});
+})->with([
+    UserRole::Admin,
+    UserRole::Employee,
+]);
