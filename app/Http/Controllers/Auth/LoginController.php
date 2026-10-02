@@ -146,7 +146,13 @@ class LoginController extends Controller
     public function showLoginForm(Request $request)
     {
         if ($request->has('intended')) {
-            Session::put('url.intended', $request->input('intended'));
+            $intended = $request->input('intended');
+
+            if (is_string($intended) && $this->isSafeIntendedUrl($request, $intended)) {
+                Session::put('url.intended', $intended);
+            } else {
+                Session::forget('url.intended');
+            }
         }
 
         if (SsoProvider::isForced()) {
@@ -156,5 +162,31 @@ class LoginController extends Controller
         return view('auth.login', [
             'hasSsoLoginAvailable' => SsoProvider::isEnabled(),
         ]);
+    }
+
+    private function isSafeIntendedUrl(Request $request, string $intended): bool
+    {
+        if (str_starts_with($intended, '/')) {
+            return ! str_starts_with($intended, '//')
+                && ! str_starts_with($intended, '/\\');
+        }
+
+        $parts = parse_url($intended);
+
+        if (! is_array($parts) || ! isset($parts['scheme'], $parts['host'])) {
+            return false;
+        }
+
+        $scheme = strtolower($parts['scheme']);
+
+        if (! in_array($scheme, ['http', 'https'], true)) {
+            return false;
+        }
+
+        $port = $parts['port'] ?? ($scheme === 'https' ? 443 : 80);
+
+        return $scheme === $request->getScheme()
+            && strcasecmp($parts['host'], $request->getHost()) === 0
+            && $port === $request->getPort();
     }
 }
