@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Item;
 
+use App\Models\Item;
 use App\Models\Vote;
 use Livewire\Component;
 use Illuminate\Support\Collection;
@@ -24,6 +25,8 @@ class VoteButton extends Component
 
     public function toggleUpvote()
     {
+        abort_if($this->model instanceof Item && $this->model->board?->block_votes, 403);
+
         $this->model->toggleUpvote();
         $this->refreshModel();
     }
