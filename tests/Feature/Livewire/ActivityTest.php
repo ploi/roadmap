@@ -2,6 +2,7 @@
 
 use App\Models\Item;
 use Livewire\Livewire;
+use App\Models\Project;
 use App\Livewire\Activity;
 use App\Enums\ItemActivity;
 
@@ -94,4 +95,19 @@ test('activity page does not show activities for private items', function () {
 
     $response->assertSee('Created the item');
     $response->assertDontSee('Made item private');
+});
+
+test('activity page does not show activities for items in private projects', function () {
+    $user = createAndLoginUser();
+    $project = Project::factory()->private()->create();
+    $item = Item::factory()->create([
+        'project_id' => $project->id,
+        'title' => 'Private Project Activity',
+        'user_id' => $user->id,
+    ]);
+
+    ItemActivity::createForItem($item, ItemActivity::Created);
+
+    $this->get(route('activity'))
+        ->assertDontSee('Private Project Activity');
 });

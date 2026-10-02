@@ -24,13 +24,18 @@ class RecentActivity extends Component implements HasTable, HasForms, HasActions
         return $table
             ->query(
                 Activity::query()
-                    ->with(['causer', 'subject.user', 'subject.comments'])
+                    ->with([
+                        'causer',
+                        'subject.user',
+                        'subject.comments' => fn ($query) => $query->public(),
+                    ])
                     ->where(function (Builder $query) {
                         $query->whereHasMorph('subject', ['App\Models\Item'], function (Builder $query) {
-                            $query->where('private', false);
+                            $query->visibleForCurrentUser();
                         })
                         ->orWhereHasMorph('subject', ['App\Models\Comment'], function (Builder $query) {
-                            $query->where('private', false);
+                            $query->public()
+                                ->whereHas('item', fn ($itemQuery) => $itemQuery->visibleForCurrentUser());
                         });
                     })
                     ->whereNotNull('causer_id')
