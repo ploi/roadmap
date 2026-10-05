@@ -9,7 +9,8 @@ class BoardsController extends Controller
 {
     public function show(Project $project, Board $board)
     {
-        abort_if($project->private && !auth()->user()?->hasAdminAccess(), 404);
+        abort_unless($project->isVisibleForCurrentUser(), 404);
+        abort_unless($board->visible, 404);
 
         return view('board', [
             'project' => $project,
