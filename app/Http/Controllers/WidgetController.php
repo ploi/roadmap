@@ -130,10 +130,14 @@ class WidgetController extends Controller
         $search = $request->input('search', '');
 
         $paginator = Activity::query()
-            ->with(['causer', 'subject.user', 'subject.comments'])
+            ->with([
+                'causer',
+                'subject.user',
+                'subject.comments' => fn ($query) => $query->public(),
+            ])
             ->where(function (Builder $query) use ($search) {
                 $query->whereHasMorph('subject', ['App\Models\Item'], function (Builder $query) use ($search) {
-                    $query->where('private', false);
+                    $query->visibleForCurrentUser();
 
                     // Add search filter for items
                     if (!empty($search)) {
@@ -141,7 +145,8 @@ class WidgetController extends Controller
                     }
                 })
                 ->orWhereHasMorph('subject', ['App\Models\Comment'], function (Builder $query) use ($search) {
-                    $query->where('private', false);
+                    $query->public()
+                        ->whereHas('item', fn ($itemQuery) => $itemQuery->visibleForCurrentUser());
 
                     // For comments, search the related item title
                     if (!empty($search)) {

@@ -4,6 +4,7 @@ use App\Models\Item;
 use App\Models\User;
 use Livewire\Livewire;
 use App\Models\Comment;
+use App\Models\Project;
 use App\Enums\ItemActivity;
 use Spatie\Activitylog\Models\Activity;
 use App\Livewire\Welcome\RecentActivity;
@@ -53,6 +54,21 @@ test('recent activity does not show activities for private items', function () {
 
     $component->assertSee('Created the item');
     $component->assertDontSee('Made item private');
+});
+
+test('recent activity does not show activities for items in private projects', function () {
+    $user = createAndLoginUser();
+    $project = Project::factory()->private()->create();
+    $item = Item::factory()->create([
+        'project_id' => $project->id,
+        'title' => 'Private Project Recent Activity',
+        'user_id' => $user->id,
+    ]);
+
+    ItemActivity::createForItem($item, ItemActivity::Created);
+
+    Livewire::test(RecentActivity::class)
+        ->assertDontSee('Private Project Recent Activity');
 });
 
 test('recent activity does not show activities without causer', function () {
