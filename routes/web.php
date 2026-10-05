@@ -32,7 +32,9 @@ Route::get('oauth/login', [\App\Http\Controllers\Auth\LoginController::class, 'r
 Route::get('oauth/callback', [\App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback'])->middleware('guest');
 
 Route::get('password-protection', PasswordProtectionController::class)->name('password.protection');
-Route::post('password-protection', [PasswordProtectionController::class, 'login'])->name('password.protection.login');
+Route::post('password-protection', [PasswordProtectionController::class, 'login'])
+    ->middleware('throttle:password-protection')
+    ->name('password.protection.login');
 
 Route::get('/widget.js', [WidgetController::class, 'javascript'])->name('widget.js');
 Route::get('/activity-widget.js', [WidgetController::class, 'activityJavascript'])->name('activity-widget.js');
