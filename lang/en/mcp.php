@@ -6,7 +6,7 @@ return [
     'disabled' => 'The MCP server is disabled, users can\'t see this page or connect. Enable it in the settings under "MCP".',
 
     'permissions-title' => 'What your assistant can do',
-    'permissions' => 'The assistant acts as you. It sees exactly the projects, items and comments you can see on the roadmap, and comments are posted under your name. Only admins and employees can move items between boards.',
+    'permissions' => 'The assistant acts as you. It sees exactly the projects, items and comments you can see on the roadmap, and comments and items are posted under your name. Only admins and employees can move items between boards.',
 
     'step-token-title' => '1. Create a token',
     'step-token' => 'Create a personal token in your profile. You can revoke it at any time, which disconnects every assistant that uses it.',

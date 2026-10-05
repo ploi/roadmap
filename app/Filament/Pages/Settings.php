@@ -354,6 +354,12 @@ class Settings extends SettingsPage
                                 ->live()
                                 ->columnSpan(2),
 
+                            Toggle::make('mcp_users_can_create_items')
+                                ->label(trans('settings.mcp.users-can-create-items'))
+                                ->helperText(trans('settings.mcp.users-can-create-items-helper-text'))
+                                ->visible(fn (Get $get): bool => (bool) $get('enable_mcp'))
+                                ->columnSpan(2),
+
                             View::make('filament.settings.mcp')
                                 ->visible(fn (Get $get): bool => (bool) $get('enable_mcp'))
                                 ->columnSpan(2),
