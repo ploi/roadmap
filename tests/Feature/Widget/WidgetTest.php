@@ -3,6 +3,7 @@
 use App\Models\Item;
 use App\Models\User;
 use App\Settings\WidgetSettings;
+use App\Settings\ActivityWidgetSettings;
 use function Pest\Laravel\assertDatabaseHas;
 
 beforeEach(function () {
@@ -121,6 +122,16 @@ test('widget submission respects domain restrictions', function () {
     $response->assertForbidden();
 });
 
+test('widget submission requires an origin when domains are restricted', function () {
+    $this->settings->allowed_domains = ['example.com'];
+    $this->settings->save();
+
+    $this->postJson('/api/widget/submit', [
+        'title' => 'Test Feedback',
+        'content' => 'This is a test feedback',
+    ])->assertForbidden();
+});
+
 test('widget submission allows configured domains', function () {
     $this->settings->allowed_domains = ['example.com'];
     $this->settings->save();
@@ -157,6 +168,29 @@ test('widget config respects domain restrictions', function () {
             'enabled' => true,
             'position' => 'bottom-right',
         ]);
+});
+
+test('widget config is disabled without an origin when domains are restricted', function () {
+    $this->settings->allowed_domains = ['example.com'];
+    $this->settings->save();
+
+    $this->getJson('/api/widget/config')
+        ->assertSuccessful()
+        ->assertJson(['enabled' => false]);
+});
+
+test('activity widget requires an origin when domains are restricted', function () {
+    $settings = app(ActivityWidgetSettings::class);
+    $settings->enabled = true;
+    $settings->allowed_domains = ['example.com'];
+    $settings->save();
+
+    $this->getJson('/api/activity-widget/config')
+        ->assertSuccessful()
+        ->assertJson(['enabled' => false]);
+
+    $this->getJson('/api/activity-widget/activities')
+        ->assertForbidden();
 });
 
 test('widget javascript is served correctly', function () {
