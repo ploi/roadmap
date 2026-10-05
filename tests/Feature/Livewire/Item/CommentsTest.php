@@ -4,6 +4,7 @@ use App\Models\Item;
 use App\Models\User;
 use App\Models\Board;
 use Livewire\Livewire;
+use App\Enums\UserRole;
 use App\Models\Comment;
 use App\Models\Project;
 use App\Livewire\Item\Comments;
@@ -62,3 +63,37 @@ test('a user cannot comment when the board blocks comments', function () {
 
     expect($item->comments()->where('content', 'Blocked comment')->exists())->toBeFalse();
 });
+
+test('a normal user cannot create a private note through component state', function () {
+    $user = User::factory()->create();
+    $item = Item::factory()->create();
+
+    $this->actingAs($user);
+
+    Livewire::test(Comments::class, ['item' => $item])
+        ->set('content', 'Valid public content')
+        ->set('private_content', 'Forged private note')
+        ->call('submit')
+        ->assertForbidden();
+
+    expect($item->comments()->where('private', true)->exists())->toBeFalse();
+});
+
+test('staff can create a private note', function (UserRole $role) {
+    $staff = User::factory()->create(['role' => $role]);
+    $item = Item::factory()->create();
+
+    $this->actingAs($staff);
+
+    Livewire::test(Comments::class, ['item' => $item])
+        ->set('private_content', 'Authorized private note')
+        ->call('submit');
+
+    expect($item->comments()
+        ->where('content', 'Authorized private note')
+        ->where('private', true)
+        ->exists())->toBeTrue();
+})->with([
+    UserRole::Admin,
+    UserRole::Employee,
+]);
