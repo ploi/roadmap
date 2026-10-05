@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Settings\WidgetSettings;
@@ -102,35 +101,13 @@ class WidgetController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Only create/find user if email is provided
-        $user = null;
-        if ($request->filled('email')) {
-            $user = User::firstOrCreate(
-                ['email' => $request->input('email')],
-                [
-                    'name' => $request->input('name', 'Widget User'),
-                    'password' => bcrypt(str()->random(32)),
-                ]
-            );
-        }
-
-        // Temporarily set the user for this request without triggering login events
-        if ($user) {
-            auth()->setUser($user);
-        }
-
         // Create item
         $item = Item::create([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
-            'user_id' => $user?->id,
+            'user_id' => null,
             'private' => false,
         ]);
-
-        // Automatically upvote the item for the user
-        if ($user) {
-            $item->toggleUpvote($user);
-        }
 
         return response()->json([
             'success' => true,

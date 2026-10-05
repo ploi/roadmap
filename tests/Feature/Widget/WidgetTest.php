@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Item;
+use App\Models\User;
 use App\Settings\WidgetSettings;
 use function Pest\Laravel\assertDatabaseHas;
 
@@ -182,7 +183,9 @@ test('widget javascript includes dark mode support', function () {
         ->toContain("document.documentElement.classList.contains('dark')");
 });
 
-test('widget submission automatically upvotes item for user', function () {
+test('widget email does not assign an existing user or create a vote', function () {
+    $user = User::factory()->create(['email' => 'voter@example.com']);
+
     $response = $this->postJson('/api/widget/submit', [
         'title' => 'Test Feedback with Vote',
         'content' => 'This feedback should have an automatic upvote',
@@ -195,11 +198,12 @@ test('widget submission automatically upvotes item for user', function () {
     $item = Item::where('title', 'Test Feedback with Vote')->first();
 
     expect($item)->not->toBeNull()
-        ->and($item->votes()->count())->toBe(1)
-        ->and($item->votes()->first()->user->email)->toBe('voter@example.com');
+        ->and($item->user_id)->toBeNull()
+        ->and($item->votes()->count())->toBe(0)
+        ->and(User::find($user->id))->not->toBeNull();
 });
 
-test('widget submission creates activity log with correct user', function () {
+test('widget email does not assign an activity causer', function () {
     $response = $this->postJson('/api/widget/submit', [
         'title' => 'Test Activity Log',
         'content' => 'This should have correct user in activity log',
@@ -214,7 +218,5 @@ test('widget submission creates activity log with correct user', function () {
 
     expect($item)->not->toBeNull()
         ->and($activity)->not->toBeNull()
-        ->and($activity->causer)->not->toBeNull()
-        ->and($activity->causer->email)->toBe('activity@example.com')
-        ->and($activity->causer->name)->toBe('Activity User');
+        ->and($activity->causer)->toBeNull();
 });
