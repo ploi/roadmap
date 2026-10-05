@@ -1,7 +1,12 @@
 <?php
 
 use App\Models\Item;
+use App\Models\Comment;
+use App\Models\Project;
+use App\Enums\ItemActivity;
+use App\Models\User;
 use App\Settings\WidgetSettings;
+use App\Settings\ActivityWidgetSettings;
 use function Pest\Laravel\assertDatabaseHas;
 
 beforeEach(function () {
@@ -12,6 +17,44 @@ beforeEach(function () {
     $this->settings->button_text = 'Feedback';
     $this->settings->allowed_domains = [];
     $this->settings->save();
+});
+
+test('activity widget excludes private project items and private note counts', function () {
+    $activitySettings = app(ActivityWidgetSettings::class);
+    $activitySettings->enabled = true;
+    $activitySettings->allowed_domains = [];
+    $activitySettings->save();
+
+    $user = createUser();
+    $this->actingAs($user);
+    $privateProject = Project::factory()->private()->create();
+    $privateProjectItem = Item::factory()->create([
+        'project_id' => $privateProject->id,
+        'title' => 'Private Project Widget Activity',
+        'user_id' => $user->id,
+    ]);
+    $publicItem = Item::factory()->create([
+        'title' => 'Public Widget Activity',
+        'user_id' => $user->id,
+    ]);
+
+    Comment::factory()->create(['item_id' => $publicItem->id, 'private' => false]);
+    Comment::factory()->create(['item_id' => $publicItem->id, 'private' => true]);
+    ItemActivity::createForItem($privateProjectItem, ItemActivity::Created);
+    ItemActivity::createForItem($publicItem, ItemActivity::Created);
+
+    $response = $this->getJson('/api/activity-widget/activities');
+
+    $response->assertSuccessful();
+
+    expect(json_encode($response->json(), JSON_THROW_ON_ERROR))
+        ->not->toContain('Private Project Widget Activity');
+
+    $publicActivity = collect($response->json('activities'))
+        ->first(fn (array $activity) => str_contains($activity['description'], 'Public Widget Activity'));
+
+    expect($publicActivity)->not->toBeNull()
+        ->and($publicActivity['comments'])->toBe(1);
 });
 
 test('widget config endpoint returns configuration when enabled', function () {
@@ -120,6 +163,16 @@ test('widget submission respects domain restrictions', function () {
     $response->assertForbidden();
 });
 
+test('widget submission requires an origin when domains are restricted', function () {
+    $this->settings->allowed_domains = ['example.com'];
+    $this->settings->save();
+
+    $this->postJson('/api/widget/submit', [
+        'title' => 'Test Feedback',
+        'content' => 'This is a test feedback',
+    ])->assertForbidden();
+});
+
 test('widget submission allows configured domains', function () {
     $this->settings->allowed_domains = ['example.com'];
     $this->settings->save();
@@ -158,6 +211,29 @@ test('widget config respects domain restrictions', function () {
         ]);
 });
 
+test('widget config is disabled without an origin when domains are restricted', function () {
+    $this->settings->allowed_domains = ['example.com'];
+    $this->settings->save();
+
+    $this->getJson('/api/widget/config')
+        ->assertSuccessful()
+        ->assertJson(['enabled' => false]);
+});
+
+test('activity widget requires an origin when domains are restricted', function () {
+    $settings = app(ActivityWidgetSettings::class);
+    $settings->enabled = true;
+    $settings->allowed_domains = ['example.com'];
+    $settings->save();
+
+    $this->getJson('/api/activity-widget/config')
+        ->assertSuccessful()
+        ->assertJson(['enabled' => false]);
+
+    $this->getJson('/api/activity-widget/activities')
+        ->assertForbidden();
+});
+
 test('widget javascript is served correctly', function () {
     $response = $this->get('/widget.js');
 
@@ -182,7 +258,9 @@ test('widget javascript includes dark mode support', function () {
         ->toContain("document.documentElement.classList.contains('dark')");
 });
 
-test('widget submission automatically upvotes item for user', function () {
+test('widget email does not assign an existing user or create a vote', function () {
+    $user = User::factory()->create(['email' => 'voter@example.com']);
+
     $response = $this->postJson('/api/widget/submit', [
         'title' => 'Test Feedback with Vote',
         'content' => 'This feedback should have an automatic upvote',
@@ -195,11 +273,12 @@ test('widget submission automatically upvotes item for user', function () {
     $item = Item::where('title', 'Test Feedback with Vote')->first();
 
     expect($item)->not->toBeNull()
-        ->and($item->votes()->count())->toBe(1)
-        ->and($item->votes()->first()->user->email)->toBe('voter@example.com');
+        ->and($item->user_id)->toBeNull()
+        ->and($item->votes()->count())->toBe(0)
+        ->and(User::find($user->id))->not->toBeNull();
 });
 
-test('widget submission creates activity log with correct user', function () {
+test('widget email does not assign an activity causer', function () {
     $response = $this->postJson('/api/widget/submit', [
         'title' => 'Test Activity Log',
         'content' => 'This should have correct user in activity log',
@@ -214,7 +293,5 @@ test('widget submission creates activity log with correct user', function () {
 
     expect($item)->not->toBeNull()
         ->and($activity)->not->toBeNull()
-        ->and($activity->causer)->not->toBeNull()
-        ->and($activity->causer->email)->toBe('activity@example.com')
-        ->and($activity->causer->name)->toBe('Activity User');
+        ->and($activity->causer)->toBeNull();
 });

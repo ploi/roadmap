@@ -73,6 +73,22 @@ it('shows error with incorrect password', function () {
     $response->assertSessionHasErrors();
 });
 
+it('limits repeated password attempts by IP address', function () {
+    $generalSettings = app(GeneralSettings::class);
+    $generalSettings->password = 'secret123';
+    $generalSettings->save();
+
+    for ($attempt = 0; $attempt < 5; $attempt++) {
+        $this->withServerVariables(['REMOTE_ADDR' => '192.0.2.10'])
+            ->post(route('password.protection.login'), ['password' => 'wrong-password'])
+            ->assertRedirect();
+    }
+
+    $this->withServerVariables(['REMOTE_ADDR' => '192.0.2.10'])
+        ->post(route('password.protection.login'), ['password' => 'wrong-password'])
+        ->assertTooManyRequests();
+});
+
 it('displays all translated strings correctly', function () {
     $colorSettings = app(ColorSettings::class);
     $colorSettings->darkmode = true;

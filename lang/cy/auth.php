@@ -21,5 +21,5 @@ return [
     'theme_auto' => 'Awtomatig',
     'password_protection_description' => 'Rhowch y cyfrinair i barhau',
     'password_placeholder' => 'Rhowch gyfrinair',
-    'wrong_password' => 'Dyma'r cyfrinair anghywir.',
+    'wrong_password' => 'Dyma\'r cyfrinair anghywir.',
 ];

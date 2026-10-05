@@ -1,6 +1,3 @@
-Aquí está la traducción al español:
-
-```php
 <?php
 
 return [

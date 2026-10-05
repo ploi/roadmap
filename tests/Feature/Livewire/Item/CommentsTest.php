@@ -2,9 +2,11 @@
 
 use App\Models\Item;
 use App\Models\User;
+use App\Models\Board;
 use Livewire\Livewire;
 use App\Enums\UserRole;
 use App\Models\Comment;
+use App\Models\Project;
 use App\Livewire\Item\Comments;
 use Illuminate\Support\Facades\DB;
 
@@ -41,6 +43,25 @@ test('rendering comments does not run extra queries per comment', function () {
     addVotedCommentThread($item);
 
     expect(countQueriesRenderingComments($item))->toBe($queriesForOneThread);
+});
+
+test('a user cannot comment when the board blocks comments', function () {
+    $user = User::factory()->create();
+    $project = Project::factory()->create();
+    $board = Board::factory()->for($project)->create(['block_comments' => true]);
+    $item = Item::factory()->create([
+        'project_id' => $project->id,
+        'board_id' => $board->id,
+    ]);
+
+    $this->actingAs($user);
+
+    Livewire::test(Comments::class, ['item' => $item])
+        ->set('content', 'Blocked comment')
+        ->call('submit')
+        ->assertForbidden();
+
+    expect($item->comments()->where('content', 'Blocked comment')->exists())->toBeFalse();
 });
 
 test('a normal user cannot create a private note through component state', function () {

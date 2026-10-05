@@ -32,7 +32,9 @@ Route::get('oauth/login', [\App\Http\Controllers\Auth\LoginController::class, 'r
 Route::get('oauth/callback', [\App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback'])->middleware('guest');
 
 Route::get('password-protection', PasswordProtectionController::class)->name('password.protection');
-Route::post('password-protection', [PasswordProtectionController::class, 'login'])->name('password.protection.login');
+Route::post('password-protection', [PasswordProtectionController::class, 'login'])
+    ->middleware('throttle:password-protection')
+    ->name('password.protection.login');
 
 Route::get('/widget.js', [WidgetController::class, 'javascript'])->name('widget.js');
 Route::get('/activity-widget.js', [WidgetController::class, 'activityJavascript'])->name('activity-widget.js');
@@ -52,7 +54,9 @@ Route::get('projects/{project}/items/{item}', [ItemController::class, 'show'])->
 Route::get('projects/{project}/items/{item}/ai', [ItemController::class, 'ai'])->name('projects.items.ai');
 Route::post('projects/{project}/items/{item}/vote', [ItemController::class, 'vote'])->middleware('authed')->name('projects.items.vote');
 Route::post('projects/{project}/items/{item}/update-board', [ItemController::class, 'updateBoard'])->middleware('authed')->name('projects.items.update-board');
-Route::get('projects/{project}/boards/{board}', [BoardsController::class, 'show'])->name('projects.boards.show');
+Route::get('projects/{project}/boards/{board}', [BoardsController::class, 'show'])
+    ->scopeBindings()
+    ->name('projects.boards.show');
 Route::get('activity', \App\Http\Controllers\ActivityController::class)->name('activity');
 Route::get('mcp/docs', \App\Http\Controllers\McpController::class)->name('mcp.docs');
 

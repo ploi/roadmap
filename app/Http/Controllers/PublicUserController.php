@@ -20,6 +20,7 @@ class PublicUserController extends Controller
         $data = [
             'items_created' => $user->items()->visibleForCurrentUser()->count(),
             'comments_created' => $user->comments()
+                ->public()
                 ->whereHas('item', fn ($q) => $q->visibleForCurrentUser())
                 ->count(),
             'votes_created' => $user->votes()
@@ -27,7 +28,8 @@ class PublicUserController extends Controller
                     if ($type === Item::class) {
                         $query->visibleForCurrentUser();
                     } elseif ($type === Comment::class) {
-                        $query->whereHas('item', fn ($q) => $q->visibleForCurrentUser());
+                        $query->public()
+                            ->whereHas('item', fn ($q) => $q->visibleForCurrentUser());
                     }
                 })
                 ->count(),
@@ -57,6 +59,7 @@ class PublicUserController extends Controller
             });
 
         $comments = $user->comments()
+            ->public()
             ->whereHas('item', fn ($query) => $query->visibleForCurrentUser())
             ->with(['item' => fn ($q) => $q->with('project')])
             ->latest()
@@ -79,7 +82,8 @@ class PublicUserController extends Controller
                 if ($type === Item::class) {
                     $query->visibleForCurrentUser();
                 } elseif ($type === Comment::class) {
-                    $query->whereHas('item', fn ($q) => $q->visibleForCurrentUser());
+                    $query->public()
+                        ->whereHas('item', fn ($q) => $q->visibleForCurrentUser());
                 }
             })
             ->with(['model' => function ($query) {
