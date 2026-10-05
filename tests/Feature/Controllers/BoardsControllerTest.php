@@ -18,6 +18,21 @@ it('renders the view', function () {
     get(route('projects.boards.show', [$project,$board]))->assertOk();
 });
 
+test('hidden boards return not found', function () {
+    $project = Project::factory()->create();
+    $board = Board::factory()->for($project)->create(['visible' => false]);
+
+    get(route('projects.boards.show', [$project, $board]))->assertNotFound();
+});
+
+test('boards from another project return not found', function () {
+    $project = Project::factory()->create();
+    $otherProject = Project::factory()->create();
+    $board = Board::factory()->for($otherProject)->create(['visible' => true]);
+
+    get(route('projects.boards.show', [$project, $board]))->assertNotFound();
+});
+
 test('breadcrumbs', function () {
     $project = Project::factory()->create();
 

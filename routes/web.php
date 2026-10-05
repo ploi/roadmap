@@ -52,7 +52,9 @@ Route::get('projects/{project}/items/{item}', [ItemController::class, 'show'])->
 Route::get('projects/{project}/items/{item}/ai', [ItemController::class, 'ai'])->name('projects.items.ai');
 Route::post('projects/{project}/items/{item}/vote', [ItemController::class, 'vote'])->middleware('authed')->name('projects.items.vote');
 Route::post('projects/{project}/items/{item}/update-board', [ItemController::class, 'updateBoard'])->middleware('authed')->name('projects.items.update-board');
-Route::get('projects/{project}/boards/{board}', [BoardsController::class, 'show'])->name('projects.boards.show');
+Route::get('projects/{project}/boards/{board}', [BoardsController::class, 'show'])
+    ->scopeBindings()
+    ->name('projects.boards.show');
 Route::get('activity', \App\Http\Controllers\ActivityController::class)->name('activity');
 Route::get('mcp/docs', \App\Http\Controllers\McpController::class)->name('mcp.docs');
 
