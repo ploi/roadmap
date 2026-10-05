@@ -19,6 +19,8 @@ class ItemCard extends Component
 
     public function toggleUpvote()
     {
+        abort_if($this->item->board?->block_votes, 403);
+
         $this->item->toggleUpvote();
         $this->item = $this->item->refresh();
     }

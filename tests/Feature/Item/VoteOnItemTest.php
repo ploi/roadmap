@@ -97,22 +97,24 @@ test('A user with admin access can vote on an item', function () {
     $this->assertTrue($user->hasAdminAccess());
 });
 
-test('A user cant vote on an item that belongs to a board which disables voting', function () {
+test('A user cannot vote on an item that belongs to a board which disables voting', function () {
     $user = User::first();
 
-    $board = Board::factory()->create(['block_votes' => true]);
+    $project = Project::factory()->create();
+    $board = Board::factory()->for($project)->create(['block_votes' => true]);
     $item = Item::factory()->create([
-        'project_id' => $board->getAttributeValue('project_id'),
-        'board_id' => $board->getAttributeValue('id'),
-        ]);
+        'project_id' => $project->id,
+        'board_id' => $board->id,
+    ]);
 
     $this->assertEquals(0, $item->votes()->count());
 
     $this->actingAs($user)
         ->post(route('projects.items.vote', [
             'item' => $item->getKey(),
-            'project' => $board->getKey(),
-        ]));
+            'project' => $project->getKey(),
+        ]))
+        ->assertForbidden();
 
     $this->assertAuthenticatedAs($user);
     $this->assertEquals(0, $item->votes()->count());
