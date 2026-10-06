@@ -9,10 +9,20 @@ class ProfanityCheck implements Rule
 {
     public function passes($attribute, $value)
     {
-        $words = explode(' ', $value);
+        if (! is_string($value)) {
+            return true;
+        }
 
-        foreach ($words as $word) {
-            if (in_array($word, app(GeneralSettings::class)->profanity_words)) {
+        foreach (app(GeneralSettings::class)->profanity_words as $profanityWord) {
+            $terms = preg_split('/\s+/u', trim((string) $profanityWord), -1, PREG_SPLIT_NO_EMPTY);
+
+            if (empty($terms)) {
+                continue;
+            }
+
+            $phrase = implode('\s+', array_map(fn (string $term) => preg_quote($term, '/'), $terms));
+
+            if (preg_match('/(?<![\p{L}\p{N}])' . $phrase . '(?![\p{L}\p{N}])/iu', $value) === 1) {
                 return false;
             }
         }
