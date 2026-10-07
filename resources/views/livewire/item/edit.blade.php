@@ -5,7 +5,7 @@
         {{ $this->form }}
 
         <x-filament::button wire:click="submit">
-            {{ trans('items.edit') }}
+            {{ trans('items.update') }}
         </x-filament::button>
     </form>
 </div>
