@@ -30,7 +30,19 @@ it('lists the tools for a regular user without the move tool', function () {
 
     expect($tools)
         ->toContain('list-projects', 'get-project', 'list-items', 'get-item', 'comment-on-item')
-        ->not->toContain('move-item');
+        ->not->toContain('move-item', 'create-item');
+});
+
+it('lists the create tool for regular users when an admin allows it', function () {
+    GeneralSettings::fake(['enable_mcp' => true, 'mcp_users_can_create_items' => true]);
+
+    $token = User::factory()->create(['role' => UserRole::User])->createToken('MCP')->plainTextToken;
+
+    $tools = withToken($token)->postJson('/mcp', listToolsRequest())
+        ->assertOk()
+        ->json('result.tools.*.name');
+
+    expect($tools)->toContain('create-item')->not->toContain('move-item');
 });
 
 it('lists the move tool for employees', function () {
@@ -40,7 +52,7 @@ it('lists the move tool for employees', function () {
         ->assertOk()
         ->json('result.tools.*.name');
 
-    expect($tools)->toContain('move-item');
+    expect($tools)->toContain('move-item', 'create-item');
 });
 
 it('is not available when an admin has disabled mcp', function () {

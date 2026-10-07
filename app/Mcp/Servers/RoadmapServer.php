@@ -6,6 +6,7 @@ use Laravel\Mcp\Server;
 use App\Mcp\Tools\GetItemTool;
 use App\Mcp\Tools\MoveItemTool;
 use App\Mcp\Tools\ListItemsTool;
+use App\Mcp\Tools\CreateItemTool;
 use App\Mcp\Tools\GetProjectTool;
 use App\Mcp\Tools\ListProjectsTool;
 use App\Mcp\Tools\CommentOnItemTool;
@@ -22,6 +23,7 @@ use Laravel\Mcp\Server\Attributes\Instructions;
     - Use `list-projects` to discover projects and their boards, and `get-project` for the item counts per board.
     - Use `list-items` to browse or search items, and `get-item` to read an item with its comments.
     - Use `comment-on-item` to comment on an item or reply to a comment.
+    - Use `create-item` to submit a new item. Admins and employees can always create items, other users only when an admin allows it.
     - Admins and employees can use `move-item` to move an item to another board or project.
 
     Everything happens as the user that owns the API token, so only the projects and items that user can see are available.
@@ -39,6 +41,7 @@ class RoadmapServer extends Server
         ListItemsTool::class,
         GetItemTool::class,
         CommentOnItemTool::class,
+        CreateItemTool::class,
         MoveItemTool::class,
     ];
 

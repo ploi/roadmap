@@ -30,3 +30,16 @@ test('the settings show how to connect once mcp is enabled', function () {
         ->assertSeeText([trans('settings.mcp.connect-heading'), 'Claude Desktop', 'ChatGPT'])
         ->assertSee(route('mcp.docs'));
 });
+
+test('admins can allow regular users to create items through mcp', function () {
+    createAndLoginUser(['role' => UserRole::Admin]);
+
+    expect(app(GeneralSettings::class)->mcp_users_can_create_items)->toBeFalse();
+
+    Livewire::test(Settings::class)
+        ->fillForm(['enable_mcp' => true, 'mcp_users_can_create_items' => true])
+        ->call('save')
+        ->assertHasNoFormErrors();
+
+    expect(app(GeneralSettings::class)->refresh()->mcp_users_can_create_items)->toBeTrue();
+});

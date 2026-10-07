@@ -39,6 +39,7 @@ class GeneralSettings extends Settings
     public bool $enable_leaderboard;
     public int $leaderboard_users_count;
     public bool $enable_mcp;
+    public bool $mcp_users_can_create_items;
 
     public function getInboxWorkflow(): InboxWorkflow
     {

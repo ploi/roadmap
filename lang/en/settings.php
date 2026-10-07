@@ -95,6 +95,8 @@ return [
     'mcp'                         => [
         'enable-mcp'             => 'Enable MCP server',
         'enable-mcp-helper-text' => 'Let users connect AI assistants such as Claude, ChatGPT or Cursor to the roadmap with a personal token.',
+        'users-can-create-items' => 'Allow users to create items through MCP',
+        'users-can-create-items-helper-text' => 'Admins and employees can always create items through MCP. Enable this to let other registered users create items with their AI assistant too.',
         'how-it-works'           => 'How it works',
         'how-it-works-description' => 'Users create a personal token under "MCP access" on their profile page and add the roadmap to their AI client. Share the documentation page with your users, it has the same instructions as below.',
         'view-docs'              => 'Open the documentation page',
