@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\Project;
 use App\Enums\ItemActivity;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Settings\GeneralSettings;
@@ -22,8 +23,8 @@ class ItemController extends Controller
 
         $item = $this->findItem($projectId, $itemId);
 
-        if (!$itemId && $item->project) {
-            // Looks like this item is added to the project, let's redirect to the correct view for the item.
+        if (!$this->isCanonicalLocation($item, $projectId, $itemId)) {
+            // The item lives somewhere else (e.g. it was added to or moved between projects), redirect to its current URL.
             return redirect()->to($item->view_url);
         }
 
@@ -57,7 +58,7 @@ class ItemController extends Controller
     {
         $item = $this->findItem($projectId, $itemId);
 
-        if (!$itemId && $item->project) {
+        if (!$this->isCanonicalLocation($item, $projectId, $itemId)) {
             return redirect()->to($item->markdown_url);
         }
 
@@ -79,15 +80,52 @@ class ItemController extends Controller
         ], 301);
     }
 
+    /**
+     * Find the item for the requested URL. When the item is no longer in the requested project (e.g. it was
+     * moved to another project), it falls back to looking up the item by its slug or the ID it starts with.
+     */
     protected function findItem(string $projectSlug, ?string $itemSlug): Item
     {
         if (!$itemSlug) {
-            return Item::query()->visibleForCurrentUser()->where('slug', $projectSlug)->firstOrFail();
+            return $this->findItemBySlugOrId($projectSlug);
         }
 
-        $project = Project::query()->visibleForCurrentUser()->where('slug', $projectSlug)->firstOrFail();
+        $project = Project::query()->visibleForCurrentUser()->where('slug', $projectSlug)->first();
 
-        return $project->items()->visibleForCurrentUser()->where('slug', $itemSlug)->firstOrFail()->setRelation('project', $project);
+        $item = $project?->items()->visibleForCurrentUser()->where('slug', $itemSlug)->first();
+
+        if ($item) {
+            return $item->setRelation('project', $project);
+        }
+
+        return $this->findItemBySlugOrId($itemSlug);
+    }
+
+    /**
+     * Item slugs are prefixed with the item ID (e.g. "5-coupons"), so the ID still resolves the item when the slug changed.
+     */
+    protected function findItemBySlugOrId(string $itemSlug): Item
+    {
+        $item = Item::query()->visibleForCurrentUser()->where('slug', $itemSlug)->first();
+
+        if ($item) {
+            return $item;
+        }
+
+        $itemId = Str::before($itemSlug, '-');
+
+        abort_unless(ctype_digit($itemId), 404);
+
+        return Item::query()->visibleForCurrentUser()->findOrFail((int) $itemId);
+    }
+
+    protected function isCanonicalLocation(Item $item, string $projectSlug, ?string $itemSlug): bool
+    {
+        if (!$itemSlug) {
+            return $item->project === null && $item->slug === $projectSlug;
+        }
+
+        return $item->project?->slug === $projectSlug && $item->slug === $itemSlug;
     }
 
     protected function toMarkdown(Item $item): string
