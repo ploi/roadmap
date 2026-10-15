@@ -74,6 +74,14 @@ test('it redirects the project-less .md url to the project .md url when the item
         ->assertRedirect($this->item->markdown_url);
 });
 
+test('it redirects the .md url of a moved item to the .md url of its new project', function () {
+    $newProject = Project::factory()->create();
+    $this->item->update(['project_id' => $newProject->id]);
+
+    $this->get(route('projects.items.markdown', [$this->project->slug, $this->item->slug]))
+        ->assertRedirect(route('projects.items.markdown', [$newProject->slug, $this->item->slug]));
+});
+
 test('it includes public comments', function () {
     $comment = Comment::factory()->create([
         'item_id' => $this->item->id,
