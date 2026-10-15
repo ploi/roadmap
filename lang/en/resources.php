@@ -133,6 +133,16 @@ return [
             'admin'    => 'Administrator',
         ],
     ],
+    'passkey'     => [
+        'label'         => 'Passkey',
+        'label-plural'  => 'Passkeys',
+        'name'          => 'Name',
+        'authenticator' => 'Authenticator',
+        'last-used-at'  => 'Last used',
+        'never-used'    => 'Never used',
+        'created-at'    => 'Added',
+        'revoke'        => 'Revoke',
+    ],
     'vote'        => [
         'label'        => 'Vote',
         'label-plural' => 'Votes',

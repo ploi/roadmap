@@ -30,6 +30,8 @@ return [
         'disable-file-upload-helper-text'                  => 'This will disable the file upload functionality for users.',
         'disable-user-registration'                        => 'Disable user registration',
         'disable-user-registration-helper-text'            => 'This will disable the user registration functionality.',
+        'enable-passkeys'                                  => 'Enable passkeys',
+        'enable-passkeys-helper-text'                      => 'Let users add passkeys on their profile and sign in with Face ID, Touch ID, Windows Hello or a security key instead of their password.',
         'show-github-link'                                 => 'Show Github link',
         'show-github-link-helper-text'                     => 'This will show a link to the Github issue on the item page.',
         'inbox-workflow'                                   => 'Inbox workflow',

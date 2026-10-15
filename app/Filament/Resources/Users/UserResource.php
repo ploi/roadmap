@@ -18,6 +18,7 @@ use App\Filament\Resources\Users\Pages\CreateUser;
 use App\Filament\Resources\Users\RelationManagers\ItemsRelationManager;
 use App\Filament\Resources\Users\RelationManagers\VotesRelationManager;
 use App\Filament\Resources\Users\RelationManagers\CommentsRelationManager;
+use App\Filament\Resources\Users\RelationManagers\PasskeysRelationManager;
 use App\Filament\Resources\Users\RelationManagers\ProjectsRelationManager;
 
 class UserResource extends Resource
@@ -126,6 +127,7 @@ class UserResource extends Resource
             CommentsRelationManager::class,
             VotesRelationManager::class,
             ProjectsRelationManager::class,
+            PasskeysRelationManager::class,
         ];
     }
 

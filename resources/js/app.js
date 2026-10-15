@@ -10,6 +10,8 @@ Alpine.data('themeToggle', themeToggle);
 import { mentions } from './mentions.js';
 Alpine.directive('mentions', mentions);
 
+import './passkeys.js';
+
 Livewire.start()
 
 
