@@ -94,6 +94,44 @@
                             {{ config('services.sso.title') }}
                         </a>
                     @endif
+
+                    @if($hasPasskeyLoginAvailable)
+                        {{-- Hidden until the browser proves it can run a WebAuthn ceremony. --}}
+                        <div
+                            x-data="{ supported: typeof window.PublicKeyCredential === 'function', busy: false, error: null }"
+                            x-show="supported"
+                            x-cloak
+                            data-options-url="{{ route('passkey.login-options') }}"
+                            data-verify-url="{{ route('passkey.login') }}"
+                            data-messages="{{ json_encode(trans('auth.passkeys.errors')) }}"
+                        >
+                            <button
+                                type="button"
+                                class="flex items-center justify-center gap-2 w-full h-8 px-3 text-sm font-semibold tracking-tight text-gray-700 transition bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-600 disabled:opacity-70 dark:bg-gray-900 dark:text-gray-200 dark:border-white/10 dark:hover:bg-gray-800"
+                                x-bind:disabled="busy"
+                                x-on:click="
+                                    busy = true;
+                                    error = null;
+                                    window.Passkeys.verify({
+                                        optionsUrl: $root.dataset.optionsUrl,
+                                        verifyUrl: $root.dataset.verifyUrl,
+                                        csrf: document.querySelector('input[name=_token]').value,
+                                        remember: document.getElementById('remember').checked,
+                                        messages: JSON.parse($root.dataset.messages),
+                                    })
+                                        .then((response) => window.location.assign(response.redirect))
+                                        .catch((exception) => { error = exception.message; busy = false; })
+                                ">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
+                                </svg>
+                                <span x-show="! busy">{{ trans('auth.passkeys.sign_in') }}</span>
+                                <span x-show="busy" x-cloak>{{ trans('auth.passkeys.waiting') }}</span>
+                            </button>
+
+                            <p x-show="error" x-text="error" x-cloak class="mt-2 text-sm text-red-600"></p>
+                        </div>
+                    @endif
                 </form>
 
                 <div class="w-4 mx-auto mt-4 border-t border-gray-300 dark:border-white/10"></div>

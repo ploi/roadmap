@@ -55,4 +55,15 @@ return [
         'use_code' => 'Use an authentication code',
     ],
 
+    'passkeys' => [
+        'sign_in' => 'Sign in with a passkey',
+        'waiting' => 'Waiting for your passkey…',
+        'verification_failed' => 'This passkey could not be verified. Please try again.',
+        'errors' => [
+            'cancelled' => 'The passkey request was cancelled or timed out.',
+            'alreadyRegistered' => 'This passkey is already registered to your account.',
+            'failed' => 'Something went wrong with your passkey. Please try again.',
+        ],
+    ],
+
 ];

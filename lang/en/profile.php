@@ -67,6 +67,25 @@ return [
         'token_revoked_notification' => 'Token revoked.',
     ],
 
+    'passkeys' => [
+        'heading' => 'Passkeys',
+        'description' => 'Sign in with Face ID, Touch ID, Windows Hello or a security key instead of your password. Signing in with a passkey skips the two-factor authentication code.',
+        'no_passkeys' => 'You have not added any passkeys yet.',
+        'add' => 'Add passkey',
+        'name' => 'Passkey name',
+        'name_placeholder' => 'MacBook Touch ID',
+        'added' => 'Added :date',
+        'last_used' => 'Last used :date',
+        'never_used' => 'Never used',
+        'remove' => 'Remove',
+        'remove_confirmation' => 'You will no longer be able to sign in with this passkey.',
+        'unsupported' => 'This browser does not support passkeys.',
+        'registration_expired' => 'Your passkey registration expired. Please try again.',
+        'registration_failed' => 'This passkey could not be registered. Please try again.',
+        'added_notification' => 'Passkey added.',
+        'removed_notification' => 'Passkey removed.',
+    ],
+
     'tabs' => [
         'account' => 'Account',
         'preferences' => 'Preferences',

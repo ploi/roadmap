@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use App\Models\UserSocial;
 use Illuminate\Http\Request;
+use App\Settings\GeneralSettings;
 use App\Http\Controllers\Controller;
 use App\SocialProviders\SsoProvider;
 use App\Providers\RouteServiceProvider;
@@ -161,6 +162,7 @@ class LoginController extends Controller
 
         return view('auth.login', [
             'hasSsoLoginAvailable' => SsoProvider::isEnabled(),
+            'hasPasskeyLoginAvailable' => app(GeneralSettings::class)->enable_passkeys,
         ]);
     }
 

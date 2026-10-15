@@ -9,6 +9,8 @@ use App\Http\Controllers\WidgetController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\ChangelogController;
+use App\Http\Middleware\EnsurePasskeysAreEnabled;
+use App\Http\Controllers\Auth\PasskeyLoginController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\ItemEmailUnsubscribeController;
 use App\Http\Controllers\Auth\VerifyEmailChangeController;
@@ -25,6 +27,13 @@ Route::get('two-factor-challenge', [\Laravel\Fortify\Http\Controllers\TwoFactorA
 Route::post('two-factor-challenge', [\Laravel\Fortify\Http\Controllers\TwoFactorAuthenticatedSessionController::class, 'store'])
     ->middleware(array_filter(['guest', config('fortify.limiters.two-factor') ? 'throttle:'.config('fortify.limiters.two-factor') : null]))
     ->name('two-factor.login.store');
+
+// Passwordless sign in with a passkey, only available once an admin enabled
+// passkeys. Registering and removing passkeys happens on the profile page.
+Route::middleware(array_filter([EnsurePasskeysAreEnabled::class, 'guest', config('fortify.limiters.passkeys') ? 'throttle:'.config('fortify.limiters.passkeys') : null]))->group(function () {
+    Route::get('passkeys/login/options', [PasskeyLoginController::class, 'index'])->name('passkey.login-options');
+    Route::post('passkeys/login', [PasskeyLoginController::class, 'store'])->name('passkey.login');
+});
 
 Route::get('oauth/login', [\App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider'])
     ->middleware('guest')

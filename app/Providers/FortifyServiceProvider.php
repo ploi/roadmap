@@ -16,8 +16,8 @@ class FortifyServiceProvider extends ServiceProvider
      * This app uses laravel/ui (Auth::routes()) for login, registration and
      * password resets, so we prevent Fortify from registering its own routes
      * (which would clash on /login, /logout, etc.). We only pull in Fortify's
-     * two-factor authentication engine and register the routes we need in
-     * routes/web.php.
+     * two-factor authentication engine and its passkey (laravel/passkeys)
+     * integration, and register the routes we need in routes/web.php.
      */
     public function register(): void
     {
@@ -37,6 +37,13 @@ class FortifyServiceProvider extends ServiceProvider
         // user id stashed in the session by the login flow.
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        });
+
+        // Named limiter referenced by the passkey sign in routes
+        // (config('fortify.limiters.passkeys')). Fetching options and
+        // verifying the passkey are two requests, so allow a few retries.
+        RateLimiter::for('passkeys', function (Request $request) {
+            return Limit::perMinute(10)->by($request->ip());
         });
     }
 }

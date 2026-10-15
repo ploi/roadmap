@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Closure;
+use Throwable;
 use ResourceBundle;
 use App\Models\User;
 use Livewire\Component;
@@ -10,7 +11,9 @@ use Filament\Actions\Action;
 use Laravel\Fortify\Fortify;
 use Filament\Actions\BulkAction;
 use App\Settings\GeneralSettings;
+use Webauthn\PublicKeyCredential;
 use Filament\Support\Colors\Color;
+use Illuminate\Support\Facades\Log;
 use App\SocialProviders\SsoProvider;
 use Illuminate\Support\Facades\Http;
 use Filament\Forms\Components\Select;
@@ -20,6 +23,7 @@ use Filament\Schemas\Components\View;
 use Filament\Support\Enums\Alignment;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Schemas\Components\Group;
+use Laravel\Passkeys\Support\WebAuthn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use App\Notifications\VerifyEmailChange;
@@ -28,13 +32,19 @@ use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Actions;
 use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Database\Eloquent\Builder;
+use Webauthn\Exception\WebauthnException;
 use Filament\Actions\Contracts\HasActions;
+use Laravel\Passkeys\Actions\StorePasskey;
 use Filament\Forms\Components\CheckboxList;
+use Laravel\Passkeys\Actions\DeletePasskey;
 use Illuminate\Database\Eloquent\Collection;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Webauthn\PublicKeyCredentialCreationOptions;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Laravel\Fortify\Actions\GenerateNewRecoveryCodes;
+use Laravel\Passkeys\Exceptions\InvalidPasskeyException;
+use Laravel\Passkeys\Actions\GenerateRegistrationOptions;
 use Laravel\Fortify\Actions\EnableTwoFactorAuthentication;
 use Laravel\Fortify\Actions\DisableTwoFactorAuthentication;
 use Laravel\Fortify\Events\TwoFactorAuthenticationConfirmed;
@@ -143,6 +153,12 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                         ->schema([
                             View::make('livewire.profile.two-factor')
                                 ->viewData(fn (): array => $this->getTwoFactorViewData()),
+
+                            View::make('livewire.profile.passkeys')
+                                ->visible(fn (): bool => app(GeneralSettings::class)->enable_passkeys)
+                                ->viewData(fn (): array => [
+                                    'passkeys' => $this->user->passkeys()->latest()->get(),
+                                ]),
                         ]),
 
                     Tab::make(trans('profile.mcp.heading'))
@@ -439,6 +455,137 @@ class Profile extends Component implements HasForms, HasTable, HasActions
                     ->success()
                     ->send();
             });
+    }
+
+    /**
+     * Begin registering a passkey after confirming the password.
+     *
+     * The creation options are kept in the session and sent to the browser, which
+     * asks the authenticator for a new credential and hands it back to
+     * finishPasskeyRegistration(). Only this action puts options in the session,
+     * so finishing a registration always follows a password confirmation.
+     */
+    public function addPasskeyAction(): Action
+    {
+        return Action::make('addPasskey')
+            ->label(trans('profile.passkeys.add'))
+            ->visible(fn (): bool => app(GeneralSettings::class)->enable_passkeys)
+            ->color(Color::Blue)
+            ->modalWidth('md')
+            ->schema([
+                TextInput::make('name')
+                    ->label(trans('profile.passkeys.name'))
+                    ->placeholder(trans('profile.passkeys.name_placeholder'))
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('current_password')
+                    ->label(trans('auth.password'))
+                    ->password()
+                    ->required()
+                    ->rule('current_password'),
+            ])
+            ->action(function (array $data) {
+                $options = app(GenerateRegistrationOptions::class)($this->user);
+
+                session()->put('passkey.registration', [
+                    'name' => $data['name'],
+                    'options' => WebAuthn::toJson($options),
+                ]);
+
+                $this->dispatch('passkey-registration-started', options: WebAuthn::toBrowserArray($options));
+            });
+    }
+
+    /**
+     * Verify and store the credential the browser created for the pending registration.
+     *
+     * @param  array<string, mixed>  $credential
+     */
+    public function finishPasskeyRegistration(array $credential): void
+    {
+        abort_unless(app(GeneralSettings::class)->enable_passkeys, 404);
+
+        $registration = session()->pull('passkey.registration');
+
+        if (! is_array($registration)) {
+            $this->sendPasskeyFailedNotification(trans('profile.passkeys.registration_expired'));
+
+            return;
+        }
+
+        try {
+            $publicKeyCredential = WebAuthn::fromJson(json_encode($credential, JSON_THROW_ON_ERROR), PublicKeyCredential::class);
+        } catch (Throwable) {
+            $this->sendPasskeyFailedNotification(trans('profile.passkeys.registration_failed'));
+
+            return;
+        }
+
+        try {
+            app(StorePasskey::class)(
+                $this->user,
+                $registration['name'],
+                $publicKeyCredential,
+                WebAuthn::fromJson($registration['options'], PublicKeyCredentialCreationOptions::class),
+            );
+        } catch (InvalidPasskeyException) {
+            $this->sendPasskeyFailedNotification(trans('profile.passkeys.registration_failed'));
+
+            return;
+        } catch (WebauthnException $exception) {
+            Log::warning('Passkey registration rejected', [
+                'exception' => $exception::class,
+                'reason' => $exception->getMessage(),
+            ]);
+
+            $this->sendPasskeyFailedNotification(trans('profile.passkeys.registration_failed'));
+
+            return;
+        }
+
+        Notification::make('passkey-added')
+            ->title(trans('profile.passkeys.added_notification'))
+            ->success()
+            ->send();
+    }
+
+    /**
+     * Remove one of the user's own passkeys after confirming the password.
+     */
+    public function deletePasskeyAction(): Action
+    {
+        return Action::make('deletePasskey')
+            ->label(trans('profile.passkeys.remove'))
+            ->color(Color::Red)
+            ->link()
+            ->requiresConfirmation()
+            ->modalAlignment(Alignment::Left)
+            ->modalDescription(trans('profile.passkeys.remove_confirmation'))
+            ->schema([
+                TextInput::make('current_password')
+                    ->label(trans('auth.password'))
+                    ->password()
+                    ->required()
+                    ->rule('current_password'),
+            ])
+            ->action(function (array $arguments) {
+                $passkey = $this->user->passkeys()->findOrFail((int) ($arguments['passkey'] ?? 0));
+
+                app(DeletePasskey::class)($this->user, $passkey);
+
+                Notification::make('passkey-removed')
+                    ->title(trans('profile.passkeys.removed_notification'))
+                    ->success()
+                    ->send();
+            });
+    }
+
+    protected function sendPasskeyFailedNotification(string $message): void
+    {
+        Notification::make('passkey-failed')
+            ->title($message)
+            ->danger()
+            ->send();
     }
 
     /**

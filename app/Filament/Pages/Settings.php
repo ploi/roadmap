@@ -148,6 +148,10 @@ class Settings extends SettingsPage
                                         ->label(trans('settings.general.disable-user-registration'))
                                         ->helperText(trans('settings.general.disable-user-registration-helper-text')),
 
+                                    Toggle::make('enable_passkeys')
+                                        ->label(trans('settings.general.enable-passkeys'))
+                                        ->helperText(trans('settings.general.enable-passkeys-helper-text')),
+
                                     Toggle::make('show_github_link')
                                         ->label(trans('settings.general.show-github-link'))
                                         ->helperText(trans('settings.general.show-github-link-helper-text'))
