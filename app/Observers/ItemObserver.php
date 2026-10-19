@@ -30,11 +30,15 @@ class ItemObserver
                     continue;
                 }
 
-                if (
-                    isset($receiver['projects']) &&
-                    Project::whereIn('id', $receiver['projects'])->count() &&
-                    !in_array($item->project_id, $receiver['projects'])
-                ) {
+                $isLimitedToProjects = isset($receiver['projects']) &&
+                    Project::whereIn('id', $receiver['projects'])->count();
+
+                if ($isLimitedToProjects && !in_array($item->project_id, $receiver['projects'])) {
+                    continue;
+                }
+
+                // Items in a private project only notify receivers that explicitly selected that project.
+                if ($item->project?->private && !$isLimitedToProjects) {
                     continue;
                 }
 
