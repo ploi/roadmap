@@ -109,3 +109,26 @@ test('Public items send notifications', function () {
 
     Mail::assertQueued(ItemHasBeenCreatedEmail::class);
 });
+
+test('Items in a private project do not send notifications', function () {
+    $project = Project::factory()->private()->create();
+
+    Item::factory()->create(['project_id' => $project->id]);
+
+    Mail::assertNothingQueued();
+});
+
+test('Items in a private project notify receivers that selected that project', function () {
+    $project = Project::factory()->private()->create();
+
+    app(GeneralSettings::class)->send_notifications_to = [
+        ['webhook' => 'private@ploi.io', 'type' => 'email', 'projects' => [(string) $project->id]],
+        ['webhook' => 'other@ploi.io', 'type' => 'email', 'projects' => [(string) $this->project->id]],
+        ['webhook' => 'info@ploi.io', 'type' => 'email'],
+    ];
+
+    Item::factory()->create(['project_id' => $project->id]);
+
+    Mail::assertQueuedCount(1);
+    Mail::assertQueued(ItemHasBeenCreatedEmail::class, fn (ItemHasBeenCreatedEmail $mail) => $mail->hasTo('private@ploi.io'));
+});

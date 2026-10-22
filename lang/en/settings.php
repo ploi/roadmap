@@ -111,7 +111,7 @@ return [
         'type'                        => 'Notification type',
         'type-helper-text'            => 'This will determine what type of notification will be sent.',
         'select-projects'             => 'Select projects',
-        'select-projects-helper-text' => 'This will determine for which projects the notification will be sent. If no projects are selected, the notification will be sent for all projects.',
+        'select-projects-helper-text' => 'This will determine for which projects the notification will be sent. If no projects are selected, the notification will be sent for all public projects. Items in private projects are only sent to receivers that select that project.',
         'name-receiver'               => 'Name receiver',
         'label'                       => 'Label',
         'name-helper-text'            => 'This will be the name/label for the notification.',
