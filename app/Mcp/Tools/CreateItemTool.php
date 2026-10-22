@@ -15,7 +15,7 @@ use Illuminate\Contracts\JsonSchema\JsonSchema;
 use App\Mcp\Tools\Concerns\InteractsWithRoadmap;
 
 #[Name('create-item')]
-#[Description('Create a new roadmap item (feature request, idea or bug), optionally on a board of a project. Available to admins and employees, and to other users when an admin allows it.')]
+#[Description('Create a new roadmap item (feature request, idea or bug), optionally on a board of a project. Admins and employees can create it as a private item, which does not send new item notifications. Available to admins and employees, and to other users when an admin allows it.')]
 class CreateItemTool extends Tool
 {
     use InteractsWithRoadmap;
@@ -33,7 +33,14 @@ class CreateItemTool extends Tool
             'content' => ['required', 'string', 'min:10', new ProfanityCheck()],
             'project' => ['nullable'],
             'board' => ['nullable'],
+            'private' => ['nullable', 'boolean'],
         ]);
+
+        $private = (bool) ($validated['private'] ?? false);
+
+        if ($private && ! $user->hasAdminAccess()) {
+            return Response::error('Only admins and employees can create private items.');
+        }
 
         $settings = app(GeneralSettings::class);
 
@@ -82,6 +89,7 @@ class CreateItemTool extends Tool
             'content' => $validated['content'],
             'project_id' => $project?->id,
             'board_id' => $board?->id,
+            'private' => $private,
         ]);
 
         $item->user()->associate($user)->save();
@@ -111,6 +119,7 @@ class CreateItemTool extends Tool
             'content' => $schema->string()->min(10)->description('The description of the item, markdown is supported.')->required(),
             'project' => $schema->string()->description('The ID or slug of the project to create the item in.'),
             'board' => $schema->string()->description('The ID or slug of the board to create the item on, requires the project.'),
+            'private' => $schema->boolean()->description('Create the item as private, only visible to admins and employees and without sending new item notifications. Only available to admins and employees.'),
         ];
     }
 

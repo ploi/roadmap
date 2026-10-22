@@ -11,6 +11,7 @@ use App\Mcp\Tools\GetProjectTool;
 use App\Mcp\Tools\ListProjectsTool;
 use App\Mcp\Tools\CommentOnItemTool;
 use Laravel\Mcp\Server\Attributes\Name;
+use App\Mcp\Tools\SetItemVisibilityTool;
 use Laravel\Mcp\Server\Attributes\Version;
 use Laravel\Mcp\Server\Attributes\Instructions;
 
@@ -24,7 +25,9 @@ use Laravel\Mcp\Server\Attributes\Instructions;
     - Use `list-items` to browse or search items, and `get-item` to read an item with its comments.
     - Use `comment-on-item` to comment on an item or reply to a comment.
     - Use `create-item` to submit a new item. Admins and employees can always create items, other users only when an admin allows it.
+      Pass `private` to create an item that only admins and employees can see; it does not send new item notifications.
     - Admins and employees can use `move-item` to move an item to another board or project.
+    - Admins and employees can use `set-item-visibility` to make an item private or public.
 
     Everything happens as the user that owns the API token, so only the projects and items that user can see are available.
     MARKDOWN)]
@@ -43,6 +46,7 @@ class RoadmapServer extends Server
         CommentOnItemTool::class,
         CreateItemTool::class,
         MoveItemTool::class,
+        SetItemVisibilityTool::class,
     ];
 
     protected array $tools = self::TOOLS;

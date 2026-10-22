@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Mcp\Tools\CreateItemTool;
 use App\Settings\GeneralSettings;
 use App\Mcp\Servers\RoadmapServer;
+use Illuminate\Support\Facades\Mail;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\assertDatabaseCount;
 
@@ -115,6 +116,27 @@ it('requires a verified email when the setting is enabled', function () {
     RoadmapServer::actingAs(User::factory()->admin()->unverified()->create())
         ->tool(CreateItemTool::class, ['title' => 'Dark mode', 'content' => 'Please add a dark mode to the dashboard.'])
         ->assertHasErrors(['You need to verify your email address before you can create items.']);
+
+    assertDatabaseCount(Item::class, 0);
+});
+
+it('creates a private item without sending notifications', function (UserRole $role) {
+    GeneralSettings::fake(['send_notifications_to' => [['webhook' => 'info@ploi.io', 'type' => 'email']]]);
+
+    RoadmapServer::actingAs(User::factory()->create(['role' => $role]))
+        ->tool(CreateItemTool::class, ['title' => 'Dark mode', 'content' => 'Please add a dark mode to the dashboard.', 'private' => true])
+        ->assertOk();
+
+    assertDatabaseHas(Item::class, ['title' => 'Dark mode', 'private' => true]);
+    Mail::assertNothingQueued();
+})->with([UserRole::Admin, UserRole::Employee]);
+
+it('does not let regular users create private items', function () {
+    GeneralSettings::fake(['mcp_users_can_create_items' => true]);
+
+    RoadmapServer::actingAs(User::factory()->create(['role' => UserRole::User]))
+        ->tool(CreateItemTool::class, ['title' => 'Dark mode', 'content' => 'Please add a dark mode to the dashboard.', 'private' => true])
+        ->assertHasErrors(['Only admins and employees can create private items.']);
 
     assertDatabaseCount(Item::class, 0);
 });
