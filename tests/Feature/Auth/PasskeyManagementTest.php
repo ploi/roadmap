@@ -8,7 +8,6 @@ use App\Settings\GeneralSettings;
 use function Pest\Laravel\actingAs;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use Laravel\Passkeys\Actions\StorePasskey;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Webauthn\Exception\AuthenticatorResponseVerificationException;
 
 beforeEach(function () {
@@ -151,10 +150,9 @@ test('removing a passkey requires the correct password', function () {
 test('a user cannot remove someone elses passkey', function () {
     $passkey = createPasskeyFor(User::factory()->create());
 
-    expect(
-        fn () => Livewire::test(Profile::class)
+    Livewire::test(Profile::class)
         ->callAction('deletePasskey', ['current_password' => 'password'], ['passkey' => $passkey->id])
-    )->toThrow(ModelNotFoundException::class);
+        ->assertNotFound();
 
     $this->assertModelExists($passkey);
 });

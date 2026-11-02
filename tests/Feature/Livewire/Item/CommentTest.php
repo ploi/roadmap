@@ -206,7 +206,7 @@ test('the edit form does not expose the content of another user\'s comment', fun
         'private' => true,
     ]);
 
-    expect(fn () => mountComment($ownComment)
-        ->mountAction(TestAction::make('edit')->arguments(['comment' => $privateNote->id])))
-        ->toThrow(Illuminate\Database\Eloquent\ModelNotFoundException::class);
+    mountComment($ownComment)
+        ->mountAction(TestAction::make('edit')->arguments(['comment' => $privateNote->id]))
+        ->assertNotFound();
 });
