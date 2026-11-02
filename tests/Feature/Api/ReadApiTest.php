@@ -1,25 +1,38 @@
 <?php
 
 use App\Models\Item;
-use App\Models\User;
+use App\Models\ApiToken;
 use App\Models\Board;
-use App\Enums\UserRole;
 use App\Models\Comment;
 use App\Models\Project;
 use function Pest\Laravel\getJson;
 use function Pest\Laravel\withToken;
 
-function apiToken(UserRole $role = UserRole::Admin): string
+function apiToken(): string
 {
-    return User::factory()->create(['role' => $role])->createToken('API')->plainTextToken;
+    return ApiToken::generate('Polder')[1];
 }
 
 it('requires a token', function () {
     getJson('/api/v1/items')->assertUnauthorized();
 });
 
-it('rejects tokens of regular users', function () {
-    withToken(apiToken(UserRole::User))->getJson('/api/v1/items')->assertForbidden();
+it('rejects an unknown token', function () {
+    withToken('rm_unknown')->getJson('/api/v1/items')->assertUnauthorized();
+});
+
+it('rejects user tokens', function () {
+    $token = createUser()->createToken('MCP')->plainTextToken;
+
+    withToken($token)->getJson('/api/v1/items')->assertUnauthorized();
+});
+
+it('records when a token was last used', function () {
+    [$apiToken, $plain] = ApiToken::generate('Polder');
+
+    withToken($plain)->getJson('/api/v1/items')->assertOk();
+
+    expect($apiToken->refresh()->last_used_at)->not->toBeNull();
 });
 
 it('lists projects, items and comments including private ones', function () {

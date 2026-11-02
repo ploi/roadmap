@@ -34,8 +34,8 @@ Route::prefix('activity-widget')->group(function () {
     Route::get('/activities', [WidgetController::class, 'activityList']);
 });
 
-// Read API (admin and employee tokens)
-Route::prefix('v1')->middleware(['auth:sanctum', 'api.access'])->group(function () {
+// Read API (API tokens from the admin panel)
+Route::prefix('v1')->middleware('api.token')->group(function () {
     Route::get('/projects', [ProjectController::class, 'index']);
     Route::get('/items', [ItemController::class, 'index']);
     Route::get('/comments', [CommentController::class, 'index']);

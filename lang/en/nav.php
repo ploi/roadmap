@@ -12,6 +12,7 @@ return [
     'project' => 'Projects',
     'tags' => 'Tags',
     'webhooks' => 'Webhooks',
+    'api-tokens' => 'API tokens',
     'votes' => 'Votes',
     'public-view' => 'Public View',
     'external' => 'External',

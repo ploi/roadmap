@@ -243,7 +243,7 @@ GET /projects/{project}/items/{item}/ai
 
 ### Read API
 
-Authenticate with a personal access token (create one under your profile) of an admin or employee user and send it as `Authorization: Bearer <token>`. Private projects, items and comments are included.
+Create an API token in the admin panel under **Manage > API tokens** (not tied to a user, shown only once) and send it as `Authorization: Bearer <token>`. Private projects, items and comments are included.
 
 ```
 GET /api/v1/projects

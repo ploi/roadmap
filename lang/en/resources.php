@@ -121,6 +121,14 @@ return [
         'name' => 'Name',
         'changelog' => 'Changelog',
     ],
+    'api-token' => [
+        'label' => 'API token',
+        'label-plural' => 'API tokens',
+        'name' => 'Name',
+        'last-used-at' => 'Last used',
+        'created-title' => 'API token created',
+        'created-body' => 'Copy this token now, it will not be shown again: :token',
+    ],
     'webhook' => [
         'label' => 'Webhook',
         'label-plural' => 'Webhooks',

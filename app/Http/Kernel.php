@@ -85,7 +85,7 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $middlewareAliases = [
-        'api.access' => \App\Http\Middleware\EnsureApiAccess::class,
+        'api.token' => \App\Http\Middleware\AuthenticateApiToken::class,
         'auth' => Authenticate::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
         'auth.session' => AuthenticateSession::class,
