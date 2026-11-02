@@ -121,6 +121,15 @@ return [
         'name' => 'Name',
         'changelog' => 'Changelog',
     ],
+    'webhook' => [
+        'label' => 'Webhook',
+        'label-plural' => 'Webhooks',
+        'url' => 'URL',
+        'secret' => 'Secret',
+        'secret-helper-text' => 'Used to sign every request with an HMAC SHA-256 signature in the X-Roadmap-Signature header.',
+        'events' => 'Events',
+        'active' => 'Active',
+    ],
     'user'        => [
         'label'        => 'User',
         'label-plural' => 'Users',

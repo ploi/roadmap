@@ -5,6 +5,9 @@ namespace App\Observers;
 use Throwable;
 use App\Models\Board;
 use App\Models\Project;
+use App\Enums\WebhookEvent;
+use App\Services\WebhookDispatcher;
+use App\Http\Resources\Api\V1\ProjectResource;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectObserver
@@ -16,6 +19,8 @@ class ProjectObserver
         if ($project->wasChanged('icon_image') && $originalIconImage) {
             Storage::disk('public')->delete($originalIconImage);
         }
+
+        WebhookDispatcher::dispatch(WebhookEvent::ProjectUpdated, (new ProjectResource($project))->resolve());
     }
 
     public function deleting(Project $project)

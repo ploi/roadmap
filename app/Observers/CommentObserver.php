@@ -4,6 +4,9 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Models\Comment;
+use App\Enums\WebhookEvent;
+use App\Services\WebhookDispatcher;
+use App\Http\Resources\Api\V1\CommentResource;
 use App\Services\MentionParser;
 use App\Notifications\CommentHasReplyNotification;
 use App\Notifications\Item\ItemHasNewCommentNotification;
@@ -22,6 +25,8 @@ class CommentObserver
 
     public function created(Comment $comment)
     {
+        WebhookDispatcher::dispatch(WebhookEvent::CommentCreated, (new CommentResource($comment))->resolve());
+
         $this->processMentions($comment);
 
         $userIds = $comment->item?->votes()

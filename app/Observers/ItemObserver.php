@@ -8,6 +8,9 @@ use App\Models\Item;
 use App\Models\User;
 use App\Models\Project;
 use App\Enums\ItemActivity;
+use App\Enums\WebhookEvent;
+use App\Services\WebhookDispatcher;
+use App\Http\Resources\Api\V1\ItemResource;
 use App\Settings\GeneralSettings;
 use App\Jobs\SendWebhookForNewItemJob;
 use Illuminate\Support\Facades\Storage;
@@ -19,6 +22,8 @@ class ItemObserver
     public function created(Item $item)
     {
         ItemActivity::createForItem($item, ItemActivity::Created);
+
+        WebhookDispatcher::dispatch(WebhookEvent::ItemCreated, $this->webhookData($item));
 
         if ($item->isPrivate()) {
             return;
@@ -50,9 +55,24 @@ class ItemObserver
         }
     }
 
+    public function deleted(Item $item): void
+    {
+        WebhookDispatcher::dispatch(WebhookEvent::ItemDeleted, $this->webhookData($item));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function webhookData(Item $item): array
+    {
+        return (new ItemResource($item->load('board')))->resolve();
+    }
+
     public function updating(Item $item)
     {
         $isDirty = false;
+        $changes = array_diff_key($item->getDirty(), array_flip(['updated_at', 'notify_subscribers']));
+        $previousBoardId = $item->getOriginal('board_id');
 
         if ($item->isDirty('board_id') && $item->board) {
             ItemActivity::createForItem($item, ItemActivity::MovedToBoard, [
@@ -109,7 +129,20 @@ class ItemObserver
             });
         }
 
+        // This saves the pending changes, so the model is no longer dirty and Eloquent will not fire `updated`.
         $item->updateQuietly(['notify_subscribers' => true]);
+
+        if ($changes === []) {
+            return;
+        }
+
+        WebhookDispatcher::dispatch(WebhookEvent::ItemUpdated, $this->webhookData($item));
+
+        if (array_key_exists('board_id', $changes)) {
+            WebhookDispatcher::dispatch(WebhookEvent::ItemStatusChanged, $this->webhookData($item) + [
+                'previous_board_id' => $previousBoardId,
+            ]);
+        }
     }
 
     public function deleting(Item $item)

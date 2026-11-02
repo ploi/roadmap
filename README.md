@@ -239,6 +239,43 @@ GET /projects/{project}/items/{item}/ai
 /projects/1-bugs/items/2-bug-in-sites-overview/ai?format=yml&include[comments]=1
 ```
 
+## Read API and webhooks
+
+### Read API
+
+Authenticate with a personal access token (create one under your profile) of an admin or employee user and send it as `Authorization: Bearer <token>`. Private projects, items and comments are included.
+
+```
+GET /api/v1/projects
+GET /api/v1/items?project_id=1
+GET /api/v1/comments?item_id=1
+```
+
+| Parameter | Description |
+|---|---|
+| `updated_since` | Only records updated at or after this date, e.g. `2026-01-01T00:00:00Z` |
+| `per_page` | 1-100, defaults to 50 |
+| `page` | Page number; responses include `data`, `links` and `meta` |
+
+Deleted records are not listed, use the `item.deleted` webhook for those.
+
+### Webhooks
+
+Admins manage webhooks in the admin panel under **Manage > Webhooks**: a URL, a secret and the events to receive.
+
+| Event | Sent when |
+|---|---|
+| `item.created` | an item is created |
+| `item.updated` | an item is changed |
+| `item.status_changed` | an item moves to another board (adds `previous_board_id`) |
+| `item.deleted` | an item is deleted |
+| `comment.created` | a comment is placed |
+| `project.updated` | a project is changed |
+
+Requests are `POST` with a JSON body `{"event", "delivery_id", "created_at", "data"}`, where `data` has the same shape as the API resources. They are sent through the queue (make sure a worker is running) and retried up to 5 times with increasing delays when the endpoint does not answer with a 2xx status.
+
+Verify a request by computing `sha256=` + `HMAC_SHA256(secret, X-Roadmap-Timestamp + "." + raw body)` and comparing it with the `X-Roadmap-Signature` header. Reject requests with an old timestamp to prevent replays.
+
 ## Docker Support
 
 ### Getting up and running...

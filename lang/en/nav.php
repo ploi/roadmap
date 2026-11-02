@@ -11,6 +11,7 @@ return [
     'item' => 'Items',
     'project' => 'Projects',
     'tags' => 'Tags',
+    'webhooks' => 'Webhooks',
     'votes' => 'Votes',
     'public-view' => 'Public View',
     'external' => 'External',

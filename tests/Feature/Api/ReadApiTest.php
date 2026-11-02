@@ -1,0 +1,57 @@
+<?php
+
+use App\Models\Item;
+use App\Models\User;
+use App\Models\Board;
+use App\Enums\UserRole;
+use App\Models\Comment;
+use App\Models\Project;
+use function Pest\Laravel\getJson;
+use function Pest\Laravel\withToken;
+
+function apiToken(UserRole $role = UserRole::Admin): string
+{
+    return User::factory()->create(['role' => $role])->createToken('API')->plainTextToken;
+}
+
+it('requires a token', function () {
+    getJson('/api/v1/items')->assertUnauthorized();
+});
+
+it('rejects tokens of regular users', function () {
+    withToken(apiToken(UserRole::User))->getJson('/api/v1/items')->assertForbidden();
+});
+
+it('lists projects, items and comments including private ones', function () {
+    $project = Project::factory()->private()->create();
+    $board = Board::factory()->create(['project_id' => $project->id]);
+    $item = Item::factory()->create(['project_id' => $project->id, 'board_id' => $board->id, 'private' => true]);
+    $comment = Comment::factory()->create(['item_id' => $item->id]);
+
+    $token = apiToken();
+
+    withToken($token)->getJson('/api/v1/projects')->assertOk()->assertJsonPath('data.0.id', $project->id);
+    withToken($token)->getJson('/api/v1/items')->assertOk()
+        ->assertJsonPath('data.0.id', $item->id)
+        ->assertJsonPath('data.0.status', $board->title)
+        ->assertJsonPath('data.0.private', true);
+    withToken($token)->getJson('/api/v1/comments')->assertOk()->assertJsonPath('data.0.id', $comment->id);
+});
+
+it('paginates and filters on updated_since', function () {
+    $old = Item::factory()->create();
+    $old->forceFill(['updated_at' => now()->subDays(10)])->saveQuietly();
+    $new = Item::factory()->create();
+
+    $response = withToken(apiToken())
+        ->getJson('/api/v1/items?per_page=1&updated_since=' . urlencode(now()->subDay()->toIso8601String()))
+        ->assertOk();
+
+    expect($response->json('data'))->toHaveCount(1)
+        ->and($response->json('data.0.id'))->toBe($new->id)
+        ->and($response->json('meta.total'))->toBe(1);
+});
+
+it('validates updated_since', function () {
+    withToken(apiToken())->getJson('/api/v1/items?updated_since=nope')->assertUnprocessable();
+});
