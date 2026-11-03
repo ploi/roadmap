@@ -89,3 +89,5 @@ Route::get('/unsubscribe/{item}/{user}', [ItemEmailUnsubscribeController::class,
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/sitemap-projects.xml', [SitemapController::class, 'projects'])->name('sitemap.projects');
 Route::get('/sitemap-items.xml', [SitemapController::class, 'items'])->name('sitemap.items');
+
+Route::fallback(fn () => abort(404));
