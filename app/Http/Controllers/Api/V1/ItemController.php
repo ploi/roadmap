@@ -20,11 +20,11 @@ class ItemController extends Controller
 
         return ItemResource::collection(
             Item::query()
-                ->with('board')
-                ->when($request->date('updated_since'), fn ($query, $since) => $query->where('updated_at', '>=', $since))
+                ->with(['board', 'project'])
+                ->when($request->date('updated_since')?->setTimezone(config('app.timezone')), fn ($query, $since) => $query->where('updated_at', '>=', $since))
                 ->when($request->integer('project_id'), fn ($query, $projectId) => $query->where('project_id', $projectId))
                 ->orderBy('id')
-                ->paginate($request->integer('per_page', 50))
+                ->paginate($request->integer('per_page') ?: 50)
                 ->withQueryString()
         );
     }

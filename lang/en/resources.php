@@ -133,6 +133,7 @@ return [
         'label' => 'Webhook',
         'label-plural' => 'Webhooks',
         'url' => 'URL',
+        'url-not-allowed' => 'The URL must use https and point to a public address.',
         'secret' => 'Secret',
         'secret-helper-text' => 'Used to sign every request with an HMAC SHA-256 signature in the X-Roadmap-Signature header.',
         'events' => 'Events',

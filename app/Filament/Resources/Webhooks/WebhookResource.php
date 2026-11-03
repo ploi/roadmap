@@ -7,6 +7,7 @@ use App\Enums\WebhookEvent;
 use Filament\Tables\Table;
 use Filament\Schemas\Schema;
 use App\Models\WebhookEndpoint;
+use App\Rules\SafeWebhookUrl;
 use Filament\Actions\EditAction;
 use Filament\Resources\Resource;
 use Filament\Actions\DeleteAction;
@@ -59,6 +60,7 @@ class WebhookResource extends Resource
                         TextInput::make('url')
                             ->label(trans('resources.webhook.url'))
                             ->url()
+                            ->rule(new SafeWebhookUrl())
                             ->maxLength(2048)
                             ->required(),
 

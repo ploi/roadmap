@@ -16,7 +16,7 @@ class WebhookEndpointFactory extends Factory
     public function definition(): array
     {
         return [
-            'url' => 'https://example.com/hooks/roadmap',
+            'url' => 'https://1.1.1.1/hooks/roadmap',
             'secret' => $this->faker->sha256(),
             'events' => array_column(WebhookEvent::cases(), 'value'),
             'active' => true,

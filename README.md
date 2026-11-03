@@ -257,11 +257,11 @@ GET /api/v1/comments?item_id=1
 | `per_page` | 1-100, defaults to 50 |
 | `page` | Page number; responses include `data`, `links` and `meta` |
 
-Deleted records are not listed, use the `item.deleted` webhook for those.
+Deleted records are not listed, use the `*.deleted` webhooks for those. `updated_since` accepts a time zone offset. Responses are always JSON.
 
 ### Webhooks
 
-Admins manage webhooks in the admin panel under **Manage > Webhooks**: a URL, a secret and the events to receive.
+Admins manage webhooks in the admin panel under **Manage > Webhooks**: a URL, a secret and the events to receive. The URL must use `https` and resolve to a public address, redirects are not followed.
 
 | Event | Sent when |
 |---|---|
@@ -270,9 +270,13 @@ Admins manage webhooks in the admin panel under **Manage > Webhooks**: a URL, a 
 | `item.status_changed` | an item moves to another board (adds `previous_board_id`) |
 | `item.deleted` | an item is deleted |
 | `comment.created` | a comment is placed |
+| `comment.updated` | the content or visibility of a comment is changed |
+| `comment.deleted` | a comment is deleted |
+| `project.created` | a project is created |
 | `project.updated` | a project is changed |
+| `project.deleted` | a project is deleted |
 
-Requests are `POST` with a JSON body `{"event", "delivery_id", "created_at", "data"}`, where `data` has the same shape as the API resources. They are sent through the queue (make sure a worker is running) and retried up to 5 times with increasing delays when the endpoint does not answer with a 2xx status.
+Requests are `POST` with a JSON body `{"event", "delivery_id", "created_at", "data"}`, where `data` has the same shape as the API resources. `created_at` is the time the event happened. Changes to the vote count alone do not send `item.updated`. Comments that are removed together with their item or user do not send `comment.deleted`, use `item.deleted` for that. Requests are sent through the queue (make sure a worker is running, with `QUEUE_CONNECTION=sync` they are sent after the response and failures are only logged) and retried up to 5 times with increasing delays when the endpoint does not answer with a 2xx status.
 
 Verify a request by computing `sha256=` + `HMAC_SHA256(secret, X-Roadmap-Timestamp + "." + raw body)` and comparing it with the `X-Roadmap-Signature` header. Reject requests with an old timestamp to prevent replays.
 

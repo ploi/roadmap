@@ -22,6 +22,7 @@ use App\Filament\Resources\Items\ItemResource;
 use App\Filament\Resources\Users\UserResource;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Actions\Concerns\InteractsWithActions;
+use Illuminate\Support\Facades\DB;
 
 class Header extends Component implements HasForms, HasActions
 {
@@ -167,15 +168,19 @@ class Header extends Component implements HasForms, HasActions
                     return redirect()->route('verification.notice');
                 }
 
-                $item = Item::create([
-                    'title' => $data['title'],
-                    'content' => $data['content'],
-                    'project_id' => $data['project_id'] ?? null,
-                    'board_id' => $data['board_id'] ?? null
-                ]);
+                $item = DB::transaction(function () use ($data) {
+                    $item = Item::create([
+                        'title' => $data['title'],
+                        'content' => $data['content'],
+                        'project_id' => $data['project_id'] ?? null,
+                        'board_id' => $data['board_id'] ?? null
+                    ]);
 
-                $item->user()->associate(auth()->user())->save();
-                $item->toggleUpvote();
+                    $item->user()->associate(auth()->user())->save();
+                    $item->toggleUpvote();
+
+                    return $item;
+                });
 
                 Notification::make('item_created')
                     ->title('Item')

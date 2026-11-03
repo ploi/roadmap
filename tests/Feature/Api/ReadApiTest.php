@@ -68,3 +68,25 @@ it('paginates and filters on updated_since', function () {
 it('validates updated_since', function () {
     withToken(apiToken())->getJson('/api/v1/items?updated_since=nope')->assertUnprocessable();
 });
+
+it('converts the updated_since offset to the app timezone', function () {
+    $item = Item::factory()->create();
+    $item->forceFill(['updated_at' => '2026-11-02 11:00:00'])->saveQuietly();
+
+    // 12:00+02:00 is 10:00 UTC, so an item updated at 11:00 UTC must be included.
+    withToken(apiToken())
+        ->getJson('/api/v1/items?updated_since=' . urlencode('2026-11-02T12:00:00+02:00'))
+        ->assertOk()
+        ->assertJsonCount(1, 'data');
+});
+
+it('falls back to the default page size for an empty per_page', function () {
+    Item::factory()->count(3)->create();
+
+    withToken(apiToken())->getJson('/api/v1/items?per_page=')->assertOk()->assertJsonPath('meta.per_page', 50);
+});
+
+it('answers with json errors without an Accept header', function () {
+    $this->get('/api/v1/items')->assertUnauthorized()->assertJsonPath('message', 'Unauthenticated.');
+    $this->withToken(apiToken())->get('/api/v1/items?updated_since=nope')->assertUnprocessable();
+});

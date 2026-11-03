@@ -2,6 +2,9 @@
 
 namespace App\Jobs;
 
+use Throwable;
+use RuntimeException;
+use App\Rules\SafeWebhookUrl;
 use App\Models\WebhookEndpoint;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Http;
@@ -26,6 +29,7 @@ class SendWebhookJob implements ShouldQueue
         public readonly string $event,
         public readonly array $data,
         public readonly string $deliveryId,
+        public readonly string $occurredAt,
     ) {
     }
 
@@ -39,16 +43,37 @@ class SendWebhookJob implements ShouldQueue
 
     public function handle(): void
     {
+        try {
+            $this->deliver();
+        } catch (Throwable $exception) {
+            // Without a real queue there is no retry, and a failing endpoint must not break the request.
+            if (config('queue.default') !== 'sync') {
+                throw $exception;
+            }
+
+            report($exception);
+        }
+    }
+
+    private function deliver(): void
+    {
+        // Checked again on every attempt, DNS may have changed since the endpoint was saved.
+        $address = SafeWebhookUrl::resolveAddress($this->endpoint->url)
+            ?? throw new RuntimeException('The webhook URL is not allowed.');
+
         $timestamp = time();
         $body = json_encode([
             'event' => $this->event,
             'delivery_id' => $this->deliveryId,
-            'created_at' => now()->toIso8601String(),
+            'created_at' => $this->occurredAt,
             'data' => $this->data,
-        ]);
+        ], JSON_THROW_ON_ERROR);
 
         // The signature covers the timestamp too, so receivers can reject replayed requests.
         $signature = hash_hmac('sha256', $timestamp . '.' . $body, $this->endpoint->secret);
+
+        $host = parse_url($this->endpoint->url, PHP_URL_HOST);
+        $port = parse_url($this->endpoint->url, PHP_URL_PORT) ?: 443;
 
         Http::withHeaders([
             'X-Roadmap-Event' => $this->event,
@@ -57,6 +82,9 @@ class SendWebhookJob implements ShouldQueue
             'X-Roadmap-Signature' => 'sha256=' . $signature,
         ])
             ->withBody($body, 'application/json')
+            ->withoutRedirecting()
+            // Connect to the address we just checked, so DNS rebinding cannot swap it afterwards.
+            ->withOptions(['curl' => [CURLOPT_RESOLVE => ["{$host}:{$port}:{$address}"]]])
             ->timeout(10)
             ->post($this->endpoint->url)
             ->throw();

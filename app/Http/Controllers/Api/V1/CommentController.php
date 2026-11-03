@@ -20,10 +20,10 @@ class CommentController extends Controller
 
         return CommentResource::collection(
             Comment::query()
-                ->when($request->date('updated_since'), fn ($query, $since) => $query->where('updated_at', '>=', $since))
+                ->when($request->date('updated_since')?->setTimezone(config('app.timezone')), fn ($query, $since) => $query->where('updated_at', '>=', $since))
                 ->when($request->integer('item_id'), fn ($query, $itemId) => $query->where('item_id', $itemId))
                 ->orderBy('id')
-                ->paginate($request->integer('per_page', 50))
+                ->paginate($request->integer('per_page') ?: 50)
                 ->withQueryString()
         );
     }

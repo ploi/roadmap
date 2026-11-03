@@ -9,7 +9,11 @@ enum WebhookEvent: string
     case ItemStatusChanged = 'item.status_changed';
     case ItemDeleted = 'item.deleted';
     case CommentCreated = 'comment.created';
+    case CommentUpdated = 'comment.updated';
+    case CommentDeleted = 'comment.deleted';
+    case ProjectCreated = 'project.created';
     case ProjectUpdated = 'project.updated';
+    case ProjectDeleted = 'project.deleted';
 
     /**
      * @return array<string, string>

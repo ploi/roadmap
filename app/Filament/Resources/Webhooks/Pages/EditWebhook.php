@@ -10,6 +10,14 @@ class EditWebhook extends EditRecord
 {
     protected static string $resource = WebhookResource::class;
 
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        // `secret` is hidden on the model, so Filament would otherwise leave the field empty.
+        $data['secret'] = $this->record->secret;
+
+        return $data;
+    }
+
     protected function getHeaderActions(): array
     {
         return [

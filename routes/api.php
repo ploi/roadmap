@@ -35,7 +35,7 @@ Route::prefix('activity-widget')->group(function () {
 });
 
 // Read API (API tokens from the admin panel)
-Route::prefix('v1')->middleware('api.token')->group(function () {
+Route::prefix('v1')->middleware(['api.json', 'api.token'])->group(function () {
     Route::get('/projects', [ProjectController::class, 'index']);
     Route::get('/items', [ItemController::class, 'index']);
     Route::get('/comments', [CommentController::class, 'index']);

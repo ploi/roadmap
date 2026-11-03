@@ -25,9 +25,9 @@ class CommentObserver
 
     public function created(Comment $comment)
     {
-        WebhookDispatcher::dispatch(WebhookEvent::CommentCreated, (new CommentResource($comment))->resolve());
-
         $this->processMentions($comment);
+
+        WebhookDispatcher::dispatch(WebhookEvent::CommentCreated, fn () => $this->webhookData($comment));
 
         $userIds = $comment->item?->votes()
                 ->subscribed()
@@ -46,6 +46,23 @@ class CommentObserver
         if ($comment->wasChanged('content')) {
             $this->processMentions($comment);
         }
+
+        if ($comment->wasChanged(['content', 'private'])) {
+            WebhookDispatcher::dispatch(WebhookEvent::CommentUpdated, fn () => $this->webhookData($comment));
+        }
+    }
+
+    public function deleted(Comment $comment)
+    {
+        WebhookDispatcher::dispatch(WebhookEvent::CommentDeleted, fn () => $this->webhookData($comment));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function webhookData(Comment $comment): array
+    {
+        return (new CommentResource($comment))->resolve();
     }
 
     public function deleting(Comment $comment)

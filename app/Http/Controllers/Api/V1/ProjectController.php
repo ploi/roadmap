@@ -19,9 +19,9 @@ class ProjectController extends Controller
 
         return ProjectResource::collection(
             Project::query()
-                ->when($request->date('updated_since'), fn ($query, $since) => $query->where('updated_at', '>=', $since))
+                ->when($request->date('updated_since')?->setTimezone(config('app.timezone')), fn ($query, $since) => $query->where('updated_at', '>=', $since))
                 ->orderBy('id')
-                ->paginate($request->integer('per_page', 50))
+                ->paginate($request->integer('per_page') ?: 50)
                 ->withQueryString()
         );
     }
