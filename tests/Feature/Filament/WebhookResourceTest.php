@@ -1,6 +1,7 @@
 <?php
 
 use Livewire\Livewire;
+use App\Filament\Resources\Webhooks\WebhookResource;
 use App\Enums\UserRole;
 use App\Models\WebhookEndpoint;
 use App\Filament\Resources\Webhooks\Pages\CreateWebhook;
@@ -57,4 +58,10 @@ it('is not available to employees', function () {
     createAndLoginUser(['role' => UserRole::Employee]);
 
     Livewire::test(ListWebhooks::class)->assertForbidden();
+});
+
+it('hides the navigation item from employees', function () {
+    createAndLoginUser(['role' => UserRole::Employee]);
+
+    expect(WebhookResource::shouldRegisterNavigation())->toBeFalse();
 });

@@ -30,6 +30,11 @@ class WebhookResource extends Resource
 
     protected static ?int $navigationSort = 1300;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::canAccess();
+    }
+
     public static function getNavigationGroup(): ?string
     {
         return trans('nav.manage');

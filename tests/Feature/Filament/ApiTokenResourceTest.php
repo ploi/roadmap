@@ -1,6 +1,7 @@
 <?php
 
 use Livewire\Livewire;
+use App\Filament\Resources\ApiTokens\ApiTokenResource;
 use App\Enums\UserRole;
 use App\Models\ApiToken;
 use App\Filament\Resources\ApiTokens\Pages\CreateApiToken;
@@ -26,4 +27,10 @@ it('is not available to employees', function () {
 
     Livewire::test(ListApiTokens::class)->assertForbidden();
     Livewire::test(CreateApiToken::class)->assertForbidden();
+});
+
+it('hides the navigation item from employees', function () {
+    createAndLoginUser(['role' => UserRole::Employee]);
+
+    expect(ApiTokenResource::shouldRegisterNavigation())->toBeFalse();
 });
