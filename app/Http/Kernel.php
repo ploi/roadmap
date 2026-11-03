@@ -3,6 +3,8 @@
 namespace App\Http;
 
 use App\Http\Middleware\Localize;
+use App\Http\Middleware\ForceJsonResponse;
+use App\Http\Middleware\AuthenticateApiToken;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\TrustProxies;
@@ -85,6 +87,8 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $middlewareAliases = [
+        'api.json' => ForceJsonResponse::class,
+        'api.token' => AuthenticateApiToken::class,
         'auth' => Authenticate::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
         'auth.session' => AuthenticateSession::class,

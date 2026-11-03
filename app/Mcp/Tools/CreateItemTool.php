@@ -13,6 +13,7 @@ use Laravel\Mcp\Server\Attributes\Name;
 use Laravel\Mcp\Server\Attributes\Description;
 use Illuminate\Contracts\JsonSchema\JsonSchema;
 use App\Mcp\Tools\Concerns\InteractsWithRoadmap;
+use Illuminate\Support\Facades\DB;
 
 #[Name('create-item')]
 #[Description('Create a new roadmap item (feature request, idea or bug), optionally on a board of a project. Admins and employees can create it as a private item, which does not send new item notifications. Available to admins and employees, and to other users when an admin allows it.')]
@@ -84,16 +85,20 @@ class CreateItemTool extends Tool
             return Response::error('A board is required, pass the board to create the item on.');
         }
 
-        $item = Item::create([
-            'title' => $validated['title'],
-            'content' => $validated['content'],
-            'project_id' => $project?->id,
-            'board_id' => $board?->id,
-            'private' => $private,
-        ]);
+        $item = DB::transaction(function () use ($validated, $project, $board, $private, $user) {
+            $item = Item::create([
+                'title' => $validated['title'],
+                'content' => $validated['content'],
+                'project_id' => $project?->id,
+                'board_id' => $board?->id,
+                'private' => $private,
+            ]);
 
-        $item->user()->associate($user)->save();
-        $item->toggleUpvote($user);
+            $item->user()->associate($user)->save();
+            $item->toggleUpvote($user);
+
+            return $item;
+        });
 
         return Response::json([
             'message' => "Created \"{$item->title}\".",
