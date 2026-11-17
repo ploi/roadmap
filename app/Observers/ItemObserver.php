@@ -4,21 +4,48 @@ namespace App\Observers;
 
 use Mail;
 use Throwable;
+use WeakMap;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\Project;
 use App\Enums\ItemActivity;
+use App\Enums\WebhookEvent;
+use App\Services\WebhookDispatcher;
+use App\Http\Resources\Api\V1\ItemResource;
 use App\Settings\GeneralSettings;
 use App\Jobs\SendWebhookForNewItemJob;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\Admin\ItemHasBeenCreatedEmail;
 use App\Notifications\Item\ItemUpdatedNotification;
 
 class ItemObserver
 {
+    /**
+     * Items that are being created and not committed yet, their follow-up saves must not send `item.updated`.
+     * Static, because Laravel resolves a new observer instance for every model event.
+     *
+     * @var WeakMap<Item, true>|null
+     */
+    private static ?WeakMap $pendingCreation = null;
+
+    public function creating(Item $item): void
+    {
+        self::$pendingCreation ??= new WeakMap();
+        self::$pendingCreation[$item] = true;
+    }
+
     public function created(Item $item)
     {
         ItemActivity::createForItem($item, ItemActivity::Created);
+
+        // Creating an item takes several saves (slug, user, project, board, vote). Wrap them in a transaction
+        // and the webhook is sent once, with the complete item, after the commit.
+        DB::afterCommit(function () use ($item) {
+            unset(self::$pendingCreation[$item]);
+
+            WebhookDispatcher::dispatch(WebhookEvent::ItemCreated, fn () => $this->webhookData($item->fresh()));
+        });
 
         if ($item->isPrivate()) {
             return;
@@ -48,6 +75,37 @@ class ItemObserver
                 };
             }
         }
+    }
+
+    public function deleted(Item $item): void
+    {
+        WebhookDispatcher::dispatch(WebhookEvent::ItemDeleted, fn () => $this->webhookData($item));
+    }
+
+    public function updated(Item $item): void
+    {
+        // Vote counts change on every vote, consumers can read them from the API.
+        $changes = array_diff_key($item->getChanges(), array_flip(['updated_at', 'notify_subscribers', 'total_votes']));
+
+        if ($changes === [] || isset(self::$pendingCreation[$item])) {
+            return;
+        }
+
+        WebhookDispatcher::dispatch(WebhookEvent::ItemUpdated, fn () => $this->webhookData($item));
+
+        if (array_key_exists('board_id', $changes)) {
+            WebhookDispatcher::dispatch(WebhookEvent::ItemStatusChanged, fn () => $this->webhookData($item) + [
+                'previous_board_id' => $item->getOriginal('board_id'),
+            ]);
+        }
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function webhookData(Item $item): array
+    {
+        return (new ItemResource($item->load(['board', 'project'])))->resolve();
     }
 
     public function updating(Item $item)
@@ -109,7 +167,8 @@ class ItemObserver
             });
         }
 
-        $item->updateQuietly(['notify_subscribers' => true]);
+        // Part of the update that is being saved.
+        $item->notify_subscribers = true;
     }
 
     public function deleting(Item $item)

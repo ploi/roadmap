@@ -14,6 +14,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Illuminate\Support\Facades\DB;
 
 class Create extends Component implements HasForms
 {
@@ -60,15 +61,19 @@ class Create extends Component implements HasForms
 
         $formState = $this->form->getState();
 
-        $item = Item::create([
-            ...$formState,
-        ]);
+        $item = DB::transaction(function () use ($formState) {
+            $item = Item::create([
+                ...$formState,
+            ]);
 
-        $item->user()->associate(auth()->user())->save();
-        $item->project()->associate($this->project)->save();
-        $item->board()->associate($this->board)->save();
+            $item->user()->associate(auth()->user())->save();
+            $item->project()->associate($this->project)->save();
+            $item->board()->associate($this->board)->save();
 
-        $item->toggleUpvote();
+            $item->toggleUpvote();
+
+            return $item;
+        });
 
         Notification::make('items')
             ->title('Items')

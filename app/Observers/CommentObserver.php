@@ -4,6 +4,9 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Models\Comment;
+use App\Enums\WebhookEvent;
+use App\Services\WebhookDispatcher;
+use App\Http\Resources\Api\V1\CommentResource;
 use App\Services\MentionParser;
 use App\Notifications\CommentHasReplyNotification;
 use App\Notifications\Item\ItemHasNewCommentNotification;
@@ -24,6 +27,8 @@ class CommentObserver
     {
         $this->processMentions($comment);
 
+        WebhookDispatcher::dispatch(WebhookEvent::CommentCreated, fn () => $this->webhookData($comment));
+
         $userIds = $comment->item?->votes()
                 ->subscribed()
                 ->where('user_id', '!=', auth()->id()) // Don't get the current user, they obviously already know about the new comment
@@ -41,6 +46,23 @@ class CommentObserver
         if ($comment->wasChanged('content')) {
             $this->processMentions($comment);
         }
+
+        if ($comment->wasChanged(['content', 'private'])) {
+            WebhookDispatcher::dispatch(WebhookEvent::CommentUpdated, fn () => $this->webhookData($comment));
+        }
+    }
+
+    public function deleted(Comment $comment)
+    {
+        WebhookDispatcher::dispatch(WebhookEvent::CommentDeleted, fn () => $this->webhookData($comment));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function webhookData(Comment $comment): array
+    {
+        return (new CommentResource($comment))->resolve();
     }
 
     public function deleting(Comment $comment)
