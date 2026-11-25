@@ -17,3 +17,9 @@ it('rejects an update for a snapshot signed without the path and method of its p
 
     $response->assertNotFound();
 });
+
+it('answers an update without components with a 404 that renders no components', function () {
+    $response = $this->json('POST', app(HandleRequests::class)->getUpdateUri(), ['components' => []], ['X-Livewire' => '1', 'Accept' => '*/*']);
+
+    $response->assertNotFound()->assertDontSee('wire:snapshot', false);
+});
